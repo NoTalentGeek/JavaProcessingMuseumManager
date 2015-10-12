@@ -8,22 +8,36 @@ List        sampleListChar      = Arrays.asList("a", "b", "c", "d", "e", "f", "g
 I guess, so far this is enough to satisfy my needs, let see what will happened next.*/
 class   Exhibition{
 
-    String          nameAlt     = '';
-    String          nameFull    = '';
-    List<String> tagStringList  = new ArrayList<String>();
+    Name            nameObject      = null;
+    String          nameAltString   = "";
+    String          nameFullString  = "";
+    List<String> tagStringList      = new ArrayList<String>();
 
-    Exhibition                  (
+    Exhibition                      (
 
-        String                  _nameAlt,
-        String                  _nameFull,
-        String...               _tagStringList
+        Name                        _nameObject,
+        String...                   _tagStringList
 
     ){
 
-        nameAlt                 = _nameAlt;
-        nameFull                = _nameFull;
+        nameObject                  = _nameObject;
+        nameAltString               = nameObject.nameAltString;
+        nameFullString              = nameObject.nameFullString;
 
         for(String tagString : _tagStringList){ tagStringList.add(tagString); }
+
+    }
+
+};
+
+class   Name{
+
+    String          nameAltString   = "";
+    String          nameFullString  = "";
+    Name                            (String _nameAltString, String _nameFullString){
+
+        nameAltString               = _nameAltString;
+        nameFullString              = _nameFullString;
 
     }
 
@@ -55,9 +69,11 @@ void    setup                   (){
     The more tag put into the exhibition the more chance that the exhibition will go out/break
         from the while loop.*/
     List<Exhibition>    exhibitionListObject    = new ArrayList<Exhibition>();
-    Exhibition          testExhibition1Object   = new Exhibition("EXH_AUS", "Exhibition Australia"  , "Agressive", "Brave", "Cute");
-    Exhibition          textExhibition2Object   = new Exhibition("EXH_BRA", "Exhibition Brazil"     , "Cool", "Legendary");
-    /*I think I still need to make Name class for this application.*/
+    Exhibition          testExhibition1Object   = new Exhibition(new Name("EXH_AUS", "Exhibition Australia"), "Agressive", "Brave", "Cute");
+    Exhibition          textExhibition2Object   = new Exhibition(new Name("EXH_BRA", "Exhibition Brazil"   ), "Cool", "Legendary");
+    /*I think I still need to make Name class for this application.
+    After this I need to create a List that is filled with Name object that will
+        later be filled in to exhibitionListObject.*/
 
 
 }
