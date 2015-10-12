@@ -5,11 +5,23 @@ ControlP5   cp5Object;
 List        sampleListChar      = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 
 /*The plan here is to make exhibition class with params of tags.
-I guess so far this is enough to satisfy my needs, let see what will happened next.*/
+I guess, so far this is enough to satisfy my needs, let see what will happened next.*/
 class   Exhibition{
 
+    String          nameAlt     = '';
+    String          nameFull    = '';
     List<String> tagStringList  = new ArrayList<String>();
-    Exhibition(String... _tagStringList){
+
+    Exhibition                  (
+
+        String                  _nameAlt,
+        String                  _nameFull,
+        String...               _tagStringList
+
+    ){
+
+        nameAlt                 = _nameAlt;
+        nameFull                = _nameFull;
 
         for(String tagString : _tagStringList){ tagStringList.add(tagString); }
 
@@ -30,12 +42,23 @@ void    setup                   (){
         .setItemHeight          (20)
         .addItems               (sampleListChar);
 
-    /*Prototyping the Exhibition class.
-    I will try to create an exhibition and then add random tags here.*/
+    /*
+    <<Prototyping the Exhibition class.
+    I will try to create an exhibition and then add random tags here.>>
     Exhibition testExhibitionObject = new Exhibition("Cute", "Enschede", "China", "Indonesia");
-    /*I can successfully retrieve the value.
-    Next thing to be done is to assign the value of tags randomly using while statement.*/
+    <<I can successfully retrieve the value.
+    Next thing to be done is to assign the value of tags randomly using while statement.>>
     println(testExhibitionObject.tagStringList.get(0));
+    */
+
+    /*Next prototype is to make several exhibitions then put the tags there with a while loop.
+    The more tag put into the exhibition the more chance that the exhibition will go out/break
+        from the while loop.*/
+    List<Exhibition>    exhibitionListObject    = new ArrayList<Exhibition>();
+    Exhibition          testExhibition1Object   = new Exhibition("EXH_AUS", "Exhibition Australia"  , "Agressive", "Brave", "Cute");
+    Exhibition          textExhibition2Object   = new Exhibition("EXH_BRA", "Exhibition Brazil"     , "Cool", "Legendary");
+    /*I think I still need to make Name class for this application.*/
+
 
 }
 
@@ -120,3 +143,4 @@ void    keyPressed              (){
     }
 
 }
+
