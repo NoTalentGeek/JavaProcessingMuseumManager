@@ -4,29 +4,51 @@ import java.util.*;
 ControlP5   cp5Object;
 List        sampleListChar      = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 
-void setup                      ()      {
+/*The plan here is to make exhibition class with params of tags.
+I guess so far this is enough to satisfy my needs, let see what will happened next.*/
+class   Exhibition{
+
+    List<String> tagStringList  = new ArrayList<String>();
+    Exhibition(String... _tagStringList){
+
+        for(String tagString : _tagStringList){ tagStringList.add(tagString); }
+
+    }
+
+};
+
+void    setup                   (){
 
     size                        (320, 240);
     cp5Object                   = new ControlP5(this);
+    int dropdownWidth           = 200;
+    int dropdownHeight          = 100;
     cp5Object.addScrollableList ("dropdown")
-        .setPosition            (100, 100)
-        .setSize                (200, 100)
+        .setPosition            ((width/2) - (dropdownWidth/2), (height/2) - (dropdownHeight/2))
+        .setSize                (dropdownWidth, dropdownHeight)
         .setBarHeight           (20)
         .setItemHeight          (20)
         .addItems               (sampleListChar);
 
+    /*Prototyping the Exhibition class.
+    I will try to create an exhibition and then add random tags here.*/
+    Exhibition testExhibitionObject = new Exhibition("Cute", "Enschede", "China", "Indonesia");
+    /*I can successfully retrieve the value.
+    Next thing to be done is to assign the value of tags randomly using while statement.*/
+    println(testExhibitionObject.tagStringList.get(0));
+
 }
 
-void draw                       ()      { background         (240); }
+void    draw                    (){ background(240); }
 
-void dropdown                   (int _index) {
+void    dropdown                (int _indexNum) {
 
     println(
 
-        _index,
+        _indexNum,
         cp5Object
             .get                (ScrollableList.class, "dropdown")
-            .getItem            (_index)
+            .getItem            (_indexNum)
 
     );
 
@@ -35,12 +57,12 @@ void dropdown                   (int _index) {
 
     cp5Object
         .get                    (ScrollableList.class, "dropdown")
-        .getItem                (_index)
+        .getItem                (_indexNum)
         .put                    ("color", colorObject);
 
 }
 
-void keyPressed                 ()      {
+void    keyPressed              (){
 
     switch(key)                 {
 
