@@ -2,35 +2,60 @@ import controlP5.*;
 import java.util.*;
 
 ControlP5   cp5Object;
-List        sampleListChar      = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 
-/*The plan here is to make exhibition class with params of tags.
-I guess, so far this is enough to satisfy my needs, let see what will happened next.*/
-class   Exhibition{
+/*A class for museum object.
+The museum objects within this application are things that can interract with visitor.
+For example floor, room, and exhibition.*/
+class   MuseumObject                            {
 
-    Name            nameObject      = null;
-    String          nameAltString   = "";
-    String          nameFullString  = "";
-    List<String> tagStringList      = new ArrayList<String>();
+    List<MuseumObject>  childObjectList         = new ArrayList<MuseumObject>();    /*This list contains all object that is sub - ordinate of this object..*/
 
-    Exhibition                      (
+    List<MuseumObject>  floorObjectList         = new ArrayList<MuseumObject>();    /*This list contains all possible floor object.*/
+    List<MuseumObject>  roomObjectList          = new ArrayList<MuseumObject>();    /*This list contains all possible room object.*/
+    List<MuseumObject>  exhibitionObjectList    = new ArrayList<MuseumObject>();    /*This list contains all possible exhibition object.*/
 
-        Name                        _nameObject,
-        String...                   _tagStringList
+    int                 indexGlobalInt          = null;                             /*This is an index number of the location of this object in its respective list.*/
+    int                 indexLocalInt           = null;                             /*This is an index number of the location of this object within its parent child object list.*/
+
+    Name                nameObject              = null;                             /*Name object that contains the alternative name and the full name of this object.*/
+    String              nameAltString           = "";                               /*This variable is intended solely to store the alternative name of this object.*/
+    String              nameFullString          = "";                               /*This variable is intended solely to store the full name of this object.*/
+
+    MuseumObject        parentObject            = null;                             /*The object parent of this object, which means this object should be inside the parent object's child object list.*/
+    String              parentNameAltString     = "";                               /*The alternative name of the parent object.*/
+    
+    String              typeString              = "";                               /*The type of this object (the only possible values are "FLR", "ROM", and "EXH").*/
+
+    List<String>        tagStringList           = new ArrayList<String>();          /*The tags for whit museum object.*/
+
+    int                 visitorCurrentInt       = 0;                                /*This museum object current visitor.*/
+    int                 visitorTotalInt         = 0;                                /*This museum objecy total visitor.*/
+
+    MuseumObject                                (
+
+        Name                                    _nameObject,
+        String...                               _tagStringList
 
     ){
 
-        nameObject                  = _nameObject;
-        nameAltString               = nameObject.nameAltString;
-        nameFullString              = nameObject.nameFullString;
+
+        nameObject                              = _nameObject;
+        nameAltString                           = nameObject.nameAltString;
+        nameFullString                          = nameObject.nameFullString;
+
+        typeString                              = _typeString;
 
         for(String tagString : _tagStringList){ tagStringList.add(tagString); }
+
+        /*DetermineChildObjectList();*/
+        /*DetermineIndexGlobalInt();*/
+        /*DetermineIndexLocalInt();*/
 
     }
 
 };
 
-class   Name{
+class   Name                        {
 
     String          nameAltString   = "";
     String          nameFullString  = "";
@@ -56,24 +81,10 @@ void    setup                   (){
         .setItemHeight          (20)
         .addItems               (sampleListChar);
 
-    /*
-    <<Prototyping the Exhibition class.
-    I will try to create an exhibition and then add random tags here.>>
-    Exhibition testExhibitionObject = new Exhibition("Cute", "Enschede", "China", "Indonesia");
-    <<I can successfully retrieve the value.
-    Next thing to be done is to assign the value of tags randomly using while statement.>>
-    println(testExhibitionObject.tagStringList.get(0));
-    */
 
-    /*Next prototype is to make several exhibitions then put the tags there with a while loop.
-    The more tag put into the exhibition the more chance that the exhibition will go out/break
-        from the while loop.*/
-    List<Exhibition>    exhibitionListObject    = new ArrayList<Exhibition>();
-    Exhibition          testExhibition1Object   = new Exhibition(new Name("EXH_AUS", "Exhibition Australia"), "Agressive", "Brave", "Cute");
-    Exhibition          textExhibition2Object   = new Exhibition(new Name("EXH_BRA", "Exhibition Brazil"   ), "Cool", "Legendary");
-    /*I think I still need to make Name class for this application.
-    After this I need to create a List that is filled with Name object that will
-        later be filled in to exhibitionListObject.*/
+    List<MuseumObject>  exhibitionListObject    = new ArrayList<MuseumObject>();
+    MuseumObject        testExhibition1Object   = new MuseumObject(new Name("EXH_AUS", "Exhibition Australia"), "Agressive", "Brave", "Cute");
+    MuseumObject        textExhibition2Object   = new MuseumObject(new Name("EXH_BRA", "Exhibition Brazil"   ), "Cool", "Legendary");
 
 
 }
