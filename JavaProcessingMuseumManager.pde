@@ -64,18 +64,64 @@ void MuseumObjectInit1Void           (){
 
 void MuseumObjectInit2Void      (
 
-    Name[]              _nameObjectArray,
     String              _typeString,
+    Name[]              _nameObjectArray,
     String              _tagString,
     List<MuseumObject>  _museumObjectList
 
 ){
 
-    for(int i = 0; i < _nameObjectArray.length; i ++){
+    if          (_typeString == "FLR"){
 
-        MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], _typeString, _tagString);
-                     _museumObjectList      .add(museumObject);
+        for(int i = 0; i < _nameObjectArray.length; i ++){
 
+            MuseumObject museumObject               = new MuseumObject(_nameObjectArray[i], "XXX_XXX", _parentNameAltString, _typeString, _tagString);
+                         _museumObjectList          .add(museumObject);
+
+        }
+
+    }
+    else if     (_typeString == "ROM"){
+
+        for(int i = 0; i < _nameObjectArray.length; i ++){
+
+            MuseumObject museumObject               = new MuseumObject(_nameObjectArray[i], "FLR_001", _parentNameAltString, _typeString, _tagString);
+                         _museumObjectList          .add(museumObject);
+
+        }
+        
+    }
+    else if     (_typeString == "EXH"){
+
+        for(int i = 0; i < _nameObjectArray.length; i ++){
+
+            if      (i < 4){
+
+                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_AFK"_parentNameAltString, _typeString, _tagString);
+                             _museumObjectList      .add(museumObject);
+
+            }
+            else if (i < 8){
+
+                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_AME"_parentNameAltString, _typeString, _tagString);
+                             _museumObjectList      .add(museumObject);
+
+            }
+            else if (i < 12){
+
+                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_ASI"_parentNameAltString, _typeString, _tagString);
+                             _museumObjectList      .add(museumObject);
+
+            }
+            else if (i < 16){
+
+                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_EUR"_parentNameAltString, _typeString, _tagString);
+                             _museumObjectList      .add(museumObject);
+
+            }
+
+        }
+        
     }
 
 }
