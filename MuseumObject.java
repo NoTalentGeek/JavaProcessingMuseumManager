@@ -31,16 +31,31 @@ class   MuseumObject                            {
     MuseumObject                                (
 
         Name                                    _nameObject,
+        String                                  _parentNameAltString,
         String                                  _typeString,
         String...                               _tagStringList
 
     ){
 
-
+        /*We put in the name object from the first argument of this class.
+        The name object is an object that contains only two variables,
+            the alternative name of an object and the full name of an object
+        For processing within this whoel application we used the alternative name.*/
         nameObject                              = _nameObject;
         nameAltString                           = nameObject.nameAltString;
         nameFullString                          = nameObject.nameFullString;
 
+        /*We put the alternative name of the parent here.
+        For example the anternative name of an exhibition object must be
+            an object with type string of "ROM" which mean the parent object
+            is an room object.*/
+        parentNameAltString                     = _parentNameAltString;
+
+        /*This is the type of this object.
+        The only possible input will be,
+            "FLR" if this object is a room object,
+            "ROM" if this object is a room object,
+            "EXH" if this object is an exhibition object.*/
         typeString                              = _typeString;
 
         for(String tagString : _tagStringList){ tagStringList.add(tagString); }
@@ -48,6 +63,7 @@ class   MuseumObject                            {
         /*DetermineChildObjectList();*/
         /*DetermineIndexGlobalInt();*/
         /*DetermineIndexLocalInt();*/
+        /*DetermineParentObject();*/
 
     }
 

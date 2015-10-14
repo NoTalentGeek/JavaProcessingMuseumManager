@@ -17,12 +17,19 @@ void    setup                       (){
     cp5Object                       = new ControlP5(this);
     int dropdownWidth               = 200;
     int dropdownHeight              = 100;
-    cp5Object.addScrollableList     ("dropdown")
+    cp5Object.addScrollableList     ("Dropdown")
         .setPosition                ((width/2) - (dropdownWidth/2), (height/2) - (dropdownHeight/2))
         .setSize                    (dropdownWidth, dropdownHeight)
         .setBarHeight               (20)
         .setItemHeight              (20)
         .addItems                   (sampleListChar);
+
+    MuseumObjectInit1Void           ();
+
+}
+
+/*Adding temporary function to initialize museum object array of object.*/
+void MuseumObjectInit1Void           (){
 
     floorNameObjectArray[0]         = new Name("FLR_001", "First Floor" );
     floorNameObjectArray[1]         = new Name("FLR_002", "Second Floor");
@@ -49,22 +56,25 @@ void    setup                       (){
     exhibitionNameObjectArray[14]   = new Name("EXH_GER", "Exhibition Germany"                 );
     exhibitionNameObjectArray[15]   = new Name("EXH_NED", "Exhibition The Netherlands"         );
 
-    for(int i = 0; i < floorNameObjectArray.length; i ++){
+    MuseumObjectInit2Void(floorNameObjectArray      , "FLR", "XXX_XXX", floorObjectList     );
+    MuseumObjectInit2Void(roomNameObjectArray       , "ROM", "XXX_XXX", roomObjectList      );
+    MuseumObjectInit2Void(exhibitionNameObjectArray , "EXH", "XXX_XXX", exhibitionObjectList);
 
-        MuseumObject floorObject            = new MuseumObject(floorNameObjectArray[i], "FLR", "XXX_XXX");
-                     floorObjectList        .add(floorObject);
+}
 
-    }
-    for(int i = 0; i < roomNameObjectArray.length; i ++){
+void MuseumObjectInit2Void      (
 
-        MuseumObject roomObject             = new MuseumObject(roomNameObjectArray[i], "ROM", "XXX_XXX");
-                     roomObjectList         .add(roomObject);
+    Name[]              _nameObjectArray,
+    String              _typeString,
+    String              _tagString,
+    List<MuseumObject>  _museumObjectList
 
-    }
-    for(int i = 0; i < exhibitionNameObjectArray.length; i ++){
+){
 
-        MuseumObject exhibitionObject       = new MuseumObject(exhibitionNameObjectArray[i], "FLR", "XXX_XXX");
-                     exhibitionObjectList   .add(exhibitionObject);
+    for(int i = 0; i < _nameObjectArray.length; i ++){
+
+        MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], _typeString, _tagString);
+                     _museumObjectList      .add(museumObject);
 
     }
 
@@ -72,13 +82,13 @@ void    setup                       (){
 
 void    draw                    (){ background(240); }
 
-void    dropdown                (int _indexNum) {
+void    Dropdown                (int _indexNum) {
 
     println(
 
         _indexNum,
         cp5Object
-            .get                (ScrollableList.class, "dropdown")
+            .get                (ScrollableList.class, "Dropdown")
             .getItem            (_indexNum)
 
     );
@@ -87,7 +97,7 @@ void    dropdown                (int _indexNum) {
            colorObject          .setBackground(color(255, 0, 0));
 
     cp5Object
-        .get                    (ScrollableList.class, "dropdown")
+        .get                    (ScrollableList.class, "Dropdown")
         .getItem                (_indexNum)
         .put                    ("color", colorObject);
 
@@ -100,14 +110,14 @@ void    keyPressed              (){
         case('1'):
 
             cp5Object
-                .get(ScrollableList.class, "dropdown")
+                .get(ScrollableList.class, "Dropdown")
                 .setType(ControlP5.LIST);
 
         break;
         case('2'):
 
             cp5Object
-                .get(ScrollableList.class, "dropdown")
+                .get(ScrollableList.class, "Dropdown")
                 .setType(ControlP5.DROPDOWN);
 
         break;
@@ -129,21 +139,21 @@ void    keyPressed              (){
 
             );
             cp5Object
-                .get(ScrollableList.class, "dropdown")
+                .get(ScrollableList.class, "Dropdown")
                 .setItems(sampleListChar);
 
         break;
         case('4'):
 
             cp5Object
-                .get(ScrollableList.class, "dropdown")
+                .get(ScrollableList.class, "Dropdown")
                 .removeItem("k-1");
 
         break;
         case('5'):
 
             cp5Object
-                .get(ScrollableList.class, "dropdown")
+                .get(ScrollableList.class, "Dropdown")
                 .clear();
 
         break;
@@ -151,6 +161,7 @@ void    keyPressed              (){
     }
 
 }
+
 
 
 
