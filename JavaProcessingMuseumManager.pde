@@ -7,6 +7,8 @@ List<MuseumObject>      floorObjectList             = new ArrayList<MuseumObject
 List<MuseumObject>      roomObjectList              = new ArrayList<MuseumObject>();    /*This list contains all possible room object.*/
 List<MuseumObject>      exhibitionObjectList        = new ArrayList<MuseumObject>();    /*This list contains all possible exhibition object.*/
 
+/*This is pending, I should not use this object of an array.
+Instead put everything into the object directly.*/
 Name[]                  floorNameObjectArray        = new Name[4];
 Name[]                  roomNameObjectArray         = new Name[4];
 Name[]                  exhibitionNameObjectArray   = new Name[16];
