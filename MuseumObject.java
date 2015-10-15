@@ -1,214 +1,70 @@
-import controlP5.*;
 import java.util.*;
 
-ControlP5               cp5Object;
-List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
-List<MuseumObject>      floorObjectList             = new ArrayList<MuseumObject>();    /*This list contains all possible floor object.*/
-List<MuseumObject>      roomObjectList              = new ArrayList<MuseumObject>();    /*This list contains all possible room object.*/
-List<MuseumObject>      exhibitionObjectList        = new ArrayList<MuseumObject>();    /*This list contains all possible exhibition object.*/
+/*A class for museum object.
+The museum objects within this application are things that can interract with visitor.
+For example floor, room, and exhibition.*/
+class   MuseumObject                            {
 
-Name[]                  floorNameObjectArray        = new Name[4];
-Name[]                  roomNameObjectArray         = new Name[4];
-Name[]                  exhibitionNameObjectArray   = new Name[16];
+    List<MuseumObject>  childObjectList         = new ArrayList<MuseumObject>();    /*This list contains all object that is sub - ordinate of this object..*/
 
-void    setup                       (){
+    List<MuseumObject>  floorObjectList         = new ArrayList<MuseumObject>();    /*This list contains all possible floor object.*/
+    List<MuseumObject>  roomObjectList          = new ArrayList<MuseumObject>();    /*This list contains all possible room object.*/
+    List<MuseumObject>  exhibitionObjectList    = new ArrayList<MuseumObject>();    /*This list contains all possible exhibition object.*/
 
-    size                            (320, 240);
-    cp5Object                       = new ControlP5(this);
-    int dropdownWidth               = 200;
-    int dropdownHeight              = 100;
-    cp5Object.addScrollableList     ("Dropdown")
-        .setPosition                ((width/2) - (dropdownWidth/2), (height/2) - (dropdownHeight/2))
-        .setSize                    (dropdownWidth, dropdownHeight)
-        .setBarHeight               (20)
-        .setItemHeight              (20)
-        .addItems                   (sampleListChar);
+    int                 indexGlobalInt          = -1;                               /*This is an index number of the location of this object in its respective list.*/
+    int                 indexLocalInt           = -1;                               /*This is an index number of the location of this object within its parent child object list.*/
 
-    MuseumObjectInit1Void           ();
+    Name                nameObject              = null;                             /*Name object that contains the alternative name and the full name of this object.*/
+    String              nameAltString           = "";                               /*This variable is intended solely to store the alternative name of this object.*/
+    String              nameFullString          = "";                               /*This variable is intended solely to store the full name of this object.*/
 
-}
+    MuseumObject        parentObject            = null;                             /*The object parent of this object, which means this object should be inside the parent object's child object list.*/
+    String              parentNameAltString     = "";                               /*The alternative name of the parent object.*/
+    
+    String              typeString              = "";                               /*The type of this object (the only possible values are "FLR", "ROM", and "EXH").*/
 
-/*Adding temporary function to initialize museum object array of object.*/
-void MuseumObjectInit1Void           (){
+    List<String>        tagStringList           = new ArrayList<String>();          /*The tags for whit museum object.*/
 
-    floorNameObjectArray[0]         = new Name("FLR_001", "First Floor" );
-    floorNameObjectArray[1]         = new Name("FLR_002", "Second Floor");
-    floorNameObjectArray[2]         = new Name("FLR_003", "Third Floor" );
-    floorNameObjectArray[3]         = new Name("FLR_004", "Fourth Floor");
-    roomNameObjectArray[0]          = new Name("ROM_AFK", "Room Afrika" );
-    roomNameObjectArray[1]          = new Name("ROM_AME", "Room America");
-    roomNameObjectArray[2]          = new Name("ROM_ASI", "Room Asia"   );
-    roomNameObjectArray[3]          = new Name("ROM_EUR", "Room Europe" );
-    exhibitionNameObjectArray[0]    = new Name("EXH_CAM", "Exhibition Cameroon"                );
-    exhibitionNameObjectArray[1]    = new Name("EXH_EGY", "Exhibition Egypt"                   );
-    exhibitionNameObjectArray[2]    = new Name("EXH_ETH", "Exhibition Ethiopia"                );
-    exhibitionNameObjectArray[3]    = new Name("EXH_NIG", "Exhibition Nigeria"                 );
-    exhibitionNameObjectArray[4]    = new Name("EXH_BRA", "Exhibition Brazil"                  );
-    exhibitionNameObjectArray[5]    = new Name("EXH_CAN", "Exhibition Canada"                  );
-    exhibitionNameObjectArray[6]    = new Name("EXH_MEX", "Exhibition Mexico"                  );
-    exhibitionNameObjectArray[7]    = new Name("EXH_USA", "Exhibition United States Of America");
-    exhibitionNameObjectArray[8]    = new Name("EXH_CAM", "Exhibition Cambodia"                );
-    exhibitionNameObjectArray[9]    = new Name("EXH_IND", "Exhibition India"                   );
-    exhibitionNameObjectArray[10]   = new Name("EXH_JAP", "Exhibition Japan"                   );
-    exhibitionNameObjectArray[11]   = new Name("EXH_SIN", "Exhibition Singapore"               );
-    exhibitionNameObjectArray[12]   = new Name("EXH_BEL", "Exhibition Belgium"                 );
-    exhibitionNameObjectArray[13]   = new Name("EXH_FRA", "Exhibition France"                  );
-    exhibitionNameObjectArray[14]   = new Name("EXH_GER", "Exhibition Germany"                 );
-    exhibitionNameObjectArray[15]   = new Name("EXH_NED", "Exhibition The Netherlands"         );
+    int                 visitorCurrentInt       = 0;                                /*This museum object current visitor.*/
+    int                 visitorTotalInt         = 0;                                /*This museum objecy total visitor.*/
 
-    MuseumObjectInit2Void(floorNameObjectArray      , "FLR", "XXX_XXX", floorObjectList     );
-    MuseumObjectInit2Void(roomNameObjectArray       , "ROM", "XXX_XXX", roomObjectList      );
-    MuseumObjectInit2Void(exhibitionNameObjectArray , "EXH", "XXX_XXX", exhibitionObjectList);
+    MuseumObject                                (
 
-}
+        Name                                    _nameObject,
+        String                                  _parentNameAltString,
+        String                                  _typeString,
+        String...                               _tagStringList
 
-void MuseumObjectInit2Void      (
+    ){
 
-    String              _typeString,
-    Name[]              _nameObjectArray,
-    String              _tagString,
-    List<MuseumObject>  _museumObjectList
+        /*We put in the name object from the first argument of this class.
+        The name object is an object that contains only two variables,
+            the alternative name of an object and the full name of an object
+        For processing within this whoel application we used the alternative name.*/
+        nameObject                              = _nameObject;
+        nameAltString                           = nameObject.nameAltString;
+        nameFullString                          = nameObject.nameFullString;
 
-){
+        /*We put the alternative name of the parent here.
+        For example the anternative name of an exhibition object must be
+            an object with type string of "ROM" which mean the parent object
+            is an room object.*/
+        parentNameAltString                     = _parentNameAltString;
 
-    if          (_typeString == "FLR"){
+        /*This is the type of this object.
+        The only possible input will be,
+            "FLR" if this object is a room object,
+            "ROM" if this object is a room object,
+            "EXH" if this object is an exhibition object.*/
+        typeString                              = _typeString;
 
-        for(int i = 0; i < _nameObjectArray.length; i ++){
+        for(String tagString : _tagStringList){ tagStringList.add(tagString); }
 
-            MuseumObject museumObject               = new MuseumObject(_nameObjectArray[i], "XXX_XXX", _parentNameAltString, _typeString, _tagString);
-                         _museumObjectList          .add(museumObject);
-
-        }
-
-    }
-    else if     (_typeString == "ROM"){
-
-        for(int i = 0; i < _nameObjectArray.length; i ++){
-
-            MuseumObject museumObject               = new MuseumObject(_nameObjectArray[i], "FLR_001", _parentNameAltString, _typeString, _tagString);
-                         _museumObjectList          .add(museumObject);
-
-        }
-        
-    }
-    else if     (_typeString == "EXH"){
-
-        for(int i = 0; i < _nameObjectArray.length; i ++){
-
-            if      (i < 4){
-
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_AFK"_parentNameAltString, _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-            else if (i < 8){
-
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_AME"_parentNameAltString, _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-            else if (i < 12){
-
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_ASI"_parentNameAltString, _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-            else if (i < 16){
-
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_EUR"_parentNameAltString, _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-
-        }
-        
-    }
-
-}
-
-void    draw                    (){ background(240); }
-
-void    Dropdown                (int _indexNum) {
-
-    println(
-
-        _indexNum,
-        cp5Object
-            .get                (ScrollableList.class, "Dropdown")
-            .getItem            (_indexNum)
-
-    );
-
-    CColor colorObject          = new CColor();
-           colorObject          .setBackground(color(255, 0, 0));
-
-    cp5Object
-        .get                    (ScrollableList.class, "Dropdown")
-        .getItem                (_indexNum)
-        .put                    ("color", colorObject);
-
-}
-
-void    keyPressed              (){
-
-    switch(key)                 {
-
-        case('1'):
-
-            cp5Object
-                .get(ScrollableList.class, "Dropdown")
-                .setType(ControlP5.LIST);
-
-        break;
-        case('2'):
-
-            cp5Object
-                .get(ScrollableList.class, "Dropdown")
-                .setType(ControlP5.DROPDOWN);
-
-        break;
-        case('3'):
-
-            sampleListChar      = Arrays.asList(
-
-                "a-1",
-                "b-1",
-                "c-1",
-                "d-1",
-                "e-1",
-                "f-1",
-                "g-1",
-                "h-1",
-                "i-1",
-                "j-1",
-                "k-1"
-
-            );
-            cp5Object
-                .get(ScrollableList.class, "Dropdown")
-                .setItems(sampleListChar);
-
-        break;
-        case('4'):
-
-            cp5Object
-                .get(ScrollableList.class, "Dropdown")
-                .removeItem("k-1");
-
-        break;
-        case('5'):
-
-            cp5Object
-                .get(ScrollableList.class, "Dropdown")
-                .clear();
-
-        break;
+        /*DetermineChildObjectList();*/
+        /*DetermineIndexGlobalInt();*/
+        /*DetermineIndexLocalInt();*/
+        /*DetermineParentObject();*/
 
     }
 
-}
-
-
-
-
-
+};
