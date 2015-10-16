@@ -2,11 +2,13 @@ import controlP5.*;
 import java.util.*;
 
 ControlP5               cp5Object;
-MuseumObject            testObject;
+ObjectMuseum            testObject;
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
-List<MuseumObject>      floorObjectList             = new ArrayList<MuseumObject>();    /*This list contains all possible floor object.*/
-List<MuseumObject>      roomObjectList              = new ArrayList<MuseumObject>();    /*This list contains all possible room object.*/
-List<MuseumObject>      exhibitionObjectList        = new ArrayList<MuseumObject>();    /*This list contains all possible exhibition object.*/
+List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
+List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
+List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
+
+PShape                  buttonOpenCloseObject       = null;
 
 /*This is pending, I should not use this object of an array.
 Instead put everything into the object directly.*/
@@ -29,10 +31,55 @@ void    setup                           (){
 
     MuseumObjectInit1Void               ();
 
+    /*PROTOTYPING BUTTON.
+    The goal here is to make a rotateable button.
+    So create the button first and then add the parameter like rotation
+        the parameters.
+    The thing is that I am not sure if you can rotate a drawing object as a group.
+    The first thing is that I need to create a PShape.
+    Then create custom PShape.
+    Finally, rotate all together within the shape.
+    Actually with group everything is easier.*/
+    int     buttonXInt                  = 0;
+    int     buttonYInt                  = 0;
+    int     buttonSizeInt               = 30;
+            buttonOpenCloseObject       = createShape(GROUP);
+    PShape  buttonOpenCloseCircleObject = createShape(
+
+        ELLIPSE, 
+        buttonXInt, 
+        buttonYInt, 
+        buttonSizeInt, 
+        buttonSizeInt
+
+    );
+    PShape  buttonOpenCloseCross1Object = createShape(
+
+        LINE, 
+        (buttonXInt + (buttonSizeInt/4)), 
+        (buttonYInt + (buttonSizeInt/4)), 
+        (buttonXInt + (buttonSizeInt/4)) + (buttonSizeInt/2), 
+        (buttonYInt + (buttonSizeInt/4)) + (buttonSizeInt/2)
+         
+    );
+    PShape  buttonOpenCloseCross2Object = createShape(
+
+        LINE, 
+        (buttonXInt + (buttonSizeInt/4)), 
+        (buttonYInt + (buttonSizeInt/4)) + (buttonSizeInt/2), 
+        (buttonXInt + (buttonSizeInt/4)) + (buttonSizeInt/2), 
+        (buttonYInt + (buttonSizeInt/4))
+
+    );
+
+    buttonOpenCloseObject.addChild   (buttonOpenCloseCircleObject);
+    buttonOpenCloseObject.addChild   (buttonOpenCloseCross1Object);
+    buttonOpenCloseObject.addChild   (buttonOpenCloseCross2Object);
+
 }
 
 /*Adding temporary function to initialize museum object array of object.*/
-void MuseumObjectInit1Void           (){
+void MuseumObjectInit1Void          (){
 
     floorNameObjectArray[0]         = new Name("FLR_001", "First Floor" );
     floorNameObjectArray[1]         = new Name("FLR_002", "Second Floor");
@@ -70,7 +117,7 @@ void MuseumObjectInit2Void      (
     String              _typeString,
     Name[]              _nameObjectArray,
     String              _tagString,
-    List<MuseumObject>  _museumObjectList
+    List<ObjectMuseum>  _museumObjectList
 
 ){
 
@@ -78,7 +125,7 @@ void MuseumObjectInit2Void      (
 
         for(int i = 0; i < _nameObjectArray.length; i ++){
 
-            MuseumObject museumObject               = new MuseumObject(_nameObjectArray[i], "XXX_XXX", _typeString, _tagString);
+            ObjectMuseum museumObject               = new ObjectMuseum(_nameObjectArray[i], "XXX_XXX", _typeString, _tagString);
                          _museumObjectList          .add(museumObject);
 
         }
@@ -88,7 +135,7 @@ void MuseumObjectInit2Void      (
 
         for(int i = 0; i < _nameObjectArray.length; i ++){
 
-            MuseumObject museumObject               = new MuseumObject(_nameObjectArray[i], "FLR_001", _typeString, _tagString);
+            ObjectMuseum museumObject               = new ObjectMuseum(_nameObjectArray[i], "FLR_001", _typeString, _tagString);
                          _museumObjectList          .add(museumObject);
 
         }
@@ -100,25 +147,25 @@ void MuseumObjectInit2Void      (
 
             if      (i < 4){
 
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_AFK", _typeString, _tagString);
+                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_AFK", _typeString, _tagString);
                              _museumObjectList      .add(museumObject);
 
             }
             else if (i < 8){
 
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_AME", _typeString, _tagString);
+                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_AME", _typeString, _tagString);
                              _museumObjectList      .add(museumObject);
 
             }
             else if (i < 12){
 
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_ASI", _typeString, _tagString);
+                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_ASI", _typeString, _tagString);
                              _museumObjectList      .add(museumObject);
 
             }
             else if (i < 16){
 
-                MuseumObject museumObject           = new MuseumObject(_nameObjectArray[i], "ROM_EUR", _typeString, _tagString);
+                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_EUR", _typeString, _tagString);
                              _museumObjectList      .add(museumObject);
 
             }
@@ -131,63 +178,10 @@ void MuseumObjectInit2Void      (
 
 void    draw                    (){
 
-    background(240);
-
-    /*PROTOTYPING BUTTON.
-    The goal here is to make a rotateable button.
-    So create the button first and then add the parameter like rotation
-        the parameters.
-    The thing is that I am not sure if you can rotate a drawing object as a group.
-    The first thing is that I need to create a PShape.
-    Then create custom PShape.
-    Finally, rotate all together within the shape.
-    Actually with group everything is easier.*/
-    int     buttonXInt                  = 10;
-    int     buttonYInt                  = 10;
-    int     buttonSizeInt               = 30;
-    PShape  buttonOpenCloseObject       = createShape(GROUP);
-    PShape  buttonOpenCloseCircleObject = createShape(ELLIPSE, buttonXInt, buttonYInt, buttonSizeInt, buttonSizeInt);
-    PShape  buttonOpenCloseCross1Object = createShape(LINE, (buttonXInt + (buttonSizeInt/4)), (buttonYInt + (buttonSizeInt/4)), (buttonXInt + (buttonSizeInt/4)) + (buttonSizeInt/2), (buttonYInt + (buttonSizeInt/4)) + (buttonSizeInt/2));
-    PShape  buttonOpenCloseCross2Object = createShape(LINE, (buttonXInt + (buttonSizeInt/4)), (buttonYInt + (buttonSizeInt/4)) + (buttonSizeInt/2), (buttonXInt + (buttonSizeInt/4)) + (buttonSizeInt/2), (buttonYInt + (buttonSizeInt/4)));
-
-            /*
-            buttonOpenCloseCross1Object.beginShape();
-            buttonOpenCloseCross1Object.fill(102);
-            buttonOpenCloseCross1Object.stroke(255);
-            buttonOpenCloseCross1Object.strokeWeight(2);
-            buttonOpenCloseCross1Object.vertex(0, -50);
-            buttonOpenCloseCross1Object.vertex(14, -20);
-            buttonOpenCloseCross1Object.vertex(47, -15);
-            buttonOpenCloseCross1Object.vertex(23, 7);
-            buttonOpenCloseCross1Object.vertex(29, 40);
-            buttonOpenCloseCross1Object.vertex(0, 25);
-            buttonOpenCloseCross1Object.vertex(-29, 40);
-            buttonOpenCloseCross1Object.vertex(-23, 7);
-            buttonOpenCloseCross1Object.vertex(-47, -15);
-            buttonOpenCloseCross1Object.vertex(-14, -20);
-            buttonOpenCloseCross1Object.endShape(CLOSE);
-
-            buttonOpenCloseCross1Object .beginShape();
-            buttonOpenCloseCross1Object .fill(102);
-            buttonOpenCloseCross1Object .stroke(255);
-            buttonOpenCloseCross1Object .strokeWeight(2);
-            buttonOpenCloseCross1Object .vertex(0, 0);
-            buttonOpenCloseCross1Object .vertex(20, 20);
-            buttonOpenCloseCross1Object .endShape(CLOSE);
-
-            buttonOpenCloseCross2Object .beginShape();
-            buttonOpenCloseCross2Object .noFill();
-            buttonOpenCloseCross2Object .strokeWeight(20);
-            buttonOpenCloseCross2Object .vertex(20, 0);
-            buttonOpenCloseCross2Object .vertex(0, 20);
-            buttonOpenCloseCross2Object .endShape(CLOSE);
-            */
-
-            buttonOpenCloseObject       .addChild(buttonOpenCloseCircleObject);
-            buttonOpenCloseObject       .addChild(buttonOpenCloseCross1Object);
-            buttonOpenCloseObject       .addChild(buttonOpenCloseCross2Object);
-
-            shape                       (buttonOpenCloseObject);
+    background                  (240);
+    shapeMode                   (CENTER);
+    shape                       (buttonOpenCloseObject, 30, 30);
+    buttonOpenCloseObject       .rotate(0.1);
 
 }
 
@@ -270,6 +264,7 @@ void    keyPressed              (){
     }
 
 }
+
 
 
 
