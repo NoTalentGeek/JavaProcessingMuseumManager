@@ -2,6 +2,7 @@ import controlP5.*;
 import java.util.*;
 
 ControlP5               cp5Object;
+ButtonOpenClose         buttonOpenCloseMuseumObject;
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
@@ -15,6 +16,9 @@ void    setup                           (){
 
     size                                (320, 240, P2D);
     cp5Object                           = new ControlP5(this);
+    
+    buttonOpenCloseMuseumObject         = new ButtonOpenClose(30);
+    
     int dropdownWidth                   = 200;
     int dropdownHeight                  = 100;
     cp5Object.addScrollableList         ("Dropdown")
@@ -65,6 +69,17 @@ void MuseumObjectInitVoid           (){
 void    draw                    (){
 
     background                  (240);
+    buttonOpenCloseMuseumObject .DrawVoid((width/2), 20);
+
+    if(buttonOpenCloseMuseumObject.isAnimating == false){
+
+        boolean tempBoolean         = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
+
+        cp5Object
+            .get                    (ScrollableList.class, "Dropdown")
+            .setVisible             (tempBoolean);
+
+    }
 
 }
 
@@ -143,6 +158,16 @@ void    keyPressed              (){
                 .clear();
 
         break;
+
+    }
+
+}
+
+void    mousePressed            (){
+
+    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){
+
+        buttonOpenCloseMuseumObject.isAnimating = true;
 
     }
 
