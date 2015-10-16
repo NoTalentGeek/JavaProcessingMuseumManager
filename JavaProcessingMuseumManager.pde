@@ -2,19 +2,14 @@ import controlP5.*;
 import java.util.*;
 
 ControlP5               cp5Object;
-ObjectMuseum            testObject;
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
 List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
 
-PShape                  buttonOpenCloseObject       = null;
-
-/*This is pending, I should not use this object of an array.
-Instead put everything into the object directly.*/
-Name[]                  floorNameObjectArray        = new Name[4];
-Name[]                  roomNameObjectArray         = new Name[4];
-Name[]                  exhibitionNameObjectArray   = new Name[16];
+ObjectMuseum[]          floorObjectArray            = new ObjectMuseum[4];
+ObjectMuseum[]          roomObjectArray             = new ObjectMuseum[4];
+ObjectMuseum[]          exhibitionObjectArray       = new ObjectMuseum[16];
 
 void    setup                           (){
 
@@ -27,161 +22,49 @@ void    setup                           (){
         .setSize                        (dropdownWidth, dropdownHeight)
         .setBarHeight                   (20)
         .setItemHeight                  (20)
+        .setVisible                     (false)
         .addItems                       (sampleListChar);
 
-    MuseumObjectInit1Void               ();
-
-    /*PROTOTYPING BUTTON.
-    The goal here is to make a rotateable button.
-    So create the button first and then add the parameter like rotation
-        the parameters.
-    The thing is that I am not sure if you can rotate a drawing object as a group.
-    The first thing is that I need to create a PShape.
-    Then create custom PShape.
-    Finally, rotate all together within the shape.
-    Actually with group everything is easier.*/
-    int     buttonXInt                  = 0;
-    int     buttonYInt                  = 0;
-    int     buttonSizeInt               = 30;
-            buttonOpenCloseObject       = createShape(GROUP);
-    PShape  buttonOpenCloseCircleObject = createShape(
-
-        ELLIPSE, 
-        buttonXInt, 
-        buttonYInt, 
-        buttonSizeInt, 
-        buttonSizeInt
-
-    );
-    PShape  buttonOpenCloseCross1Object = createShape(
-
-        LINE, 
-        (buttonXInt + (buttonSizeInt/4)), 
-        (buttonYInt + (buttonSizeInt/4)), 
-        (buttonXInt + (buttonSizeInt/4)) + (buttonSizeInt/2), 
-        (buttonYInt + (buttonSizeInt/4)) + (buttonSizeInt/2)
-         
-    );
-    PShape  buttonOpenCloseCross2Object = createShape(
-
-        LINE, 
-        (buttonXInt + (buttonSizeInt/4)), 
-        (buttonYInt + (buttonSizeInt/4)) + (buttonSizeInt/2), 
-        (buttonXInt + (buttonSizeInt/4)) + (buttonSizeInt/2), 
-        (buttonYInt + (buttonSizeInt/4))
-
-    );
-
-    buttonOpenCloseObject.addChild   (buttonOpenCloseCircleObject);
-    buttonOpenCloseObject.addChild   (buttonOpenCloseCross1Object);
-    buttonOpenCloseObject.addChild   (buttonOpenCloseCross2Object);
+    MuseumObjectInitVoid                ();
 
 }
 
-/*Adding temporary function to initialize museum object array of object.*/
-void MuseumObjectInit1Void          (){
+void MuseumObjectInitVoid           (){
 
-    floorNameObjectArray[0]         = new Name("FLR_001", "First Floor" );
-    floorNameObjectArray[1]         = new Name("FLR_002", "Second Floor");
-    floorNameObjectArray[2]         = new Name("FLR_003", "Third Floor" );
-    floorNameObjectArray[3]         = new Name("FLR_004", "Fourth Floor");
-    roomNameObjectArray[0]          = new Name("ROM_AFK", "Room Afrika" );
-    roomNameObjectArray[1]          = new Name("ROM_AME", "Room America");
-    roomNameObjectArray[2]          = new Name("ROM_ASI", "Room Asia"   );
-    roomNameObjectArray[3]          = new Name("ROM_EUR", "Room Europe" );
-    exhibitionNameObjectArray[0]    = new Name("EXH_CAM", "Exhibition Cameroon"                );
-    exhibitionNameObjectArray[1]    = new Name("EXH_EGY", "Exhibition Egypt"                   );
-    exhibitionNameObjectArray[2]    = new Name("EXH_ETH", "Exhibition Ethiopia"                );
-    exhibitionNameObjectArray[3]    = new Name("EXH_NIG", "Exhibition Nigeria"                 );
-    exhibitionNameObjectArray[4]    = new Name("EXH_BRA", "Exhibition Brazil"                  );
-    exhibitionNameObjectArray[5]    = new Name("EXH_CAN", "Exhibition Canada"                  );
-    exhibitionNameObjectArray[6]    = new Name("EXH_MEX", "Exhibition Mexico"                  );
-    exhibitionNameObjectArray[7]    = new Name("EXH_USA", "Exhibition United States Of America");
-    exhibitionNameObjectArray[8]    = new Name("EXH_CAM", "Exhibition Cambodia"                );
-    exhibitionNameObjectArray[9]    = new Name("EXH_IND", "Exhibition India"                   );
-    exhibitionNameObjectArray[10]   = new Name("EXH_JAP", "Exhibition Japan"                   );
-    exhibitionNameObjectArray[11]   = new Name("EXH_SIN", "Exhibition Singapore"               );
-    exhibitionNameObjectArray[12]   = new Name("EXH_BEL", "Exhibition Belgium"                 );
-    exhibitionNameObjectArray[13]   = new Name("EXH_FRA", "Exhibition France"                  );
-    exhibitionNameObjectArray[14]   = new Name("EXH_GER", "Exhibition Germany"                 );
-    exhibitionNameObjectArray[15]   = new Name("EXH_NED", "Exhibition The Netherlands"         );
+    floorObjectArray[0]             = new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", "TAG_XXX");
+    floorObjectArray[1]             = new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", "TAG_XXX");
+    floorObjectArray[2]             = new ObjectMuseum(new Name("FLR_003", "Third Floor"                        ), "XXX_XXX", "FLR", "TAG_XXX");
+    floorObjectArray[3]             = new ObjectMuseum(new Name("FLR_004", "Fourth Floor"                       ), "XXX_XXX", "FLR", "TAG_XXX");
+    roomObjectArray[0]              = new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", "TAG_XXX");
+    roomObjectArray[1]              = new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", "TAG_XXX");
+    roomObjectArray[2]              = new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_001", "ROM", "TAG_XXX");
+    roomObjectArray[3]              = new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_001", "ROM", "TAG_XXX");
+    exhibitionObjectArray[0]        = new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", "TAG_XXX");
+    exhibitionObjectArray[1]        = new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", "TAG_XXX");
+    exhibitionObjectArray[2]        = new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", "TAG_XXX");
+    exhibitionObjectArray[3]        = new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", "TAG_XXX");
+    exhibitionObjectArray[4]        = new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", "TAG_XXX");
+    exhibitionObjectArray[5]        = new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", "TAG_XXX");
+    exhibitionObjectArray[6]        = new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", "TAG_XXX");
+    exhibitionObjectArray[7]        = new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", "TAG_XXX");
+    exhibitionObjectArray[8]        = new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", "TAG_XXX");
+    exhibitionObjectArray[9]        = new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", "TAG_XXX");
+    exhibitionObjectArray[10]       = new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", "TAG_XXX");
+    exhibitionObjectArray[11]       = new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", "TAG_XXX");
+    exhibitionObjectArray[12]       = new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", "TAG_XXX");
+    exhibitionObjectArray[13]       = new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", "TAG_XXX");
+    exhibitionObjectArray[14]       = new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", "TAG_XXX");
+    exhibitionObjectArray[15]       = new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", "TAG_XXX");
 
-    MuseumObjectInit2Void("FLR", floorNameObjectArray      , "XXX_XXX", floorObjectList     );
-    MuseumObjectInit2Void("ROM", roomNameObjectArray       , "XXX_XXX", roomObjectList      );
-    MuseumObjectInit2Void("EXH", exhibitionNameObjectArray , "XXX_XXX", exhibitionObjectList);
-
-}
-
-void MuseumObjectInit2Void      (
-
-    String              _typeString,
-    Name[]              _nameObjectArray,
-    String              _tagString,
-    List<ObjectMuseum>  _museumObjectList
-
-){
-
-    if          (_typeString == "FLR"){
-
-        for(int i = 0; i < _nameObjectArray.length; i ++){
-
-            ObjectMuseum museumObject               = new ObjectMuseum(_nameObjectArray[i], "XXX_XXX", _typeString, _tagString);
-                         _museumObjectList          .add(museumObject);
-
-        }
-
-    }
-    else if     (_typeString == "ROM"){
-
-        for(int i = 0; i < _nameObjectArray.length; i ++){
-
-            ObjectMuseum museumObject               = new ObjectMuseum(_nameObjectArray[i], "FLR_001", _typeString, _tagString);
-                         _museumObjectList          .add(museumObject);
-
-        }
-        
-    }
-    else if     (_typeString == "EXH"){
-
-        for(int i = 0; i < _nameObjectArray.length; i ++){
-
-            if      (i < 4){
-
-                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_AFK", _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-            else if (i < 8){
-
-                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_AME", _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-            else if (i < 12){
-
-                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_ASI", _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-            else if (i < 16){
-
-                ObjectMuseum museumObject           = new ObjectMuseum(_nameObjectArray[i], "ROM_EUR", _typeString, _tagString);
-                             _museumObjectList      .add(museumObject);
-
-            }
-
-        }
-        
-    }
+    for(int i = 0; i < floorObjectArray         .length; i ++){ floorObjectList         .add(floorObjectArray[i]        ); }
+    for(int i = 0; i < roomObjectArray          .length; i ++){ roomObjectList          .add(roomObjectArray[i]         ); }
+    for(int i = 0; i < exhibitionObjectArray    .length; i ++){ exhibitionObjectList    .add(exhibitionObjectArray[i]   ); }
 
 }
 
 void    draw                    (){
 
     background                  (240);
-    shapeMode                   (CENTER);
-    shape                       (buttonOpenCloseObject, 30, 30);
-    buttonOpenCloseObject       .rotate(0.1);
 
 }
 
