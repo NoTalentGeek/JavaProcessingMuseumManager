@@ -12,7 +12,7 @@ ObjectMuseum[]          floorObjectArray            = new ObjectMuseum[4];
 ObjectMuseum[]          roomObjectArray             = new ObjectMuseum[4];
 ObjectMuseum[]          exhibitionObjectArray       = new ObjectMuseum[16];
 
-int                     buttonAlphaCounter          = 0;
+int                     dropDownAlphaInt            = 0;
 
 void    setup                           (){
 
@@ -68,10 +68,10 @@ void MuseumObjectInitVoid           (){
 
 }
 
-void    draw                    (){
+void    draw                        (){
 
-    background                  (240);
-    buttonOpenCloseMuseumObject .DrawVoid((width/2), 20);
+    background                      (240);
+    buttonOpenCloseMuseumObject     .DrawVoid((width/2), 20);
 
     if(buttonOpenCloseMuseumObject.isAnimating == false){
 
@@ -83,12 +83,16 @@ void    draw                    (){
                 .get                (ScrollableList.class, "Dropdown")
                 .show               ();
 
+            dropDownAlphaInt        = 255;
+
         }
         else if                     (tempBoolean == false){
 
             cp5Object
                 .get                (ScrollableList.class, "Dropdown")
                 .hide               ();
+
+            dropDownAlphaInt        = 0;
 
         }
 
@@ -97,10 +101,43 @@ void    draw                    (){
 
         boolean tempBoolean         = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
 
-        if      (tempBoolean == true ){
+        if                          (tempBoolean == true ){
+
+            println(dropDownAlphaInt);
+            CColor fadeCColorObject = new CColor();
+                   fadeCColorObject
+                        .setActive          (color(0    , 170   , 255,    dropDownAlphaInt))
+                        .setBackground      (color(0    , 45    , 90 ,    dropDownAlphaInt))
+                        .setCaptionLabel    (color(255  , 255   , 255,    dropDownAlphaInt))
+                        .setForeground      (color(0    , 116   , 217,    dropDownAlphaInt))
+                        .setValueLabel      (color(255  , 255   , 255,    dropDownAlphaInt));
+
+            cp5Object
+                .get                (ScrollableList.class, "Dropdown")
+                .setColor           (fadeCColorObject)
+                .show               ();
+
+            dropDownAlphaInt        -= (255/45);
+
 
         }
-        else if (tempBoolean == false){
+        else if                     (tempBoolean == false){
+
+            println(dropDownAlphaInt);
+            CColor fadeCColorObject = new CColor();
+                   fadeCColorObject
+                        .setActive          (color(0    , 170   , 255,    dropDownAlphaInt))
+                        .setBackground      (color(0    , 45    , 90 ,    dropDownAlphaInt))
+                        .setCaptionLabel    (color(255  , 255   , 255,    dropDownAlphaInt))
+                        .setForeground      (color(0    , 116   , 217,    dropDownAlphaInt))
+                        .setValueLabel      (color(255  , 255   , 255,    dropDownAlphaInt));
+
+            cp5Object
+                .get                (ScrollableList.class, "Dropdown")
+                .setColor           (fadeCColorObject)
+                .show               ();
+
+            dropDownAlphaInt        += (255/45);
 
         }
 
