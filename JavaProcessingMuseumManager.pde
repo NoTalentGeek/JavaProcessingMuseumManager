@@ -92,8 +92,6 @@ void    draw                        (){
                 .get                (ScrollableList.class, "Dropdown")
                 .hide               ();
 
-            dropDownAlphaInt        = 0;
-
         }
 
     }
@@ -103,7 +101,6 @@ void    draw                        (){
 
         if                          (tempBoolean == true ){
 
-            println(dropDownAlphaInt);
             CColor fadeCColorObject = new CColor();
                    fadeCColorObject
                         .setActive          (color(0    , 170   , 255,    dropDownAlphaInt))
@@ -123,7 +120,6 @@ void    draw                        (){
         }
         else if                     (tempBoolean == false){
 
-            println(dropDownAlphaInt);
             CColor fadeCColorObject = new CColor();
                    fadeCColorObject
                         .setActive          (color(0    , 170   , 255,    dropDownAlphaInt))
