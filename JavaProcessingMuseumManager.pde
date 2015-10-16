@@ -12,6 +12,8 @@ ObjectMuseum[]          floorObjectArray            = new ObjectMuseum[4];
 ObjectMuseum[]          roomObjectArray             = new ObjectMuseum[4];
 ObjectMuseum[]          exhibitionObjectArray       = new ObjectMuseum[16];
 
+int                     buttonAlphaCounter          = 0;
+
 void    setup                           (){
 
     size                                (320, 240, P2D);
@@ -87,6 +89,18 @@ void    draw                    (){
             cp5Object
                 .get                (ScrollableList.class, "Dropdown")
                 .hide               ();
+
+        }
+
+    }
+    else if(buttonOpenCloseMuseumObject.isAnimating == true){
+
+        boolean tempBoolean         = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
+
+        if      (tempBoolean == true ){
+
+        }
+        else if (tempBoolean == false){
 
         }
 
