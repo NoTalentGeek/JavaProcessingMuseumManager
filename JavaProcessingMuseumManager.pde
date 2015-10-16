@@ -26,7 +26,7 @@ void    setup                           (){
         .setSize                        (dropdownWidth, dropdownHeight)
         .setBarHeight                   (20)
         .setItemHeight                  (20)
-        .setVisible                     (false)
+        .hide                           ()
         .addItems                       (sampleListChar);
 
     MuseumObjectInitVoid                ();
@@ -75,9 +75,20 @@ void    draw                    (){
 
         boolean tempBoolean         = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
 
-        cp5Object
-            .get                    (ScrollableList.class, "Dropdown")
-            .setVisible             (tempBoolean);
+        if                          (tempBoolean == true ){
+
+            cp5Object
+                .get                (ScrollableList.class, "Dropdown")
+                .show               ();
+
+        }
+        else if                     (tempBoolean == false){
+
+            cp5Object
+                .get                (ScrollableList.class, "Dropdown")
+                .hide               ();
+
+        }
 
     }
 
