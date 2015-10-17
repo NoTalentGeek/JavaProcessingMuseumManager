@@ -70,8 +70,9 @@ void    setup                           (){
 void    draw                            (){
 
     background                          (240);
-    dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   ,(width - offsetInt)   ,offsetInt     ,buttonOpenCloseMuseumObject,"Exhibition" );
-    dropdownPlayerAlphaFloat            = DropdownDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject, "Visitor"    );
+    println                             (dropdownMObjectAlphaFloat);
+    dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   ,(width - offsetInt)    ,offsetInt      ,buttonOpenCloseMuseumObject    , "Exhibition" );
+    dropdownPlayerAlphaFloat            = DropdownDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
 }
 
@@ -127,7 +128,15 @@ void MuseumObjectInitVoid               (){
 
 }
 
-float DropdownDrawFloat                     (float _alphaFloat, int _xInt, int _yInt, ButtonOpenClose _buttonOpenCloseObject, String _captionString){
+float DropdownDrawFloat                     (
+
+    float           _alphaFloat, 
+    int             _xInt, 
+    int             _yInt, 
+    ButtonOpenClose _buttonOpenCloseObject, 
+    String          _captionString
+
+){
 
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
