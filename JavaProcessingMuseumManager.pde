@@ -12,26 +12,47 @@ ObjectMuseum[]          floorObjectArray            = new ObjectMuseum[4];      
 ObjectMuseum[]          roomObjectArray             = new ObjectMuseum[4];              /*Temporary museum object array for initialization.*/
 ObjectMuseum[]          exhibitionObjectArray       = new ObjectMuseum[16];             /*Temporary museum object array for initialization.*/
 
-int                     dropdownPlayerAlphaInt      = 0;                                /*The opacity number for dropdown player P5 component.*/
+int                     dropdownMObjectAlphaFloat   = 35;
+int                     dropdownPlayerAlphaFloat    = 35;                               /*The opacity number for dropdown player P5 component.*/
 int                     offsetInt                   = 20;                               /*Offset for layouting the graphical user interface.*/
 
 void    setup                           (){
 
-    size                                (1024, 576, P2D);
+    size                                (512, 288, P2D);
     cp5Object                           = new ControlP5(this);                                      /*Initiates ControlP5 object.*/
 
     int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
-    int dropdownPlayerWidth             = 200;                                                      /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
-    int dropdownPlayerHeight            = 100;                                                      /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
     buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
 
+    int dropdownMObjectWidth             = 200;                                                     /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
+    int dropdownMObjectHeight            = 100;                                                     /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
     /*Create player dropdown menu.
     PENDING: Adjust the size of this dropdown menu according to the application resolution.*/
-    cp5Object.addScrollableList         ("DropdownPlayer")
+    cp5Object
+        .addScrollableList              ("Exhibitions")
         .setPosition                    (
 
-            ((width/2)  - (dropdownPlayerWidth /2)),
-            ((height/2) - (dropdownPlayerHeight/2))
+            ((width/2)  - (dropdownMObjectWidth  /2)),
+            ((height/2) - (dropdownMObjectHeight /2))
+
+        )
+        .setSize                        (dropdownMObjectWidth, dropdownMObjectHeight)
+        .setBarHeight                   (20)
+        .setItemHeight                  (20)
+        .show                           ()
+        .addItems                       (sampleListChar);
+
+
+    int dropdownPlayerWidth             = 200;                                                      /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
+    int dropdownPlayerHeight            = 100;                                                      /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
+    /*Create player dropdown menu.
+    PENDING: Adjust the size of this dropdown menu according to the application resolution.*/
+    cp5Object
+        .addScrollableList              ("Visitor")
+        .setPosition                    (
+
+            ((offsetInt/2)*2) + (buttonSizeInt/2),
+            ((offsetInt/2)*2) + (buttonSizeInt/2)
 
         )
         .setSize                        (dropdownPlayerWidth, dropdownPlayerHeight)
@@ -46,8 +67,39 @@ void    setup                           (){
 
 }
 
+void    draw                            (){
+
+    background                          (240);
+    DropdownPlayerDraw                  ();
+    println                             (dropdownPlayerAlphaFloat);
+
+}
+
+void    dropdown                        (int _indexNum) {
+
+    CColor colorObject                  = new CColor();
+           colorObject                  .setBackground(color(255, 0, 0, dropdownPlayerAlphaFloat));
+
+    cp5Object
+        .get                            (ScrollableList.class, "Visitor")
+        .getItem                        (_indexNum)
+        .put                            ("color", colorObject);
+
+}
+
+/*The mouse pressed override function is for the open and close button.*/
+void    mousePressed                    (){
+
+    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){
+
+        buttonOpenCloseMuseumObject.isAnimating = true;
+
+    }
+
+}
+
 /*Prototype function to init all basic museum manager.*/
-void MuseumObjectInitVoid           (){
+void MuseumObjectInitVoid               (){
 
     /*Create all initial museum objects and assign its tags and parent object.*/
     floorObjectArray[0]             = new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", "TAG_XXX");
@@ -82,40 +134,11 @@ void MuseumObjectInitVoid           (){
 
 }
 
-void    draw                        (){
-
-    background                      (240);
-    DropdownPlayerUpdate            ();
-
-}
-
-/*Function controller for DropdownPlayer.*/
-void    DropdownPlayer          (int _indexNum) {
-
-    println(
-
-        _indexNum,
-        cp5Object
-            .get                (ScrollableList.class, "DropdownPlayer")
-            .getItem            (_indexNum)
-
-    );
-
-    CColor colorObject          = new CColor();
-           colorObject          .setBackground(color(255, 0, 0, dropdownPlayerAlphaInt));
-
-    cp5Object
-        .get                    (ScrollableList.class, "DropdownPlayer")
-        .getItem                (_indexNum)
-        .put                    ("color", colorObject);
-
-}
-
-void DropdownPlayerUpdate           (){
+void DropdownPlayerDraw                 (){
 
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
-    buttonOpenCloseMuseumObject     .DrawVoid((width - offsetInt), offsetInt);
+    buttonOpenCloseMuseumObject         .DrawVoid(offsetInt, offsetInt);
 
     /*If statements to control event animation of the open close buttons.
     Like here for example I want to hide() and show the dropdown menu based on
@@ -125,22 +148,22 @@ void DropdownPlayerUpdate           (){
     if(buttonOpenCloseMuseumObject.isAnimating == false){
 
         /*Revert the boolean.*/
-        boolean tempBoolean         = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
+        boolean tempBoolean             = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
 
-        if                          (tempBoolean == true ){
+        if                              (tempBoolean == true ){
 
             cp5Object
-                .get                (ScrollableList.class, "DropdownPlayer")
-                .show               ();
-
-            dropdownPlayerAlphaInt  = 255;
+                .get                    (ScrollableList.class, "Visitor")
+                .show                   ();
+            
+            dropdownPlayerAlphaFloat    = 255;
 
         }
-        else if                     (tempBoolean == false){
+        else if                         (tempBoolean == false){
 
             cp5Object
-                .get                (ScrollableList.class, "DropdownPlayer")
-                .hide               ();
+                .get                    (ScrollableList.class, "Visitor")
+                .hide                   ();
 
         }
 
@@ -154,53 +177,33 @@ void DropdownPlayerUpdate           (){
         /*Create simple fade in and fade out animation.*/
         CColor fadeCColorObject             = new CColor();
                fadeCColorObject
-                    .setActive              (color(0    , 170   , 255,    dropdownPlayerAlphaInt))
-                    .setBackground          (color(0    , 45    , 90 ,    dropdownPlayerAlphaInt))
-                    .setCaptionLabel        (color(255  , 255   , 255,    dropdownPlayerAlphaInt))
-                    .setForeground          (color(0    , 116   , 217,    dropdownPlayerAlphaInt))
-                    .setValueLabel          (color(255  , 255   , 255,    dropdownPlayerAlphaInt));
+                    .setActive              (color(0    , 170   , 255,    dropdownPlayerAlphaFloat))
+                    .setBackground          (color(0    , 45    , 90 ,    dropdownPlayerAlphaFloat))
+                    .setCaptionLabel        (color(255  , 255   , 255,    dropdownPlayerAlphaFloat))
+                    .setForeground          (color(0    , 116   , 217,    dropdownPlayerAlphaFloat))
+                    .setValueLabel          (color(255  , 255   , 255,    dropdownPlayerAlphaFloat));
 
         if                                  (tempBoolean == true ){
 
+            dropdownPlayerAlphaFloat        -= (255/45);
+            
             cp5Object
-                .get                        (ScrollableList.class, "DropdownPlayer")
+                .get                        (ScrollableList.class, "Visitor")
                 .setColor                   (fadeCColorObject)
                 .show                       ();
-
-            dropdownPlayerAlphaInt          -= (255/45);
-
 
         }
         else if                             (tempBoolean == false){
 
+            dropdownPlayerAlphaFloat        += (255/45);
+            
             cp5Object
-                .get                        (ScrollableList.class, "DropdownPlayer")
+                .get                        (ScrollableList.class, "Visitor")
                 .setColor                   (fadeCColorObject)
                 .show                       ();
-
-            dropdownPlayerAlphaInt          += (255/45);
 
         }
 
     }
 
 }
-
-/*The mouse pressed override function is for the open and close button.*/
-void    mousePressed            (){
-
-    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){
-
-        buttonOpenCloseMuseumObject.isAnimating = true;
-
-    }
-
-}
-
-
-
-
-
-
-
-
