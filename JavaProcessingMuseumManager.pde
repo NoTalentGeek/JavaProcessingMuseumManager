@@ -1,8 +1,7 @@
 import controlP5.*;
 import java.util.*;
 
-ControlP5               cp5DropdownMuseumObject;
-ControlP5               cp5DropdownPlayerObject;
+ControlP5               cp5DropdownObject;
 ButtonOpenClose         buttonOpenCloseMuseumObject;
 ButtonOpenClose         buttonOpenClosePlayerObject;
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
@@ -17,8 +16,7 @@ int                     offsetInt                   = 20;                       
 void    setup                           (){
 
     size                                (512, 288, P2D);
-    cp5DropdownMuseumObject             = new ControlP5(this);
-    cp5DropdownPlayerObject             = new ControlP5(this);                                      /*Initiates ControlP5 object.*/
+    cp5DropdownObject                   = new ControlP5(this);
 
     int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
     buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
@@ -28,7 +26,7 @@ void    setup                           (){
     int dropdownMObjectHeight            = 100;                                                     /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
     /*Create player dropdown menu.
     PENDING: Adjust the size of this dropdown menu according to the application resolution.*/
-    cp5DropdownMuseumObject
+    cp5DropdownObject
         .addScrollableList              ("Exhibition")
         .setPosition                    (
 
@@ -48,7 +46,7 @@ void    setup                           (){
     int dropdownPlayerHeight            = 100;                                                      /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
     /*Create player dropdown menu.
     PENDING: Adjust the size of this dropdown menu according to the application resolution.*/
-    cp5DropdownPlayerObject
+    cp5DropdownObject
         .addScrollableList              ("Visitor")
         .setPosition                    (
 
@@ -147,7 +145,7 @@ void DropdownMObjectDraw                    (){
 
         if                                  (tempBoolean == true ){
 
-            cp5DropdownMuseumObject
+            cp5DropdownObject
                 .get                        (ScrollableList.class, "Exhibition")
                 .show                       ();
             
@@ -156,7 +154,7 @@ void DropdownMObjectDraw                    (){
         }
         else if                             (tempBoolean == false){
 
-            cp5DropdownMuseumObject
+            cp5DropdownObject
                 .get                        (ScrollableList.class, "Exhibition")
                 .hide                       ();
 
@@ -182,7 +180,7 @@ void DropdownMObjectDraw                    (){
 
             dropdownMObjectAlphaFloat       -= (255/45);
             
-            cp5DropdownMuseumObject
+            cp5DropdownObject
                 .get                        (ScrollableList.class, "Exhibition")
                 .setColor                   (fadeCColorObject)
                 .show                       ();
@@ -192,7 +190,7 @@ void DropdownMObjectDraw                    (){
 
             dropdownMObjectAlphaFloat       += (255/45);
             
-            cp5DropdownMuseumObject
+            cp5DropdownObject
                 .get                        (ScrollableList.class, "Exhibition")
                 .setColor                   (fadeCColorObject)
                 .show                       ();
@@ -221,7 +219,7 @@ void DropdownPlayerDraw                 (){
 
         if                              (tempBoolean == true ){
 
-            cp5DropdownPlayerObject
+            cp5DropdownObject
                 .get                    (ScrollableList.class, "Visitor")
                 .show                   ();
             
@@ -230,7 +228,7 @@ void DropdownPlayerDraw                 (){
         }
         else if                         (tempBoolean == false){
 
-            cp5DropdownPlayerObject
+            cp5DropdownObject
                 .get                    (ScrollableList.class, "Visitor")
                 .hide                   ();
 
@@ -256,7 +254,7 @@ void DropdownPlayerDraw                 (){
 
             dropdownPlayerAlphaFloat        -= (255/45);
             
-            cp5DropdownPlayerObject
+            cp5DropdownObject
                 .get                        (ScrollableList.class, "Visitor")
                 .setColor                   (fadeCColorObject)
                 .show                       ();
@@ -266,7 +264,7 @@ void DropdownPlayerDraw                 (){
 
             dropdownPlayerAlphaFloat        += (255/45);
             
-            cp5DropdownPlayerObject
+            cp5DropdownObject
                 .get                        (ScrollableList.class, "Visitor")
                 .setColor                   (fadeCColorObject)
                 .show                       ();
