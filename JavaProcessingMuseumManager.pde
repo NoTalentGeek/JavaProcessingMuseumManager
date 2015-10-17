@@ -16,13 +16,15 @@ int                     dropdownPlayerAlphaInt      = 0;                        
 
 void    setup                           (){
 
-    size                                (320, 240, P2D);
-    cp5Object                           = new ControlP5(this);      /*Initiates ControlP5 object.*/
+    size                                (200, 576, P2D);
+    cp5Object                           = new ControlP5(this);                                      /*Initiates ControlP5 object.*/
     
-    buttonOpenCloseMuseumObject         = new ButtonOpenClose(30);  /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
+    int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
+    println                             (buttonSizeInt);
+    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
     
-    int dropdownPlayerWidth             = 200;                      /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
-    int dropdownPlayerHeight            = 100;                      /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
+    int dropdownPlayerWidth             = 200;                                                      /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
+    int dropdownPlayerHeight            = 100;                                                      /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
 
 
     /*Create player dropdown menu.
