@@ -9,8 +9,8 @@ List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
 List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
 
-float                   dropdownMObjectAlphaFloat   = 35;
-float                   dropdownPlayerAlphaFloat    = 35;                               /*The opacity number for dropdown player P5 component.*/
+float                   dropdownMObjectAlphaFloat   = 0;
+float                   dropdownPlayerAlphaFloat    = 0;                               /*The opacity number for dropdown player P5 component.*/
 int                     offsetInt                   = 20;                               /*Offset for layouting the graphical user interface.*/
 
 void    setup                           (){
@@ -70,7 +70,6 @@ void    setup                           (){
 void    draw                            (){
 
     background                          (240);
-    println                             (dropdownMObjectAlphaFloat);
     dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   ,(width - offsetInt)    ,offsetInt      ,buttonOpenCloseMuseumObject    , "Exhibition" );
     dropdownPlayerAlphaFloat            = DropdownDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
@@ -138,6 +137,12 @@ float DropdownDrawFloat                     (
 
 ){
 
+    /*This is the time step necessary for fade in and fade out animation.
+    The 255f is the floating number of the maximum opacity.
+    While the 45f is the tick necessary to finish the rotating animation of
+        button open close.*/
+    float animationStepFloat                = (255f/45f);
+
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
     _buttonOpenCloseObject                  .DrawVoid(_xInt, _yInt);
@@ -158,7 +163,7 @@ float DropdownDrawFloat                     (
                 .get                        (ScrollableList.class, _captionString)
                 .show                       ();
             
-            _alphaFloat                     = 255;
+            _alphaFloat                     = 255f - (255f/45f);
 
         }
         else if                             (tempBoolean == false){
@@ -166,6 +171,8 @@ float DropdownDrawFloat                     (
             cp5DropdownObject
                 .get                        (ScrollableList.class, _captionString)
                 .hide                       ();
+
+            _alphaFloat                     = (255f/45f);
 
         }
 
@@ -186,23 +193,23 @@ float DropdownDrawFloat                     (
                     .setValueLabel          (color(255  , 255   , 255,    _alphaFloat));
 
         if                                  (tempBoolean == true ){
-
-            _alphaFloat                     -= (255/45);
             
             cp5DropdownObject
                 .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
+
+            _alphaFloat                     -= (255f/45f);
 
         }
         else if                             (tempBoolean == false){
-
-            _alphaFloat                     += (255/45); println(_alphaFloat);
             
             cp5DropdownObject
                 .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
+
+            _alphaFloat                     += (255f/45f);
 
         }
 

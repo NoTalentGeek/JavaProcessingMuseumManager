@@ -29,8 +29,8 @@ List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
 List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
 
-float                   dropdownMObjectAlphaFloat   = 35;
-float                   dropdownPlayerAlphaFloat    = 35;                               /*The opacity number for dropdown player P5 component.*/
+float                   dropdownMObjectAlphaFloat   = 0;
+float                   dropdownPlayerAlphaFloat    = 0;                               /*The opacity number for dropdown player P5 component.*/
 int                     offsetInt                   = 20;                               /*Offset for layouting the graphical user interface.*/
 
 public void    setup                           (){
@@ -90,7 +90,6 @@ public void    setup                           (){
 public void    draw                            (){
 
     background                          (240);
-    println                             (dropdownMObjectAlphaFloat);
     dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   ,(width - offsetInt)    ,offsetInt      ,buttonOpenCloseMuseumObject    , "Exhibition" );
     dropdownPlayerAlphaFloat            = DropdownDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
@@ -178,7 +177,7 @@ public float DropdownDrawFloat                     (
                 .get                        (ScrollableList.class, _captionString)
                 .show                       ();
             
-            _alphaFloat                     = 255;
+            _alphaFloat                     = 255 - (255f/45f);
 
         }
         else if                             (tempBoolean == false){
@@ -186,6 +185,8 @@ public float DropdownDrawFloat                     (
             cp5DropdownObject
                 .get                        (ScrollableList.class, _captionString)
                 .hide                       ();
+
+            _alphaFloat                     = (255f/45f);
 
         }
 
@@ -206,23 +207,24 @@ public float DropdownDrawFloat                     (
                     .setValueLabel          (color(255  , 255   , 255,    _alphaFloat));
 
         if                                  (tempBoolean == true ){
-
-            _alphaFloat                     -= (255/45);
             
             cp5DropdownObject
                 .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
+
+            _alphaFloat                     -= (255f/45f);
 
         }
         else if                             (tempBoolean == false){
-
-            _alphaFloat                     += (255/45); println(_alphaFloat);
             
             cp5DropdownObject
                 .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
+
+            _alphaFloat                     += (255f/45f);
+            if(_alphaFloat < 100) println(_alphaFloat);
 
         }
 
