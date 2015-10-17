@@ -8,7 +8,7 @@ ButtonOpenClose         buttonOpenClosePlayerObject;
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
-List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/\
+List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
 
 int                     dropdownMObjectAlphaFloat   = 35;
 int                     dropdownPlayerAlphaFloat    = 35;                               /*The opacity number for dropdown player P5 component.*/
@@ -39,6 +39,7 @@ void    setup                           (){
         .setSize                        (dropdownMObjectWidth, dropdownMObjectHeight)
         .setBarHeight                   (20)
         .setItemHeight                  (20)
+        .setType                        (ControlP5.LIST)
         .show                           ()
         .addItems                       (sampleListChar);
 
@@ -58,6 +59,7 @@ void    setup                           (){
         .setSize                        (dropdownPlayerWidth, dropdownPlayerHeight)
         .setBarHeight                   (20)
         .setItemHeight                  (20)
+        .setType                        (ControlP5.LIST)
         .hide                           ()
         .addItems                       (sampleListChar);
 
