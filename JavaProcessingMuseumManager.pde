@@ -9,8 +9,8 @@ List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
 List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
 
-int                     dropdownMObjectAlphaFloat   = 35;
-int                     dropdownPlayerAlphaFloat    = 35;                               /*The opacity number for dropdown player P5 component.*/
+float                   dropdownMObjectAlphaFloat   = 35;
+float                   dropdownPlayerAlphaFloat    = 35;                               /*The opacity number for dropdown player P5 component.*/
 int                     offsetInt                   = 20;                               /*Offset for layouting the graphical user interface.*/
 
 void    setup                           (){
@@ -70,8 +70,8 @@ void    setup                           (){
 void    draw                            (){
 
     background                          (240);
-    DropdownMObjectDraw                 ();
-    DropdownPlayerDraw                  ();
+    dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   ,(width - offsetInt)   ,offsetInt     ,buttonOpenCloseMuseumObject,"Exhibition" );
+    dropdownPlayerAlphaFloat            = DropdownDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject, "Visitor"    );
 
 }
 
@@ -127,71 +127,71 @@ void MuseumObjectInitVoid               (){
 
 }
 
-void DropdownMObjectDraw                    (){
+float DropdownDrawFloat                     (float _alphaFloat, int _xInt, int _yInt, ButtonOpenClose _buttonOpenCloseObject, String _captionString){
 
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
-    buttonOpenCloseMuseumObject             .DrawVoid((width - offsetInt), offsetInt);
+    _buttonOpenCloseObject                  .DrawVoid(_xInt, _yInt);
 
     /*If statements to control event animation of the open close buttons.
     Like here for example I want to hide() and show the dropdown menu based on
         the corresponding open close button.
     The thing to mention here is that the animation need to finished first before another event executed.
     If statment when the animation is finished.*/
-    if(buttonOpenCloseMuseumObject.isAnimating == false){
+    if(_buttonOpenCloseObject.isAnimating   == false){
 
         /*Revert the boolean.*/
-        boolean tempBoolean                 = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
+        boolean tempBoolean                 = !_buttonOpenCloseObject.isButtonOpenBoolean;
 
         if                                  (tempBoolean == true ){
 
             cp5DropdownObject
-                .get                        (ScrollableList.class, "Exhibition")
+                .get                        (ScrollableList.class, _captionString)
                 .show                       ();
             
-            dropdownMObjectAlphaFloat       = 255;
+            _alphaFloat                     = 255;
 
         }
         else if                             (tempBoolean == false){
 
             cp5DropdownObject
-                .get                        (ScrollableList.class, "Exhibition")
+                .get                        (ScrollableList.class, _captionString)
                 .hide                       ();
 
         }
 
     }
     /*If statement while the animation is playing.*/
-    else if(buttonOpenCloseMuseumObject.isAnimating == true){
+    else if(_buttonOpenCloseObject.isAnimating == true){
 
         /*Revert the boolean.*/
-        boolean tempBoolean                 = !buttonOpenCloseMuseumObject.isButtonOpenBoolean;
+        boolean tempBoolean                 = !_buttonOpenCloseObject.isButtonOpenBoolean;
 
         /*Create simple fade in and fade out animation.*/
         CColor fadeCColorObject             = new CColor();
                fadeCColorObject
-                    .setActive              (color(0    , 170   , 255,    dropdownMObjectAlphaFloat))
-                    .setBackground          (color(0    , 45    , 90 ,    dropdownMObjectAlphaFloat))
-                    .setCaptionLabel        (color(255  , 255   , 255,    dropdownMObjectAlphaFloat))
-                    .setForeground          (color(0    , 116   , 217,    dropdownMObjectAlphaFloat))
-                    .setValueLabel          (color(255  , 255   , 255,    dropdownMObjectAlphaFloat));
+                    .setActive              (color(0    , 170   , 255,    _alphaFloat))
+                    .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
+                    .setCaptionLabel        (color(255  , 255   , 255,    _alphaFloat))
+                    .setForeground          (color(0    , 116   , 217,    _alphaFloat))
+                    .setValueLabel          (color(255  , 255   , 255,    _alphaFloat));
 
         if                                  (tempBoolean == true ){
 
-            dropdownMObjectAlphaFloat       -= (255/45);
+            _alphaFloat                     -= (255/45);
             
             cp5DropdownObject
-                .get                        (ScrollableList.class, "Exhibition")
+                .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
 
         }
         else if                             (tempBoolean == false){
 
-            dropdownMObjectAlphaFloat       += (255/45);
+            _alphaFloat                     += (255/45); println(_alphaFloat);
             
             cp5DropdownObject
-                .get                        (ScrollableList.class, "Exhibition")
+                .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
 
@@ -199,78 +199,6 @@ void DropdownMObjectDraw                    (){
 
     }
 
-}
-
-void DropdownPlayerDraw                 (){
-
-    /*Update the open and close button.
-    The two parameters is the position of the open and close button.*/
-    buttonOpenClosePlayerObject         .DrawVoid(offsetInt, offsetInt);
-
-    /*If statements to control event animation of the open close buttons.
-    Like here for example I want to hide() and show the dropdown menu based on
-        the corresponding open close button.
-    The thing to mention here is that the animation need to finished first before another event executed.
-    If statment when the animation is finished.*/
-    if(buttonOpenClosePlayerObject.isAnimating == false){
-
-        /*Revert the boolean.*/
-        boolean tempBoolean             = !buttonOpenClosePlayerObject.isButtonOpenBoolean;
-
-        if                              (tempBoolean == true ){
-
-            cp5DropdownObject
-                .get                    (ScrollableList.class, "Visitor")
-                .show                   ();
-            
-            dropdownPlayerAlphaFloat    = 255;
-
-        }
-        else if                         (tempBoolean == false){
-
-            cp5DropdownObject
-                .get                    (ScrollableList.class, "Visitor")
-                .hide                   ();
-
-        }
-
-    }
-    /*If statement while the animation is playing.*/
-    else if(buttonOpenClosePlayerObject.isAnimating == true){
-
-        /*Revert the boolean.*/
-        boolean tempBoolean                 = !buttonOpenClosePlayerObject.isButtonOpenBoolean;
-
-        /*Create simple fade in and fade out animation.*/
-        CColor fadeCColorObject             = new CColor();
-               fadeCColorObject
-                    .setActive              (color(0    , 170   , 255,    dropdownPlayerAlphaFloat))
-                    .setBackground          (color(0    , 45    , 90 ,    dropdownPlayerAlphaFloat))
-                    .setCaptionLabel        (color(255  , 255   , 255,    dropdownPlayerAlphaFloat))
-                    .setForeground          (color(0    , 116   , 217,    dropdownPlayerAlphaFloat))
-                    .setValueLabel          (color(255  , 255   , 255,    dropdownPlayerAlphaFloat));
-
-        if                                  (tempBoolean == true ){
-
-            dropdownPlayerAlphaFloat        -= (255/45);
-            
-            cp5DropdownObject
-                .get                        (ScrollableList.class, "Visitor")
-                .setColor                   (fadeCColorObject)
-                .show                       ();
-
-        }
-        else if                             (tempBoolean == false){
-
-            dropdownPlayerAlphaFloat        += (255/45);
-            
-            cp5DropdownObject
-                .get                        (ScrollableList.class, "Visitor")
-                .setColor                   (fadeCColorObject)
-                .show                       ();
-
-        }
-
-    }
+    return                                  _alphaFloat;
 
 }
