@@ -12,27 +12,25 @@ ObjectMuseum[]          floorObjectArray            = new ObjectMuseum[4];      
 ObjectMuseum[]          roomObjectArray             = new ObjectMuseum[4];              /*Temporary museum object array for initialization.*/
 ObjectMuseum[]          exhibitionObjectArray       = new ObjectMuseum[16];             /*Temporary museum object array for initialization.*/
 
-int                     dropdownPlayerAlphaInt      = 0;                                /*The opacity number for dropdown player P5 component..*/
+int                     dropdownPlayerAlphaInt      = 0;                                /*The opacity number for dropdown player P5 component.*/
+int                     offsetInt                   = 20;                               /*Offset for layouting the graphical user interface.*/
 
 void    setup                           (){
 
-    size                                (200, 576, P2D);
+    size                                (1024, 576, P2D);
     cp5Object                           = new ControlP5(this);                                      /*Initiates ControlP5 object.*/
-    
+
     int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
-    println                             (buttonSizeInt);
-    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
-    
     int dropdownPlayerWidth             = 200;                                                      /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
     int dropdownPlayerHeight            = 100;                                                      /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
-
+    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
 
     /*Create player dropdown menu.
     PENDING: Adjust the size of this dropdown menu according to the application resolution.*/
     cp5Object.addScrollableList         ("DropdownPlayer")
         .setPosition                    (
 
-            ((width/2) - (dropdownPlayerWidth/2)),
+            ((width/2)  - (dropdownPlayerWidth /2)),
             ((height/2) - (dropdownPlayerHeight/2))
 
         )
@@ -113,11 +111,11 @@ void    DropdownPlayer          (int _indexNum) {
 
 }
 
-void DropdownPlayerUpdate       (){
+void DropdownPlayerUpdate           (){
 
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
-    buttonOpenCloseMuseumObject     .DrawVoid((width/2), 20);
+    buttonOpenCloseMuseumObject     .DrawVoid((width - offsetInt), offsetInt);
 
     /*If statements to control event animation of the open close buttons.
     Like here for example I want to hide() and show the dropdown menu based on
