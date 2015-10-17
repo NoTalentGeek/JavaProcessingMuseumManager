@@ -8,11 +8,7 @@ ButtonOpenClose         buttonOpenClosePlayerObject;
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
 List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
-List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
-
-ObjectMuseum[]          floorObjectArray            = new ObjectMuseum[4];              /*Temporary museum object array for initialization.*/
-ObjectMuseum[]          roomObjectArray             = new ObjectMuseum[4];              /*Temporary museum object array for initialization.*/
-ObjectMuseum[]          exhibitionObjectArray       = new ObjectMuseum[16];             /*Temporary museum object array for initialization.*/
+List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/\
 
 int                     dropdownMObjectAlphaFloat   = 35;
 int                     dropdownPlayerAlphaFloat    = 35;                               /*The opacity number for dropdown player P5 component.*/
@@ -82,52 +78,52 @@ void    draw                            (){
 /*The mouse pressed override function is for the open and close button.*/
 void    mousePressed                    (){
 
-    if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){
-
-        buttonOpenClosePlayerObject.isAnimating = true;
-
-    }
-    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){
-
-        buttonOpenCloseMuseumObject.isAnimating = true;
-
-    }
+    if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimating = true; }
+    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimating = true; }
 
 }
 
-/*Prototype function to init all basic museum manager.*/
+/*Prototype function to initiate all basic museum objects.*/
 void MuseumObjectInitVoid               (){
 
-    /*Create all initial museum objects and assign its tags and parent object.*/
-    floorObjectArray[0]             = new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", "TAG_XXX");
-    floorObjectArray[1]             = new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", "TAG_XXX");
-    floorObjectArray[2]             = new ObjectMuseum(new Name("FLR_003", "Third Floor"                        ), "XXX_XXX", "FLR", "TAG_XXX");
-    floorObjectArray[3]             = new ObjectMuseum(new Name("FLR_004", "Fourth Floor"                       ), "XXX_XXX", "FLR", "TAG_XXX");
-    roomObjectArray[0]              = new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", "TAG_XXX");
-    roomObjectArray[1]              = new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", "TAG_XXX");
-    roomObjectArray[2]              = new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_001", "ROM", "TAG_XXX");
-    roomObjectArray[3]              = new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_001", "ROM", "TAG_XXX");
-    exhibitionObjectArray[0]        = new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", "TAG_XXX");
-    exhibitionObjectArray[1]        = new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", "TAG_XXX");
-    exhibitionObjectArray[2]        = new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", "TAG_XXX");
-    exhibitionObjectArray[3]        = new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", "TAG_XXX");
-    exhibitionObjectArray[4]        = new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", "TAG_XXX");
-    exhibitionObjectArray[5]        = new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", "TAG_XXX");
-    exhibitionObjectArray[6]        = new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", "TAG_XXX");
-    exhibitionObjectArray[7]        = new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", "TAG_XXX");
-    exhibitionObjectArray[8]        = new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", "TAG_XXX");
-    exhibitionObjectArray[9]        = new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", "TAG_XXX");
-    exhibitionObjectArray[10]       = new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", "TAG_XXX");
-    exhibitionObjectArray[11]       = new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", "TAG_XXX");
-    exhibitionObjectArray[12]       = new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", "TAG_XXX");
-    exhibitionObjectArray[13]       = new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", "TAG_XXX");
-    exhibitionObjectArray[14]       = new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", "TAG_XXX");
-    exhibitionObjectArray[15]       = new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", "TAG_XXX");
+    floorObjectList                     = Arrays.asList(
 
-    /*Add each objects into corresponding list.*/
-    for(int i = 0; i < floorObjectArray         .length; i ++){ floorObjectList         .add(floorObjectArray[i]        ); }
-    for(int i = 0; i < roomObjectArray          .length; i ++){ roomObjectList          .add(roomObjectArray[i]         ); }
-    for(int i = 0; i < exhibitionObjectArray    .length; i ++){ exhibitionObjectList    .add(exhibitionObjectArray[i]   ); }
+        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", "TAG_XXX"),
+        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", "TAG_XXX"),
+        new ObjectMuseum(new Name("FLR_003", "Third Floor"                        ), "XXX_XXX", "FLR", "TAG_XXX"),
+        new ObjectMuseum(new Name("FLR_004", "Fourth Floor"                       ), "XXX_XXX", "FLR", "TAG_XXX")
+
+    );
+
+    roomObjectList                      = Arrays.asList(
+
+        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", "TAG_XXX"),
+        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", "TAG_XXX"),
+        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_001", "ROM", "TAG_XXX"),
+        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_001", "ROM", "TAG_XXX")
+
+    );
+
+    exhibitionObjectList                = Arrays.asList(
+
+        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", "TAG_XXX")
+
+    );
 
 }
 
