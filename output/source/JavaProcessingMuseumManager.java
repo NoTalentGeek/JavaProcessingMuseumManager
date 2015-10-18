@@ -24,10 +24,13 @@ public class JavaProcessingMuseumManager extends PApplet {
 ControlP5               cp5DropdownObject;
 ButtonOpenClose         buttonOpenCloseMuseumObject;
 ButtonOpenClose         buttonOpenClosePlayerObject;
-List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
+List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
 List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
 List<ObjectMuseum>      exhibitionObjectList        = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
+List<String>            floorStringList             = new ArrayList<String>();
+List<String>            roomStringList              = new ArrayList<String>();
+List<String>            exhibitionStringList        = new ArrayList<String>();
 
 float                   dropdownMObjectAlphaFloat   = 0;
 float                   dropdownPlayerAlphaFloat    = 0;                               /*The opacity number for dropdown player P5 component.*/
@@ -35,62 +38,71 @@ int                     offsetInt                   = 20;                       
 
 public void    setup                           (){
 
-    size                                (512, 288, P2D);
+    size                                (1024, 576, P2D);
+
+    /*Prototype function to init museum object.
+    Later on please init everything from the .csv file.*/
+    MuseumObjectInitVoid                ();
+    for(int i = 0; i < floorObjectList.size(); i ++){
+
+        floorStringList.add(floorObjectList.get(i).nameAltString);
+
+    }
+
     cp5DropdownObject                   = new ControlP5(this);
 
     int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
     buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
     buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
 
-    int dropdownMObjectWidth             = 200;                                                     /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
-    int dropdownMObjectHeight            = 100;                                                     /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
-    /*Create player dropdown menu.
-    PENDING: Adjust the size of this dropdown menu according to the application resolution.*/
+    int dropdownObjectWidthInt          = (width/3);
+    int dropdownObjectHeightInt         = (height - ((offsetInt + (buttonSizeInt/2))*2));
+    int itemHeightInt                   = (dropdownObjectHeightInt/20);
+
+    /*Create player dropdown menu.*/
     cp5DropdownObject
         .addScrollableList              ("Exhibition")
         .setPosition                    (
 
-            ((width - ((offsetInt/2)*2) - (buttonSizeInt/2)) - dropdownMObjectWidth),
-            ((offsetInt/2)*2) + (buttonSizeInt/2)
+            ((width - ((offsetInt/2)*2) - (buttonSizeInt/2)) - dropdownObjectWidthInt),
+            (offsetInt + (buttonSizeInt/2))
 
         )
-        .setSize                        (dropdownMObjectWidth, dropdownMObjectHeight)
-        .setBarHeight                   (20)
-        .setItemHeight                  (20)
+        .setSize                        (dropdownObjectWidthInt, dropdownObjectHeightInt)
+        .setBarHeight                   (itemHeightInt)
+        .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
         .show                           ()
         .addItems                       (sampleListChar);
 
-
-    int dropdownPlayerWidth             = 200;                                                      /*The width of player dropdown menu. PENDING: Adjust later based on application resolution.*/
-    int dropdownPlayerHeight            = 100;                                                      /*The height of player dropdown menu. PENDING: Adjust later based on application resolution.*/
-    /*Create player dropdown menu.
-    PENDING: Adjust the size of this dropdown menu according to the application resolution.*/
+    /*Create player dropdown menu.*/
     cp5DropdownObject
         .addScrollableList              ("Visitor")
         .setPosition                    (
 
             ((offsetInt/2)*2) + (buttonSizeInt/2),
-            ((offsetInt/2)*2) + (buttonSizeInt/2)
+            (offsetInt + (buttonSizeInt/2))
 
         )
-        .setSize                        (dropdownPlayerWidth, dropdownPlayerHeight)
-        .setBarHeight                   (20)
-        .setItemHeight                  (20)
+        .setSize                        (dropdownObjectWidthInt, dropdownObjectHeightInt)
+        .setBarHeight                   (itemHeightInt)
+        .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
         .hide                           ()
         .addItems                       (sampleListChar);
 
-    /*Prototype function to init museum object.
-    Later on please init everything from the .csv file.*/
-    MuseumObjectInitVoid                ();
-
+    cp5DropdownObject                   .get(ScrollableList.class, "Exhibition")
+                                        .setItems(floorStringList);
+    /*
+    cp5DropdownObject                   .get(ScrollableList.class, "Visitor")
+                                        .setItems();
+    */
 }
 
 public void    draw                            (){
 
     background                          (240);
-    dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   ,(width - offsetInt)    ,offsetInt      ,buttonOpenCloseMuseumObject    , "Exhibition" );
+    dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   , (width - offsetInt)   , offsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
     dropdownPlayerAlphaFloat            = DropdownDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
 }
@@ -100,6 +112,13 @@ public void    mousePressed                    (){
 
     if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimating = true; }
     if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimating = true; }
+
+}
+
+public void Exhibition                         (int _indexInt){
+
+
+    println(cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text"));
 
 }
 
@@ -157,6 +176,12 @@ public float DropdownDrawFloat                     (
 
 ){
 
+    /*This is the time step necessary for fade in and fade out animation.
+    The 255f is the floating number of the maximum opacity.
+    While the 45f is the tick necessary to finish the rotating animation of
+        button open close.*/
+    float animationStepFloat                = (255f/45f);
+
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
     _buttonOpenCloseObject                  .DrawVoid(_xInt, _yInt);
@@ -177,7 +202,7 @@ public float DropdownDrawFloat                     (
                 .get                        (ScrollableList.class, _captionString)
                 .show                       ();
             
-            _alphaFloat                     = 255 - (255f/45f);
+            _alphaFloat                     = (255f - (255f/45f));
 
         }
         else if                             (tempBoolean == false){
@@ -224,7 +249,6 @@ public float DropdownDrawFloat                     (
                 .show                       ();
 
             _alphaFloat                     += (255f/45f);
-            if(_alphaFloat < 100) println(_alphaFloat);
 
         }
 
