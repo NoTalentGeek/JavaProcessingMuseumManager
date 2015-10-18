@@ -97,8 +97,20 @@ void    mousePressed                    (){
 
 void Exhibition                         (int _indexInt){
 
+    ObjectMuseum    selectedMuseumObject            = null;
+    String          itemScrollableListString        = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();
 
-    println(cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text"));
+    for(int i = 0; i < floorObjectList.size(); i ++){
+
+        if(floorObjectList.get(i).nameAltString == itemScrollableListString){
+
+            selectedMuseumObject = floorObjectList.get(i);
+
+        }
+
+
+    }
+    println(selectedMuseumObject.nameAltString);
 
 }
 

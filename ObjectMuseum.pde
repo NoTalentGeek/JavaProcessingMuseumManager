@@ -28,6 +28,9 @@ class   ObjectMuseum                            {
     int                 visitorCurrentInt       = 0;                                /*This museum object current visitor.*/
     int                 visitorTotalInt         = 0;                                /*This museum objecy total visitor.*/
 
+    /*These are some user interfaces related variables.*/
+    boolean             activeBoolean           = false;
+
     ObjectMuseum                                (
 
         Name                                    _nameObject,
