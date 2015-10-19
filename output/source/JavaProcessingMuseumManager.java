@@ -24,6 +24,9 @@ public class JavaProcessingMuseumManager extends PApplet {
 ControlP5               cp5DropdownObject;
 ButtonOpenClose         buttonOpenCloseMuseumObject;
 ButtonOpenClose         buttonOpenClosePlayerObject;
+List<String>            museumStringList            = new ArrayList<String>();
+List<String>            playerStringList            = new ArrayList<String>();
+/*PENDING: Delete this variable when you are not using this anymore.*/
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
 List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
@@ -84,12 +87,14 @@ public void    setup                           (){
         .setType                        (ControlP5.LIST)
         .hide                           ();
 
+    museumStringList                    = floorStringList;                                  /*Set the initial item for this scrollable list.*/
     cp5DropdownObject                   .get(ScrollableList.class, "Exhibition")
                                         .setItems(floorStringList);
     /*
     cp5DropdownObject                   .get(ScrollableList.class, "Visitor")
                                         .setItems();
     */
+
 }
 
 public void    draw                            (){
@@ -110,35 +115,55 @@ public void    mousePressed                    (){
 
 public void Exhibition                         (int _indexInt){
 
-    ObjectMuseum    selectedMuseumObject            = null;
-    String          itemScrollableListString        = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();
+    List<ObjectMuseum>                  selectedMuseumObjectList        = new ArrayList<ObjectMuseum>();
+    ObjectMuseum                        selectedMuseumObject            = null;
+    String                              itemScrollableListString        = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
+    String                              temporaryTypeString             = itemScrollableListString.substring(0, Math.min(itemScrollableListString.length(), 3));
+    int                                 selectedMuseumIndexInt          = -1;
 
-    int             selectedMuseumInt               = -1;
+    if     (temporaryTypeString.equals("FLR")){ selectedMuseumObjectList     = floorObjectList;          }
+    else if(temporaryTypeString.equals("ROM")){ selectedMuseumObjectList     = roomObjectList;           }
+    else if(temporaryTypeString.equals("EXH")){ selectedMuseumObjectList     = exhibitionObjectList;     }
 
-    for(int i = 0; i < floorObjectList.size(); i ++){
+    for(int i = 0; i < selectedMuseumObjectList.size(); i ++){
 
-        if(floorObjectList.get(i).nameAltString     == itemScrollableListString){
+        if(selectedMuseumObjectList.get(i).nameAltString    == itemScrollableListString){
 
-            selectedMuseumObject    = floorObjectList .get(i);
-            selectedMuseumInt       = i + 1;
+            selectedMuseumObject    = selectedMuseumObjectList .get(i);
+            selectedMuseumIndexInt  = i + 1;
 
         }
 
     }
-    selectedMuseumObject.activeBoolean              = !selectedMuseumObject.activeBoolean;
+    selectedMuseumObject.activeBoolean                                  = !selectedMuseumObject.activeBoolean;
 
-    List<String>    childStringList                 = floorStringList;
+    if     (selectedMuseumObject.activeBoolean == true){
 
-    for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
-
-        childStringList                             .add(selectedMuseumInt, selectedMuseumObject.childObjectList.get(i).nameAltString);
+        for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++)   { museumStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString); }
+        cp5DropdownObject.get(ScrollableList.class, "Exhibition").setItems(museumStringList);
 
     }
+    else if(selectedMuseumObject.activeBoolean == false){
 
-    if(selectedMuseumObject.activeBoolean == true)  {
+        for(int i = 0; i < museumStringList.size(); i ++)                       {
 
-        cp5DropdownObject                           .get(ScrollableList.class, "Exhibition")
-                                                    .setItems(childStringList);
+            for(int j = 0; j < selectedMuseumObject.childObjectList.size(); j ++){
+
+                if(museumStringList.get(i) == selectedMuseumObject.childObjectList.get(j).nameAltString){
+
+                    museumStringList        .remove(i);
+                    i                       --;
+
+                }
+
+            }
+
+        }
+        for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++)   {
+
+            cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+
+        }
 
     }
 
