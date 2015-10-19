@@ -23,11 +23,6 @@ void    setup                           (){
     /*Prototype function to init museum object.
     Later on please init everything from the .csv file.*/
     MuseumObjectInitVoid                ();
-    for(int i = 0; i < floorObjectList.size(); i ++){
-
-        floorStringList.add(floorObjectList.get(i).nameAltString);
-
-    }
 
     cp5DropdownObject                   = new ControlP5(this);
 
@@ -52,8 +47,7 @@ void    setup                           (){
         .setBarHeight                   (itemHeightInt)
         .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
-        .show                           ()
-        .addItems                       (sampleListChar);
+        .show                           ();
 
     /*Create player dropdown menu.*/
     cp5DropdownObject
@@ -68,8 +62,7 @@ void    setup                           (){
         .setBarHeight                   (itemHeightInt)
         .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
-        .hide                           ()
-        .addItems                       (sampleListChar);
+        .hide                           ();
 
     cp5DropdownObject                   .get(ScrollableList.class, "Exhibition")
                                         .setItems(floorStringList);
@@ -97,20 +90,34 @@ void    mousePressed                    (){
 
 void Exhibition                         (int _indexInt){
 
-    ObjectMuseum    selectedMuseumObject            = null;
+    ObjectMuseum    selectedObjectMuseum            = null;
     String          itemScrollableListString        = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();
 
     for(int i = 0; i < floorObjectList.size(); i ++){
 
-        if(floorObjectList.get(i).nameAltString == itemScrollableListString){
+        if(floorObjectList.get(i).nameAltString     == itemScrollableListString){
 
-            selectedMuseumObject = floorObjectList.get(i);
+            selectedObjectMuseum = floorObjectList .get(i);
 
         }
 
+    }
+    selectedObjectMuseum.activeBoolean              = !selectedObjectMuseum.activeBoolean;
+
+    List<String>    childStringList                 = floorStringList;
+
+    for(int i = 0; i < selectedObjectMuseum.childObjectList.size(); i ++){
+
+        childStringList                             .add(1, selectedObjectMuseum.childObjectList.get(i).nameAltString);
 
     }
-    println(selectedMuseumObject.nameAltString);
+
+    if(selectedObjectMuseum.activeBoolean == true)  {
+
+        cp5DropdownObject                           .get(ScrollableList.class, "Exhibition")
+                                                    .setItems(childStringList);
+
+    }
 
 }
 
@@ -137,7 +144,7 @@ void MuseumObjectInitVoid               (){
 
     exhibitionObjectList                = Arrays.asList(
 
-        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", "TAG_XXX"),
+        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", "TAG_XXX"),
         new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", "TAG_XXX"),
         new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", "TAG_XXX"),
         new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", "TAG_XXX"),
@@ -155,6 +162,22 @@ void MuseumObjectInitVoid               (){
         new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", "TAG_XXX")
 
     );
+
+    
+    for(int i = 0; i < floorObjectList      .size() ; i ++){ floorStringList.add(floorObjectList.get(i).nameAltString);             }
+    for(int i = 0; i < roomObjectList       .size() ; i ++){ roomStringList.add(roomObjectList.get(i).nameAltString);               }
+    for(int i = 0; i < exhibitionObjectList .size() ; i ++){ exhibitionStringList.add(exhibitionObjectList.get(i).nameAltString);   }
+
+    for(int i = 0; i < floorObjectList      .size() ; i ++){
+
+        floorObjectList.get(i).childObjectList = floorObjectList.get(i).SetChildObjectList(roomObjectList);
+
+    }
+    for(int i = 0; i < roomObjectList       .size() ; i ++){
+
+        roomObjectList.get(i).childObjectList = roomObjectList.get(i).SetChildObjectList(exhibitionObjectList);
+
+    }
 
 }
 
@@ -217,7 +240,7 @@ float DropdownDrawFloat                     (
         /*Create simple fade in and fade out animation.*/
         CColor fadeCColorObject             = new CColor();
                fadeCColorObject
-                    .setActive              (color(0    , 170   , 255,    _alphaFloat))
+                    .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
                     .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
                     .setCaptionLabel        (color(255  , 255   , 255,    _alphaFloat))
                     .setForeground          (color(0    , 116   , 217,    _alphaFloat))

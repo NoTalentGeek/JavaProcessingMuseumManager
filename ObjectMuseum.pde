@@ -63,10 +63,24 @@ class   ObjectMuseum                            {
 
         for(String tagString : _tagStringList){ tagStringList.add(tagString); }
 
-        /*DetermineChildObjectList();*/
-        /*DetermineIndexGlobalInt();*/
-        /*DetermineIndexLocalInt();*/
-        /*DetermineParentObject();*/
+        /*SetChildObjectList();*/
+        /*SetIndexGlobalInt();*/
+        /*SetIndexLocalInt();*/
+        /*SetParentObject();*/
+
+    }
+
+    List<ObjectMuseum> SetChildObjectList(List<ObjectMuseum> _targetObjectList){
+
+        if(childObjectList.size() > 0){ childObjectList.clear(); }
+
+        for(int i = 0;          i < _targetObjectList.size(); i ++){
+
+            if(nameAltString    == _targetObjectList.get(i).parentNameAltString){ childObjectList.add(_targetObjectList.get(i)); }
+
+        }
+
+        return                  childObjectList;
 
     }
 
