@@ -4,6 +4,9 @@ import java.util.*;
 ControlP5               cp5DropdownObject;
 ButtonOpenClose         buttonOpenCloseMuseumObject;
 ButtonOpenClose         buttonOpenClosePlayerObject;
+List<String>            museumStringList            = new ArrayList<String>();
+List<String>            playerStringList            = new ArrayList<String>();
+/*PENDING: Delete this variable when you are not using this anymore.*/
 List<String>            sampleListChar              = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z");
 List<ObjectMuseum>      floorObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList              = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
@@ -64,12 +67,14 @@ void    setup                           (){
         .setType                        (ControlP5.LIST)
         .hide                           ();
 
+    museumStringList                    = floorStringList;                                  /*Set the initial item for this scrollable list.*/
     cp5DropdownObject                   .get(ScrollableList.class, "Exhibition")
                                         .setItems(floorStringList);
     /*
     cp5DropdownObject                   .get(ScrollableList.class, "Visitor")
                                         .setItems();
     */
+
 }
 
 void    draw                            (){
@@ -91,16 +96,18 @@ void    mousePressed                    (){
 void Exhibition                         (int _indexInt){
 
     ObjectMuseum    selectedMuseumObject            = null;
+
+    /*This String is for holding the name of the selected button.*/
     String          itemScrollableListString        = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();
 
-    int             selectedMuseumInt               = -1;
+    int             selectedMuseumIndexInt          = -1;
 
     for(int i = 0; i < floorObjectList.size(); i ++){
 
         if(floorObjectList.get(i).nameAltString     == itemScrollableListString){
 
             selectedMuseumObject    = floorObjectList .get(i);
-            selectedMuseumInt       = i + 1;
+            selectedMuseumIndexInt  = i + 1;
 
         }
 
@@ -111,7 +118,7 @@ void Exhibition                         (int _indexInt){
 
     for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
 
-        childStringList                             .add(selectedMuseumInt, selectedMuseumObject.childObjectList.get(i).nameAltString);
+        childStringList                             .add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString);
 
     }
 
