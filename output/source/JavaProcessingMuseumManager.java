@@ -110,29 +110,32 @@ public void    mousePressed                    (){
 
 public void Exhibition                         (int _indexInt){
 
-    ObjectMuseum    selectedObjectMuseum            = null;
+    ObjectMuseum    selectedMuseumObject            = null;
     String          itemScrollableListString        = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();
+
+    int             selectedMuseumInt               = -1;
 
     for(int i = 0; i < floorObjectList.size(); i ++){
 
         if(floorObjectList.get(i).nameAltString     == itemScrollableListString){
 
-            selectedObjectMuseum = floorObjectList .get(i);
+            selectedMuseumObject    = floorObjectList .get(i);
+            selectedMuseumInt       = i + 1;
 
         }
 
     }
-    selectedObjectMuseum.activeBoolean              = !selectedObjectMuseum.activeBoolean;
+    selectedMuseumObject.activeBoolean              = !selectedMuseumObject.activeBoolean;
 
     List<String>    childStringList                 = floorStringList;
 
-    for(int i = 0; i < selectedObjectMuseum.childObjectList.size(); i ++){
+    for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
 
-        childStringList                             .add(1, selectedObjectMuseum.childObjectList.get(i).nameAltString);
+        childStringList                             .add(selectedMuseumInt, selectedMuseumObject.childObjectList.get(i).nameAltString);
 
     }
 
-    if(selectedObjectMuseum.activeBoolean == true)  {
+    if(selectedMuseumObject.activeBoolean == true)  {
 
         cp5DropdownObject                           .get(ScrollableList.class, "Exhibition")
                                                     .setItems(childStringList);
