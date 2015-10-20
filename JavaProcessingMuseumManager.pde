@@ -151,7 +151,9 @@ void Exhibition                         (int _indexInt){
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
     else if(selectedMuseumObject.activeBoolean == false){
 
-        /*Of you close the FLR you need to iterate through its children and set all children active boolean to false.
+        /*CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME
+          CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME
+        Of you close the FLR you need to iterate through its children and set all children active boolean to false.
         This is trouble some for me because I do not knwo how to do depth - sort.
         Hence, I did this manually.
         PENDING: Using depth - sort to carefully set active boolean to false.*/
@@ -240,6 +242,10 @@ void Exhibition                         (int _indexInt){
             cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
 
         }
+
+        /*END
+          CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME
+          CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME*/
 
     }
 

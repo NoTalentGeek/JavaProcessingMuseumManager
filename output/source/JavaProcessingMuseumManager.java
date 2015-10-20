@@ -171,10 +171,14 @@ public void Exhibition                         (int _indexInt){
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
     else if(selectedMuseumObject.activeBoolean == false){
 
-        
+        /*Of you close the FLR you need to iterate through its children and set all children active boolean to false.
+        This is trouble some for me because I do not knwo how to do depth - sort.
+        Hence, I did this manually.
+        PENDING: Using depth - sort to carefully set active boolean to false.*/
         if(temporaryTypeString.equals("FLR")){
 
             int indexChildInt = 0;
+            /*Iterate through room.*/
             while(indexChildInt < (selectedMuseumObject.childObjectList.size() - 1)){
 
                 ObjectMuseum selectedMuseumChildObject                  = selectedMuseumObject.childObjectList.get(indexChildInt);
@@ -182,7 +186,7 @@ public void Exhibition                         (int _indexInt){
 
                 for(int i = 0; i < museumStringList.size(); i ++)                   {
 
-                    /*Iterate through all the selected object children.*/
+                    /*Iterate through exhibitions.*/
                     for(
 
                         int j   = 0; 
@@ -192,8 +196,18 @@ public void Exhibition                         (int _indexInt){
                     ){
 
                         selectedMuseumChildObject.childObjectList.get(j).activeBoolean = false;
-                    
-                        if(museumStringList.get(i) == selectedMuseumChildObject.childObjectList.get(j).nameAltString){
+
+                        /*
+                        for(
+
+                            int k   = 0; 
+                            k       < selectedMuseumChildObject.childObjectList.get(j).childObjectList.size(); 
+                            k       ++
+
+                        ){ selectedMuseumChildObject.childObjectList.get(j).childObjectList.get(k).activeBoolean = false; }
+                        */
+
+                        if(museumStringList.get(i)  == selectedMuseumChildObject.childObjectList.get(j).nameAltString){
 
                             museumStringList        .remove(i);                                                             /*Remove the element from the museum String list.*/
                             i                       --;                                                                     /*Do not forget to reduce the loop counter by one for everytime you remove an element from the list.*/
