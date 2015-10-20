@@ -97,7 +97,7 @@ void Exhibition                         (int _indexInt){
     List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                            /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
     ObjectMuseum                        selectedMuseumObject                = null;                                                                                                     /*This is the selected museum object. From here this application will try to modify the selected museum object;s values.*/
     String                              itemScrollableString                = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
-    String                              temporaryTypeString                 = itemScrollableString.subString(0, Math.min(itemScrollableString.length(), 3));                            /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String.*/
+    String                              temporaryTypeString                 = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));                            /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String.*/
     int                                 selectedMuseumIndexInt              = -1;                                                                                                       /*The selected index of the selected object in its object list.*/
 
     /*We assign the selected museum object list according to the temporary type String.*/
@@ -122,7 +122,7 @@ void Exhibition                         (int _indexInt){
 
             /*Return the object index inside the museum String list.
             This variable is for determining the layout later on within the scrollable dropdown list.*/
-            selectedMuseumIndexInt                                          = i + 1; println(selectedMuseumIndexInt);
+            selectedMuseumIndexInt                                          = i + 1;
 
         }
 
@@ -137,19 +137,91 @@ void Exhibition                         (int _indexInt){
 
         /*Iterate all children objects and add all of it to the museum String list.
         We need to set (delete the previous ones and initiate the new ones) the children to the museum String list according to the index position of the parent in the museum String list.*/
-        for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++)   { museumStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString); }
+        for(
+
+           int i    = selectedMuseumObject.childObjectList.size() - 1;
+           i        >= 0;
+           i        --
+
+        ){ museumStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString); }
         /*Set the items into the scrollable list.*/
-        cp5DropdownObject.get(ScrollableList.class, "Exhibition")               .setItems(museumStringList);
+        cp5DropdownObject.get(ScrollableList.class, "Exhibition")           .setItems(museumStringList);
 
     }
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
     else if(selectedMuseumObject.activeBoolean == false){
 
+        /*Of you close the FLR you need to iterate through its children and set all children active boolean to false.
+        This is trouble some for me because I do not knwo how to do depth - sort.
+        Hence, I did this manually.
+        PENDING: Using depth - sort to carefully set active boolean to false.*/
+        if(temporaryTypeString.equals("FLR")){
+
+            int indexChildInt = 0;
+            /*Iterate through room.*/
+            while(indexChildInt < (selectedMuseumObject.childObjectList.size() - 1)){
+
+                ObjectMuseum selectedMuseumChildObject                  = selectedMuseumObject.childObjectList.get(indexChildInt);
+                             selectedMuseumChildObject.activeBoolean    = false;
+
+                for(int i = 0; i < museumStringList.size(); i ++)                   {
+
+                    /*Iterate through exhibitions.*/
+                    for(
+
+                        int j   = 0; 
+                        j       < selectedMuseumChildObject.childObjectList.size(); 
+                        j       ++
+
+                    ){
+
+                        selectedMuseumChildObject.childObjectList.get(j).activeBoolean = false;
+
+                        /*
+                        for(
+
+                            int k   = 0; 
+                            k       < selectedMuseumChildObject.childObjectList.get(j).childObjectList.size(); 
+                            k       ++
+
+                        ){ selectedMuseumChildObject.childObjectList.get(j).childObjectList.get(k).activeBoolean = false; }
+                        */
+
+                        if(museumStringList.get(i)  == selectedMuseumChildObject.childObjectList.get(j).nameAltString){
+
+                            museumStringList        .remove(i);                                                             /*Remove the element from the museum String list.*/
+                            i                       --;                                                                     /*Do not forget to reduce the loop counter by one for everytime you remove an element from the list.*/
+
+                        }
+
+                    }
+
+                }
+
+                /*Remove the children of inactive parent into the the scrollable object.*/
+                for(int i = 0; i < selectedMuseumChildObject.childObjectList.size(); i ++)   {
+
+                    cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumChildObject.childObjectList.get(i).nameAltString);
+
+                }
+
+                indexChildInt ++;
+
+            }
+
+        }
+
         /*Iterate through the museum String list and delete all the children from incative parent.*/
-        for(int i = 0; i < museumStringList.size(); i ++)                       {
+        for(int i = 0; i < museumStringList.size(); i ++)                   {
 
             /*Iterate through all the selected object children.*/
-            for(int j = 0; j < selectedMuseumObject.childObjectList.size(); j ++){
+            for(
+
+                int j   = 0; 
+                j       < selectedMuseumObject.childObjectList.size(); 
+                j       ++
+
+            ){
 
                 if(museumStringList.get(i) == selectedMuseumObject.childObjectList.get(j).nameAltString){
 
@@ -161,6 +233,7 @@ void Exhibition                         (int _indexInt){
             }
 
         }
+
         /*Remove the children of inactive parent into the the scrollable object.*/
         for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++)   {
 
@@ -214,21 +287,19 @@ void MuseumObjectInitVoid               (){
 
     );
 
-    
+    /*PENDING: Optimization here, you can put all methods into the same for loop. Right now I want to see object required more for loops.
+    These lists is for putting list into the corresponding String list, so that it can be easier to be put in the scrollable list.*/
     for(int i = 0; i < floorObjectList      .size() ; i ++){ floorStringList        .add(floorObjectList        .get(i).nameAltString); }
     for(int i = 0; i < roomObjectList       .size() ; i ++){ roomStringList         .add(roomObjectList         .get(i).nameAltString); }
     for(int i = 0; i < exhibitionObjectList .size() ; i ++){ exhibitionStringList   .add(exhibitionObjectList   .get(i).nameAltString); }
 
-    for(int i = 0; i < floorObjectList      .size() ; i ++){
+    /*These list is to assign children object for each museum object.*/
+    for(int i = 0; i < floorObjectList      .size() ; i ++){ floorObjectList.get(i).childObjectList = floorObjectList   .get(i).SetChildObjectList(roomObjectList);         }
+    for(int i = 0; i < roomObjectList       .size() ; i ++){ roomObjectList .get(i).childObjectList = roomObjectList    .get(i).SetChildObjectList(exhibitionObjectList);   }
 
-        floorObjectList.get(i).childObjectList = floorObjectList.get(i).SetChildObjectList(roomObjectList);
-
-    }
-    for(int i = 0; i < roomObjectList       .size() ; i ++){
-
-        roomObjectList.get(i).childObjectList = roomObjectList.get(i).SetChildObjectList(exhibitionObjectList);
-
-    }
+    /*These list is to assign parent object for each museum object.*/
+    for(int i = 0; i < roomObjectList               .size() ; i ++){ roomObjectList         .get(i).parentObject    = roomObjectList        .get(i).SetParentObject(floorObjectList);   }
+    for(int i = 0; i < exhibitionObjectList         .size() ; i ++){ exhibitionObjectList   .get(i).parentObject    = exhibitionObjectList  .get(i).SetParentObject(roomObjectList);    }
 
 }
 

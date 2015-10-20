@@ -65,7 +65,6 @@ class   ObjectMuseum                            {
 
         /*SetIndexGlobalInt();*/
         /*SetIndexLocalInt();*/
-        /*SetParentObject();*/
 
     }
 
@@ -81,6 +80,20 @@ class   ObjectMuseum                            {
         }
 
         return                  childObjectList;
+
+    }
+
+    /*A function to set this object parent.*/
+    ObjectMuseum SetParentObject(List<ObjectMuseum> _targetObjectList){
+
+        /*Iterate through all parent object list to find this object parent object.*/
+        for(int i = 0; i < _targetObjectList.size(); i ++){
+
+            if(parentNameAltString == _targetObjectList.get(i).nameAltString){ parentObject = _targetObjectList.get(i); break; }
+
+        }
+
+        return parentObject;
 
     }
 
