@@ -319,11 +319,40 @@ float DropdownDrawFloat                     (
 
 ){
 
+    /*Create simple fade in and fade out animation.*/
+    CColor fadeCColorObject             = new CColor();
+           fadeCColorObject
+                .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
+                .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
+                .setCaptionLabel        (color(255  , 255   , 255,    _alphaFloat))
+                .setForeground          (color(0    , 116   , 217,    _alphaFloat))
+                .setValueLabel          (color(255  , 255   , 255,    _alphaFloat));
+
+    CColor fadeCColorFloorObject          = new CColor();
+           fadeCColorFloorObject
+                .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
+                .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
+                .setForeground          (color(0    , 45    , 90 ,    _alphaFloat));
+
+    CColor fadeCColorRoomObject          = new CColor();
+           fadeCColorRoomObject
+                .setActive              (color(0    , 95    , 140,    _alphaFloat))
+                .setBackground          (color(0    , 95    , 140,    _alphaFloat))
+                .setForeground          (color(0    , 126   , 227,    _alphaFloat));
+
+    CColor fadeCColorExhibitionObject   = new CColor();
+           fadeCColorExhibitionObject
+                .setActive              (color(0    , 145   , 190,    _alphaFloat))
+                .setBackground          (color(0    , 145   , 190,    _alphaFloat))
+                .setForeground          (color(0    , 136   , 237,    _alphaFloat));
+
     /*This is the time step necessary for fade in and fade out animation.
     The 255f is the floating number of the maximum opacity.
     While the 45f is the tick necessary to finish the rotating animation of
         button open close.*/
-    float animationStepFloat                = (255f/45f);
+    float   animationStepFloat              = (255f/45f);
+
+    int     museumSizeInt                   = museumStringList.size();
 
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
@@ -344,7 +373,13 @@ float DropdownDrawFloat                     (
             cp5DropdownObject
                 .get                        (ScrollableList.class, _captionString)
                 .show                       ();
-            
+
+            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
+            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+            if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
+            else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
+            else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
+
             _alphaFloat                     = (255f - (255f/45f));
 
         }
@@ -365,15 +400,6 @@ float DropdownDrawFloat                     (
         /*Revert the boolean.*/
         boolean tempBoolean                 = !_buttonOpenCloseObject.isButtonOpenBoolean;
 
-        /*Create simple fade in and fade out animation.*/
-        CColor fadeCColorObject             = new CColor();
-               fadeCColorObject
-                    .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
-                    .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
-                    .setCaptionLabel        (color(255  , 255   , 255,    _alphaFloat))
-                    .setForeground          (color(0    , 116   , 217,    _alphaFloat))
-                    .setValueLabel          (color(255  , 255   , 255,    _alphaFloat));
-
         /*For closing animation.*/
         if                                  (tempBoolean == true ){
             
@@ -381,6 +407,25 @@ float DropdownDrawFloat                     (
                 .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
+
+            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
+            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+            if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
+            else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
+            else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
+
+            /*
+            for(int i = 0; i < museumStringList.size(); i ++){
+
+                String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
+                String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+
+                if      (temporaryTypeString    == "FLR"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
+                else if (temporaryTypeString    == "ROM"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
+                else if (temporaryTypeString    == "EXH"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
+
+            }
+            */
 
             _alphaFloat                     -= (255f/45f);
 
@@ -392,6 +437,32 @@ float DropdownDrawFloat                     (
                 .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
+            fadeCColorFloorObject          = new CColor();
+            fadeCColorFloorObject
+                .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
+                .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
+                .setForeground          (color(0    , 45    , 90 ,    _alphaFloat));
+
+            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
+            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+            if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
+            else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
+            else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
+            
+
+            /*
+            for(int i = 0; i < museumStringList.size(); i ++){
+
+                String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
+                String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+
+                if      (temporaryTypeString    == "FLR"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
+                else if (temporaryTypeString    == "ROM"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
+                else if (temporaryTypeString    == "EXH"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
+
+            }
+            */
+            
 
             _alphaFloat                     += (255f/45f);
 
