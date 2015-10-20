@@ -374,11 +374,16 @@ float DropdownDrawFloat                     (
                 .get                        (ScrollableList.class, _captionString)
                 .show                       ();
 
-            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
-            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
-            if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
-            else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
-            else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
+            for(int i = 0; i < museumStringList.size(); i ++){
+
+                String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
+                String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+
+                if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
+                else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
+                else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
+
+            }
 
             _alphaFloat                     = (255f - (255f/45f));
 
@@ -408,24 +413,23 @@ float DropdownDrawFloat                     (
                 .setColor                   (fadeCColorObject)
                 .show                       ();
 
+            /*
             String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
             String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
             if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
             else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
             else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
-
-            /*
+            */
             for(int i = 0; i < museumStringList.size(); i ++){
 
                 String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
                 String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
 
-                if      (temporaryTypeString    == "FLR"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
-                else if (temporaryTypeString    == "ROM"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
-                else if (temporaryTypeString    == "EXH"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
+                if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
+                else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
+                else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
 
             }
-            */
 
             _alphaFloat                     -= (255f/45f);
 
@@ -437,32 +441,24 @@ float DropdownDrawFloat                     (
                 .get                        (ScrollableList.class, _captionString)
                 .setColor                   (fadeCColorObject)
                 .show                       ();
-            fadeCColorFloorObject          = new CColor();
-            fadeCColorFloorObject
-                .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
-                .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
-                .setForeground          (color(0    , 45    , 90 ,    _alphaFloat));
 
+            /*
             String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
             String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
             if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
             else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
             else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
-            
-
-            /*
+            */
             for(int i = 0; i < museumStringList.size(); i ++){
 
                 String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
                 String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
 
-                if      (temporaryTypeString    == "FLR"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
-                else if (temporaryTypeString    == "ROM"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
-                else if (temporaryTypeString    == "EXH"){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
+                if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
+                else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
+                else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
 
             }
-            */
-            
 
             _alphaFloat                     += (255f/45f);
 
