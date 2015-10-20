@@ -121,16 +121,25 @@ public void Exhibition                         (int _indexInt){
     String                              temporaryTypeString             = itemScrollableListString.substring(0, Math.min(itemScrollableListString.length(), 3));
     int                                 selectedMuseumIndexInt          = -1;
 
-    if     (temporaryTypeString.equals("FLR")){ selectedMuseumObjectList     = floorObjectList;          }
-    else if(temporaryTypeString.equals("ROM")){ selectedMuseumObjectList     = roomObjectList;           }
-    else if(temporaryTypeString.equals("EXH")){ selectedMuseumObjectList     = exhibitionObjectList;     }
+    if     (temporaryTypeString.equals("FLR")){ selectedMuseumObjectList    = floorObjectList;          }
+    else if(temporaryTypeString.equals("ROM")){ selectedMuseumObjectList    = roomObjectList;           }
+    else if(temporaryTypeString.equals("EXH")){ selectedMuseumObjectList    = exhibitionObjectList;     }
 
-    for(int i = 0; i < selectedMuseumObjectList.size(); i ++){
+    for(int i = 0; i < museumStringList.size(); i ++){
 
-        if(selectedMuseumObjectList.get(i).nameAltString    == itemScrollableListString){
+        if(museumStringList.get(i)                                          == itemScrollableListString){
 
-            selectedMuseumObject    = selectedMuseumObjectList .get(i);
-            selectedMuseumIndexInt  = i + 1;
+            for(int j = 0; j < selectedMuseumObjectList.size(); j ++)       {
+
+                if(selectedMuseumObjectList.get(j).nameAltString == museumStringList.get(i)){
+
+                    selectedMuseumObject                                    = selectedMuseumObjectList.get(j);
+
+                }
+
+            }
+
+            selectedMuseumIndexInt                                          = i + 1; println(selectedMuseumIndexInt);
 
         }
 
