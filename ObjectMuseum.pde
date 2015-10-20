@@ -63,20 +63,20 @@ class   ObjectMuseum                            {
 
         for(String tagString : _tagStringList){ tagStringList.add(tagString); }
 
-        /*SetChildObjectList();*/
         /*SetIndexGlobalInt();*/
         /*SetIndexLocalInt();*/
         /*SetParentObject();*/
 
     }
 
+    /*A function to add the children of this object into childObjectList.*/
     List<ObjectMuseum> SetChildObjectList(List<ObjectMuseum> _targetObjectList){
 
-        if(childObjectList.size() > 0){ childObjectList.clear(); }
+        if(childObjectList.size() > 0){ childObjectList.clear(); }                                                                  /*Clear the previous child object array.*/
 
-        for(int i = 0;          i < _targetObjectList.size(); i ++){
+        for(int i = 0;          i < _targetObjectList.size(); i ++){                                                                /*Itarete through all the object list to find whether or not there is a museum object that refers this object as its parent.*/
 
-            if(nameAltString    == _targetObjectList.get(i).parentNameAltString){ childObjectList.add(_targetObjectList.get(i)); }
+            if(nameAltString    == _targetObjectList.get(i).parentNameAltString){ childObjectList.add(_targetObjectList.get(i)); }  /*If the parent object from the _targetObjectList is the same with this object name then add the object into this object child object list.*/
 
         }
 
