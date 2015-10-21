@@ -77,7 +77,7 @@ void    setup                           (){
 
 void    draw                            (){
 
-    background                          (240);
+    background                          (0x222034);
     dropdownMObjectAlphaFloat           = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - offsetInt)   , offsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
     dropdownPlayerAlphaFloat            = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
