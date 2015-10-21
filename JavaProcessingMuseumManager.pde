@@ -19,7 +19,7 @@ int                     offsetInt                       = 20;                   
 
 void    setup                           (){
 
-    size                                (1024, 576, P2D);
+    size                                (512, 288, P2D);
 
     /*Prototype function to init museum object.
     Later on please init everything from the .csv file.*/
@@ -178,56 +178,20 @@ void Exhibition                         (int _indexInt){
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
     else if(selectedMuseumObject.activeBoolean == false){
 
-        /*CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME
-          CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME
-        Of you close the FLR you need to iterate through its children and set all children active boolean to false.
-        This is trouble some for me because I do not knwo how to do depth - sort.
-        Hence, I did this manually.
-        PENDING: Using depth - sort to carefully set active boolean to false.*/
         if(temporaryTypeString.equals("FLR")){
 
-            int indexChildInt = 0;
-            /*Iterate through room.*/
-            while(indexChildInt < (selectedMuseumObject.childObjectList.size() - 1)){
+            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
 
-                ObjectMuseum selectedMuseumChildObject                  = selectedMuseumObject.childObjectList.get(indexChildInt);
-                             selectedMuseumChildObject.activeBoolean    = false;
+                for(int j = 0; j < selectedMuseumObject.childObjectList.get(i).childObjectList.size(); j ++){
 
+                    for(int k = 0; k < museumStringList.size(); k ++){
 
-                /*Remove the children of inactive parent into the the scrollable object.*/
-                for(int i = 0; i < selectedMuseumChildObject.childObjectList.size(); i ++)   {
+                        if(museumStringList.get(k).equals(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString)){
 
-                    cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumChildObject.childObjectList.get(i).nameAltString);
-
-                }
-
-                for(int i = 0; i < museumStringList.size(); i ++)                   {
-
-                    /*Iterate through exhibitions.*/
-                    for(
-
-                        int j   = 0; 
-                        j       < selectedMuseumChildObject.childObjectList.size(); 
-                        j       ++
-
-                    ){
-
-                        selectedMuseumChildObject.childObjectList.get(j).activeBoolean = false;
-
-                        /*
-                        for(
-
-                            int k   = 0; 
-                            k       < selectedMuseumChildObject.childObjectList.get(j).childObjectList.size(); 
-                            k       ++
-
-                        ){ selectedMuseumChildObject.childObjectList.get(j).childObjectList.get(k).activeBoolean = false; }
-                        */
-
-                        if(museumStringList.get(i)  == selectedMuseumChildObject.childObjectList.get(j).nameAltString){
-
-                            museumStringList        .remove(i);                                                             /*Remove the element from the museum String list.*/
-                            i                       --;                                                                     /*Do not forget to reduce the loop counter by one for everytime you remove an element from the list.*/
+                            selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).activeBoolean = false;
+                            cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString);
+                            museumStringList.remove(k);
+                            k --;
 
                         }
 
@@ -235,45 +199,42 @@ void Exhibition                         (int _indexInt){
 
                 }
 
-                indexChildInt ++;
+                for(int j = 0; j < museumStringList.size(); j ++){
 
-            }
+                    if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
 
-        }
+                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
+                        cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        museumStringList.remove(j);
+                        j --;
 
-        /*Iterate through the museum String list and delete all the children from incative parent.*/
-        for(int i = 0; i < museumStringList.size(); i ++)                   {
-
-            /*Iterate through all the selected object children.*/
-            for(
-
-                int j   = 0; 
-                j       < selectedMuseumObject.childObjectList.size(); 
-                j       ++
-
-            ){
-
-                if(museumStringList.get(i) == selectedMuseumObject.childObjectList.get(j).nameAltString){
-
-                    museumStringList        .remove(i);                                                             /*Remove the element from the museum String list.*/
-                    i                       --;                                                                     /*Do not forget to reduce the loop counter by one for everytime you remove an element from the list.*/
+                    }
 
                 }
 
             }
 
         }
+        else{
 
-        /*Remove the children of inactive parent into the the scrollable object.*/
-        for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++)   {
+            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
 
-            cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                for(int j = 0; j < museumStringList.size(); j ++){
+
+                    if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
+
+                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
+                        cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        museumStringList.remove(j);
+                        j --;
+
+                    }
+
+                }
+
+            }
 
         }
-
-        /*END
-          CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME
-          CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME CODE OF SHAME*/
 
     }
 
