@@ -178,6 +178,8 @@ void Exhibition                         (int _indexInt){
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
     else if(selectedMuseumObject.activeBoolean == false){
 
+        /*If close the floor we must carefully close the inner most button, in this case it is the exhibition buttons.
+        We need to close the room buttons and then loop again to close the exhibition buttons.*/
         if(temporaryTypeString.equals("FLR")){
 
             for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
@@ -215,6 +217,7 @@ void Exhibition                         (int _indexInt){
             }
 
         }
+        /*If the button is not a floor button then we do not need to iterate deeper.*/
         else{
 
             for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
@@ -233,6 +236,8 @@ void Exhibition                         (int _indexInt){
                 }
 
             }
+
+        /*God bless these curly braces.*/
 
         }
 
