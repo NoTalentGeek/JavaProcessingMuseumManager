@@ -3,7 +3,10 @@ This button will be used to open a panel made using
     P5 user interface.*/
 public class ButtonOpenClose{
 
-    boolean isAnimating                 = false;
+    PShape  buttonOpenCloseCircleObject = null; /*This is a child shape of this button, later will be combined together into main shape.*/
+    PShape  buttonOpenCloseCross1Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
+    PShape  buttonOpenCloseCross2Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
+    boolean isAnimatingBoolean          = false;
     boolean isButtonOpenBoolean         = true;
     boolean isFunctionTriggerBoolean    = false;
     int     buttonRotationCounterInt    = 0;
@@ -11,9 +14,6 @@ public class ButtonOpenClose{
     int     buttonXInt                  = -1;   /*The x position of this button.*/
     int     buttonYInt                  = -1;   /*The y position of this button.*/
     PShape  buttonOpenCloseObject       = null; /*The main shape for this button.*/
-    PShape  buttonOpenCloseCircleObject = null; /*This is a child shape of this button, later will be combined together into main shape.*/
-    PShape  buttonOpenCloseCross1Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
-    PShape  buttonOpenCloseCross2Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
 
     /*This object constructor, the only argument is this button size.*/
     ButtonOpenClose                     (int _buttonSizeInt){
@@ -75,7 +75,7 @@ public class ButtonOpenClose{
         buttonYInt                              = _buttonYInt + (buttonSizeInt/2);                  /*Determine the position of this button axis with additional (buttonSizeInt/2) to fix the position resulted from shapeMode(CENTER).*/
         shape                                   (buttonOpenCloseObject, buttonXInt, buttonYInt);    /*Draw the main shape with additional last two parameters are the position on screen.*/
 
-        if(isAnimating == true)                 {
+        if(isAnimatingBoolean == true)                 {
 
             if      (isButtonOpenBoolean        == true)  { buttonOpenCloseObject.rotate(radians(1));  }    /*This button animation based on the current state of this button.*/
             else if (isButtonOpenBoolean        == false) { buttonOpenCloseObject.rotate(-radians(1)); }    /*This button animation based on the current state of this button.*/
@@ -88,7 +88,7 @@ public class ButtonOpenClose{
                 buttonRotationCounterInt        =  0;                                       /*Reset the animation counter, so that next time the counter start counting from 0 degree.*/
                 if      (isButtonOpenBoolean    == true)  { isButtonOpenBoolean = false; }  /*Change button state, if button is open then change the state to close.*/
                 else if (isButtonOpenBoolean    == false) { isButtonOpenBoolean = true;  }  /*Change button state, if button is close then change the state to open.*/
-                isAnimating                     =  false;                                   /*The animation trigger boolean.*/
+                isAnimatingBoolean              =  false;                                   /*The animation trigger boolean.*/
                 isFunctionTriggerBoolean        =  true;                                    /*The function trigger boolean. The function will only happened one tick after state change.*/
 
             }

@@ -78,16 +78,16 @@ void    setup                           (){
 void    draw                            (){
 
     background                          (240);
-    dropdownMObjectAlphaFloat           = DropdownDrawFloat(dropdownMObjectAlphaFloat   , (width - offsetInt)   , offsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
-    dropdownPlayerAlphaFloat            = DropdownDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
+    dropdownMObjectAlphaFloat           = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - offsetInt)   , offsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
+    dropdownPlayerAlphaFloat            = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
 }
 
 /*The mouse pressed override function is for the open and close button.*/
 void    mousePressed                    (){
 
-    if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimating = true; }
-    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimating = true; }
+    if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimatingBoolean = true; }
+    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimatingBoolean = true; }
 
 }
 
@@ -309,163 +309,199 @@ void MuseumObjectInitVoid               (){
 
 }
 
-float DropdownDrawFloat                     (
+float ScrollableDrawFloat(
 
-    float           _alphaFloat, 
-    int             _xInt, 
-    int             _yInt, 
-    ButtonOpenClose _buttonOpenCloseObject, 
+    float           _alphaFloat             ,
+    int             _xInt                   ,
+    int             _yInt                   ,
+    ButtonOpenClose _buttonOpenCloseObject  ,
     String          _captionString
 
 ){
 
-    /*Create simple fade in and fade out animation.*/
-    CColor fadeCColorObject             = new CColor();
-           fadeCColorObject
-                .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
-                .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
-                .setCaptionLabel        (color(255  , 255   , 255,    _alphaFloat))
-                .setForeground          (color(0    , 116   , 217,    _alphaFloat))
-                .setValueLabel          (color(255  , 255   , 255,    _alphaFloat));
-
-    CColor fadeCColorFloorObject          = new CColor();
-           fadeCColorFloorObject
-                .setActive              (color(0    , 45    , 90 ,    _alphaFloat))
-                .setBackground          (color(0    , 45    , 90 ,    _alphaFloat))
-                .setForeground          (color(0    , 45    , 90 ,    _alphaFloat));
-
-    CColor fadeCColorRoomObject          = new CColor();
-           fadeCColorRoomObject
-                .setActive              (color(0    , 95    , 140,    _alphaFloat))
-                .setBackground          (color(0    , 95    , 140,    _alphaFloat))
-                .setForeground          (color(0    , 126   , 227,    _alphaFloat));
-
-    CColor fadeCColorExhibitionObject   = new CColor();
-           fadeCColorExhibitionObject
-                .setActive              (color(0    , 145   , 190,    _alphaFloat))
-                .setBackground          (color(0    , 145   , 190,    _alphaFloat))
-                .setForeground          (color(0    , 136   , 237,    _alphaFloat));
-
+    /*Determine color for each possible buttons.*/
+    CColor defaultCColorObject      = new CColor(); /*Color for default ubuttons scrollable list.*/
+    CColor floorCColorObject        = new CColor(); /*Color for floor buttons scrollable list.*/
+    CColor roomCColorObject         = new CColor(); /*Color for room buttons scrollable list.*/
+    CColor exhibitionCColorObject   = new CColor(); /*Color for exhibition buttons scrollable list.*/
+           defaultCColorObject
+                .setActive          (color(0    , 45    , 90    , _alphaFloat))
+                .setBackground      (color(0    , 45    , 90    , _alphaFloat))
+                .setCaptionLabel    (color(255  , 255   , 255   , _alphaFloat))
+                .setForeground      (color(0    , 116   , 217   , _alphaFloat))
+                .setValueLabel      (color(255  , 255   , 255   , _alphaFloat));
+           floorCColorObject
+                .setActive          (color(0    , 45    , 90    , _alphaFloat))
+                .setBackground      (color(0    , 45    , 90    , _alphaFloat))
+                .setForeground      (color(0    , 116   , 217   , _alphaFloat));
+           roomCColorObject
+                .setActive          (color(0    , 95    , 140   , _alphaFloat))
+                .setBackground      (color(0    , 95    , 140   , _alphaFloat))
+                .setForeground      (color(0    , 126   , 227   , _alphaFloat));
+           exhibitionCColorObject
+                .setActive          (color(0    , 145   , 190   , _alphaFloat))
+                .setBackground      (color(0    , 145   , 190   , _alphaFloat))
+                .setForeground      (color(0    , 136   , 237   , _alphaFloat));
     /*This is the time step necessary for fade in and fade out animation.
     The 255f is the floating number of the maximum opacity.
     While the 45f is the tick necessary to finish the rotating animation of
         button open close.*/
-    float   animationStepFloat              = (255f/45f);
-
-    int     museumSizeInt                   = museumStringList.size();
-
+    float   animationStepFloat      = (255f/45f);
     /*Update the open and close button.
     The two parameters is the position of the open and close button.*/
-    _buttonOpenCloseObject                  .DrawVoid(_xInt, _yInt);
-
-    /*If statements to control event animation of the open close buttons.
-    Like here for example I want to hide() and show the dropdown menu based on
+    _buttonOpenCloseObject          .DrawVoid(_xInt, _yInt);
+    /*If statements to control animation event of the open close buttons.
+    Like here, for example I want to hide() and show the dropdown menu based on
         the corresponding open close button.
     The thing to mention here is that the animation need to finished first before another event executed.
-    If statment when the animation is finished.*/
-    if(_buttonOpenCloseObject.isAnimating   == false){
+    If statment while the animation is still going.*/
+    if                              (_buttonOpenCloseObject.isAnimatingBoolean == true ){
 
-        /*Revert the boolean.*/
-        boolean tempBoolean                 = !_buttonOpenCloseObject.isButtonOpenBoolean;
+        _alphaFloat = ButtonOpenCloseAnimatingFloat(
 
-        if                                  (tempBoolean == true ){
+            _buttonOpenCloseObject.isButtonOpenBoolean  ,
+            _buttonOpenCloseObject.isAnimatingBoolean   ,
+            _captionString                              ,
+            defaultCColorObject                         ,
+            floorCColorObject                           ,
+            roomCColorObject                            ,
+            exhibitionCColorObject                      ,
+            _alphaFloat
 
-            cp5DropdownObject
-                .get                        (ScrollableList.class, _captionString)
-                .show                       ();
-
-            for(int i = 0; i < museumStringList.size(); i ++){
-
-                String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
-                String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
-
-                if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
-                else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
-                else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
-
-            }
-
-            _alphaFloat                     = (255f - (255f/45f));
-
-        }
-        else if                             (tempBoolean == false){
-
-            cp5DropdownObject
-                .get                        (ScrollableList.class, _captionString)
-                .hide                       ();
-
-            _alphaFloat                     = (255f/45f);
-
-        }
+        );
 
     }
-    /*If statement while the animation is playing.*/
-    else if(_buttonOpenCloseObject.isAnimating == true){
+    /*If statement when the animation is stopped playing.*/
+    else if                         (_buttonOpenCloseObject.isAnimatingBoolean == false){
 
-        /*Revert the boolean.*/
-        boolean tempBoolean                 = !_buttonOpenCloseObject.isButtonOpenBoolean;
+        _alphaFloat = ButtonOpenCloseAnimatingFloat(
+
+            _buttonOpenCloseObject.isButtonOpenBoolean  ,
+            _buttonOpenCloseObject.isAnimatingBoolean   ,
+            _captionString                              ,
+            defaultCColorObject                         ,
+            floorCColorObject                           ,
+            roomCColorObject                            ,
+            exhibitionCColorObject                     ,
+            _alphaFloat
+
+        );
+
+    }
+
+    return _alphaFloat;
+
+}
+
+float ButtonOpenCloseAnimatingFloat (
+
+    boolean _buttonOpenCloseBoolean ,
+    boolean _isAnimatingBoolean     ,
+    String  _captionString          ,
+    CColor  _defaultCColorObject    ,
+    CColor  _floorCColorObject      ,
+    CColor  _roomCColorObject       ,
+    CColor  _exhibitionCColorObject ,
+    float   _alphaFloat
+
+){
+
+    /*Invert the state of when button is open or close.
+    I am not really sure why I need to invert the boolean while it is supposed
+        to work even without inverting the value.
+    So when the buttonOpenCloseObject.isButtonOpenBoolean is true the button is actually closed.
+    And when the buttonOpenCloseObject.isButtonOpenBoolean is false the button is actually open.*/
+    boolean buttonOpenCloseInvertBoolean = !_buttonOpenCloseBoolean;
+    /*When the button is animating (fade in - fade out).*/
+    if                          (_isAnimatingBoolean == true ){
 
         /*For closing animation.*/
-        if                                  (tempBoolean == true ){
+        if                      (buttonOpenCloseInvertBoolean == true ){
             
+            /*Show the scrollable list.*/
             cp5DropdownObject
-                .get                        (ScrollableList.class, _captionString)
-                .setColor                   (fadeCColorObject)
-                .show                       ();
-
-            /*
-            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
-            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
-            if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
-            else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
-            else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
-            */
-            for(int i = 0; i < museumStringList.size(); i ++){
-
-                String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
-                String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
-
-                if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
-                else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
-                else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
-
-            }
-
-            _alphaFloat                     -= (255f/45f);
+                .get            (ScrollableList.class, _captionString)
+                .setColor       (_defaultCColorObject)
+                .show           ();
+            /*Set the color according to the caption title.*/
+            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
+            /*Decrease the opacity value over time.*/
+            _alphaFloat -= (255f/45f);
 
         }
         /*For opening animation.*/
-        else if                             (tempBoolean == false){
+        else if                 (buttonOpenCloseInvertBoolean == false){
             
+            /*Show the scrollable list.*/
             cp5DropdownObject
-                .get                        (ScrollableList.class, _captionString)
-                .setColor                   (fadeCColorObject)
-                .show                       ();
-
-            /*
-            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).get("text").toString();
-            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
-            if(temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorFloorObject); }
-            else if(temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorRoomObject); }
-            else if(temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(2).put("color", fadeCColorExhibitionObject); }
-            */
-            for(int i = 0; i < museumStringList.size(); i ++){
-
-                String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).get("text").toString();
-                String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
-
-                if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorFloorObject);        }
-                else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorRoomObject);         }
-                else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, "Exhibition").getItem(i).put("color", fadeCColorExhibitionObject);   }
-
-            }
-
+                .get            (ScrollableList.class, _captionString)
+                .setColor       (_defaultCColorObject)
+                .show           ();
+            /*Set the color according to the caption title.*/
+            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
+            /*Increase the opacity value over time.*/
             _alphaFloat                     += (255f/45f);
 
         }
 
     }
+    /*When the button is not animating.*/
+    else if     (_isAnimatingBoolean == false){
 
-    return                                  _alphaFloat;
+        /*When the button is not animating and the button is close.*/
+        if      (buttonOpenCloseInvertBoolean == true ){
+
+            /*Show the scrollable list.*/
+            cp5DropdownObject
+                .get            (ScrollableList.class, _captionString)
+                .show           ();
+            /*Set the color according to the caption title.*/
+            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
+            /*Set the alpha value of this scrollable list to one tick before it goes full opacity.*/
+            _alphaFloat         = (255f - (255f/45f));
+
+        }
+        /*When the button is not animating and the button is open.*/
+        else if (buttonOpenCloseInvertBoolean == false){
+
+            /*Hide the scrollable list.*/
+            cp5DropdownObject
+                .get            (ScrollableList.class, _captionString)
+                .hide           ();
+            /*Set the alpha value of this scrollable list to one tick before it goes invisible.*/
+            _alphaFloat         = (255f/45f);
+
+        }
+
+    }
+
+    return _alphaFloat;
+
+}
+
+/*A function to control color for each possible type of buttons.*/
+void ColorControlVoid               (
+
+    String  _captionString          ,
+    CColor  _floorCColorObject      ,
+    CColor  _roomCColorObject       ,
+    CColor  _exhibitionCColorObject
+
+){
+
+    if(_captionString.equals("Exhibition")){
+
+        for(int i = 0; i < museumStringList.size(); i ++){
+
+            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).get("text").toString();
+            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+
+            if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _floorCColorObject);        }
+            else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _roomCColorObject);         }
+            else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _exhibitionCColorObject);   }
+
+        }
+
+    }
 
 }
