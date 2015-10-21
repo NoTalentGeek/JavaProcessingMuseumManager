@@ -328,13 +328,13 @@ float ButtonOpenCloseAnimatingFloat (
         /*For closing animation.*/
         if                      (buttonOpenCloseInvertBoolean == true ){
             
+            /*Set the color according to the caption title.*/
+            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Show the scrollable list.*/
             cp5DropdownObject
                 .get            (ScrollableList.class, _captionString)
                 .setColor       (_defaultCColorObject)
                 .show           ();
-            /*Set the color according to the caption title.*/
-            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Decrease the opacity value over time.*/
             _alphaFloat -= (255f/45f);
 
@@ -342,13 +342,13 @@ float ButtonOpenCloseAnimatingFloat (
         /*For opening animation.*/
         else if                 (buttonOpenCloseInvertBoolean == false){
             
+            /*Set the color according to the caption title.*/
+            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Show the scrollable list.*/
             cp5DropdownObject
                 .get            (ScrollableList.class, _captionString)
                 .setColor       (_defaultCColorObject)
                 .show           ();
-            /*Set the color according to the caption title.*/
-            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Increase the opacity value over time.*/
             _alphaFloat                     += (255f/45f);
 
@@ -361,12 +361,12 @@ float ButtonOpenCloseAnimatingFloat (
         /*When the button is not animating and the button is close.*/
         if      (buttonOpenCloseInvertBoolean == true ){
 
+            /*Set the color according to the caption title.*/
+            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Show the scrollable list.*/
             cp5DropdownObject
                 .get            (ScrollableList.class, _captionString)
                 .show           ();
-            /*Set the color according to the caption title.*/
-            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Set the alpha value of this scrollable list to one tick before it goes full opacity.*/
             _alphaFloat         = (255f - (255f/45f));
 

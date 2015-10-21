@@ -100,6 +100,7 @@ public void    draw                            (){
     background                          (240);
     dropdownMObjectAlphaFloat           = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - offsetInt)   , offsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
     dropdownPlayerAlphaFloat            = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , offsetInt             , offsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
+    println                             (dropdownMObjectAlphaFloat + " " + dropdownPlayerAlphaFloat);
 
 }
 
@@ -198,6 +199,8 @@ public void Exhibition                         (int _indexInt){
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
     else if(selectedMuseumObject.activeBoolean == false){
 
+        /*If close the floor we must carefully close the inner most button, in this case it is the exhibition buttons.
+        We need to close the room buttons and then loop again to close the exhibition buttons.*/
         if(temporaryTypeString.equals("FLR")){
 
             for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
@@ -235,6 +238,7 @@ public void Exhibition                         (int _indexInt){
             }
 
         }
+        /*If the button is not a floor button then we do not need to iterate deeper.*/
         else{
 
             for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
@@ -253,6 +257,8 @@ public void Exhibition                         (int _indexInt){
                 }
 
             }
+
+        /*God bless these curly braces.*/
 
         }
 
@@ -343,13 +349,13 @@ public float ButtonOpenCloseAnimatingFloat (
         /*For closing animation.*/
         if                      (buttonOpenCloseInvertBoolean == true ){
             
+            /*Set the color according to the caption title.*/
+            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Show the scrollable list.*/
             cp5DropdownObject
                 .get            (ScrollableList.class, _captionString)
                 .setColor       (_defaultCColorObject)
                 .show           ();
-            /*Set the color according to the caption title.*/
-            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Decrease the opacity value over time.*/
             _alphaFloat -= (255f/45f);
 
@@ -357,13 +363,13 @@ public float ButtonOpenCloseAnimatingFloat (
         /*For opening animation.*/
         else if                 (buttonOpenCloseInvertBoolean == false){
             
+            /*Set the color according to the caption title.*/
+            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Show the scrollable list.*/
             cp5DropdownObject
                 .get            (ScrollableList.class, _captionString)
                 .setColor       (_defaultCColorObject)
                 .show           ();
-            /*Set the color according to the caption title.*/
-            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Increase the opacity value over time.*/
             _alphaFloat                     += (255f/45f);
 
@@ -376,12 +382,12 @@ public float ButtonOpenCloseAnimatingFloat (
         /*When the button is not animating and the button is close.*/
         if      (buttonOpenCloseInvertBoolean == true ){
 
+            /*Set the color according to the caption title.*/
+            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Show the scrollable list.*/
             cp5DropdownObject
                 .get            (ScrollableList.class, _captionString)
                 .show           ();
-            /*Set the color according to the caption title.*/
-            ColorControlVoid("Exhibition", _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
             /*Set the alpha value of this scrollable list to one tick before it goes full opacity.*/
             _alphaFloat         = (255f - (255f/45f));
 
