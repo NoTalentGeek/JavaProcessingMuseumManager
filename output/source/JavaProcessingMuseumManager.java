@@ -111,6 +111,33 @@ public void    mousePressed                    (){
 
 }
 
+/*A function to control color for each possible type of buttons.*/
+public void ColorControlVoid               (
+
+    String  _captionString          ,
+    CColor  _floorCColorObject      ,
+    CColor  _roomCColorObject       ,
+    CColor  _exhibitionCColorObject
+
+){
+
+    if(_captionString.equals("Exhibition")){
+
+        for(int i = 0; i < museumStringList.size(); i ++){
+
+            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).get("text").toString();
+            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+
+            if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _floorCColorObject);        }
+            else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _roomCColorObject);         }
+            else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _exhibitionCColorObject);   }
+
+        }
+
+    }
+
+}
+
 /*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
 public void Exhibition                         (int _indexInt){
 
@@ -186,6 +213,14 @@ public void Exhibition                         (int _indexInt){
                 ObjectMuseum selectedMuseumChildObject                  = selectedMuseumObject.childObjectList.get(indexChildInt);
                              selectedMuseumChildObject.activeBoolean    = false;
 
+
+                /*Remove the children of inactive parent into the the scrollable object.*/
+                for(int i = 0; i < selectedMuseumChildObject.childObjectList.size(); i ++)   {
+
+                    cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumChildObject.childObjectList.get(i).nameAltString);
+
+                }
+
                 for(int i = 0; i < museumStringList.size(); i ++)                   {
 
                     /*Iterate through exhibitions.*/
@@ -217,13 +252,6 @@ public void Exhibition                         (int _indexInt){
                         }
 
                     }
-
-                }
-
-                /*Remove the children of inactive parent into the the scrollable object.*/
-                for(int i = 0; i < selectedMuseumChildObject.childObjectList.size(); i ++)   {
-
-                    cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumChildObject.childObjectList.get(i).nameAltString);
 
                 }
 
@@ -329,90 +357,6 @@ public void MuseumObjectInitVoid               (){
 
 }
 
-public float ScrollableDrawFloat(
-
-    float           _alphaFloat             ,
-    int             _xInt                   ,
-    int             _yInt                   ,
-    ButtonOpenClose _buttonOpenCloseObject  ,
-    String          _captionString
-
-){
-
-    /*Determine color for each possible buttons.*/
-    CColor defaultCColorObject      = new CColor(); /*Color for default ubuttons scrollable list.*/
-    CColor floorCColorObject        = new CColor(); /*Color for floor buttons scrollable list.*/
-    CColor roomCColorObject         = new CColor(); /*Color for room buttons scrollable list.*/
-    CColor exhibitionCColorObject   = new CColor(); /*Color for exhibition buttons scrollable list.*/
-           defaultCColorObject
-                .setActive          (color(0    , 45    , 90    , _alphaFloat))
-                .setBackground      (color(0    , 45    , 90    , _alphaFloat))
-                .setCaptionLabel    (color(255  , 255   , 255   , _alphaFloat))
-                .setForeground      (color(0    , 116   , 217   , _alphaFloat))
-                .setValueLabel      (color(255  , 255   , 255   , _alphaFloat));
-           floorCColorObject
-                .setActive          (color(0    , 45    , 90    , _alphaFloat))
-                .setBackground      (color(0    , 45    , 90    , _alphaFloat))
-                .setForeground      (color(0    , 116   , 217   , _alphaFloat));
-           roomCColorObject
-                .setActive          (color(0    , 95    , 140   , _alphaFloat))
-                .setBackground      (color(0    , 95    , 140   , _alphaFloat))
-                .setForeground      (color(0    , 126   , 227   , _alphaFloat));
-           exhibitionCColorObject
-                .setActive          (color(0    , 145   , 190   , _alphaFloat))
-                .setBackground      (color(0    , 145   , 190   , _alphaFloat))
-                .setForeground      (color(0    , 136   , 237   , _alphaFloat));
-    /*This is the time step necessary for fade in and fade out animation.
-    The 255f is the floating number of the maximum opacity.
-    While the 45f is the tick necessary to finish the rotating animation of
-        button open close.*/
-    float   animationStepFloat      = (255f/45f);
-    /*Update the open and close button.
-    The two parameters is the position of the open and close button.*/
-    _buttonOpenCloseObject          .DrawVoid(_xInt, _yInt);
-    /*If statements to control animation event of the open close buttons.
-    Like here, for example I want to hide() and show the dropdown menu based on
-        the corresponding open close button.
-    The thing to mention here is that the animation need to finished first before another event executed.
-    If statment while the animation is still going.*/
-    if                              (_buttonOpenCloseObject.isAnimatingBoolean == true ){
-
-        _alphaFloat = ButtonOpenCloseAnimatingFloat(
-
-            _buttonOpenCloseObject.isButtonOpenBoolean  ,
-            _buttonOpenCloseObject.isAnimatingBoolean   ,
-            _captionString                              ,
-            defaultCColorObject                         ,
-            floorCColorObject                           ,
-            roomCColorObject                            ,
-            exhibitionCColorObject                      ,
-            _alphaFloat
-
-        );
-
-    }
-    /*If statement when the animation is stopped playing.*/
-    else if                         (_buttonOpenCloseObject.isAnimatingBoolean == false){
-
-        _alphaFloat = ButtonOpenCloseAnimatingFloat(
-
-            _buttonOpenCloseObject.isButtonOpenBoolean  ,
-            _buttonOpenCloseObject.isAnimatingBoolean   ,
-            _captionString                              ,
-            defaultCColorObject                         ,
-            floorCColorObject                           ,
-            roomCColorObject                            ,
-            exhibitionCColorObject                     ,
-            _alphaFloat
-
-        );
-
-    }
-
-    return _alphaFloat;
-
-}
-
 public float ButtonOpenCloseAnimatingFloat (
 
     boolean _buttonOpenCloseBoolean ,
@@ -499,30 +443,87 @@ public float ButtonOpenCloseAnimatingFloat (
 
 }
 
-/*A function to control color for each possible type of buttons.*/
-public void ColorControlVoid               (
+public float ScrollableDrawFloat(
 
-    String  _captionString          ,
-    CColor  _floorCColorObject      ,
-    CColor  _roomCColorObject       ,
-    CColor  _exhibitionCColorObject
+    float           _alphaFloat             ,
+    int             _xInt                   ,
+    int             _yInt                   ,
+    ButtonOpenClose _buttonOpenCloseObject  ,
+    String          _captionString
 
 ){
 
-    if(_captionString.equals("Exhibition")){
+    /*Determine color for each possible buttons.*/
+    CColor defaultCColorObject      = new CColor(); /*Color for default ubuttons scrollable list.*/
+    CColor floorCColorObject        = new CColor(); /*Color for floor buttons scrollable list.*/
+    CColor roomCColorObject         = new CColor(); /*Color for room buttons scrollable list.*/
+    CColor exhibitionCColorObject   = new CColor(); /*Color for exhibition buttons scrollable list.*/
+           defaultCColorObject
+                .setActive          (color(0    , 45    , 90    , _alphaFloat))
+                .setBackground      (color(0    , 45    , 90    , _alphaFloat))
+                .setCaptionLabel    (color(255  , 255   , 255   , _alphaFloat))
+                .setForeground      (color(0    , 116   , 217   , _alphaFloat))
+                .setValueLabel      (color(255  , 255   , 255   , _alphaFloat));
+           floorCColorObject
+                .setActive          (color(0    , 45    , 90    , _alphaFloat))
+                .setBackground      (color(0    , 45    , 90    , _alphaFloat))
+                .setForeground      (color(0    , 116   , 217   , _alphaFloat));
+           roomCColorObject
+                .setActive          (color(0    , 95    , 140   , _alphaFloat))
+                .setBackground      (color(0    , 95    , 140   , _alphaFloat))
+                .setForeground      (color(0    , 126   , 227   , _alphaFloat));
+           exhibitionCColorObject
+                .setActive          (color(0    , 145   , 190   , _alphaFloat))
+                .setBackground      (color(0    , 145   , 190   , _alphaFloat))
+                .setForeground      (color(0    , 136   , 237   , _alphaFloat));
+    /*This is the time step necessary for fade in and fade out animation.
+    The 255f is the floating number of the maximum opacity.
+    While the 45f is the tick necessary to finish the rotating animation of
+        button open close.*/
+    float   animationStepFloat      = (255f/45f);
+    /*Update the open and close button.
+    The two parameters is the position of the open and close button.*/
+    _buttonOpenCloseObject          .DrawVoid(_xInt, _yInt);
+    /*If statements to control animation event of the open close buttons.
+    Like here, for example I want to hide() and show the dropdown menu based on
+        the corresponding open close button.
+    The thing to mention here is that the animation need to finished first before another event executed.
+    If statment while the animation is still going.*/
+    if                              (_buttonOpenCloseObject.isAnimatingBoolean == true ){
 
-        for(int i = 0; i < museumStringList.size(); i ++){
+        _alphaFloat = ButtonOpenCloseAnimatingFloat(
 
-            String  itemScrollableString    = cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).get("text").toString();
-            String  temporaryTypeString     = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));
+            _buttonOpenCloseObject.isButtonOpenBoolean  ,
+            _buttonOpenCloseObject.isAnimatingBoolean   ,
+            _captionString                              ,
+            defaultCColorObject                         ,
+            floorCColorObject                           ,
+            roomCColorObject                            ,
+            exhibitionCColorObject                      ,
+            _alphaFloat
 
-            if      (temporaryTypeString.equals("FLR")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _floorCColorObject);        }
-            else if (temporaryTypeString.equals("ROM")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _roomCColorObject);         }
-            else if (temporaryTypeString.equals("EXH")){ cp5DropdownObject.get(ScrollableList.class, _captionString).getItem(i).put("color", _exhibitionCColorObject);   }
-
-        }
+        );
 
     }
+    /*If statement when the animation is stopped playing.*/
+    else if                         (_buttonOpenCloseObject.isAnimatingBoolean == false){
+
+        _alphaFloat = ButtonOpenCloseAnimatingFloat(
+
+            _buttonOpenCloseObject.isButtonOpenBoolean  ,
+            _buttonOpenCloseObject.isAnimatingBoolean   ,
+            _captionString                              ,
+            defaultCColorObject                         ,
+            floorCColorObject                           ,
+            roomCColorObject                            ,
+            exhibitionCColorObject                     ,
+            _alphaFloat
+
+        );
+
+    }
+
+    return _alphaFloat;
 
 }
 /*A class for toggle open and close button.

@@ -193,6 +193,14 @@ void Exhibition                         (int _indexInt){
                 ObjectMuseum selectedMuseumChildObject                  = selectedMuseumObject.childObjectList.get(indexChildInt);
                              selectedMuseumChildObject.activeBoolean    = false;
 
+
+                /*Remove the children of inactive parent into the the scrollable object.*/
+                for(int i = 0; i < selectedMuseumChildObject.childObjectList.size(); i ++)   {
+
+                    cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumChildObject.childObjectList.get(i).nameAltString);
+
+                }
+
                 for(int i = 0; i < museumStringList.size(); i ++)                   {
 
                     /*Iterate through exhibitions.*/
@@ -224,13 +232,6 @@ void Exhibition                         (int _indexInt){
                         }
 
                     }
-
-                }
-
-                /*Remove the children of inactive parent into the the scrollable object.*/
-                for(int i = 0; i < selectedMuseumChildObject.childObjectList.size(); i ++)   {
-
-                    cp5DropdownObject.get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumChildObject.childObjectList.get(i).nameAltString);
 
                 }
 
