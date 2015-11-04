@@ -306,6 +306,8 @@ void draw()                                                 {
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
+    println(buttonOpenCloseMuseumObject.isButtonOpenBoolean);
+
 }
 
 /*The mouse pressed override function is for the open and close button.*/
