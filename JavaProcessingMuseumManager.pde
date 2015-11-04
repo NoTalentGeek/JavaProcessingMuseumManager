@@ -257,7 +257,6 @@ void draw()                                                 {
 
     /*PROTOTYPE.*/
     test ++;
-    println(roomObjectList.get(0).childObjectList.size());
     if(test == 500 && testBoolean == true){
         ObjectMuseum testObjectMuseum = new ObjectMuseum(new Name("EXH_TES", "Exhibition Test"), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList));
         exhibitionObjectList.add(testObjectMuseum);

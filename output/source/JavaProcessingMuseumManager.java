@@ -280,12 +280,12 @@ public void draw()                                                 {
     test ++;
     println(roomObjectList.get(0).childObjectList.size());
     if(test == 500 && testBoolean == true){
-        ObjectMuseum    testObjectMuseum = new ObjectMuseum(new Name("EXH_TES", "Exhibition Test"), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList));
-                        exhibitionObjectList.add(testObjectMuseum);
-                        exhibitionStringList.add(testObjectMuseum.nameAltString);
-                        roomObjectList.get(0).SetChildObjectList(exhibitionObjectList);
-                        testObjectMuseum.SetInitialParentObject(roomObjectList);
-                        testObjectMuseum.SetIndexInsideVoid();
+        ObjectMuseum testObjectMuseum = new ObjectMuseum(new Name("EXH_TES", "Exhibition Test"), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList));
+        exhibitionObjectList.add(testObjectMuseum);
+        exhibitionStringList.add(testObjectMuseum.nameAltString);
+        roomObjectList.get(0).SetChildObjectList(exhibitionObjectList);
+        testObjectMuseum.SetInitialParentObject(roomObjectList);
+        testObjectMuseum.SetIndexInsideVoid();
         testBoolean = false;
     }
 
