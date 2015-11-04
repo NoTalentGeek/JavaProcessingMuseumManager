@@ -60,6 +60,10 @@ float                   dropdownMObjectAlphaFloat       = 0;
 float                   dropdownPlayerAlphaFloat        = 0;                                /*The opacity number for dropdown player P5 component.*/
 int                     guiOffsetInt                    = 20;                               /*Offset for layouting the graphical user interface.*/
 
+/*PROTOTYPE.*/
+int test = 0;
+boolean testBoolean = true;
+
 /*Name class to manage an object name.*/
 class Name                                      {
 
@@ -165,6 +169,12 @@ void setup()                                    {
 
     );
 
+    /*Copy the List to itself so it changed from static List into dynamic List.*/
+    tagObjectList           = new ArrayList<Tag>            (tagObjectList          );
+    floorObjectList         = new ArrayList<ObjectMuseum>   (floorObjectList        );
+    roomObjectList          = new ArrayList<ObjectMuseum>   (roomObjectList         );
+    exhibitionObjectList    = new ArrayList<ObjectMuseum>   (exhibitionObjectList   );
+
     /*Initiate object parents and children for all object museum.*/
     for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList.get(i).SetChildObjectList  (roomObjectList); }
     for(int i = 0; i < roomObjectList.size()            ; i ++) {
@@ -244,6 +254,19 @@ void setup()                                    {
 }
 
 void draw()                                                 {
+
+    /*PROTOTYPE.*/
+    test ++;
+    println(roomObjectList.get(0).childObjectList.size());
+    if(test == 500 && testBoolean == true){
+        ObjectMuseum testObjectMuseum = new ObjectMuseum(new Name("EXH_TES", "Exhibition Test"), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList));
+        exhibitionObjectList.add(testObjectMuseum);
+        exhibitionStringList.add(testObjectMuseum.nameAltString);
+        roomObjectList.get(0).SetChildObjectList(exhibitionObjectList);
+        testObjectMuseum.SetInitialParentObject(roomObjectList);
+        testObjectMuseum.SetIndexInsideVoid();
+        testBoolean = false;
+    }
 
     /*Set the background color for this application.*/
     background              (34, 32, 52);
@@ -333,6 +356,7 @@ void CheckMuseumObjectHoverVoid(int _indexInt, List<ObjectMuseum> _targetObjectL
     }
 
 }
+
 /*A function to check whether an object of player is hovered by mouse pointer.*/
 void CheckPlayerObjectHoverVoid(int _indexInt){
 
