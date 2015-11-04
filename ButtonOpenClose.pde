@@ -22,6 +22,8 @@ public class ButtonOpenClose{
         int originXInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
         int originYInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
 
+        fill                            (255);
+        stroke                          (0);
         shapeMode                       (CENTER);                   /*Set this button origin point mode as center.*/
 
         buttonOpenCloseObject           = createShape(GROUP);       /*Create a shape type GROUP, which is an accumulation of other shapes.*/
@@ -60,20 +62,28 @@ public class ButtonOpenClose{
         After this is done you can just the main shape as the whole shape,
             and you do not need to set the properties of each shapes one
             by one.*/
-        buttonOpenCloseObject.addChild   (buttonOpenCloseCircleObject);
-        buttonOpenCloseObject.addChild   (buttonOpenCloseCross1Object);
-        buttonOpenCloseObject.addChild   (buttonOpenCloseCross2Object);
+        buttonOpenCloseObject.addChild  (buttonOpenCloseCircleObject);
+        buttonOpenCloseObject.addChild  (buttonOpenCloseCross1Object);
+        buttonOpenCloseObject.addChild  (buttonOpenCloseCross2Object);
+
+        noFill                          ();
+        noStroke                        ();
+        shapeMode                       (CORNER);                   /*Set this button origin point mode as center.*/
 
     }
 
     /*A function to draw the combined shape.*/
     void DrawVoid                               (int _buttonXInt, int _buttonYInt){
 
+        fill                                    (255);
+        stroke                                  (0);
+        shapeMode                               (CENTER);                                                   /*Set this button origin point mode as center.*/
+
         if(isFunctionTriggerBoolean == true)    { isFunctionTriggerBoolean = false; }
 
-        buttonXInt                              = _buttonXInt + (buttonSizeInt/2);                  /*Determine the position of this button axis with additional (buttonSizeInt/2) to fix the position resulted from shapeMode(CENTER).*/
-        buttonYInt                              = _buttonYInt + (buttonSizeInt/2);                  /*Determine the position of this button axis with additional (buttonSizeInt/2) to fix the position resulted from shapeMode(CENTER).*/
-        shape                                   (buttonOpenCloseObject, buttonXInt, buttonYInt);    /*Draw the main shape with additional last two parameters are the position on screen.*/
+        buttonXInt                              = _buttonXInt + (buttonSizeInt/2);                          /*Determine the position of this button axis with additional (buttonSizeInt/2) to fix the position resulted from shapeMode(CENTER).*/
+        buttonYInt                              = _buttonYInt + (buttonSizeInt/2);                          /*Determine the position of this button axis with additional (buttonSizeInt/2) to fix the position resulted from shapeMode(CENTER).*/
+        shape                                   (buttonOpenCloseObject, buttonXInt, buttonYInt);            /*Draw the main shape with additional last two parameters are the position on screen.*/
 
         if(isAnimatingBoolean == true)                 {
 
@@ -85,15 +95,19 @@ public class ButtonOpenClose{
             /*If the animation is finished.*/
             if(buttonRotationCounterInt         >= 45){
 
-                buttonRotationCounterInt        =  0;                                       /*Reset the animation counter, so that next time the counter start counting from 0 degree.*/
-                if      (isButtonOpenBoolean    == true)  { isButtonOpenBoolean = false; }  /*Change button state, if button is open then change the state to close.*/
-                else if (isButtonOpenBoolean    == false) { isButtonOpenBoolean = true;  }  /*Change button state, if button is close then change the state to open.*/
-                isAnimatingBoolean              =  false;                                   /*The animation trigger boolean.*/
-                isFunctionTriggerBoolean        =  true;                                    /*The function trigger boolean. The function will only happened one tick after state change.*/
+                buttonRotationCounterInt        =  0;                                                       /*Reset the animation counter, so that next time the counter start counting from 0 degree.*/
+                if      (isButtonOpenBoolean    == true)  { isButtonOpenBoolean = false; }                  /*Change button state, if button is open then change the state to close.*/
+                else if (isButtonOpenBoolean    == false) { isButtonOpenBoolean = true;  }                  /*Change button state, if button is close then change the state to open.*/
+                isAnimatingBoolean              =  false;                                                   /*The animation trigger boolean.*/
+                isFunctionTriggerBoolean        =  true;                                                    /*The function trigger boolean. The function will only happened one tick after state change.*/
 
             }
 
         }
+
+        fill                                    (255);
+        stroke                                  (0);
+        shapeMode                               (CORNER);                   /*Set this button origin point mode as center.*/
 
     }
 
