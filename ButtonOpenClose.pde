@@ -7,7 +7,7 @@ public class ButtonOpenClose{
     PShape  buttonOpenCloseCross1Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
     PShape  buttonOpenCloseCross2Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
     boolean isAnimatingBoolean          = false;
-    boolean isButtonOpenBoolean         = true;
+    boolean isButtonOpenBoolean         = false;
     boolean isFunctionTriggerBoolean    = false;
     int     buttonRotationCounterInt    = 0;
     int     buttonSizeInt               = -1;   /*The size of this button.*/
@@ -87,8 +87,8 @@ public class ButtonOpenClose{
 
         if(isAnimatingBoolean == true)                 {
 
-            if      (isButtonOpenBoolean        == true)  { buttonOpenCloseObject.rotate(radians(1));  }    /*This button animation based on the current state of this button.*/
-            else if (isButtonOpenBoolean        == false) { buttonOpenCloseObject.rotate(-radians(1)); }    /*This button animation based on the current state of this button.*/
+            if      (isButtonOpenBoolean        == true)  { buttonOpenCloseObject.rotate(-radians(1));  }   /*This button animation based on the current state of this button.*/
+            else if (isButtonOpenBoolean        == false) { buttonOpenCloseObject.rotate( radians(1));  }   /*This button animation based on the current state of this button.*/
 
             buttonRotationCounterInt            ++;                                                         /*The animation is 45 degrees rotation clock wise or anti - clock wise depending on button state.*/
 

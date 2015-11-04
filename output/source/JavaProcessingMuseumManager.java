@@ -22,9 +22,10 @@ public class JavaProcessingMuseumManager extends PApplet {
 
 
 
-ControlP5               cp5DropdownObject;
-ButtonOpenClose         buttonOpenCloseMuseumObject;
-ButtonOpenClose         buttonOpenClosePlayerObject;
+boolean                 buttonOpenCloseBoolean          = false ;
+ControlP5               cp5DropdownObject                       ;
+ButtonOpenClose         buttonOpenCloseMuseumObject             ;
+ButtonOpenClose         buttonOpenClosePlayerObject             ;
 
 /*Determine global variables.*/
 int                     playerAmountInt                 = 100;                              /*The number of players in this simulation.*/
@@ -316,9 +317,6 @@ public void draw()                                                 {
     for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, exhibitionObjectList  ); }
     for(int i = 0; i < playerObjectList     .size(); i ++){ playerObjectList        .get(i).DrawVoid(); CheckPlayerObjectHoverVoid(i                        ); }
 
-    /*Create the card.*/
-    CreatePanelCardVoid();
-
     /*
     playerObjectList        .get(playerLoopCounterInt).AIAutoVoid();
     playerLoopCounterInt    = (playerLoopCounterInt >= (playerObjectList.size() - 1)) ? 0 : (playerLoopCounterInt + 1);
@@ -327,7 +325,10 @@ public void draw()                                                 {
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
 
-    println(buttonOpenCloseMuseumObject.isButtonOpenBoolean);
+    /*Update buttonOpenCloseBoolean.*/
+    SetButtonOpenCloseBoolean   ();
+    /*Create the card.*/
+    if(buttonOpenCloseBoolean == false){ CreatePanelCardVoid(); }
 
 }
 
@@ -604,6 +605,15 @@ public void Exhibition(int _indexInt)                              {
 
 }
 
+/*A function to set if there is at least one button in open state.*/
+public boolean SetButtonOpenCloseBoolean()                         {
+
+    if(buttonOpenCloseMuseumObject.isButtonOpenBoolean == true || buttonOpenClosePlayerObject.isButtonOpenBoolean == true)  { buttonOpenCloseBoolean = true ; }
+    else                                                                                                                    { buttonOpenCloseBoolean = false; }
+    return buttonOpenCloseBoolean;
+
+}
+
 public float ButtonOpenCloseAnimatingFloat(
 
     boolean _buttonOpenCloseBoolean ,
@@ -622,12 +632,11 @@ public float ButtonOpenCloseAnimatingFloat(
         to work even without inverting the value.
     So when the buttonOpenCloseObject.isButtonOpenBoolean is true the button is actually closed.
     And when the buttonOpenCloseObject.isButtonOpenBoolean is false the button is actually open.*/
-    boolean buttonOpenCloseInvertBoolean = !_buttonOpenCloseBoolean;
     /*When the button is animating (fade in - fade out).*/
     if                          (_isAnimatingBoolean == true ){
 
         /*For closing animation.*/
-        if                      (buttonOpenCloseInvertBoolean == true ){
+        if                      (_buttonOpenCloseBoolean == true ){
             
             /*Set the color according to the caption title.*/
             ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
@@ -641,7 +650,7 @@ public float ButtonOpenCloseAnimatingFloat(
 
         }
         /*For opening animation.*/
-        else if                 (buttonOpenCloseInvertBoolean == false){
+        else if                 (_buttonOpenCloseBoolean == false){
             
             /*Set the color according to the caption title.*/
             ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
@@ -660,7 +669,7 @@ public float ButtonOpenCloseAnimatingFloat(
     else if     (_isAnimatingBoolean == false){
 
         /*When the button is not animating and the button is close.*/
-        if      (buttonOpenCloseInvertBoolean == true ){
+        if      (_buttonOpenCloseBoolean == true ){
 
             /*Set the color according to the caption title.*/
             ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
@@ -673,7 +682,7 @@ public float ButtonOpenCloseAnimatingFloat(
 
         }
         /*When the button is not animating and the button is open.*/
-        else if (buttonOpenCloseInvertBoolean == false){
+        else if (_buttonOpenCloseBoolean == false){
 
             /*Hide the scrollable list.*/
             cp5DropdownObject
@@ -863,7 +872,7 @@ public class ButtonOpenClose{
     PShape  buttonOpenCloseCross1Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
     PShape  buttonOpenCloseCross2Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
     boolean isAnimatingBoolean          = false;
-    boolean isButtonOpenBoolean         = true;
+    boolean isButtonOpenBoolean         = false;
     boolean isFunctionTriggerBoolean    = false;
     int     buttonRotationCounterInt    = 0;
     int     buttonSizeInt               = -1;   /*The size of this button.*/
@@ -943,8 +952,8 @@ public class ButtonOpenClose{
 
         if(isAnimatingBoolean == true)                 {
 
-            if      (isButtonOpenBoolean        == true)  { buttonOpenCloseObject.rotate(radians(1));  }    /*This button animation based on the current state of this button.*/
-            else if (isButtonOpenBoolean        == false) { buttonOpenCloseObject.rotate(-radians(1)); }    /*This button animation based on the current state of this button.*/
+            if      (isButtonOpenBoolean        == true)  { buttonOpenCloseObject.rotate(-radians(1));  }   /*This button animation based on the current state of this button.*/
+            else if (isButtonOpenBoolean        == false) { buttonOpenCloseObject.rotate( radians(1));  }   /*This button animation based on the current state of this button.*/
 
             buttonRotationCounterInt            ++;                                                         /*The animation is 45 degrees rotation clock wise or anti - clock wise depending on button state.*/
 
