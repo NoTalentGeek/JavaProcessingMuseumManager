@@ -7,10 +7,10 @@ ButtonOpenClose         buttonOpenClosePlayerObject;
 List<ObjectMuseum>      floorObjectList                 = new ArrayList<ObjectMuseum>();    /*This list contains all possible floor object.*/
 List<ObjectMuseum>      roomObjectList                  = new ArrayList<ObjectMuseum>();    /*This list contains all possible room object.*/
 List<ObjectMuseum>      exhibitionObjectList            = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
+List<String>            museumStringList                = new ArrayList<String>();
 List<String>            floorStringList                 = new ArrayList<String>();
 List<String>            roomStringList                  = new ArrayList<String>();
 List<String>            exhibitionStringList            = new ArrayList<String>();
-List<String>            museumStringList                = new ArrayList<String>();
 List<String>            playerStringList                = new ArrayList<String>();
 
 float                   dropdownMObjectAlphaFloat       = 0;
