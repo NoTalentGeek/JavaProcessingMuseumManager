@@ -1160,16 +1160,16 @@ class AddMuseumGUIObject{
 	                                            .setGroup               (AddMuseumGroupObject)
 	                                            .setLabel               ("Submit");
 
-        println("AddMuseumGroupObject \t\t" + cp5Object.get(Group.class, "AddMuseumGroupObject").getColor());
-        println("TypeObjectMuseumSList \t\t" + cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList").getColor());
-        println("SelectParentObjectMuseumSList \t" + cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").getColor());
-        println("SelectTagSubjectSList \t\t" + cp5Object.get(ScrollableList.class, "SelectTagSubjectSList").getColor());
-        println("SelectTagVerbSList \t\t" + cp5Object.get(ScrollableList.class, "SelectTagVerbSList").getColor());
-        println("SelectTagNounSList \t\t" + cp5Object.get(ScrollableList.class, "SelectTagNounSList").getColor());
-        println("CanAddMultipleTagsTextlabel \t" + cp5Object.get(Textlabel.class, "CanAddMultipleTagsTextlabel").getColor());
-        println("NameFullTextfield \t\t" + cp5Object.get(Textfield.class, "NameFullTextfield").getColor());
-        println("NameAltTextfield \t\t" + cp5Object.get(Textfield.class, "NameAltTextfield").getColor());
-        println("SubmitButton \t\t\t" + cp5Object.get(Button.class, "SubmitButton").getColor());
+        println("AddMuseumGroupObject\t\t" 			+ cp5Object.get(Group.class			, "AddMuseumGroupObject"			).getColor());
+        println("TypeObjectMuseumSList\t\t" 		+ cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList"			).getColor());
+        println("SelectParentObjectMuseumSList\t" 	+ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList"	).getColor());
+        println("SelectTagSubjectSList\t\t"			+ cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"			).getColor());
+        println("SelectTagVerbSList\t\t" 			+ cp5Object.get(ScrollableList.class, "SelectTagVerbSList"				).getColor());
+        println("SelectTagNounSList\t\t" 			+ cp5Object.get(ScrollableList.class, "SelectTagNounSList"				).getColor());
+        println("CanAddMultipleTagsTextlabel\t" 	+ cp5Object.get(Textlabel.class		, "CanAddMultipleTagsTextlabel"		).getColor());
+        println("NameFullTextfield\t\t" 			+ cp5Object.get(Textfield.class		, "NameFullTextfield"				).getColor());
+        println("NameAltTextfield\t\t" 				+ cp5Object.get(Textfield.class		, "NameAltTextfield"				).getColor());
+        println("SubmitButton\t\t\t" 				+ cp5Object.get(Button.class		, "SubmitButton"					).getColor());
 
 	}
 
