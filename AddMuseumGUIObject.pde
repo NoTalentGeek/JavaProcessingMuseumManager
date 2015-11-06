@@ -25,6 +25,8 @@ class AddMuseumGUIObject{
     CColor          sChecklistTrueCColor                = new CColor();             /*The color of the item when an item in scroll checklist is selected.*/
     CColor          sChecklistFalseCColor               = new CColor();             /*The color of the item when an item in scroll checklist is not selected.*/
     String          typeObjectMuseumString              = "";                       /*The type of the object that will be added, it will be either floor, room, or exhibition object.*/
+    String          selectedParentString                = "";                       /*Variable to be used and altered in the main class.*/
+    String          selectedTypeObjectString            = "";                       /*Variable to be used and altered in the main class.*/
 
     /*Constructor.*/
     AddMuseumGUIObject(
