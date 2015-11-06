@@ -274,20 +274,18 @@ public void setup()                                    {
 
 }
 
-public void draw()                                                 {
+public void draw()                                     {
 
     /*PROTOTYPE.*/
     test ++;
-    println(roomObjectList.get(0).childObjectList.size());
-    if(test == 500 && testBoolean == true){
-        ObjectMuseum testObjectMuseum = new ObjectMuseum(new Name("EXH_TES", "Exhibition Test"), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList));
-        exhibitionObjectList.add(testObjectMuseum);
-        exhibitionStringList.add(testObjectMuseum.nameAltString);
-        roomObjectList.get(0).SetChildObjectList(exhibitionObjectList);
-        testObjectMuseum.SetInitialParentObject(roomObjectList);
-        testObjectMuseum.SetIndexInsideVoid();
+    if(test == 50 && testBoolean == true){
+        //AddObjectMuseum("ROM_TES", "Room Test", "FLR_002", "ROM");
+        AddObjectMuseum("FLR_TES", "Floor Test", "XXX_XXX", "FLR");
+        AddObjectMuseum("ROM_TES", "Room Test", "FLR_TES", "ROM");
+        AddObjectMuseum("EXH_TES", "Exhibition Test", "ROM_TES", "EXH");
         testBoolean = false;
     }
+
 
     /*Set the background color for this application.*/
     background              (34, 32, 52);
@@ -356,7 +354,7 @@ public void draw()                                                 {
 }
 
 /*The mouse pressed override function is for the open and close button.*/
-public void mousePressed()                                         {
+public void mousePressed()                             {
 
     if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimatingBoolean = true; }
     if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimatingBoolean = true; }
@@ -422,7 +420,7 @@ public void ColorControlVoid(
 }
 
 /*A function to create panel card.*/
-public void CreatePanelCardVoid()                          {
+public void CreatePanelCardVoid()                      {
 
     if(panelCardChangeBoolean == false){
 
@@ -503,7 +501,7 @@ public void CreatePanelCardVoid()                          {
 }
 
 /*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
-public void Exhibition(int _indexInt)                              {
+public void Exhibition(int _indexInt)                  {
 
     List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                            /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
     ObjectMuseum                        selectedMuseumObject                = null;                                                                                                     /*This is the selected museum object. From here this application will try to modify the selected museum object;s values.*/
@@ -630,7 +628,7 @@ public void Exhibition(int _indexInt)                              {
 }
 
 /*A function to set if there is at least one button in open state.*/
-public boolean SetButtonOpenCloseBoolean()                         {
+public boolean SetButtonOpenCloseBoolean()             {
 
     if(buttonOpenCloseMuseumObject.isButtonOpenBoolean == true || buttonOpenClosePlayerObject.isButtonOpenBoolean == true)  { buttonOpenCloseBoolean = true ; }
     else                                                                                                                    { buttonOpenCloseBoolean = false; }
@@ -833,6 +831,80 @@ public int CalculateTextHeightInt(
 
 }
 
+/*Simple function to return an index number of museum object within their own list.*/
+public int FindObjectMuseumIndexInt(
+
+    String _targetString                    ,
+    List<ObjectMuseum> _targetObjectList
+
+){
+
+    for(int i = 0; i < _targetObjectList.size(); i ++){
+
+        if(_targetObjectList.get(i).nameAltString.equals(_targetString)){ return i; }
+
+    }
+    return -1;
+
+}
+
+/*Create a function to add museum object.
+PENDING: Later I need to add additional arguments so that the tags will also be added.*/
+public ObjectMuseum AddObjectMuseum(
+
+    String _nameAltString       ,
+    String _nameFullString      ,
+    String _parentNameAltString ,
+    String _typeString
+
+){
+
+    /*Create temporary list for object that we want to make, its list, and its parent list.*/
+    List<ObjectMuseum>  museumObjectList        = new ArrayList<ObjectMuseum>();
+    List<ObjectMuseum>  parentMuseumObjectList  = new ArrayList<ObjectMuseum>();
+    List<String>        museumStringList        = new ArrayList<String>();
+    ObjectMuseum        museumObject            = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, AssignRandomTagList(tagObjectList));
+
+    /*If statement to determine which List we should put in.*/
+    if      (_typeString.equals("FLR")){
+
+        museumObjectList            = floorObjectList;
+        museumStringList            = floorStringList;
+
+    }
+    else if (_typeString.equals("ROM")){
+
+        museumObjectList            = roomObjectList;
+        parentMuseumObjectList      = floorObjectList;
+        museumStringList            = roomStringList;
+
+    }
+    else if (_typeString.equals("EXH")){
+
+        museumObjectList            = exhibitionObjectList;
+        parentMuseumObjectList      = roomObjectList;
+        museumStringList            = exhibitionStringList;
+
+    }
+
+    /*Assign the object into the object List and the String List.*/
+    museumObjectList.add(museumObject);
+    museumStringList.add(museumObject.nameAltString);
+
+    /*If other than floor object we also need to determine the parent object.*/
+    if      (!_typeString.equals("FLR")){
+
+        parentMuseumObjectList.get(FindObjectMuseumIndexInt(_parentNameAltString, parentMuseumObjectList)).SetChildObjectList(museumObjectList);
+        museumObject.SetInitialParentObject(parentMuseumObjectList);
+
+    }
+
+    /*Re - adjust all the index of this object that we just created.*/
+    museumObject.SetIndexInsideVoid();
+    
+    return museumObject;
+
+}
 
 /*A function to return an array of object tag to be put in the museum object, randomly.*/
 public Tag[] AssignRandomTagList(List<Tag> _tagObjectList) {
@@ -1172,6 +1244,10 @@ class   ObjectMuseum                                                            
             else if (heightPanelInt <= 10){ heightPanelInt = 10; }
 
         }
+
+        /*PENDING: Noise error here.*/
+        //if(nameAltString.equals("EXH_TES")){ println(parentObject.childObjectList.size()); }
+
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
 
             widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*layoutOffsetInt))/parentObject.childObjectList.size());

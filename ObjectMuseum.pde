@@ -139,6 +139,10 @@ class   ObjectMuseum                                                            
             else if (heightPanelInt <= 10){ heightPanelInt = 10; }
 
         }
+
+        /*PENDING: Noise error here.*/
+        //if(nameAltString.equals("EXH_TES")){ println(parentObject.childObjectList.size()); }
+
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
 
             widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*layoutOffsetInt))/parentObject.childObjectList.size());
