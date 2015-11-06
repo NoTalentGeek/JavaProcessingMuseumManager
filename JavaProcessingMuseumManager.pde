@@ -222,34 +222,47 @@ void setup()                                    {
     cp5Object                           = new ControlP5(this);
 
     int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
-    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
-    buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
+    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
+    buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
 
     int dropdownObjectWidthInt          = (width/3);
     int dropdownObjectHeightInt         = (height - ((guiOffsetInt + (buttonSizeInt/2))*2));
     int itemHeightInt                   = (dropdownObjectHeightInt/20);
 
-    /*Create player dropdown menu.*/
+    /*Add the museum object GUI.*/
+    addMuseumGUIObject                  = new AddMuseumGUIObject(
+
+        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
+        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
+        dropdownObjectWidthInt                                              ,
+        250                                                                 ,
+        buttonSizeInt                                                       ,
+        dropdownObjectWidthInt
+
+    );
+
+    /*Create museum object dropdown menu.*/
     cp5Object
-        .addScrollableList              ("Exhibition")
+        .addScrollableList              ("ExhibitionSList")
         .setPosition                    (
 
-            ((width - ((guiOffsetInt/2)*2) - (buttonSizeInt/2)) - dropdownObjectWidthInt),
-            (guiOffsetInt + (buttonSizeInt/2))
+            (width -  guiOffsetInt      - (buttonSizeInt/2) - dropdownObjectWidthInt                ),
+            (        (guiOffsetInt*1.5) + (buttonSizeInt/2) + addMuseumGUIObject.groupAddHeightInt  )
 
         )
         .setSize                        (dropdownObjectWidthInt, dropdownObjectHeightInt)
         .setBarHeight                   (itemHeightInt)
         .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
+        .setLabel                       ("Exhibition:")
         .hide                           ();
 
     /*Create player dropdown menu.*/
     cp5Object
-        .addScrollableList              ("Visitor")
+        .addScrollableList              ("VisitorSList")
         .setPosition                    (
 
-            ((guiOffsetInt/2)*2) + (buttonSizeInt/2),
+            (guiOffsetInt + (buttonSizeInt/2)),
             (guiOffsetInt + (buttonSizeInt/2))
 
         )
@@ -257,18 +270,16 @@ void setup()                                    {
         .setBarHeight                   (itemHeightInt)
         .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
+        .setLabel                       ("Visitor:")
         .hide                           ();
 
     museumStringList                    = floorStringList;                                  /*Set the initial item for this scrollable list.*/
-    cp5Object                           .get(ScrollableList.class, "Exhibition")
+    cp5Object                           .get(ScrollableList.class, "ExhibitionSList")
                                         .setItems(floorStringList);
     /*
-    cp5Object                           .get(ScrollableList.class, "Visitor")
+    cp5Object                           .get(ScrollableList.class, "VisitorSList")
                                         .setItems();
     */
-
-    /*Add the museum object GUI.*/
-    addMuseumGUIObject                  = new AddMuseumGUIObject(0, 0, (width/3), 250);
 
 }
 
@@ -340,8 +351,8 @@ void draw()                                     {
     playerLoopCounterInt    = (playerLoopCounterInt >= (playerObjectList.size() - 1)) ? 0 : (playerLoopCounterInt + 1);
     */
 
-    dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
-    dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
+    dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
+    dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
     /*Update the museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
 
@@ -397,7 +408,7 @@ void CheckPlayerObjectHoverVoid(int _indexInt)  {
 
 }
 
-/*A function to control color for each possible type of buttons.*/
+/*A function to control color for each possible type of museum object buttons.*/
 void ColorControlVoid(
 
     String  _captionString          ,
@@ -407,7 +418,7 @@ void ColorControlVoid(
 
 ){
 
-    if(_captionString.equals("Exhibition")){
+    if(_captionString.equals("ExhibitionSList")){
 
         for(int i = 0; i < museumStringList.size(); i ++){
 
@@ -507,11 +518,11 @@ void CreatePanelCardVoid()                      {
 }
 
 /*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
-void Exhibition(int _indexInt)                  {
+void ExhibitionSList(int _indexInt)             {
 
     List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                            /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
     ObjectMuseum                        selectedMuseumObject                = null;                                                                                                     /*This is the selected museum object. From here this application will try to modify the selected museum object;s values.*/
-    String                              itemScrollableString                = cp5Object        .get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
+    String                              itemScrollableString                = cp5Object        .get(ScrollableList.class, "ExhibitionSList").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
     String                              temporaryTypeString                 = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));                            /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String.*/
     int                                 selectedMuseumIndexInt              = -1;                                                                                                       /*The selected index of the selected object in its object list.*/
 
@@ -560,7 +571,7 @@ void Exhibition(int _indexInt)                  {
 
         ){ museumStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString); }
         /*Set the items into the scrollable list.*/
-        cp5Object        .get(ScrollableList.class, "Exhibition")           .setItems(museumStringList);
+        cp5Object        .get(ScrollableList.class, "ExhibitionSList")           .setItems(museumStringList);
 
     }
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
@@ -579,7 +590,7 @@ void Exhibition(int _indexInt)                  {
                         if(museumStringList.get(k).equals(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString)){
 
                             selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).activeBoolean = false;
-                            cp5Object        .get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString);
+                            cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString);
                             museumStringList.remove(k);
                             k --;
 
@@ -594,7 +605,7 @@ void Exhibition(int _indexInt)                  {
                     if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
 
                         selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        cp5Object        .get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
                         museumStringList.remove(j);
                         j --;
 
@@ -615,7 +626,7 @@ void Exhibition(int _indexInt)                  {
                     if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
 
                         selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        cp5Object        .get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
                         museumStringList.remove(j);
                         j --;
 
@@ -910,7 +921,7 @@ ObjectMuseum AddObjectMuseum(
 
     /*Reset the display of the exhibition scrollable list.*/
     museumStringList            = floorStringList;
-    cp5Object                   .get(ScrollableList.class, "Exhibition").setItems(museumStringList);
+    cp5Object                   .get(ScrollableList.class, "ExhibitionSList").setItems(museumStringList);
 
     return                      museumObject;
 

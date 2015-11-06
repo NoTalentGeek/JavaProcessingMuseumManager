@@ -245,34 +245,47 @@ public void setup()                                    {
     cp5Object                           = new ControlP5(this);
 
     int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
-    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
-    buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size of 30 pixels. PENDING: Adjust later based on application resolution.*/
+    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
+    buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
 
     int dropdownObjectWidthInt          = (width/3);
     int dropdownObjectHeightInt         = (height - ((guiOffsetInt + (buttonSizeInt/2))*2));
     int itemHeightInt                   = (dropdownObjectHeightInt/20);
 
-    /*Create player dropdown menu.*/
+    /*Add the museum object GUI.*/
+    addMuseumGUIObject                  = new AddMuseumGUIObject(
+
+        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
+        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
+        dropdownObjectWidthInt                                              ,
+        250                                                                 ,
+        buttonSizeInt                                                       ,
+        dropdownObjectWidthInt
+
+    );
+
+    /*Create museum object dropdown menu.*/
     cp5Object
-        .addScrollableList              ("Exhibition")
+        .addScrollableList              ("ExhibitionSList")
         .setPosition                    (
 
-            ((width - ((guiOffsetInt/2)*2) - (buttonSizeInt/2)) - dropdownObjectWidthInt),
-            (guiOffsetInt + (buttonSizeInt/2))
+            (width -  guiOffsetInt      - (buttonSizeInt/2) - dropdownObjectWidthInt                ),
+            (        (guiOffsetInt*1.5f) + (buttonSizeInt/2) + addMuseumGUIObject.groupAddHeightInt  )
 
         )
         .setSize                        (dropdownObjectWidthInt, dropdownObjectHeightInt)
         .setBarHeight                   (itemHeightInt)
         .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
+        .setLabel                       ("Exhibitions:")
         .hide                           ();
 
     /*Create player dropdown menu.*/
     cp5Object
-        .addScrollableList              ("Visitor")
+        .addScrollableList              ("VisitorSList")
         .setPosition                    (
 
-            ((guiOffsetInt/2)*2) + (buttonSizeInt/2),
+            (guiOffsetInt + (buttonSizeInt/2)),
             (guiOffsetInt + (buttonSizeInt/2))
 
         )
@@ -280,18 +293,16 @@ public void setup()                                    {
         .setBarHeight                   (itemHeightInt)
         .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)
+        .setLabel                       ("Visitor:")
         .hide                           ();
 
     museumStringList                    = floorStringList;                                  /*Set the initial item for this scrollable list.*/
-    cp5Object                           .get(ScrollableList.class, "Exhibition")
+    cp5Object                           .get(ScrollableList.class, "ExhibitionSList")
                                         .setItems(floorStringList);
     /*
-    cp5Object                           .get(ScrollableList.class, "Visitor")
+    cp5Object                           .get(ScrollableList.class, "VisitorSList")
                                         .setItems();
     */
-
-    /*Add the museum object GUI.*/
-    addMuseumGUIObject                  = new AddMuseumGUIObject(0, 0, (width/3), 250);
 
 }
 
@@ -363,8 +374,8 @@ public void draw()                                     {
     playerLoopCounterInt    = (playerLoopCounterInt >= (playerObjectList.size() - 1)) ? 0 : (playerLoopCounterInt + 1);
     */
 
-    dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
-    dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
+    dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
+    dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
     /*Update the museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
 
@@ -420,7 +431,7 @@ public void CheckPlayerObjectHoverVoid(int _indexInt)  {
 
 }
 
-/*A function to control color for each possible type of buttons.*/
+/*A function to control color for each possible type of museum object buttons.*/
 public void ColorControlVoid(
 
     String  _captionString          ,
@@ -430,7 +441,7 @@ public void ColorControlVoid(
 
 ){
 
-    if(_captionString.equals("Exhibition")){
+    if(_captionString.equals("ExhibitionSList")){
 
         for(int i = 0; i < museumStringList.size(); i ++){
 
@@ -530,11 +541,11 @@ public void CreatePanelCardVoid()                      {
 }
 
 /*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
-public void Exhibition(int _indexInt)                  {
+public void ExhibitionSList(int _indexInt)             {
 
     List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                            /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
     ObjectMuseum                        selectedMuseumObject                = null;                                                                                                     /*This is the selected museum object. From here this application will try to modify the selected museum object;s values.*/
-    String                              itemScrollableString                = cp5Object        .get(ScrollableList.class, "Exhibition").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
+    String                              itemScrollableString                = cp5Object        .get(ScrollableList.class, "ExhibitionSList").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
     String                              temporaryTypeString                 = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));                            /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String.*/
     int                                 selectedMuseumIndexInt              = -1;                                                                                                       /*The selected index of the selected object in its object list.*/
 
@@ -583,7 +594,7 @@ public void Exhibition(int _indexInt)                  {
 
         ){ museumStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString); }
         /*Set the items into the scrollable list.*/
-        cp5Object        .get(ScrollableList.class, "Exhibition")           .setItems(museumStringList);
+        cp5Object        .get(ScrollableList.class, "ExhibitionSList")           .setItems(museumStringList);
 
     }
     /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
@@ -602,7 +613,7 @@ public void Exhibition(int _indexInt)                  {
                         if(museumStringList.get(k).equals(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString)){
 
                             selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).activeBoolean = false;
-                            cp5Object        .get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString);
+                            cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString);
                             museumStringList.remove(k);
                             k --;
 
@@ -617,7 +628,7 @@ public void Exhibition(int _indexInt)                  {
                     if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
 
                         selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        cp5Object        .get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
                         museumStringList.remove(j);
                         j --;
 
@@ -638,7 +649,7 @@ public void Exhibition(int _indexInt)                  {
                     if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
 
                         selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        cp5Object        .get(ScrollableList.class, "Exhibition").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
                         museumStringList.remove(j);
                         j --;
 
@@ -933,7 +944,7 @@ public ObjectMuseum AddObjectMuseum(
 
     /*Reset the display of the exhibition scrollable list.*/
     museumStringList            = floorStringList;
-    cp5Object                   .get(ScrollableList.class, "Exhibition").setItems(museumStringList);
+    cp5Object                   .get(ScrollableList.class, "ExhibitionSList").setItems(museumStringList);
 
     return                      museumObject;
 
@@ -1031,33 +1042,37 @@ public void ScrollableChecklistVoid    (String _scrollableNameString, int _index
 class AddMuseumGUIObject{
 
     /*Some variables :).*/
-    int           groupBackgroundColor        ;                           /*The color of group panel background.*/
-    int           groupColorBackgroundColor   ;
-    int           groupColorLabelColor        ;
-    float           alphaFloat                  = 255;                      /*The opacity of this object.*/
-    int             groupLayoutOffsetInt        = 10;                       /*This object layout offset.*/
-    int             groupLabelHeightInt         ;                           /*Make the header of the group to be exactly as the same as layout offset.*/
-    int             groupXInt                   ;                           /*X position of this GUI object in the main class.*/
-    int             groupYInt                   ;                           /*Y position of this GUI object in the main class.*/
-    int             groupAddWidthInt            ;                           /*Width of the group, dependent on screen size.*/
-    int             groupAddHeightInt           ;                           /*Fixed height of the group, you need to carefully arrange the height of this variable using pixel ruler..*/
-    int             scrollableOffsetInt         = 1;                        /*Fixed offset of scrollable list.*/
-    int             scrollableWidthInt          ;                           /*Width of every scrollable list component, dependent on group size.*/
-    int             scrollableHeightInt         ;                           /*Height of every scrollable list component, dependent group label height.*/
-    int             oneLineComponentWidthInt    ;                           /*Width for every one line component like button or text field, dependent on scrollable component size.*/
-    int             oneLineComponentHeightInt   ;                           /*Height for every one line component like button or text field, dependent on scrollable component size.*/
-    CColor          otherCColor                 = new CColor();             /*The color for other component than the scrollableChecklist.*/
-    CColor          sChecklistTrueCColor        = new CColor();             /*The color of the item when an item in scroll checklist is selected.*/
-    CColor          sChecklistFalseCColor       = new CColor();             /*The color of the item when an item in scroll checklist is not selected.*/
-    String          typeObjectMuseumString      = "";                       /*The type of the object that will be added, it will be either floor, room, or exhibition object.*/
+    int           groupBackgroundColor                ;                           /*The color of group panel group background.*/
+    int           groupColorBackgroundColor           ;                           /*The title background color of panel group.*/
+    int           groupColorLabelColor                ;                           /*The title font colot of the panel group.*/
+    float           alphaFloat                          = 255;                      /*The opacity of this object.*/
+    int             parentButtonSizeInt                 ;                           /*A variable for layout taken from the main class.*/
+    int             parentDropdownObjectWidthInt        ;                           /*A variable for layout taken from the main class.*/
+    int             groupLayoutOffsetInt                = 10;                       /*This object layout offset.*/
+    int             groupLabelHeightInt                 ;                           /*Make the header of the group to be exactly as the same as layout offset.*/
+    int             groupXInt                           ;                           /*X position of this GUI object in the main class.*/
+    int             groupYInt                           ;                           /*Y position of this GUI object in the main class.*/
+    int             groupAddWidthInt                    ;                           /*Width of the group, dependent on screen size.*/
+    int             groupAddHeightInt                   ;                           /*Fixed height of the group, you need to carefully arrange the height of this variable using pixel ruler..*/
+    int             scrollableOffsetInt                 = 1;                        /*Fixed offset of scrollable list.*/
+    int             scrollableWidthInt                  ;                           /*Width of every scrollable list component, dependent on group size.*/
+    int             scrollableHeightInt                 ;                           /*Height of every scrollable list component, dependent group label height.*/
+    int             oneLineComponentWidthInt            ;                           /*Width for every one line component like button or text field, dependent on scrollable component size.*/
+    int             oneLineComponentHeightInt           ;                           /*Height for every one line component like button or text field, dependent on scrollable component size.*/
+    CColor          otherCColor                         = new CColor();             /*The color for other component than the scrollableChecklist.*/
+    CColor          sChecklistTrueCColor                = new CColor();             /*The color of the item when an item in scroll checklist is selected.*/
+    CColor          sChecklistFalseCColor               = new CColor();             /*The color of the item when an item in scroll checklist is not selected.*/
+    String          typeObjectMuseumString              = "";                       /*The type of the object that will be added, it will be either floor, room, or exhibition object.*/
 
     /*Constructor.*/
     AddMuseumGUIObject(
 
-        int     _groupXInt          ,
-        int     _groupYInt          ,
-        int     _groupAddWidthInt   ,
-        int     _groupAddHeightInt
+        int     _groupXInt                      ,
+        int     _groupYInt                      ,
+        int     _groupAddWidthInt               ,
+        int     _groupAddHeightInt              ,
+        int     _parentButtonSizeInt            ,
+        int     _parentDropdownObjectWidthInt
 
     ){
 
@@ -1065,14 +1080,16 @@ class AddMuseumGUIObject{
         groupYInt                               = _groupYInt + groupLayoutOffsetInt;
         groupAddWidthInt                        = _groupAddWidthInt;
         groupAddHeightInt                       = _groupAddHeightInt;
+        parentButtonSizeInt                     = _parentButtonSizeInt;
+        parentDropdownObjectWidthInt            = _parentDropdownObjectWidthInt;
 
         groupLabelHeightInt                     = groupLayoutOffsetInt;
         scrollableWidthInt                      = ((groupAddWidthInt - groupLayoutOffsetInt*4)/3);          /*Create the scrollable list width to accomodate three scrollable list in a row.*/
-        scrollableHeightInt                     = ((6*groupLabelHeightInt) + (5*scrollableOffsetInt));  /*Create the scrollable list height to accomodate five items + header in.*/
+        scrollableHeightInt                     = ((6*groupLabelHeightInt) + (5*scrollableOffsetInt));      /*Create the scrollable list height to accomodate five items + header in.*/
         oneLineComponentWidthInt                = ((groupAddWidthInt - groupLayoutOffsetInt*3)/2);          /*Create the one line object width to accomodate two similar object in a row.*/
-        oneLineComponentHeightInt               = groupLabelHeightInt;                                  /*This need to be at the same height as the layout offset or the label height.*/
+        oneLineComponentHeightInt               = groupLabelHeightInt;                                      /*This need to be at the same height as the layout offset or the label height.*/
 
-        /*Set the color.*/
+        /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
         groupBackgroundColor                    = color(50  , 60    , 57    , alphaFloat);
         groupColorBackgroundColor               = color(2   , 45    , 89    , alphaFloat);
         groupColorLabelColor                    = color(255 , 255   , 255   , alphaFloat);
@@ -1095,7 +1112,7 @@ class AddMuseumGUIObject{
         /*Create the group and all components.*/
         Group   AddMuseumGroupObject            =
                 cp5Object                       .addGroup               ("AddMuseumGroupObject")
-                                                .setPosition            (0, groupLabelHeightInt)
+                                                .setPosition            (groupXInt, groupYInt)
                                                 .setWidth               (groupAddWidthInt)
                                                 .setBackgroundHeight    (groupAddHeightInt)
                                                 .setBackgroundColor     (groupBackgroundColor)
@@ -1178,43 +1195,40 @@ class AddMuseumGUIObject{
                                                 .setColor               (otherCColor)
                                                 .setLabel               ("Submit");
 
-        println("AddMuseumGroupObject\t\t"          + cp5Object.get(Group.class         , "AddMuseumGroupObject"            ).getColor());
-        println("TypeObjectMuseumSList\t\t"         + cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList"           ).getColor());
-        println("SelectParentObjectMuseumSList\t"   + cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList"   ).getColor());
-        println("SelectTagSubjectSList\t\t"         + cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"           ).getColor());
-        println("SelectTagVerbSList\t\t"            + cp5Object.get(ScrollableList.class, "SelectTagVerbSList"              ).getColor());
-        println("SelectTagNounSList\t\t"            + cp5Object.get(ScrollableList.class, "SelectTagNounSList"              ).getColor());
-        println("CanAddMultipleTagsTextlabel\t"     + cp5Object.get(Textlabel.class     , "CanAddMultipleTagsTextlabel"     ).getColor());
-        println("NameFullTextfield\t\t"             + cp5Object.get(Textfield.class     , "NameFullTextfield"               ).getColor());
-        println("NameAltTextfield\t\t"              + cp5Object.get(Textfield.class     , "NameAltTextfield"                ).getColor());
-        println("SubmitButton\t\t\t"                + cp5Object.get(Button.class        , "SubmitButton"                    ).getColor());
+        /*DEBUG.*/
+        /*
+        println("AddMuseumGroupObject\t\t"                              + cp5Object.get(Group.class         , "AddMuseumGroupObject"            ).getColor());
+        println("TypeObjectMuseumSList\t\t"                             + cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList"           ).getColor());
+        println("SelectParentObjectMuseumSList\t"                       + cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList"   ).getColor());
+        println("SelectTagSubjectSList\t\t"                             + cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"           ).getColor());
+        println("SelectTagVerbSList\t\t"                                + cp5Object.get(ScrollableList.class, "SelectTagVerbSList"              ).getColor());
+        println("SelectTagNounSList\t\t"                                + cp5Object.get(ScrollableList.class, "SelectTagNounSList"              ).getColor());
+        println("CanAddMultipleTagsTextlabel\t"                         + cp5Object.get(Textlabel.class     , "CanAddMultipleTagsTextlabel"     ).getColor());
+        println("NameFullTextfield\t\t"                                 + cp5Object.get(Textfield.class     , "NameFullTextfield"               ).getColor());
+        println("NameAltTextfield\t\t"                                  + cp5Object.get(Textfield.class     , "NameAltTextfield"                ).getColor());
+        println("SubmitButton\t\t\t"                                    + cp5Object.get(Button.class        , "SubmitButton"                    ).getColor());
+        */
 
     }
 
     public void DrawVoid(float _alphaFloat){
 
-        alphaFloat      = _alphaFloat;
-        if      (alphaFloat >  (255f/45f)){
+        /*For ebery tick/frame make sure to sync this object with the value received from the main class.*/
+        alphaFloat                  = _alphaFloat;
 
-            cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).show();
-
-        }
-        else if (alphaFloat <= (255f/45f)){
-
-            cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).hide();
-
-
-        }
-        groupBackgroundColor        = color             (50     , 60    , 57    , alphaFloat + (255f/45f));
-        groupColorBackgroundColor   = color             (2      , 45    , 89    , alphaFloat + (255f/45f));
-        groupColorLabelColor        = color             (255    , 255   , 255   , alphaFloat + (255f/45f));
+        /*Show/hide controller based on the alpha value received from the main class.*/
+        if                          (alphaFloat >  (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).show(); }
+        else if                     (alphaFloat <= (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).hide(); }
+        groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat + (255f/45f));
+        groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat + (255f/45f));
+        groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat + (255f/45f));
         otherCColor                 .setActive          (color(0    , 170   , 255   , alphaFloat))
                                     .setBackground      (color(0    , 45    , 90    , alphaFloat))
                                     .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
                                     .setForeground      (color(0    , 116   , 217   , alphaFloat))
                                     .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
-
+        /*Especially for group controller you need to adjust four methods instead of just one.*/
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setBackgroundColor    (groupBackgroundColor);
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColor              (otherCColor);
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColorBackground    (groupColorBackgroundColor);
@@ -1235,6 +1249,28 @@ class AddMuseumGUIObject{
         else if (typeObjectMuseumString.equals("Room"       )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(floorStringList    ); typeObjectMuseumString = ""; }
         else if (typeObjectMuseumString.equals("Exhibition" )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(roomStringList     ); typeObjectMuseumString = ""; }
 
+        /*This code below is for controlling controllers outside of this class.
+        These two if statements is for controlling the position of the other object in the same open close button.*/
+        if      (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == true ){
+
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+
+                    (width -  guiOffsetInt      - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt    ),
+                    (        (guiOffsetInt*1.5f) + (parentButtonSizeInt/2) + groupAddHeightInt               )
+
+                );
+                
+        }
+        else if (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == false){
+
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+
+                    (width -  guiOffsetInt - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt ),
+                    (         guiOffsetInt + (parentButtonSizeInt/2) + groupLabelHeightInt          )
+
+                );
+
+        }
 
     }
 
