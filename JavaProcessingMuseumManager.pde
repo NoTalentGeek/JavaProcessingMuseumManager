@@ -342,13 +342,11 @@ void draw()                                     {
 
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "Exhibition" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "Visitor"    );
+    /*Update the museum object GUI.*/
+    addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
 
     /*Update buttonOpenCloseBoolean.*/
-    SetButtonOpenCloseBoolean   ();
-
-    /*Update the museum object GUI.*/
-    addMuseumGUIObject                      .DrawVoid();
-
+    SetButtonOpenCloseBoolean               ();    
     /*Create the card.*/
     if(buttonOpenCloseBoolean == false)     { CreatePanelCardVoid(); }
 
@@ -690,7 +688,7 @@ float ButtonOpenCloseAnimatingFloat(
                 .setColor       (_defaultCColorObject)
                 .show           ();
             /*Increase the opacity value over time.*/
-            _alphaFloat                     += (255f/45f);
+            _alphaFloat         += (255f/45f);
 
         }
 
@@ -987,8 +985,8 @@ void ScrollableChecklistVoid    (String _scrollableNameString, int _indexInt)   
     After that assign the isSelected value to true and also assign the color.*/
     if( cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected") == null){
 
-        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("isSelected" , true                           );
-        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color"      , addMuseumGUIObject.trueCColor  );
+        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("isSelected" , true                                       );
+        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color"      , addMuseumGUIObject.sChecklistTrueCColor    );
 
     }
     /*If there is isSelected property than revert it between true and false everytime we clicked it and set the appropriate color scheme.*/
@@ -998,8 +996,8 @@ void ScrollableChecklistVoid    (String _scrollableNameString, int _indexInt)   
                                     cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("isSelected", !stateBoolean           );
                 stateBoolean    =   cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected").toString().equals("true") ? true : false;
 
-        if      (stateBoolean == true ){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.trueCColor ); }
-        else if (stateBoolean == false){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.falseCColor); }
+        if      (stateBoolean == true ){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.sChecklistTrueCColor ); }
+        else if (stateBoolean == false){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.sChecklistFalseCColor); }
 
     }
 

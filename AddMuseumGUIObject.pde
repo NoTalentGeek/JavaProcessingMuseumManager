@@ -5,7 +5,7 @@ class AddMuseumGUIObject{
 
 	/*Some variables :).*/
 	color           groupBackgroundColor        = color(255, 50);			/*The color of group panel background.*/
-	float 			alphaFloat 					= 0; 						/*The opacity of this object.*/
+	float 			alphaFloat 					= 255; 						/*The opacity of this object.*/
 	int 			groupLayoutOffsetInt		= 10;						/*This object layout offset.*/
 	int             groupLabelHeightInt         ;                           /*Make the header of the group to be exactly as the same as layout offset.*/
 	int 			groupXInt					;							/*X position of this GUI object in the main class.*/
@@ -17,8 +17,9 @@ class AddMuseumGUIObject{
 	int             scrollableHeightInt         ;                           /*Height of every scrollable list component, dependent group label height.*/
 	int             oneLineComponentWidthInt    ;                           /*Width for every one line component like button or text field, dependent on scrollable component size.*/
 	int             oneLineComponentHeightInt   ;                           /*Height for every one line component like button or text field, dependent on scrollable component size.*/
-	CColor          trueCColor                  = new CColor();				/*The color of the item when an item in scroll checklist is selected.*/
-	CColor          falseCColor                 = new CColor();				/*The color of the item when an item in scroll checklist is not selected.*/
+	CColor 			otherCColor 				= new CColor();				/*The color for other component than the scrollableChecklist.*/
+	CColor          sChecklistTrueCColor		= new CColor();				/*The color of the item when an item in scroll checklist is selected.*/
+	CColor          sChecklistFalseCColor		= new CColor();				/*The color of the item when an item in scroll checklist is not selected.*/
 	String          typeObjectMuseumString      = "";						/*The type of the object that will be added, it will be either floor, room, or exhibition object.*/
 
 	/*Constructor.*/
@@ -43,12 +44,18 @@ class AddMuseumGUIObject{
 	    oneLineComponentHeightInt               = groupLabelHeightInt;									/*This need to be at the same height as the layout offset or the label height.*/
 
 	    /*Set the color.*/
-		falseCColor                             .setActive          (color(0    , 45    , 90    , alphaFloat))
+	    otherCColor 							.setActive          (color(0    , 170   , 255   , alphaFloat))
 		                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
 		                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
 		                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
 		                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-		trueCColor                              .setActive          (color(0    , 116   , 217   , alphaFloat))
+		                                        println(otherCColor);
+		sChecklistFalseCColor					.setActive          (color(0    , 45    , 90    , alphaFloat))
+		                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
+		                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+		                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
+		                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+		sChecklistTrueCColor					.setActive          (color(0    , 116   , 217   , alphaFloat))
 		                                        .setBackground      (color(0    , 116   , 217   , alphaFloat))
 		                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
 		                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
@@ -61,8 +68,8 @@ class AddMuseumGUIObject{
 	                                            .setWidth               (groupAddWidthInt)
 	                                            .setBackgroundHeight    (groupAddHeightInt)
 	                                            .setBackgroundColor     (groupBackgroundColor)
-	                                            .setLabel               ("Add Museum Object:")
-	                                            .hide 					();
+	                                            .setColor 				(otherCColor)
+	                                            .setLabel               ("Add Museum Object:");
 
 	            cp5Object                       .addScrollableList      ("TypeObjectMuseumSList")
 	                                            .setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
@@ -70,6 +77,7 @@ class AddMuseumGUIObject{
 	                                            .setGroup               (AddMuseumGroupObject)
 	                                            .addItems               (Arrays.asList("Floor", "Room", "Exhibition"))
 	                                            .setType                (ControlP5.LIST)
+	                                            .setColor 				(otherCColor)
 	                                            .setLabel               ("Choose Type:");
 
 	            cp5Object                       .addScrollableList      ("SelectParentObjectMuseumSList")
@@ -78,6 +86,7 @@ class AddMuseumGUIObject{
 	                                            .setGroup               (AddMuseumGroupObject)
 	                                            .addItems               (defaultStringList)
 	                                            .setType                (ControlP5.LIST)
+	                                            .setColor 				(otherCColor)
 	                                            .setLabel               ("Parent Object:");
 
 	            cp5Object                       .addScrollableList      ("SelectTagSubjectSList")
@@ -86,7 +95,7 @@ class AddMuseumGUIObject{
 	                                            .setGroup               (AddMuseumGroupObject)
 	                                            .addItems               (subjectTagStringList)
 	                                            .setType                (ControlP5.LIST)
-	                                            //.setColor               (falseCColor)
+	                                            .setColor               (sChecklistFalseCColor)
 	                                            .setLabel               ("Subject Tag:");
 
 	            cp5Object                       .addScrollableList      ("SelectTagVerbSList")
@@ -95,7 +104,7 @@ class AddMuseumGUIObject{
 	                                            .setGroup               (AddMuseumGroupObject)
 	                                            .addItems               (verbTagStringList)
 	                                            .setType                (ControlP5.LIST)
-	                                            //.setColor               (falseCColor)
+	                                            .setColor               (sChecklistFalseCColor)
 	                                            .setLabel               ("Verb Tag:");
 
 	            cp5Object                       .addScrollableList      ("SelectTagNounSList")
@@ -104,12 +113,14 @@ class AddMuseumGUIObject{
 	                                            .setGroup               (AddMuseumGroupObject)
 	                                            .addItems               (nounTagStringList)
 	                                            .setType                (ControlP5.LIST)
-	                                            //.setColor               (falseCColor)
+	                                            .setColor               (sChecklistFalseCColor)
+	                                            .setColor 				(otherCColor)
 	                                            .setLabel               ("Noun Tag:");
 
 	            cp5Object                       .addTextlabel           ("CanAddMultipleTagsTextlabel")
 	                                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
 	                                            .setGroup               (AddMuseumGroupObject)
+	                                            .setColor 				(otherCColor)
 	                                            .setColorValue          (255)
 	                                            .setText                ("*You can add multiple tags,\nbut minimum one tag in each category.");
 
@@ -117,18 +128,21 @@ class AddMuseumGUIObject{
 	                                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*6) + (scrollableHeightInt*2)))
 	                                            .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
 	                                            .setGroup               (AddMuseumGroupObject)
+	                                            .setColor 				(otherCColor)
 	                                            .setLabel               ("Name Full:");
 
 	            cp5Object                       .addTextfield           ("NameAltTextfield")
 	                                            .setPosition            (((groupLayoutOffsetInt*2) + oneLineComponentWidthInt), ((groupLayoutOffsetInt*6) + (scrollableHeightInt*2)))
 	                                            .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
 	                                            .setGroup               (AddMuseumGroupObject)
+	                                            .setColor 				(otherCColor)
 	                                            .setLabel               ("Name Alternative:");
 
 	            cp5Object                       .addButton              ("SubmitButton")
 	                                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*9) + (scrollableHeightInt*2) + oneLineComponentHeightInt))
 	                                            .setSize                (((oneLineComponentWidthInt*2) + groupLayoutOffsetInt), oneLineComponentHeightInt)
 	                                            .setGroup               (AddMuseumGroupObject)
+	                                            .setColor 				(otherCColor)
 	                                            .setLabel               ("Submit");
 
         println("AddMuseumGroupObject\t\t" 			+ cp5Object.get(Group.class			, "AddMuseumGroupObject"			).getColor());
@@ -144,14 +158,42 @@ class AddMuseumGUIObject{
 
 	}
 
-	void DrawVoid(){
+	void DrawVoid(float _alphaFloat){
+
+		alphaFloat 		= _alphaFloat;
+		if 		(alphaFloat >  (255f/45f)){
+
+			cp5Object.get(Group 		.class	, "AddMuseumGroupObject"			).show();
+
+		}
+		else if (alphaFloat <= (255f/45f)){
+
+			cp5Object.get(Group 		.class	, "AddMuseumGroupObject"			).hide();
+
+
+		}
+		otherCColor		.setActive          (color(0    , 170   , 255   , alphaFloat))
+						.setBackground      (color(0    , 45    , 90    , alphaFloat))
+						.setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+						.setForeground      (color(0    , 116   , 217   , alphaFloat))
+						.setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+
+		cp5Object.get(Group 		.class	, "AddMuseumGroupObject"			).setColor(otherCColor);
+		cp5Object.get(ScrollableList.class	, "TypeObjectMuseumSList"			).setColor(otherCColor);
+		cp5Object.get(ScrollableList.class	, "SelectParentObjectMuseumSList"	).setColor(otherCColor);
+		cp5Object.get(ScrollableList.class	, "SelectTagSubjectSList"			).setColor(otherCColor);
+		cp5Object.get(ScrollableList.class	, "SelectTagVerbSList"				).setColor(otherCColor);
+		cp5Object.get(ScrollableList.class	, "SelectTagNounSList"				).setColor(otherCColor);
+		cp5Object.get(Textlabel		.class	, "CanAddMultipleTagsTextlabel"		).setColor(otherCColor);
+		cp5Object.get(Textfield		.class	, "NameFullTextfield"				).setColor(otherCColor);
+		cp5Object.get(Textfield		.class	, "NameAltTextfield"				).setColor(otherCColor);
+		cp5Object.get(Button 		.class	, "SubmitButton"					).setColor(otherCColor);
+        println("NameAltTextfield\t\t" 				+ cp5Object.get(Textfield.class		, "NameAltTextfield"				).getColor().getAlpha());
 
 		/*This to re - set SelectParentObjectMuseumSList so that it display options according to the TypeObjectMuseumSList selection.*/
 		if      (typeObjectMuseumString.equals("Floor"      )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(defaultStringList  ); typeObjectMuseumString = ""; }
 	    else if (typeObjectMuseumString.equals("Room"       )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(floorStringList    ); typeObjectMuseumString = ""; }
 	    else if (typeObjectMuseumString.equals("Exhibition" )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(roomStringList     ); typeObjectMuseumString = ""; }
-
-	    /*Opacity animation.*/
 
 
 	}
