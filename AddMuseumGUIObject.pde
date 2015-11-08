@@ -29,7 +29,8 @@ class AddMuseumGUIObject{
     String          selectedParentString                = "";                       /*Variable to be used and altered in the main class.*/
     String          selectedTypeObjectString            = "";                       /*Variable to be used and altered in the main class.*/
 
-    /*Constructor.*/
+    /*Constructor.
+    PENDING: Move the parent argument into the argument for DrawVoid() method.*/
     AddMuseumGUIObject(
 
         int     _groupXInt                      ,
@@ -195,12 +196,13 @@ class AddMuseumGUIObject{
                                     .setForeground      (color(0    , 116   , 217   , alphaFloat))
                                     .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
-        /*Especially for group controller you need to adjust four methods instead of just one.*/
+        /*Especially for group controller you need to adjust four methods instead of just one methods.*/
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setBackgroundColor    (groupBackgroundColor);
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColor              (otherCColor);
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColorBackground    (groupColorBackgroundColor);
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColorLabel         (groupColorLabelColor);
 
+        /*The rest of the controller you only need to adjust for one method, which is setColor().*/
         cp5Object.get(ScrollableList.class  , "TypeObjectMuseumSList"           ).setColor              (otherCColor);
         cp5Object.get(ScrollableList.class  , "SelectParentObjectMuseumSList"   ).setColor              (otherCColor);
         cp5Object.get(ScrollableList.class  , "SelectTagSubjectSList"           ).setColor              (otherCColor);
