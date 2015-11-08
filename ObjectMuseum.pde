@@ -21,7 +21,8 @@ class   ObjectMuseum                                                            
     String              typeString                  = "";                               /*The type of this object (the only possible values are "FLR", "ROM", and "EXH").*/
 
     List<Tag>           tagMuseumObjectList         = new ArrayList<Tag>();             /*Object tag list.*/
-    List<String>        tagMuseumNameAltStringList  = new ArrayList<String>();          /*The tags for whit museum object.*/
+    List<String>        tagMuseumNameAltStringList  = new ArrayList<String>();          /*The tags for this museum object.*/
+    List<String>        tagMuseumNameFullStringList = new ArrayList<String>();          /*The tags for this museum object.*/
 
     boolean             fullBoolean                 = false;                            /*Whether this museum object is full or not.*/
     int                 visitorCurrentInt           = 0;                                /*This museum object current visitor.*/
@@ -72,8 +73,12 @@ class   ObjectMuseum                                                            
 
         /*Assign the added tags and then convert it from array to List.*/
         tagMuseumObjectList                         = Arrays.asList(_tagObjectArray);
-        for(int i = 0; i < tagMuseumObjectList.size(); i ++)
-                                                    { tagMuseumNameAltStringList.add(tagMuseumObjectList.get(i).nameAltString); }
+        for(int i = 0; i < tagMuseumObjectList.size(); i ++){
+
+            tagMuseumNameAltStringList.add(tagMuseumObjectList.get(i).nameAltString);
+            tagMuseumNameFullStringList.add(tagMuseumObjectList.get(i).nameFullString);
+
+        }
 
         /*Create panel.*/
         panelObject                                 = new Panel();
@@ -85,8 +90,7 @@ class   ObjectMuseum                                                            
 
         SetFullBoolean  ();
         SetHoverBoolean ();
-        /*PENDING: Turn off panel draw void while creating player panel.*/
-        //PanelDrawVoid ();
+        PanelDrawVoid   ();
 
     }
 

@@ -8,15 +8,19 @@ class TagCounter{
 
     /*I create an array becuse comparator will not working on primitive data type.
     Hence, I put the value in one element List.*/
-    List<Integer>   tagCounterIntList   = new ArrayList<Integer>();
-    String          tagNameString       = "";
     int             tagCounterInt       = -1;
+    List<Integer>   tagCounterIntList   = new ArrayList<Integer>();
+    String          tagNameAltString    = "";
+    String          tagNameFullString   = "";
+    Tag             tagObject           ;
 
     TagCounter(){}
 
     /*Getter and setter function for counting tha tags.*/
-    void    SetTagNameStringVoid    (String _tagNameString) { tagNameString = _tagNameString; }
-    void    SetTagCounterIntVoid    (int    _tagCounterInt) {
+    void    SetTagObject            (Tag    _tagObject)         { tagObject         = _tagObject; }
+    void    SetTagNameAltString     (String _tagNameAltString)  { tagNameAltString  = _tagNameAltString;    }
+    void    SetTagNameFullString    (String _tagNameFullString) { tagNameFullString = _tagNameFullString;   }
+    void    SetTagCounterIntVoid    (int    _tagCounterInt)     {
 
         /*I create an array becuse comparator will not working on primitive data type.
         Hence, I put the value in one element List.*/
@@ -25,8 +29,9 @@ class TagCounter{
         tagCounterIntList   .add(tagCounterInt);
 
     }
-    int     GetTagCounterInt        (){ return tagCounterInt; }
-    String  GetTagNameString        (){ return tagNameString; }
+    int     GetTagCounterInt        (){ return tagCounterInt;       }
+    String  GetTagNameAltString     (){ return tagNameAltString;    }
+    String  GetTagNameFullString    (){ return tagNameFullString;   }
 
 }
 
@@ -35,27 +40,28 @@ The player object will be the class that can be either played by the user (somek
     or being automated.*/
 class ObjectPlayer{
 
-    String              exhibitionCurrentString     = "";                               /*Current exhibition in String.*/
-    List<String>        exhibitionTargetStringList  = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedStringList = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<TagCounter>    exhibitionTagCounterList    = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
+    String              exhibitionCurrentString         = "";                               /*Current exhibition in String.*/
+    List<String>        exhibitionTargetStringList      = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
+    List<String>        exhibitionVisitedStringList     = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
+    List<String>        exhibitionTagCounterStringList  = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
+    List<TagCounter>    exhibitionTagCounterList        = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
 
-    int                 playerIndexInt              = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
+    int                 playerIndexInt                  = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
 
-    List<ObjectPlayer>  playerSiblingObjectList     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
-    int                 playerSiblingIndexInt       = -1;                               /*The index of this object within the List of object player sibling.*/
+    List<ObjectPlayer>  playerSiblingObjectList         = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
+    int                 playerSiblingIndexInt           = -1;                               /*The index of this object within the List of object player sibling.*/
 
-    float               timeCurrentExhibitionFloat  = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
+    float               timeCurrentExhibitionFloat      = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
 
     /*Panel variable.*/
-    boolean hoverBoolean                            = false;
-    color   panelUnfinishedColor                    = color(217, 160, 102);
-    color   panelFinishedColor                      = color(223, 113, 38 );
-    int     widthPanelInt                           = 0;
-    int     heightPanelInt                          = 0;
-    int     xPanelInt                               = 0;
-    int     yPanelInt                               = 0;
-    Panel   panelObject                             = null;
+    boolean hoverBoolean                                = false;
+    color   panelUnfinishedColor                        = color(217, 160, 102);
+    color   panelFinishedColor                          = color(223, 113, 38 );
+    int     widthPanelInt                               = 0;
+    int     heightPanelInt                              = 0;
+    int     xPanelInt                                   = 0;
+    int     yPanelInt                                   = 0;
+    Panel   panelObject                                 = null;
 
     /*Constructor.*/
     ObjectPlayer(
@@ -82,11 +88,16 @@ class ObjectPlayer{
         for(int i = 0; i < _exhibitionCurrentObject.tagMuseumNameAltStringList.size(); i ++){
 
             /*Create new tag counter to count how many tags are in the user preference.*/
-            TagCounter  tagCounter      = new TagCounter();
-                        tagCounter      .SetTagNameStringVoid(_exhibitionCurrentObject.tagMuseumNameAltStringList.get(i));
+            TagCounter  tagCounterObject    = new TagCounter();
+            /*PENDING: There might be an inconsistency error within these three lines of code below.
+            PENDING: The solution probably to set the alternate and the full name directly from the tagCounterObject.tagObject.
+            PENDING: At this moment the tag is set into three different List which might caused inconsistency later on.*/
+                        tagCounterObject    .SetTagObject           (_exhibitionCurrentObject   .tagMuseumObjectList            .get(i));
+                        tagCounterObject    .SetTagNameAltString    (_exhibitionCurrentObject   .tagMuseumNameAltStringList     .get(i));
+                        tagCounterObject    .SetTagNameFullString   (_exhibitionCurrentObject   .tagMuseumNameFullStringList    .get(i));
 
-            boolean     newBool         = true;     /*Whether the tag is new to the array or there is already existing one.*/
-            int         indexInt        = -1;       /*If there is the corresponding tag already in the array return its index with this variable, otherwise it keeps -1.*/
+            boolean     newBoolean             = true;     /*Whether the tag is new to the array or there is already existing one.*/
+            int         indexInt            = -1;       /*If there is the corresponding tag already in the array return its index with this variable, otherwise it keeps -1.*/
 
             /*Iterate through all tag those already gathered to find if there any tag that
                 is already registered in this player.*/
@@ -94,16 +105,16 @@ class ObjectPlayer{
 
                 if(
 
-                    exhibitionTagCounterList.get(j).GetTagNameString().equals(
+                    exhibitionTagCounterList.get(j).GetTagNameAltString().equals(
 
-                        tagCounter.GetTagNameString()
+                        tagCounterObject.GetTagNameAltString()
 
                     )
 
                 ){
 
-                    newBool             = false;
-                    indexInt            = j;
+                    newBoolean              = false;    /*If newBoolean is false then the object is alrady inside the list.*/
+                    indexInt                = j;        /*The index of the tag is the tag is already inside the list.*/
 
                 }
 
@@ -111,16 +122,16 @@ class ObjectPlayer{
 
             /*If the tag received is new then set the initial tag value to 1 and
                 add the tag to the tag counter.*/
-            if      (newBool == true ){
+            if      (newBoolean == true ){
 
-                tagCounter                  .SetTagCounterIntVoid(1);
-                exhibitionTagCounterList    .add(tagCounter);
+                tagCounterObject                .SetTagCounterIntVoid(1);
+                exhibitionTagCounterList        .add(tagCounterObject);
 
             }
             /*If the tag received is alredy filled in before then increase the tag counter.*/
-            else if (newBool == false){
+            else if (newBoolean == false){
 
-                exhibitionTagCounterList.get(indexInt).SetTagCounterIntVoid(exhibitionTagCounterList.get(indexInt).GetTagCounterInt() + 1);
+                exhibitionTagCounterList        .get(indexInt).SetTagCounterIntVoid(exhibitionTagCounterList.get(indexInt).GetTagCounterInt() + 1);
 
             }
 
@@ -183,8 +194,16 @@ class ObjectPlayer{
 
         AIAutoVoid      ();
         SetHoverBoolean ();
-        /*PENDING: Turn off panel draw void while creating player panel.*/
-        //PanelDrawVoid ();
+        PanelDrawVoid   ();
+
+        exhibitionTagCounterStringList.clear();
+        for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
+
+            String  tempTagString           = "";
+            tempTagString                   = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameFullString());
+            exhibitionTagCounterStringList  .add(tempTagString);
+
+        }
 
     }
 
@@ -347,7 +366,7 @@ class ObjectPlayer{
             if two tags are match the exhibition has 33% chance of being removed from the target exhibition array,
             if three tags are match the exhibition will stay in the target exhibition array.*/
         String tempTagStringArray[] = new String[3];
-        for(int i = 0; i < tempTagStringArray.length            ; i ++){ tempTagStringArray[i] = exhibitionTagCounterList.get(i).GetTagNameString(); }
+        for(int i = 0; i < tempTagStringArray.length            ; i ++){ tempTagStringArray[i] = exhibitionTagCounterList.get(i).GetTagNameAltString(); }
         for(int i = 0; i < exhibitionTargetStringList.size()    ; i ++){
 
             ObjectMuseum    exhibitionTargetObject  = FindObject(exhibitionObjectList, exhibitionTargetStringList.get(i));

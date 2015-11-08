@@ -16,7 +16,8 @@ List<ObjectPlayer>      playerObjectList                = new ArrayList<ObjectPl
 
 /*The graphical user interface framework, the ControlP5 work by assigning a List of String to its controller.
 Hence these String List below is bascially a convert of the actual object array nameAltString.
-I have not done anything with the player, however the String list will be taken from the index number of the player.*/
+I have not done anything with the player, however the String list will be taken from the index number of the player.
+PENDING: Make another Lists to support the nameFullString and nameAltString.*/
 List<String>            museumStringList                = new ArrayList<String>();
 List<String>            floorStringList                 = new ArrayList<String>();
 List<String>            roomStringList                  = new ArrayList<String>();
@@ -45,6 +46,7 @@ int                     heightPanelCardInt              = 280;                  
 int                     panelLineSpacingInt             = 5;                                /*Number of additional pixel within line break.*/
 int                     rowInt                          = 0;                                /*How many maximum row is necessary for each panel (updated every tick).*/
 int                     textSizePanelInt                = 16;                               /*Text size of the panel.*/
+/*PENDING: Instead of using "selected" change the name of these two variables below into "hovered".*/
 ObjectMuseum            selectedMuseumObject            = null;                             /*Which museum object is hovered.*/
 ObjectPlayer            selectedPlayerObject            = null;                             /*Which player object is hovered.*/
 PFont                   panelCardPFont                  ;                                   /*Font setting for panel object.*/
@@ -381,14 +383,13 @@ void draw()                                     {
     playerLoopCounterInt    = (playerLoopCounterInt >= (playerObjectList.size() - 1)) ? 0 : (playerLoopCounterInt + 1);
     */
 
+    /*Update the value for animation of both button open close.*/
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
-    
     /*Update the add museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the edit player object GUI.*/
-    editPlayerGUIObject                     .DrawVoid(dropdownPlayerAlphaFloat);
-
+    editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
     /*Create the card.*/
@@ -413,7 +414,7 @@ void CheckMuseumObjectHoverVoid(
 ){
 
     /*This is to check which museum/player object is hovered, then create panel based on that object position.*/
-    if(_targetObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true){
+    if(_targetObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true && buttonOpenCloseBoolean == false){
 
         xPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.xPanelInt + (_targetObjectList.get(_indexInt).panelObject.widthPanelInt /2 );
         yPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.yPanelInt + (_targetObjectList.get(_indexInt).panelObject.heightPanelInt/2);
@@ -429,7 +430,7 @@ void CheckMuseumObjectHoverVoid(
 void CheckPlayerObjectHoverVoid(int _indexInt)  {
 
     /*This is to check which museum/player object is hovered, then create panel based on that object position.*/
-    if(playerObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true){
+    if(playerObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true && buttonOpenCloseBoolean == false){
 
         xPanelCardInt           = playerObjectList.get(_indexInt).panelObject.xPanelInt + (playerObjectList.get(_indexInt).panelObject.widthPanelInt/2 );
         yPanelCardInt           = playerObjectList.get(_indexInt).panelObject.yPanelInt + (playerObjectList.get(_indexInt).panelObject.heightPanelInt/2);
@@ -500,15 +501,15 @@ void CreatePanelCardVoid()                      {
 
             panelString  =
 
-                "FLR_CUR = " + exhibitionCurrentObject.nameAltString                                        + "\n" +
-                "ROM_CUR = " + roomCurrentObject.nameAltString                                              + "\n" +
-                "EXH_CUR = " + exhibitionCurrentObject.nameAltString                                        + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(0)                      + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(1)                      + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(2)                      + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameString()   + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameString()   + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameString()
+                "FLR_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
+                "ROM_CUR = " + roomCurrentObject.nameAltString                                                  + "\n" +
+                "EXH_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(0)                          + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(1)                          + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(2)                          + "\n" +
+                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
+                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
+                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
 
             ;
 
@@ -545,133 +546,6 @@ void CreatePanelCardVoid()                      {
         text                (panelString, tempXPanelInt + (widthPanelCardInt/2), tempYPanelInt + (textSizePanelInt));
         textAlign           (LEFT);
         noFill              ();
-
-    }
-
-}
-
-/*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
-void ExhibitionSList(int _indexInt)             {
-
-    List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                            /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
-    ObjectMuseum                        selectedMuseumObject                = null;                                                                                                     /*This is the selected museum object. From here this application will try to modify the selected museum object;s values.*/
-    String                              itemScrollableString                = cp5Object        .get(ScrollableList.class, "ExhibitionSList").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
-    String                              tempTypeString                      = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));                            /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String.*/
-    int                                 selectedMuseumIndexInt              = -1;                                                                                                       /*The selected index of the selected object in its object list.*/
-
-    /*We assign the selected museum object list according to the temporary type String.*/
-    if     (tempTypeString.equals("FLR")){ selectedMuseumObjectList         = floorObjectList;          }
-    else if(tempTypeString.equals("ROM")){ selectedMuseumObjectList         = roomObjectList;           }
-    else if(tempTypeString.equals("EXH")){ selectedMuseumObjectList         = exhibitionObjectList;     }
-
-    /*The for loop below is for assigning which museum object is actually selected*/
-    for(int i = 0; i < museumStringList.size(); i ++){
-
-        /*Compare every possible String in the museum String list with the selected scrollable String.*/
-        if(museumStringList.get(i)                                          == itemScrollableString){
-
-            /*If the String match we will the index of name of the object inside the museum String list.*/
-            for(int j = 0; j < selectedMuseumObjectList.size(); j ++)       {
-
-                /*Iterate once more to to find the named object inside its object list.
-                After this done, we get access to the object local and public variables and functions.*/
-                if(selectedMuseumObjectList.get(j).nameAltString            == museumStringList.get(i)){ selectedMuseumObject= selectedMuseumObjectList.get(j); }
-
-            }
-
-            /*Return the object index inside the museum String list.
-            This variable is for determining the layout later on within the scrollable dropdown list.*/
-            selectedMuseumIndexInt                                          = i + 1;
-
-        }
-
-    }
-    /*After we get the "selected object" object.
-    We will revert its active boolean variable.
-    We will keep reverting this for everytime the selected object is clicked.*/
-    selectedMuseumObject.activeBoolean                                      = !selectedMuseumObject.activeBoolean;
-
-    /*If the selected museum object active boolean is true then add all of its children (if any) to the scrollable drop list.*/
-    if     (selectedMuseumObject.activeBoolean == true){
-
-        /*Iterate all children objects and add all of it to the museum String list.
-        We need to set (delete the previous ones and initiate the new ones) the children to the museum String list according to the index position of the parent in the museum String list.*/
-        for(
-
-           int i    = selectedMuseumObject.childObjectList.size() - 1;
-           i        >= 0;
-           i        --
-
-        ){ museumStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString); }
-        /*Set the items into the scrollable list.*/
-        cp5Object        .get(ScrollableList.class, "ExhibitionSList")           .setItems(museumStringList);
-
-    }
-    /*If the selected museum object active boolean is false then remove all of its children from the museum String list and the scrollable list.*/
-    else if(selectedMuseumObject.activeBoolean == false){
-
-        /*If close the floor we must carefully close the inner most button, in this case it is the exhibition buttons.
-        We need to close the room buttons and then loop again to close the exhibition buttons.*/
-        if(tempTypeString.equals("FLR")){
-
-            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
-
-                for(int j = 0; j < selectedMuseumObject.childObjectList.get(i).childObjectList.size(); j ++){
-
-                    for(int k = 0; k < museumStringList.size(); k ++){
-
-                        if(museumStringList.get(k).equals(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString)){
-
-                            selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).activeBoolean = false;
-                            cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString);
-                            museumStringList.remove(k);
-                            k --;
-
-                        }
-
-                    }
-
-                }
-
-                for(int j = 0; j < museumStringList.size(); j ++){
-
-                    if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
-
-                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
-                        museumStringList.remove(j);
-                        j --;
-
-                    }
-
-                }
-
-            }
-
-        }
-        /*If the button is not a floor button then we do not need to iterate deeper.*/
-        else{
-
-            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
-
-                for(int j = 0; j < museumStringList.size(); j ++){
-
-                    if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
-
-                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
-                        museumStringList.remove(j);
-                        j --;
-
-                    }
-
-                }
-
-            }
-
-        /*God bless these curly braces.*/
-
-        }
 
     }
 
@@ -1014,9 +888,140 @@ Tag[] AssignRandomTagList(List<Tag> _tagObjectList) {
 
 }
 
+/*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
+void ExhibitionSList(int _indexInt)             {
+
+    List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                            /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
+    ObjectMuseum                        selectedMuseumObject                = null;                                                                                                     /*This is the selected museum object. From here this application will try to modify the selected museum object;s values.*/
+    String                              itemScrollableString                = cp5Object        .get(ScrollableList.class, "ExhibitionSList").getItem(_indexInt).get("text").toString();      /*This String is for holding the name of the selected button.*/
+    String                              tempTypeString                      = itemScrollableString.substring(0, Math.min(itemScrollableString.length(), 3));                            /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String.*/
+    int                                 selectedMuseumIndexInt              = -1;                                                                                                       /*The selected index of the selected object in its object list.*/
+
+    /*We assign the selected museum object list according to the temporary type String.*/
+    if     (tempTypeString.equals("FLR")){ selectedMuseumObjectList         = floorObjectList;          }
+    else if(tempTypeString.equals("ROM")){ selectedMuseumObjectList         = roomObjectList;           }
+    else if(tempTypeString.equals("EXH")){ selectedMuseumObjectList         = exhibitionObjectList;     }
+
+    /*The for loop below is for assigning which museum object is actually selected*/
+    for(int i = 0; i < museumStringList.size(); i ++){
+
+        /*Compare every possible String in the museum String list with the selected scrollable String.*/
+        if(museumStringList.get(i)                                          == itemScrollableString){
+
+            /*If the String match we will take the index of name of the object inside the museum String list.*/
+            for(int j = 0; j < selectedMuseumObjectList.size(); j ++)       {
+
+                /*Iterate once more to to find the named object inside its object list.
+                After this done, we get access to the object local and public variables and functions.*/
+                if(selectedMuseumObjectList.get(j).nameAltString            == museumStringList.get(i)){ selectedMuseumObject = selectedMuseumObjectList.get(j); }
+
+            }
+
+            /*Return the object index inside the museum String list.
+            This variable is for determining the layout later on within the scrollable dropdown list.*/
+            selectedMuseumIndexInt                                          = i + 1;
+
+        }
+
+    }
+    /*After we get the "selected object" object.
+    We will revert its active boolean variable.
+    We will keep reverting this for everytime the selected object is clicked.*/
+    selectedMuseumObject.activeBoolean                                      = !selectedMuseumObject.activeBoolean;
+
+    /*If the selected museum object active boolean is true then add all of its children (if any) to the scrollable drop list.*/
+    if     (selectedMuseumObject.activeBoolean == true){
+
+        /*Iterate all children objects and add all of it to the museum String list.
+        We need to set (delete the previous ones and initiate the new ones) the children to the museum String list according to the index position of the parent in the museum String list.*/
+        for(
+
+           int i    = selectedMuseumObject.childObjectList.size() - 1;
+           i        >= 0;
+           i        --
+
+        ){ museumStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString); }
+        /*Set the items into the scrollable list.*/
+        cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumStringList);
+
+    }
+    /*If the selected museum object active boolean is false then remove all of its children from the museum String List and the scrollable list.*/
+    else if(selectedMuseumObject.activeBoolean == false){
+
+        /*If close the floor we must carefully close the inner most button, in this case it is the exhibition buttons.
+        We need to close the room buttons and then loop again to close the exhibition buttons.*/
+        if(tempTypeString.equals("FLR")){
+
+            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
+
+                for(int j = 0; j < selectedMuseumObject.childObjectList.get(i).childObjectList.size(); j ++){
+
+                    for(int k = 0; k < museumStringList.size(); k ++){
+
+                        if(museumStringList.get(k).equals(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString)){
+
+                            selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).activeBoolean = false;
+                            cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString);
+                            museumStringList.remove(k);
+                            k --;
+
+                        }
+
+                    }
+
+                }
+
+                for(int j = 0; j < museumStringList.size(); j ++){
+
+                    if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
+
+                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
+                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        museumStringList.remove(j);
+                        j --;
+
+                    }
+
+                }
+
+            }
+
+        }
+        /*If the button is not a floor button then we do not need to iterate deeper.*/
+        else{
+
+            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
+
+                for(int j = 0; j < museumStringList.size(); j ++){
+
+                    if(museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString)){
+
+                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
+                        cp5Object        .get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);
+                        museumStringList.remove(j);
+                        j --;
+
+                    }
+
+                }
+
+            }
+
+        /*God bless these curly braces.*/
+
+        }
+
+    }
+
+}
+/*This function is to control player scrollable list.*/
+void VisitorSList(int _indexInt)                {
+
+    editPlayerGUIObject.selectedPlayerObject    = playerObjectList.get(_indexInt);
+
+}
 /*Control function for the EditPlayerGUIObject.pde.*/              
 void ModeRadioButton                (int _intIndex)                                 { editPlayerGUIObject.editPlayerModeInt = _intIndex; }
-
 /*Control functions for the AddMuseumGUIObject.pde.
 This function below is for to know what kind of object the class will have to make.*/
 void TypeObjectMuseumSList          (int _indexInt)                                 {
