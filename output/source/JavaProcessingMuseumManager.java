@@ -278,9 +278,9 @@ public void setup()                                    {
     /*Add the edit player GUI.*/
     editPlayerGUIObject                 = new EditPlayerGUIObject(
 
-        (width /3),
-        369,
-        ((width /2) - ((width/3)/2)),
+        (width /3)                      ,
+        369                             ,
+        ((width /2) - ((width/3)/2))    ,
         ((height/2) - (369/2))
 
     );
@@ -1540,7 +1540,7 @@ class EditPlayerGUIObject{
                             //.setColorLabel        (groupColorLabelColor)
                             .setLabel               ("Edit Player Object:");
 
-                /*PENDING: Create the text panel. Many text panel!!!*/
+                /*PENDING - DONE: Create the text panel. Many text panel!!!*/
                 cp5Object   .addTextlabel           ("PlayerIndexTextlabel")
                             .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*1))
                             .setGroup               (EditPlayerGroupObject)
@@ -1548,6 +1548,16 @@ class EditPlayerGUIObject{
                             //.setColor             (otherCColor)
                             //.setColorValue        (255)
                             .setText                ("Player Index:");
+
+                cp5Object   .addTextlabel           ("PlayerIndexValueTextLabel")
+                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*1))
+                            .setGroup               (EditPlayerGroupObject)
+                            /*PENDING: Please set the color after done with prototyping.*/
+                            //.setColor             (otherCColor)
+                            //.setColorValue        (255)
+                            /*PENDING: Set the text label based on the selected player.*/
+                            .setText                ("1");
+
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentTextlabel")
                             .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2))
                             .setGroup               (EditPlayerGroupObject)
@@ -1555,6 +1565,14 @@ class EditPlayerGUIObject{
                             //.setColor             (otherCColor)
                             //.setColorValue        (255)
                             .setText                ("Player Current Exhibition:");
+
+                cp5Object   .addTextlabel           ("PlayerExhibitionCurrentvalueTextLabel")
+                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*2))
+                            .setGroup               (EditPlayerGroupObject)
+                            /*PENDING: Please set the color after done with prototyping.*/
+                            //.setColor             (otherCColor)
+                            //.setColorValue        (255)
+                            .setText                ("EXH_CAO");
 
                 /*PENDING: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")

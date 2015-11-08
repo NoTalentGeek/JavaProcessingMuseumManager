@@ -253,9 +253,9 @@ void setup()                                    {
     /*Add the edit player GUI.*/
     editPlayerGUIObject                 = new EditPlayerGUIObject(
 
-        (width /3),
-        369,
-        ((width /2) - ((width/3)/2)),
+        (width /3)                      ,
+        369                             ,
+        ((width /2) - ((width/3)/2))    ,
         ((height/2) - (369/2))
 
     );
