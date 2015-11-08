@@ -404,8 +404,11 @@ public void draw()                                     {
 
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
-    /*Update the museum object GUI.*/
+    
+    /*Update the add museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
+    /*Update the edit player object GUI.*/
+    editPlayerGUIObject                     .DrawVoid();
 
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
@@ -1032,6 +1035,9 @@ public Tag[] AssignRandomTagList(List<Tag> _tagObjectList) {
 
 }
 
+/*Control function for the EditPlayerGUIObject.pde.*/              
+public void ModeRadioButton                (int _intIndex)                                 { editPlayerGUIObject.editPlayerModeInt = _intIndex; }
+
 /*Control functions for the AddMuseumGUIObject.pde.
 This function below is for to know what kind of object the class will have to make.*/
 public void TypeObjectMuseumSList          (int _indexInt)                                 {
@@ -1501,6 +1507,8 @@ public class ButtonOpenClose{
 
 class EditPlayerGUIObject{
 
+    int editPlayerModeInt                       ;
+
     int groupLayoutOffsetInt                    = 10;
     //int playerGroupWidthInt                   = (width/3);
     int playerGroupWidthInt                     ;
@@ -1512,7 +1520,7 @@ class EditPlayerGUIObject{
     int playerScrollableListHeight3Int          = 50;
 
     /*Constructor.*/
-    EditPlayerGUIObject(
+    EditPlayerGUIObject     (
 
         int _playerGroupWidthInt    ,
         int _playerGroupHeightInt   ,
@@ -1632,6 +1640,15 @@ class EditPlayerGUIObject{
                             /*PENDING: Please select the color later on.*/
                             //.setColor             (otherCColor)
                             .setLabel               ("Please Select Next Exhibition:");
+
+    }
+
+    public void DrawVoid           (){
+
+        if      (editPlayerModeInt == 1){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
+        else if (editPlayerModeInt == 2){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").show(); }
+        else if (editPlayerModeInt == 3){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
+        else                            { cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
 
     }
 

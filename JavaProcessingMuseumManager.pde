@@ -379,8 +379,11 @@ void draw()                                     {
 
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
-    /*Update the museum object GUI.*/
+    
+    /*Update the add museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
+    /*Update the edit player object GUI.*/
+    editPlayerGUIObject                     .DrawVoid();
 
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
@@ -1006,6 +1009,9 @@ Tag[] AssignRandomTagList(List<Tag> _tagObjectList) {
     return assignTagObjectArray;
 
 }
+
+/*Control function for the EditPlayerGUIObject.pde.*/              
+void ModeRadioButton                (int _intIndex)                                 { editPlayerGUIObject.editPlayerModeInt = _intIndex; }
 
 /*Control functions for the AddMuseumGUIObject.pde.
 This function below is for to know what kind of object the class will have to make.*/

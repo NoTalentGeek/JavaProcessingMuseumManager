@@ -3,6 +3,8 @@ import java.util.*;
 import controlP5.*;
 class EditPlayerGUIObject{
 
+    int editPlayerModeInt                       ;
+
     int groupLayoutOffsetInt                    = 10;
     //int playerGroupWidthInt                   = (width/3);
     int playerGroupWidthInt                     ;
@@ -14,7 +16,7 @@ class EditPlayerGUIObject{
     int playerScrollableListHeight3Int          = 50;
 
     /*Constructor.*/
-    EditPlayerGUIObject(
+    EditPlayerGUIObject     (
 
         int _playerGroupWidthInt    ,
         int _playerGroupHeightInt   ,
@@ -134,6 +136,15 @@ class EditPlayerGUIObject{
                             /*PENDING: Please select the color later on.*/
                             //.setColor             (otherCColor)
                             .setLabel               ("Please Select Next Exhibition:");
+
+    }
+
+    void DrawVoid           (){
+
+        if      (editPlayerModeInt == 1){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
+        else if (editPlayerModeInt == 2){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").show(); }
+        else if (editPlayerModeInt == 3){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
+        else                            { cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
 
     }
 
