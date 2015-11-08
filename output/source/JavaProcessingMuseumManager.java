@@ -36,13 +36,19 @@ List<ObjectMuseum>      floorObjectList                 = new ArrayList<ObjectMu
 List<ObjectMuseum>      roomObjectList                  = new ArrayList<ObjectMuseum>();    /*Array List of museum object room*/
 List<ObjectMuseum>      exhibitionObjectList            = new ArrayList<ObjectMuseum>();    /*Array List of museum object exhibition*/
 List<ObjectPlayer>      playerObjectList                = new ArrayList<ObjectPlayer>();    /*Array List of player object.*/
+
+/*The graphical user interface framework, the ControlP5 work by assigning a List of String to its controller.
+Hence these String List below is bascially a convert of the actual object array nameAltString.
+I have not done anything with the player, however the String list will be taken from the index number of the player.*/
 List<String>            museumStringList                = new ArrayList<String>();
 List<String>            floorStringList                 = new ArrayList<String>();
 List<String>            roomStringList                  = new ArrayList<String>();
 List<String>            exhibitionStringList            = new ArrayList<String>();
 List<String>            playerStringList                = new ArrayList<String>();
 
-/*PROTOTYPE: For testing.*/
+/*PROTOTYPE: For testing.
+PENDING: In the future I want so that when a player visited an exhibition it received three different kind of tags.
+PENDING: And then when player visit different exhibition I want that the tags collected transformed into a neat japanese style poem called haiku.*/
 List<String>            subjectTagStringList            = new ArrayList<String>();
 List<String>            verbTagStringList               = new ArrayList<String>();
 List<String>            nounTagStringList               = new ArrayList<String>();
@@ -132,7 +138,7 @@ class Tag                                       {
 public void setup()                                    {
 
     /*Setting up application.*/
-    size                                (1024, 576, P2D);
+    size                                (320, 240, P2D);
     noStroke                            ();
 
     /*Create the tag list.*/
@@ -166,7 +172,7 @@ public void setup()                                    {
     verbTagStringList       = Arrays.asList("Eat"       , "Work"    , "Sleep");
     nounTagStringList       = Arrays.asList("Airplane"  , "Car"     , "Ship" );
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
-    defaultStringList                       = Arrays.asList();
+    defaultStringList       = Arrays.asList();
 
     /*Set up the museum objects.*/
     floorObjectList         = Arrays.asList(
@@ -228,15 +234,20 @@ public void setup()                                    {
     /*Initiate all players.*/
     for(int i = 0; i < playerAmountInt; i ++)                   {
 
-        ObjectPlayer objectPlayer   = new ObjectPlayer((i + 1), exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString);
+        ObjectPlayer objectPlayer = new ObjectPlayer(
+
+            (i + 1),
+            exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString      /*Generate random starting exhibition for the player.*/
+
+        );
 
     }
 
     /*Populate String list.*/
-    for(int i = 0; i < floorObjectList.size()       ; i ++){ floorStringList        .add(     floorObjectList       .get(i).nameAltString ); }
-    for(int i = 0; i < roomObjectList.size()        ; i ++){ roomStringList         .add(     roomObjectList        .get(i).nameAltString ); }
-    for(int i = 0; i < exhibitionObjectList.size()  ; i ++){ exhibitionStringList   .add(     exhibitionObjectList  .get(i).nameAltString ); }
-    for(int i = 0; i < playerObjectList.size()      ; i ++){ playerStringList       .add("" + playerObjectList      .get(i).playerIndexInt); }
+    for(int i = 0; i < floorObjectList.size()           ; i ++){ floorStringList        .add(     floorObjectList       .get(i).nameAltString ); }
+    for(int i = 0; i < roomObjectList.size()            ; i ++){ roomStringList         .add(     roomObjectList        .get(i).nameAltString ); }
+    for(int i = 0; i < exhibitionObjectList.size()      ; i ++){ exhibitionStringList   .add(     exhibitionObjectList  .get(i).nameAltString ); }
+    for(int i = 0; i < playerObjectList.size()          ; i ++){ playerStringList       .add("" + playerObjectList      .get(i).playerIndexInt); }
 
     cp5Object                           = new ControlP5(this);
 
@@ -245,7 +256,7 @@ public void setup()                                    {
     buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
 
     int dropdownObjectWidthInt          = (width/3);
-    int dropdownObjectHeightInt         = (height - ((guiOffsetInt + (buttonSizeInt/2))*2));
+    int dropdownObjectHeightInt         = (height - (guiOffsetInt*2) - ((buttonSizeInt/2)*2));
     int itemHeightInt                   = (dropdownObjectHeightInt/20);
 
     /*Add the museum object GUI.*/
@@ -256,7 +267,8 @@ public void setup()                                    {
         dropdownObjectWidthInt                                              ,
         250                                                                 ,
         buttonSizeInt                                                       ,
-        dropdownObjectWidthInt
+        dropdownObjectWidthInt                                              ,
+        dropdownObjectHeightInt
 
     );
 
@@ -266,7 +278,7 @@ public void setup()                                    {
         .setPosition                    (
 
             (width -  guiOffsetInt      - (buttonSizeInt/2) - dropdownObjectWidthInt                ),
-            (        (guiOffsetInt*1.5f) + (buttonSizeInt/2) + addMuseumGUIObject.groupAddHeightInt  )
+            (         guiOffsetInt      + (buttonSizeInt/2)                                         )
 
         )
         .setSize                        (dropdownObjectWidthInt, dropdownObjectHeightInt)
@@ -292,13 +304,123 @@ public void setup()                                    {
         .setLabel                       ("Visitor:")
         .hide                           ();
 
+    /*PROTOTYPE: Creating Player edit panel.*/
+    int     groupLayoutOffsetInt            = 10;
+    int     playerGroupWidthInt             = (width/3);
+    int     playerGroupHeightInt            = (367 + 2);    /*Additional 2 to fix layouting error in the radio buttons.*/
+    int     playerScrollableListHeightInt   = 62;
+    int     playerScrollableListHeight3Int  = 50;
+    Group   EditPlayerGroupObject           = 
+                        cp5Object   .addGroup               ("EditPlayerGroupObject")
+                                    .setPosition            (((width/2) - (playerGroupWidthInt/2)), ((height/2) - (playerGroupHeightInt/2)))
+                                    .setWidth               (playerGroupWidthInt)
+                                    .setBackgroundHeight    (playerGroupHeightInt)
+                                    /*PENDING: Set colors later on.*/
+                                    .setBackgroundColor     (color(50, 60, 57))
+                                    //.setColor             (otherCColor)
+                                    //.setColorBackground   (groupColorBackgroundColor)
+                                    //.setColorLabel        (groupColorLabelColor)
+                                    .setLabel               ("Edit Player Object:");
+
+                        /*PENDING: Create the text panel. Many text panel!!!*/
+                        cp5Object   .addTextlabel           ("PlayerIndexTextlabel")
+                                    .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*1))
+                                    .setGroup               (EditPlayerGroupObject)
+                                    /*PENDING: Please set the color after done with prototyping.*/
+                                    //.setColor             (otherCColor)
+                                    //.setColorValue        (255)
+                                    .setText                ("Player Index:");
+                        cp5Object   .addTextlabel           ("PlayerExhibitionCurrentTextlabel")
+                                    .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2))
+                                    .setGroup               (EditPlayerGroupObject)
+                                    /*PENDING: Please set the color after done with prototyping.*/
+                                    //.setColor             (otherCColor)
+                                    //.setColorValue        (255)
+                                    .setText                ("Player Current Exhibition:");
+
+                        /*PENDING: Please make this unselectable.*/
+                        cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")
+                                    .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*4))
+                                    .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeight3Int)
+                                    .setGroup               (EditPlayerGroupObject)
+                                    .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3"))
+                                    .setType                (ControlP5.LIST)
+                                    /*PENDING: Please select the color later on.*/
+                                    //.setColor             (otherCColor)
+                                    .setLabel               ("Player Target Exhibitions:");
+
+                        /*PENDING: Please make this unselectable.*/
+                        cp5Object   .addScrollableList      ("PlayerExhibitionVisitedSList")
+                                    .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*5) + playerScrollableListHeight3Int)
+                                    .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
+                                    .setGroup               (EditPlayerGroupObject)
+                                    .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3", "Exhibition Test 4", "Exhibition Test 5"))
+                                    .setType                (ControlP5.LIST)
+                                    /*PENDING: Please select the color later on.*/
+                                    //.setColor             (otherCColor)
+                                    .setLabel               ("Player Visited Exhibitions:");
+
+                        cp5Object   .addScrollableList      ("PlayerTagSList")
+                                    .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
+                                    .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
+                                    .setGroup               (EditPlayerGroupObject)
+                                    .addItems               (Arrays.asList("Tag Test 1 - 123123", "Tag Test 2 - 123123", "Tag Test 3 - 123123", "Tag Test 4 - 123123", "Tag Test 5 - 123123"))
+                                    .setType                (ControlP5.LIST)
+                                    /*PENDING: Please select the color later on.*/
+                                    //.setColor             (otherCColor)
+                                    .setLabel               ("Player Collected Tags:");
+
+                        cp5Object   .addTextlabel           ("ModeTextlabel")
+                                    .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*7) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
+                                    .setGroup               (EditPlayerGroupObject)
+                                    /*PENDING: Please set the color after done with prototyping.*/
+                                    //.setColor             (otherCColor)
+                                    //.setColorValue        (255)
+                                    .setText                ("Modes:");
+
+                        /*PENDING: Adding radion buttons to select mode on how player should be moved.*/
+                        cp5Object   .addRadioButton         ("ModeRadioButton")
+                                    .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*8) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
+                                    .setSize                (groupLayoutOffsetInt, groupLayoutOffsetInt)
+                                    .setGroup               (EditPlayerGroupObject)
+                                    .addItem                ("Software - Auto"  , 1)
+                                    .addItem                ("Software - Manual", 2)
+                                    .addItem                ("hardware - Manual", 3);
+
+                        cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
+                                    .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*12) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2) + 2))    /*Additional 2 to fix layouting error in the radio buttons.*/
+                                    .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2 )), 64)
+                                    .setGroup               (EditPlayerGroupObject)
+                                    .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3", "Exhibition Test 4", "Exhibition Test 5"))
+                                    .setType                (ControlP5.LIST)
+                                    /*PENDING: Please select the color later on.*/
+                                    //.setColor             (otherCColor)
+                                    .setLabel               ("Please Select Next Exhibition:");
+
     museumStringList                    = floorStringList;                                  /*Set the initial item for this scrollable list.*/
     cp5Object                           .get(ScrollableList.class, "ExhibitionSList")
                                         .setItems(floorStringList);
-    /*
+
+    /*Set the items for the scrollabnle list of the visitors.
+    PENDING: The next thing I need to do is to make the a panel of which gather the informations of the player.
+    PENDING: For the current working milestone I think I will take these informations to the display group panel.
+    PENDING: List of informations.
+        1. Player Index.
+        2. Player Current Exhibition.
+        3. Player Three Target Exhibitions.
+        3. Player Three Most Visited Tags.
+        4. Player Movement Modes.
+        5. If Software Manual Control is toggled on there is another scrollable list to pick which exhibition to visit next.
+    PENDING: The player movement mode is a radio list of how can certain player be controlled.
+    PENDING: At this moment I can think of three ways to control player/visitor in this application.
+    PENDING: Player movement mode.
+        1. AI Mode, player move within the museum simulator with AIAutoVoid() method.
+        2. Software Manual Control, player move within the museum simulator with dictation from a human using the museum manager application.
+        3. Hardware Manual Control, player is move in synchronize with movement from Arduino device.
+    PENDING: Create prototype of player panel.
+    PENDING - DONE: Before working on the player edit panel please turn off the card display first.*/
     cp5Object                           .get(ScrollableList.class, "VisitorSList")
-                                        .setItems();
-    */
+                                        .setItems(playerStringList);
 
 }
 
@@ -1008,13 +1130,18 @@ public void SelectParentObjectMuseumSList  (int _indexInt)                      
 /*Submit button callback function.*/
 public void SubmitButton                   (int _indexInt)                                 {
 
+    /*Put everything into temporary variables.*/
     String tempNameAltString        = cp5Object.get(Textfield   .class, "NameAltTextfield" ).getText();
     String tempNameFullString       = cp5Object.get(Textfield   .class, "NameFullTextfield").getText();
     String tempParentNameAltString  = "";
     String tempTypeString           = addMuseumGUIObject.selectedTypeObjectString   ; addMuseumGUIObject.selectedTypeObjectString   = "";
+
+    /*Due to museum object floor will ever have no parent object, then we need to specifically set its parent object.*/
     if      ( tempTypeString.equals("FLR")) { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
     else if (!tempTypeString.equals("FLR")) { tempParentNameAltString = addMuseumGUIObject.selectedParentString; addMuseumGUIObject.selectedParentString = ""; }
     else                                    { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
+
+    /*Create the museum object.*/
     AddObjectMuseum                 (tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeString);
 
 }
@@ -1055,6 +1182,7 @@ class AddMuseumGUIObject{
     float           alphaFloat                          = 255;                      /*The opacity of this object.*/
     int             parentButtonSizeInt                 ;                           /*A variable for layout taken from the main class.*/
     int             parentDropdownObjectWidthInt        ;                           /*A variable for layout taken from the main class.*/
+    int             parentDropdownObjectHeightInt       ;                           /*A variable for layout taken from the main class.*/
     int             groupLayoutOffsetInt                = 10;                       /*This object layout offset.*/
     int             groupLabelHeightInt                 ;                           /*Make the header of the group to be exactly as the same as layout offset.*/
     int             groupXInt                           ;                           /*X position of this GUI object in the main class.*/
@@ -1081,7 +1209,8 @@ class AddMuseumGUIObject{
         int     _groupAddWidthInt               ,
         int     _groupAddHeightInt              ,
         int     _parentButtonSizeInt            ,
-        int     _parentDropdownObjectWidthInt
+        int     _parentDropdownObjectWidthInt   ,
+        int     _parentDropdownObjwctHeightInt
 
     ){
 
@@ -1091,6 +1220,7 @@ class AddMuseumGUIObject{
         groupAddHeightInt                       = _groupAddHeightInt;
         parentButtonSizeInt                     = _parentButtonSizeInt;
         parentDropdownObjectWidthInt            = _parentDropdownObjectWidthInt;
+        parentDropdownObjectHeightInt           = _parentDropdownObjwctHeightInt;
 
         groupLabelHeightInt                     = groupLayoutOffsetInt;
         scrollableWidthInt                      = ((groupAddWidthInt - groupLayoutOffsetInt*4)/3);          /*Create the scrollable list width to accomodate three scrollable list in a row.*/
@@ -1262,20 +1392,36 @@ class AddMuseumGUIObject{
         These two if statements is for controlling the position of the other object in the same open close button.*/
         if      (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == true ){
 
+                /*Change the position when the group object is open.*/
                  cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
 
                     (width -  guiOffsetInt      - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt    ),
                     (        (guiOffsetInt*1.5f) + (parentButtonSizeInt/2) + groupAddHeightInt               )
 
                 );
+                /*Change the size when the group object is open.*/
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
+
+                    parentDropdownObjectWidthInt,
+                    parentDropdownObjectHeightInt - groupAddHeightInt
+
+                );
                 
         }
         else if (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == false){
 
+                /*Change the position when the group object is close.*/
                  cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
 
                     (width -  guiOffsetInt - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt ),
                     (         guiOffsetInt + (parentButtonSizeInt/2) + groupLabelHeightInt          )
+
+                );
+                /*Change the size when the group object is close.*/
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
+
+                    parentDropdownObjectWidthInt,
+                    parentDropdownObjectHeightInt - groupLabelHeightInt
 
                 );
 
@@ -1515,7 +1661,8 @@ class   ObjectMuseum                                                            
 
         SetFullBoolean  ();
         SetHoverBoolean ();
-        PanelDrawVoid   ();
+        /*PENDING: Turn off panel draw void while creating player panel.*/
+        //PanelDrawVoid ();
 
     }
 
@@ -1937,7 +2084,8 @@ class ObjectPlayer{
 
         AIAutoVoid      ();
         SetHoverBoolean ();
-        PanelDrawVoid   ();
+        /*PENDING: Turn off panel draw void while creating player panel.*/
+        //PanelDrawVoid ();
 
     }
 

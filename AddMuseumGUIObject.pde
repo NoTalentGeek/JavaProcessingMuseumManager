@@ -10,6 +10,7 @@ class AddMuseumGUIObject{
     float           alphaFloat                          = 255;                      /*The opacity of this object.*/
     int             parentButtonSizeInt                 ;                           /*A variable for layout taken from the main class.*/
     int             parentDropdownObjectWidthInt        ;                           /*A variable for layout taken from the main class.*/
+    int             parentDropdownObjectHeightInt       ;                           /*A variable for layout taken from the main class.*/
     int             groupLayoutOffsetInt                = 10;                       /*This object layout offset.*/
     int             groupLabelHeightInt                 ;                           /*Make the header of the group to be exactly as the same as layout offset.*/
     int             groupXInt                           ;                           /*X position of this GUI object in the main class.*/
@@ -36,7 +37,8 @@ class AddMuseumGUIObject{
         int     _groupAddWidthInt               ,
         int     _groupAddHeightInt              ,
         int     _parentButtonSizeInt            ,
-        int     _parentDropdownObjectWidthInt
+        int     _parentDropdownObjectWidthInt   ,
+        int     _parentDropdownObjwctHeightInt
 
     ){
 
@@ -46,6 +48,7 @@ class AddMuseumGUIObject{
         groupAddHeightInt                       = _groupAddHeightInt;
         parentButtonSizeInt                     = _parentButtonSizeInt;
         parentDropdownObjectWidthInt            = _parentDropdownObjectWidthInt;
+        parentDropdownObjectHeightInt           = _parentDropdownObjwctHeightInt;
 
         groupLabelHeightInt                     = groupLayoutOffsetInt;
         scrollableWidthInt                      = ((groupAddWidthInt - groupLayoutOffsetInt*4)/3);          /*Create the scrollable list width to accomodate three scrollable list in a row.*/
@@ -217,20 +220,36 @@ class AddMuseumGUIObject{
         These two if statements is for controlling the position of the other object in the same open close button.*/
         if      (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == true ){
 
+                /*Change the position when the group object is open.*/
                  cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
 
                     (width -  guiOffsetInt      - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt    ),
                     (        (guiOffsetInt*1.5) + (parentButtonSizeInt/2) + groupAddHeightInt               )
 
                 );
+                /*Change the size when the group object is open.*/
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
+
+                    parentDropdownObjectWidthInt,
+                    parentDropdownObjectHeightInt - groupAddHeightInt
+
+                );
                 
         }
         else if (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == false){
 
+                /*Change the position when the group object is close.*/
                  cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
 
                     (width -  guiOffsetInt - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt ),
                     (         guiOffsetInt + (parentButtonSizeInt/2) + groupLabelHeightInt          )
+
+                );
+                /*Change the size when the group object is close.*/
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
+
+                    parentDropdownObjectWidthInt,
+                    parentDropdownObjectHeightInt - groupLabelHeightInt
 
                 );
 

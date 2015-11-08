@@ -183,7 +183,8 @@ class ObjectPlayer{
 
         AIAutoVoid      ();
         SetHoverBoolean ();
-        PanelDrawVoid   ();
+        /*PENDING: Turn off panel draw void while creating player panel.*/
+        //PanelDrawVoid ();
 
     }
 
