@@ -12,7 +12,6 @@ class AddMuseumGUIObject{
     int             parentDropdownObjectWidthInt        ;                           /*A variable for layout taken from the main class.*/
     int             parentDropdownObjectHeightInt       ;                           /*A variable for layout taken from the main class.*/
     int             groupLayoutOffsetInt                = 10;                       /*This object layout offset.*/
-    int             groupLabelHeightInt                 ;                           /*Make the header of the group to be exactly as the same as layout offset.*/
     int             groupXInt                           ;                           /*X position of this GUI object in the main class.*/
     int             groupYInt                           ;                           /*Y position of this GUI object in the main class.*/
     int             groupAddWidthInt                    ;                           /*Width of the group, dependent on screen size.*/
@@ -51,11 +50,10 @@ class AddMuseumGUIObject{
         parentDropdownObjectWidthInt            = _parentDropdownObjectWidthInt;
         parentDropdownObjectHeightInt           = _parentDropdownObjwctHeightInt;
 
-        groupLabelHeightInt                     = groupLayoutOffsetInt;
         scrollableWidthInt                      = ((groupAddWidthInt - groupLayoutOffsetInt*4)/3);          /*Create the scrollable list width to accomodate three scrollable list in a row.*/
-        scrollableHeightInt                     = ((6*groupLabelHeightInt) + (5*scrollableOffsetInt));      /*Create the scrollable list height to accomodate five items + header in.*/
+        scrollableHeightInt                     = ((6*groupLayoutOffsetInt) + (5*scrollableOffsetInt));      /*Create the scrollable list height to accomodate five items + header in.*/
         oneLineComponentWidthInt                = ((groupAddWidthInt - groupLayoutOffsetInt*3)/2);          /*Create the one line object width to accomodate two similar object in a row.*/
-        oneLineComponentHeightInt               = groupLabelHeightInt;                                      /*This need to be at the same height as the layout offset or the label height.*/
+        oneLineComponentHeightInt               = groupLayoutOffsetInt;                                      /*This need to be at the same height as the layout offset or the label height.*/
 
         /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
         groupBackgroundColor                    = color(50  , 60    , 57    , alphaFloat);
@@ -195,6 +193,16 @@ class AddMuseumGUIObject{
                                     .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
                                     .setForeground      (color(0    , 116   , 217   , alphaFloat))
                                     .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+        sChecklistFalseCColor       .setActive          (color(0    , 45    , 90    , alphaFloat))
+                                    .setBackground      (color(0    , 45    , 90    , alphaFloat))
+                                    .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+                                    .setForeground      (color(0    , 116   , 217   , alphaFloat))
+                                    .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+        sChecklistTrueCColor        .setActive          (color(0    , 116   , 217   , alphaFloat))
+                                    .setBackground      (color(0    , 116   , 217   , alphaFloat))
+                                    .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+                                    .setForeground      (color(0    , 116   , 217   , alphaFloat))
+                                    .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
         /*Especially for group controller you need to adjust four methods instead of just one methods.*/
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setBackgroundColor    (groupBackgroundColor);
@@ -203,15 +211,15 @@ class AddMuseumGUIObject{
         cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColorLabel         (groupColorLabelColor);
 
         /*The rest of the controller you only need to adjust for one method, which is setColor().*/
-        cp5Object.get(ScrollableList.class  , "TypeObjectMuseumSList"           ).setColor              (otherCColor);
-        cp5Object.get(ScrollableList.class  , "SelectParentObjectMuseumSList"   ).setColor              (otherCColor);
-        cp5Object.get(ScrollableList.class  , "SelectTagSubjectSList"           ).setColor              (otherCColor);
-        cp5Object.get(ScrollableList.class  , "SelectTagVerbSList"              ).setColor              (otherCColor);
-        cp5Object.get(ScrollableList.class  , "SelectTagNounSList"              ).setColor              (otherCColor);
-        cp5Object.get(Textlabel     .class  , "CanAddMultipleTagsTextlabel"     ).setColor              (otherCColor);
-        cp5Object.get(Textfield     .class  , "NameFullTextfield"               ).setColor              (otherCColor);
-        cp5Object.get(Textfield     .class  , "NameAltTextfield"                ).setColor              (otherCColor);
-        cp5Object.get(Button        .class  , "SubmitButton"                    ).setColor              (otherCColor);
+        cp5Object.get(ScrollableList.class  , "TypeObjectMuseumSList"           ).setColor              (otherCColor            );
+        cp5Object.get(ScrollableList.class  , "SelectParentObjectMuseumSList"   ).setColor              (otherCColor            );
+        cp5Object.get(ScrollableList.class  , "SelectTagSubjectSList"           ).setColor              (sChecklistFalseCColor  );
+        cp5Object.get(ScrollableList.class  , "SelectTagVerbSList"              ).setColor              (sChecklistFalseCColor  );
+        cp5Object.get(ScrollableList.class  , "SelectTagNounSList"              ).setColor              (sChecklistFalseCColor  );
+        cp5Object.get(Textlabel     .class  , "CanAddMultipleTagsTextlabel"     ).setColor              (otherCColor            );
+        cp5Object.get(Textfield     .class  , "NameFullTextfield"               ).setColor              (otherCColor            );
+        cp5Object.get(Textfield     .class  , "NameAltTextfield"                ).setColor              (otherCColor            );
+        cp5Object.get(Button        .class  , "SubmitButton"                    ).setColor              (otherCColor            );
 
         /*This to re - set SelectParentObjectMuseumSList so that it display options according to the TypeObjectMuseumSList selection.*/
         if      (typeObjectMuseumString.equals("Floor"      )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(defaultStringList  ); typeObjectMuseumString = ""; }
@@ -244,14 +252,14 @@ class AddMuseumGUIObject{
                  cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
 
                     (width -  guiOffsetInt - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt ),
-                    (         guiOffsetInt + (parentButtonSizeInt/2) + groupLabelHeightInt          )
+                    (         guiOffsetInt + (parentButtonSizeInt/2) + groupLayoutOffsetInt         )
 
                 );
                 /*Change the size when the group object is close.*/
                  cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
 
-                    parentDropdownObjectWidthInt,
-                    parentDropdownObjectHeightInt - groupLabelHeightInt
+                    parentDropdownObjectWidthInt  ,
+                    parentDropdownObjectHeightInt
 
                 );
 

@@ -253,10 +253,14 @@ void setup()                                    {
     /*Add the edit player GUI.*/
     editPlayerGUIObject                 = new EditPlayerGUIObject(
 
-        (width /3)                      ,
-        369                             ,
-        ((width /2) - ((width/3)/2))    ,
-        ((height/2) - (369/2))
+
+        (guiOffsetInt + (buttonSizeInt/2))  ,
+        (guiOffsetInt + (buttonSizeInt/2))  ,
+        dropdownObjectWidthInt              ,
+        369                                 ,
+        buttonSizeInt                       ,
+        dropdownObjectWidthInt              ,
+        dropdownObjectHeightInt
 
     );
 
@@ -297,22 +301,22 @@ void setup()                                    {
                                         .setItems(floorStringList);
 
     /*Set the items for the scrollabnle list of the visitors.
-    PENDING: The next thing I need to do is to make the a panel of which gather the informations of the player.
-    PENDING: For the current working milestone I think I will take these informations to the display group panel.
-    PENDING: List of informations.
+    PENDING - DONE: The next thing I need to do is to make the a panel of which gather the informations of the player.
+    PENDING - DONE: For the current working milestone I think I will take these informations to the display group panel.
+    PENDING - DONE: List of informations.
         1. Player Index.
         2. Player Current Exhibition.
         3. Player Three Target Exhibitions.
         3. Player Three Most Visited Tags.
         4. Player Movement Modes.
         5. If Software Manual Control is toggled on there is another scrollable list to pick which exhibition to visit next.
-    PENDING: The player movement mode is a radio list of how can certain player be controlled.
-    PENDING: At this moment I can think of three ways to control player/visitor in this application.
-    PENDING: Player movement mode.
+    PENDING - DONE: The player movement mode is a radio list of how can certain player be controlled.
+    PENDING - DONE: At this moment I can think of three ways to control player/visitor in this application.
+    PENDING - DONE: Player movement mode.
         1. AI Mode, player move within the museum simulator with AIAutoVoid() method.
         2. Software Manual Control, player move within the museum simulator with dictation from a human using the museum manager application.
         3. Hardware Manual Control, player is move in synchronize with movement from Arduino device.
-    PENDING: Create prototype of player panel.
+    PENDING - DONE: Create prototype of player panel.
     PENDING - DONE: Before working on the player edit panel please turn off the card display first.*/
     cp5Object                           .get(ScrollableList.class, "VisitorSList")
                                         .setItems(playerStringList);
@@ -383,7 +387,7 @@ void draw()                                     {
     /*Update the add museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the edit player object GUI.*/
-    editPlayerGUIObject                     .DrawVoid();
+    editPlayerGUIObject                     .DrawVoid(dropdownPlayerAlphaFloat);
 
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
