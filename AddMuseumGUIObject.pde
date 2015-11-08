@@ -50,10 +50,10 @@ class AddMuseumGUIObject{
         parentDropdownObjectWidthInt            = _parentDropdownObjectWidthInt;
         parentDropdownObjectHeightInt           = _parentDropdownObjwctHeightInt;
 
-        scrollableWidthInt                      = ((groupAddWidthInt - groupLayoutOffsetInt*4)/3);          /*Create the scrollable list width to accomodate three scrollable list in a row.*/
-        scrollableHeightInt                     = ((6*groupLayoutOffsetInt) + (5*scrollableOffsetInt));      /*Create the scrollable list height to accomodate five items + header in.*/
-        oneLineComponentWidthInt                = ((groupAddWidthInt - groupLayoutOffsetInt*3)/2);          /*Create the one line object width to accomodate two similar object in a row.*/
-        oneLineComponentHeightInt               = groupLayoutOffsetInt;                                      /*This need to be at the same height as the layout offset or the label height.*/
+        scrollableWidthInt                      = ((groupAddWidthInt - groupLayoutOffsetInt*4)/3);      /*Create the scrollable list width to accomodate three scrollable list in a row.*/
+        scrollableHeightInt                     = ((6*groupLayoutOffsetInt) + (5*scrollableOffsetInt)); /*Create the scrollable list height to accomodate five items + header in.*/
+        oneLineComponentWidthInt                = ((groupAddWidthInt - groupLayoutOffsetInt*3)/2);      /*Create the one line object width to accomodate two similar object in a row.*/
+        oneLineComponentHeightInt               = groupLayoutOffsetInt;                                 /*This need to be at the same height as the layout offset or the label height.*/
 
         /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
         groupBackgroundColor                    = color(50  , 60    , 57    , alphaFloat);
