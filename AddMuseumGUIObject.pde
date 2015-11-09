@@ -222,9 +222,21 @@ class AddMuseumGUIObject{
         cp5Object.get(Button        .class  , "SubmitButton"                    ).setColor              (otherCColor            );
 
         /*This to re - set SelectParentObjectMuseumSList so that it display options according to the TypeObjectMuseumSList selection.*/
-        if      (typeObjectMuseumString.equals("Floor"      )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(defaultStringList  ); typeObjectMuseumString = ""; }
-        else if (typeObjectMuseumString.equals("Room"       )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(floorStringList    ); typeObjectMuseumString = ""; }
-        else if (typeObjectMuseumString.equals("Exhibition" )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(roomStringList     ); typeObjectMuseumString = ""; }
+        if      (useNameAltBoolean == true ){
+
+            if      (typeObjectMuseumString.equals("Floor"      )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(defaultStringList         ); typeObjectMuseumString = ""; }
+            else if (typeObjectMuseumString.equals("Room"       )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(floorNameAltStringList    ); typeObjectMuseumString = ""; }
+            else if (typeObjectMuseumString.equals("Exhibition" )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(roomNameAltStringList     ); typeObjectMuseumString = ""; }
+
+        }
+        else if (useNameAltBoolean == false){
+
+            if      (typeObjectMuseumString.equals("Floor"      )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(defaultStringList         ); typeObjectMuseumString = ""; }
+            else if (typeObjectMuseumString.equals("Room"       )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(floorNameFullStringList   ); typeObjectMuseumString = ""; }
+            else if (typeObjectMuseumString.equals("Exhibition" )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(roomNameFullStringList    ); typeObjectMuseumString = ""; }
+
+        }
+
 
         /*This code below is for controlling controllers outside of this class.
         These two if statements is for controlling the position of the other object in the same open close button.*/

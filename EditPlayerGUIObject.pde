@@ -1,4 +1,5 @@
-/*A class for creating GUI object for editing player movement around the museum.*/
+/*A class for creating GUI object for editing player movement around the museum.
+PENDING: Please do not forget to create default value, so when the system starts this GUI object displays the information of the first player.*/
 import java.util.*;
 import controlP5.*;
 class EditPlayerGUIObject{

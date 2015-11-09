@@ -51,6 +51,10 @@ class ObjectPlayer{
     List<ObjectPlayer>  playerSiblingObjectList         = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
     int                 playerSiblingIndexInt           = -1;                               /*The index of this object within the List of object player sibling.*/
 
+    int                 editPlayerModeInt                = 1;                               /*The mode that runs this player.
+                                                                                                editPlayerMode =    1, this player controlled by AIAutoVoid.
+                                                                                                editPlayerMode =    2, this player controlled manually using this application.
+                                                                                                editPlayerMode =    3, this player controlled manually using Arduino.*/
     float               timeCurrentExhibitionFloat      = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
 
     /*Panel variable.*/
@@ -181,7 +185,7 @@ class ObjectPlayer{
                 /*Move player to the new exhibition.*/
                 int randomIndexInt          = (int)(Math.floor((Math.random()*exhibitionTargetStringList.size()) + 0));
                 ExhibitionMoveObject        (exhibitionTargetStringList.get(randomIndexInt));
-                timeCurrentExhibitionFloat    = 0;                                                                            /*Reset timer.*/
+                timeCurrentExhibitionFloat  = 0;                                                                            /*Reset timer.*/
 
             }
 
@@ -192,10 +196,14 @@ class ObjectPlayer{
     /*A function to update this player variables over time.*/
     void DrawVoid()                                                                     {
 
-        AIAutoVoid      ();
         SetHoverBoolean ();
         PanelDrawVoid   ();
 
+        /*PROTOTYPE: Changing player mode.*/
+        if(editPlayerModeInt == 1){ AIAutoVoid(); }
+        /*PROTOTYPE: Creating function to move this player manually.*/
+
+        /*PENDING: Give the codes below in the new own method and create commentation for these code below.*/
         exhibitionTagCounterStringList.clear();
         for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
 
@@ -510,7 +518,8 @@ class ObjectPlayer{
 
     }
 
-    /*A function to find an object from an array.*/
+    /*A function to find an object from an array.
+    PROTOTYPE: Change this function so that it can also search from the full name.*/
     ObjectMuseum FindObject(
 
         List<ObjectMuseum>  _targetObjectList       ,
