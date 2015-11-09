@@ -531,9 +531,9 @@ void CreatePanelCardVoid()                      {
                 "FLR_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
                 "ROM_CUR = " + roomCurrentObject.nameAltString                                                  + "\n" +
                 "EXH_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(0)                          + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(1)                          + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(2)                          + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(0)                   + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(1)                   + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(2)                   + "\n" +
                 "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
                 "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
                 "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
@@ -1076,7 +1076,14 @@ void ExhibitionSList(int _indexInt)             {
 
 }
 /*This function is to control player scrollable list.*/
-void VisitorSList                   (int _indexInt)                                 { editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt); }
+void VisitorSList                   (int _indexInt)                                 {
+
+    /*Assign the selected player.*/
+    editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
+    /*Change the radio button accordingly.*/
+    cp5Object.get(RadioButton.class, "ModeRadioButton").activate((editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt - 1));
+
+}
 /*Control function for the EditPlayerGUIObject.pde.*/              
 void ModeRadioButton                (int _intIndex)                                 {
 
@@ -1085,14 +1092,14 @@ void ModeRadioButton                (int _intIndex)                             
     editPlayerGUIObject                     .editPlayerModeInt  = _intIndex;
 
 }
+/*Function to move to new exhibition.*/
 void PleaseSelectNextExhibitionSList(int _indexInt)                                 {
-
-    cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt);
-    println(cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt));
 
     if(editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt == 2){
 
-        //editPlayerGUIObject.selectedPlayerObject.ExhibitionMoveObject();
+        String          receivedString          = cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt).get("text").toString();
+        ObjectMuseum    receivedMuseumObject    = editPlayerGUIObject.selectedPlayerObject.FindObject(exhibitionObjectList, receivedString);
+        editPlayerGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumObject.nameAltString);
 
     }
 

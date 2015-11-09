@@ -9,7 +9,7 @@ class EditPlayerGUIObject{
     color           groupColorLabelColor                    ;               /*The title font colot of the panel group.*/
     /*PENDING: alphaFloat is actually unecessary please delete this variable later and just directly refers the value from the arguments.*/
     float           alphaFloat                              = 255;          /*The opacity for this object.*/
-    int             editPlayerModeInt                       ;               /*Whether the selected player object is controlled by AI, manual control, or hardware control.*/
+    int             editPlayerModeInt                       = 2;               /*Whether the selected player object is controlled by AI, manual control, or hardware control.*/
     int             playerGroupXInt                         ;               /*The x position of this graphical user interface.*/
     int             playerGroupYInt                         ;               /*The x position of this graphical user interface.*/
     int             parentButtonSizeInt                     ;               /*A variable for layout taken from the main class.*/
@@ -25,7 +25,7 @@ class EditPlayerGUIObject{
     CColor          otherCColor                             = new CColor(); /*The color for other component than the scrollableChecklist.*/
     CColor          sListStaticCColor                       = new CColor(); /*The color of the scrollable list that has no interaction (User cannot choose the elements).*/
     ObjectPlayer    selectedPlayerObject                    = null;         /*Selected object player from this graphical user interface.*/
-    ObjectPlayer    selectedPlayerPrevObject                = null;
+    //ObjectPlayer  selectedPlayerPrevObject                = null;         /*Selected object player from this graphical user interface.*/
 
     /*Constructor.*/
     EditPlayerGUIObject     (
@@ -64,6 +64,8 @@ class EditPlayerGUIObject{
                                                 .setForeground      (color(0    , 45    , 90    , alphaFloat))
                                                 .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
+        /*Set the default player object.*/
+        selectedPlayerObject                        = playerObjectList.get(0);
 
         Group   EditPlayerGroupObject               = 
                 cp5Object   .addGroup               ("EditPlayerGroupObject")
@@ -90,7 +92,7 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("1");
+                            .setText                ("" + selectedPlayerObject.playerIndexInt);
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentTextlabel")
                             .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2))
@@ -104,14 +106,14 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("EXH_CAO");
+                            .setText                (selectedPlayerObject.exhibitionCurrentString);
 
                 /*PENDING - DONE: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*4))
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeight3Int)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3"))
+                            .addItems               (selectedPlayerObject.exhibitionTargetNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Target Exhibitions:");
@@ -121,7 +123,7 @@ class EditPlayerGUIObject{
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*5) + playerScrollableListHeight3Int)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3", "Exhibition Test 4", "Exhibition Test 5"))
+                            .addItems               (selectedPlayerObject.exhibitionVisitedNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Visited Exhibitions:");
@@ -130,7 +132,7 @@ class EditPlayerGUIObject{
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (Arrays.asList("Tag Test 1 - 123123", "Tag Test 2 - 123123", "Tag Test 3 - 123123", "Tag Test 4 - 123123", "Tag Test 5 - 123123"))
+                            .addItems               (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Collected Tags:");
@@ -149,7 +151,8 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .addItem                ("Software - Auto"  , 1)
                             .addItem                ("Software - Manual", 2)
-                            .addItem                ("hardware - Manual", 3);
+                            .addItem                ("hardware - Manual", 3)
+                            .activate               (1);
 
                 cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*12) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2) + 2))    /*Additional 2 to fix layouting error in the radio buttons.*/
@@ -170,20 +173,16 @@ class EditPlayerGUIObject{
     ){
 
         /*If there is a button open close for player is close then we need to reset the reference to the selected object.*/
-        if(_buttonOpenClosePlayerBoolean == false){ selectedPlayerObject = null; }
+        if(_buttonOpenClosePlayerBoolean == false){ selectedPlayerObject = playerObjectList.get(0); }
         /*If selected player object is not null than populate the controller using the value of the selected player object.*/
         if(selectedPlayerObject != null){
 
-            if(selectedPlayerObject != selectedPlayerPrevObject){
-
-                cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
-                cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     selectedPlayerObject.exhibitionCurrentString));
-                cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     selectedPlayerObject.exhibitionTargetStringList));
-                cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     selectedPlayerObject.exhibitionVisitedStringList));
-                cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     selectedPlayerObject.exhibitionTagCounterStringList));
-                selectedPlayerPrevObject = selectedPlayerObject;
-
-            }
+            cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
+            cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     selectedPlayerObject.exhibitionCurrentObject.nameFullString));
+            cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     selectedPlayerObject.exhibitionTargetNameFullStringList));
+            cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     selectedPlayerObject.exhibitionVisitedNameFullStringList));
+            cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     selectedPlayerObject.exhibitionTagCounterNameFullStringList));
+            cp5Object.get(ScrollableList    .class, "PleaseSelectNextExhibitionSList"       )   .setItems((     exhibitionNameFullStringList));
         }
 
         alphaFloat                  = _alphaFloat;
@@ -191,9 +190,9 @@ class EditPlayerGUIObject{
         /*Show/hide controller based on the alpha value received from the main class.*/
         if                          (alphaFloat >  (255f/45f)){ cp5Object.get(Group   .class  , "EditPlayerGroupObject"            ).show(); }
         else if                     (alphaFloat <= (255f/45f)){ cp5Object.get(Group   .class  , "EditPlayerGroupObject"            ).hide(); }
-        groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat + (255f/45f));
-        groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat + (255f/45f));
-        groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat + (255f/45f));
+        groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat    + (255f/45f));
+        groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat    + (255f/45f));
+        groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat    + (255f/45f));
         otherCColor                 .setActive          (color(0    , 170   , 255   , alphaFloat))
                                     .setBackground      (color(0    , 45    , 90    , alphaFloat))
                                     .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))

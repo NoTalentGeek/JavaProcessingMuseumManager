@@ -556,9 +556,9 @@ public void CreatePanelCardVoid()                      {
                 "FLR_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
                 "ROM_CUR = " + roomCurrentObject.nameAltString                                                  + "\n" +
                 "EXH_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(0)                          + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(1)                          + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetStringList .get(2)                          + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(0)                   + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(1)                   + "\n" +
+                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(2)                   + "\n" +
                 "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
                 "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
                 "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
@@ -1101,7 +1101,14 @@ public void ExhibitionSList(int _indexInt)             {
 
 }
 /*This function is to control player scrollable list.*/
-public void VisitorSList                   (int _indexInt)                                 { editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt); }
+public void VisitorSList                   (int _indexInt)                                 {
+
+    /*Assign the selected player.*/
+    editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
+    /*Change the radio button accordingly.*/
+    cp5Object.get(RadioButton.class, "ModeRadioButton").activate((editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt - 1));
+
+}
 /*Control function for the EditPlayerGUIObject.pde.*/              
 public void ModeRadioButton                (int _intIndex)                                 {
 
@@ -1110,14 +1117,14 @@ public void ModeRadioButton                (int _intIndex)                      
     editPlayerGUIObject                     .editPlayerModeInt  = _intIndex;
 
 }
+/*Function to move to new exhibition.*/
 public void PleaseSelectNextExhibitionSList(int _indexInt)                                 {
-
-    cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt);
-    println(cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt));
 
     if(editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt == 2){
 
-        //editPlayerGUIObject.selectedPlayerObject.ExhibitionMoveObject();
+        String          receivedString          = cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt).get("text").toString();
+        ObjectMuseum    receivedMuseumObject    = editPlayerGUIObject.selectedPlayerObject.FindObject(exhibitionObjectList, receivedString);
+        editPlayerGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumObject.nameAltString);
 
     }
 
@@ -1617,7 +1624,7 @@ class EditPlayerGUIObject{
     int           groupColorLabelColor                    ;               /*The title font colot of the panel group.*/
     /*PENDING: alphaFloat is actually unecessary please delete this variable later and just directly refers the value from the arguments.*/
     float           alphaFloat                              = 255;          /*The opacity for this object.*/
-    int             editPlayerModeInt                       ;               /*Whether the selected player object is controlled by AI, manual control, or hardware control.*/
+    int             editPlayerModeInt                       = 2;               /*Whether the selected player object is controlled by AI, manual control, or hardware control.*/
     int             playerGroupXInt                         ;               /*The x position of this graphical user interface.*/
     int             playerGroupYInt                         ;               /*The x position of this graphical user interface.*/
     int             parentButtonSizeInt                     ;               /*A variable for layout taken from the main class.*/
@@ -1633,7 +1640,7 @@ class EditPlayerGUIObject{
     CColor          otherCColor                             = new CColor(); /*The color for other component than the scrollableChecklist.*/
     CColor          sListStaticCColor                       = new CColor(); /*The color of the scrollable list that has no interaction (User cannot choose the elements).*/
     ObjectPlayer    selectedPlayerObject                    = null;         /*Selected object player from this graphical user interface.*/
-    ObjectPlayer    selectedPlayerPrevObject                = null;
+    //ObjectPlayer  selectedPlayerPrevObject                = null;         /*Selected object player from this graphical user interface.*/
 
     /*Constructor.*/
     EditPlayerGUIObject     (
@@ -1672,6 +1679,8 @@ class EditPlayerGUIObject{
                                                 .setForeground      (color(0    , 45    , 90    , alphaFloat))
                                                 .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
+        /*Set the default player object.*/
+        selectedPlayerObject                        = playerObjectList.get(0);
 
         Group   EditPlayerGroupObject               = 
                 cp5Object   .addGroup               ("EditPlayerGroupObject")
@@ -1698,7 +1707,7 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("1");
+                            .setText                ("" + selectedPlayerObject.playerIndexInt);
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentTextlabel")
                             .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2))
@@ -1712,14 +1721,14 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("EXH_CAO");
+                            .setText                (selectedPlayerObject.exhibitionCurrentString);
 
                 /*PENDING - DONE: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*4))
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeight3Int)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3"))
+                            .addItems               (selectedPlayerObject.exhibitionTargetNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Target Exhibitions:");
@@ -1729,7 +1738,7 @@ class EditPlayerGUIObject{
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*5) + playerScrollableListHeight3Int)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3", "Exhibition Test 4", "Exhibition Test 5"))
+                            .addItems               (selectedPlayerObject.exhibitionVisitedNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Visited Exhibitions:");
@@ -1738,7 +1747,7 @@ class EditPlayerGUIObject{
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (Arrays.asList("Tag Test 1 - 123123", "Tag Test 2 - 123123", "Tag Test 3 - 123123", "Tag Test 4 - 123123", "Tag Test 5 - 123123"))
+                            .addItems               (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Collected Tags:");
@@ -1757,7 +1766,8 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .addItem                ("Software - Auto"  , 1)
                             .addItem                ("Software - Manual", 2)
-                            .addItem                ("hardware - Manual", 3);
+                            .addItem                ("hardware - Manual", 3)
+                            .activate               (1);
 
                 cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*12) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2) + 2))    /*Additional 2 to fix layouting error in the radio buttons.*/
@@ -1778,20 +1788,16 @@ class EditPlayerGUIObject{
     ){
 
         /*If there is a button open close for player is close then we need to reset the reference to the selected object.*/
-        if(_buttonOpenClosePlayerBoolean == false){ selectedPlayerObject = null; }
+        if(_buttonOpenClosePlayerBoolean == false){ selectedPlayerObject = playerObjectList.get(0); }
         /*If selected player object is not null than populate the controller using the value of the selected player object.*/
         if(selectedPlayerObject != null){
 
-            if(selectedPlayerObject != selectedPlayerPrevObject){
-
-                cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
-                cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     selectedPlayerObject.exhibitionCurrentString));
-                cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     selectedPlayerObject.exhibitionTargetStringList));
-                cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     selectedPlayerObject.exhibitionVisitedStringList));
-                cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     selectedPlayerObject.exhibitionTagCounterStringList));
-                selectedPlayerPrevObject = selectedPlayerObject;
-
-            }
+            cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
+            cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     selectedPlayerObject.exhibitionCurrentObject.nameFullString));
+            cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     selectedPlayerObject.exhibitionTargetNameFullStringList));
+            cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     selectedPlayerObject.exhibitionVisitedNameFullStringList));
+            cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     selectedPlayerObject.exhibitionTagCounterNameFullStringList));
+            cp5Object.get(ScrollableList    .class, "PleaseSelectNextExhibitionSList"       )   .setItems((     exhibitionNameFullStringList));
         }
 
         alphaFloat                  = _alphaFloat;
@@ -1799,9 +1805,9 @@ class EditPlayerGUIObject{
         /*Show/hide controller based on the alpha value received from the main class.*/
         if                          (alphaFloat >  (255f/45f)){ cp5Object.get(Group   .class  , "EditPlayerGroupObject"            ).show(); }
         else if                     (alphaFloat <= (255f/45f)){ cp5Object.get(Group   .class  , "EditPlayerGroupObject"            ).hide(); }
-        groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat + (255f/45f));
-        groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat + (255f/45f));
-        groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat + (255f/45f));
+        groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat    + (255f/45f));
+        groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat    + (255f/45f));
+        groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat    + (255f/45f));
         otherCColor                 .setActive          (color(0    , 170   , 255   , alphaFloat))
                                     .setBackground      (color(0    , 45    , 90    , alphaFloat))
                                     .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
@@ -2253,32 +2259,38 @@ The player object will be the class that can be either played by the user (somek
     or being automated.*/
 class ObjectPlayer{
 
-    String              exhibitionCurrentString         = "";                               /*Current exhibition in String.*/
-    List<String>        exhibitionTargetStringList      = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedStringList     = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<String>        exhibitionTagCounterStringList  = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
-    List<TagCounter>    exhibitionTagCounterList        = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
+    String              exhibitionCurrentString                 = "";                               /*Current exhibition in String.*/
+    ObjectMuseum        exhibitionCurrentObject                 = null;
+    List<String>        exhibitionTargetNameAltStringList       = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
+    List<String>        exhibitionVisitedNameAltStringList      = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
+    List<String>        exhibitionTagCounterNameAltStringList   = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
+    
+    List<String>        exhibitionTargetNameFullStringList      = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
+    List<String>        exhibitionVisitedNameFullStringList     = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
+    List<String>        exhibitionTagCounterNameFullStringList  = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
+    
+    List<TagCounter>    exhibitionTagCounterList                = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
 
-    int                 playerIndexInt                  = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
+    int                 playerIndexInt                          = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
 
-    List<ObjectPlayer>  playerSiblingObjectList         = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
-    int                 playerSiblingIndexInt           = -1;                               /*The index of this object within the List of object player sibling.*/
+    List<ObjectPlayer>  playerSiblingObjectList                 = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
+    int                 playerSiblingIndexInt                   = -1;                               /*The index of this object within the List of object player sibling.*/
 
-    int                 editPlayerModeInt                = 1;                               /*The mode that runs this player.
-                                                                                                editPlayerMode =    1, this player controlled by AIAutoVoid.
-                                                                                                editPlayerMode =    2, this player controlled manually using this application.
-                                                                                                editPlayerMode =    3, this player controlled manually using Arduino.*/
-    float               timeCurrentExhibitionFloat      = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
+    int                 editPlayerModeInt                       = 2;                               /*The mode that runs this player.
+                                                                                                        editPlayerMode =    1, this player controlled by AIAutoVoid.
+                                                                                                        editPlayerMode =    2, this player controlled manually using this application.
+                                                                                                        editPlayerMode =    3, this player controlled manually using Arduino.*/
+    float               timeCurrentExhibitionFloat              = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
 
     /*Panel variable.*/
-    boolean hoverBoolean                                = false;
-    int   panelUnfinishedColor                        = color(217, 160, 102);
-    int   panelFinishedColor                          = color(223, 113, 38 );
-    int     widthPanelInt                               = 0;
-    int     heightPanelInt                              = 0;
-    int     xPanelInt                                   = 0;
-    int     yPanelInt                                   = 0;
-    Panel   panelObject                                 = null;
+    boolean hoverBoolean                                        = false;
+    int   panelUnfinishedColor                                = color(217, 160, 102);
+    int   panelFinishedColor                                  = color(223, 113, 38 );
+    int     widthPanelInt                                       = 0;
+    int     heightPanelInt                                      = 0;
+    int     xPanelInt                                           = 0;
+    int     yPanelInt                                           = 0;
+    Panel   panelObject                                         = null;
 
     /*Constructor.*/
     ObjectPlayer(
@@ -2384,7 +2396,7 @@ class ObjectPlayer{
         I checked the whether the exhibition visited has the same amount of length with total exhibition length.
         It is not necessary for this player to have all exhibitions visited due to there is a chance that this player
             visited same exhibitions twice or more.*/
-        if(exhibitionObjectList.size()                      > exhibitionVisitedStringList.size()){
+        if(exhibitionObjectList.size()                      > exhibitionVisitedNameAltStringList.size()){
 
             /*Increase the amount of time of this player in the current exhibition the visitor visits.
             The more time this player spent time in the exhibition the more chance the visitor will move to the
@@ -2396,8 +2408,8 @@ class ObjectPlayer{
             if(randomFloat > (1f - timeCurrentExhibitionFloat)){
 
                 /*Move player to the new exhibition.*/
-                int randomIndexInt          = (int)(Math.floor((Math.random()*exhibitionTargetStringList.size()) + 0));
-                ExhibitionMoveObject        (exhibitionTargetStringList.get(randomIndexInt));
+                int randomIndexInt          = (int)(Math.floor((Math.random()*exhibitionTargetNameAltStringList.size()) + 0));
+                ExhibitionMoveObject        (exhibitionTargetNameAltStringList.get(randomIndexInt));
                 timeCurrentExhibitionFloat  = 0;                                                                            /*Reset timer.*/
 
             }
@@ -2417,12 +2429,16 @@ class ObjectPlayer{
         /*PROTOTYPE: Creating function to move this player manually.*/
 
         /*PENDING: Give the codes below in the new own method and create commentation for these code below.*/
-        exhibitionTagCounterStringList.clear();
+        exhibitionTagCounterNameAltStringList .clear();
+        exhibitionTagCounterNameFullStringList.clear();
         for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
 
-            String  tempTagString           = "";
-            tempTagString                   = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameFullString());
-            exhibitionTagCounterStringList  .add(tempTagString);
+            String  tempTagNameAltString                = "";
+            String  tempTagNameFullString               = "";
+                    tempTagNameAltString                = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameAltString ());
+                    tempTagNameFullString               = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameFullString());
+            exhibitionTagCounterNameAltStringList       .add(tempTagNameAltString);
+            exhibitionTagCounterNameFullStringList      .add(tempTagNameFullString);
 
         }
 
@@ -2497,9 +2513,10 @@ class ObjectPlayer{
     }
 
     /*A function to determine target exhibition.*/
-    public List<String> SetExhibitionTargetStringList()      {
+    public List<String> SetExhibitionTargetNameAltStringList()      {
 
-        exhibitionTargetStringList  = new ArrayList<String>();
+        exhibitionTargetNameAltStringList  = new ArrayList<String>();
+        exhibitionTargetNameFullStringList = new ArrayList<String>();
 
         /*Stage one sort.
         Stage one sort is to remove the currently visited exhibition from the target exhibition index.
@@ -2515,11 +2532,8 @@ class ObjectPlayer{
 
             ){
 
-                exhibitionTargetStringList.add(
-
-                    exhibitionObjectList.get(i).nameAltString
-
-                );
+                exhibitionTargetNameAltStringList .add(exhibitionObjectList.get(i).nameAltString );
+                exhibitionTargetNameFullStringList.add(exhibitionObjectList.get(i).nameFullString);
 
             }
 
@@ -2539,8 +2553,9 @@ class ObjectPlayer{
                 /*After each remove make sure to have the exhibition target length to be 3.
                 If not 3 elements in the target exhibition array, then return the last 3 elements
                     of target exhibition array ever exist.*/
-                exhibitionTargetStringList                      .remove(exhibitionObjectList.get(i).nameAltString);
-                if(exhibitionTargetStringList.size() == 3)      { return exhibitionTargetStringList; }
+                exhibitionTargetNameAltStringList                       .remove(exhibitionObjectList.get(i).nameAltString );
+                exhibitionTargetNameFullStringList                      .remove(exhibitionObjectList.get(i).nameFullString);
+                if(exhibitionTargetNameAltStringList.size() == 3)       { return exhibitionTargetNameAltStringList; }
 
             }
 
@@ -2551,18 +2566,19 @@ class ObjectPlayer{
         For example the visitor is now in the Exhibition C as he/she used to visits Exhibition A and Exhibition B before,
             the system now will let Exhibition A and Exhibition B to have 10% chance to be not removed from the target
             exhibition array.*/
-        for(int i = 0; i < exhibitionVisitedStringList.size(); i ++){
+        for(int i = 0; i < exhibitionVisitedNameAltStringList.size(); i ++){
 
-            for(int j = 0; j < exhibitionTargetStringList.size(); j ++){
+            for(int j = 0; j < exhibitionTargetNameAltStringList.size(); j ++){
 
                 /*Compare the target exhibitions with all visited exhibition.
                 If it matches then the corresponding exhibition has 90% chance to be deleted
                     from target exhibition array.*/
-                if(exhibitionTargetStringList.get(j).equals(exhibitionVisitedStringList.get(i))){
+                if(exhibitionTargetNameAltStringList.get(j).equals(exhibitionVisitedNameAltStringList.get(i))){
 
                     if(Math.random() < 0.90f){
 
-                        exhibitionTargetStringList.remove(exhibitionTargetStringList.get(j));
+                        exhibitionTargetNameAltStringList .remove(exhibitionTargetNameAltStringList .get(j));
+                        exhibitionTargetNameFullStringList.remove(exhibitionTargetNameFullStringList.get(j));
                         j --;
 
                     }
@@ -2570,7 +2586,7 @@ class ObjectPlayer{
                     /*After each remove make sure to have the exhibition target length to be 3.
                     If not 3 elements in the target exhibition array, then return the last 3 elements
                         of target exhibition array ever exist.*/
-                    if(exhibitionTargetStringList.size() == 3)  { return exhibitionTargetStringList; }
+                    if(exhibitionTargetNameAltStringList.size() == 3)  { return exhibitionTargetNameAltStringList; }
 
                 }
 
@@ -2587,10 +2603,10 @@ class ObjectPlayer{
             if two tags are match the exhibition has 33% chance of being removed from the target exhibition array,
             if three tags are match the exhibition will stay in the target exhibition array.*/
         String tempTagStringArray[] = new String[3];
-        for(int i = 0; i < tempTagStringArray.length            ; i ++){ tempTagStringArray[i] = exhibitionTagCounterList.get(i).GetTagNameAltString(); }
-        for(int i = 0; i < exhibitionTargetStringList.size()    ; i ++){
+        for(int i = 0; i < tempTagStringArray.length                    ; i ++){ tempTagStringArray[i] = exhibitionTagCounterList.get(i).GetTagNameAltString(); }
+        for(int i = 0; i < exhibitionTargetNameAltStringList.size()     ; i ++){
 
-            ObjectMuseum    exhibitionTargetObject  = FindObject(exhibitionObjectList, exhibitionTargetStringList.get(i));
+            ObjectMuseum    exhibitionTargetObject  = FindObject(exhibitionObjectList, exhibitionTargetNameAltStringList.get(i));
             int             tagSameCountInt         = 0;
 
             for(int j = 0; j < exhibitionTargetObject.tagMuseumNameAltStringList.size(); j ++){
@@ -2603,15 +2619,15 @@ class ObjectPlayer{
 
             }
             
-            if      (tagSameCountInt == 0)          {                            exhibitionTargetStringList.remove(exhibitionTargetStringList.get(i)); i --; }
-            else if (tagSameCountInt == 1)          { if(Math.random() < 0.66f){ exhibitionTargetStringList.remove(exhibitionTargetStringList.get(i)); i --; } }
-            else if (tagSameCountInt == 2)          { if(Math.random() < 0.33f){ exhibitionTargetStringList.remove(exhibitionTargetStringList.get(i)); i --; } }
+            if      (tagSameCountInt == 0)          {                            exhibitionTargetNameAltStringList.remove(exhibitionTargetNameAltStringList.get(i)); exhibitionTargetNameFullStringList.remove(exhibitionTargetNameFullStringList.get(i)); i --; }
+            else if (tagSameCountInt == 1)          { if(Math.random() < 0.66f){ exhibitionTargetNameAltStringList.remove(exhibitionTargetNameAltStringList.get(i)); exhibitionTargetNameFullStringList.remove(exhibitionTargetNameFullStringList.get(i)); i --; } }
+            else if (tagSameCountInt == 2)          { if(Math.random() < 0.33f){ exhibitionTargetNameAltStringList.remove(exhibitionTargetNameAltStringList.get(i)); exhibitionTargetNameFullStringList.remove(exhibitionTargetNameFullStringList.get(i)); i --; } }
             else if (tagSameCountInt == 3)          {  }
 
             /*After each remove make sure to have the exhibition target length to be 3.
             If not 3 elements in the target exhibition array, then return the last 3 elements
                 of target exhibition array ever exist.*/
-            if(exhibitionTargetStringList.size() == 3)  { return exhibitionTargetStringList; }
+            if(exhibitionTargetNameAltStringList.size() == 3)  { return exhibitionTargetNameAltStringList; }
 
         }
 
@@ -2624,9 +2640,9 @@ class ObjectPlayer{
         /*Stage five sort.
         The fourth sort is to make the exhibition target that are not in the same floor or room of which player's
             current exhibition to have 50% chance of stay.*/
-        for(int i = 0; i < exhibitionTargetStringList.size(); i ++){
+        for(int i = 0; i < exhibitionTargetNameAltStringList.size(); i ++){
 
-            ObjectMuseum    exhibitionTargetObject  = FindObject(exhibitionObjectList, exhibitionTargetStringList.get(i));
+            ObjectMuseum    exhibitionTargetObject  = FindObject(exhibitionObjectList, exhibitionTargetNameAltStringList.get(i));
             String          roomTargetString        = exhibitionTargetObject.parentNameAltString;
             ObjectMuseum    roomTargetObject        = FindObject(roomObjectList, roomTargetString);
             String          floorTargetString       = roomTargetObject.parentNameAltString;
@@ -2634,10 +2650,10 @@ class ObjectPlayer{
 
             if(roomCurrentString    != roomTargetString ){
 
-                if(Math.random() < 0.20f){ exhibitionTargetStringList.remove(exhibitionTargetStringList.get(i)); i --; }
+                if(Math.random() < 0.20f){ exhibitionTargetNameAltStringList.remove(exhibitionTargetNameAltStringList.get(i)); exhibitionTargetNameFullStringList.remove(exhibitionTargetNameFullStringList.get(i)); i --; }
                 else{
 
-                    if(floorCurrentString != floorTargetString){ if(Math.random() < 0.50f){ exhibitionTargetStringList.remove(exhibitionTargetStringList.get(i)); i --; } }
+                    if(floorCurrentString != floorTargetString){ if(Math.random() < 0.50f){ exhibitionTargetNameAltStringList.remove(exhibitionTargetNameAltStringList.get(i)); exhibitionTargetNameFullStringList.remove(exhibitionTargetNameFullStringList.get(i)); i --; } }
 
                 }
 
@@ -2646,24 +2662,26 @@ class ObjectPlayer{
             /*After each remove make sure to have the exhibition target length to be 3.
             If not 3 elements in the target exhibition array, then return the last 3 elements
                 of target exhibition array ever exist.*/
-            if(exhibitionTargetStringList.size() == 3)  { return exhibitionTargetStringList; }
+            if(exhibitionTargetNameAltStringList.size() == 3)  { return exhibitionTargetNameAltStringList; }
 
         }
 
         /*Make sure to only have three exhibition target at the end of this function.*/
-        if(exhibitionTargetStringList.size() > 3){
+        if(exhibitionTargetNameAltStringList.size() > 3){
 
-            int listIndexInt = exhibitionTargetStringList.size() - 1;
+            int listIndexInt = exhibitionTargetNameAltStringList.size() - 1;
 
-            while(exhibitionTargetStringList.size() > 3){
+            while(exhibitionTargetNameAltStringList.size() > 3){
 
-                exhibitionTargetStringList  .remove(listIndexInt);
-                listIndexInt                --;
+                exhibitionTargetNameAltStringList   .remove(listIndexInt);
+                exhibitionTargetNameFullStringList  .remove(listIndexInt);
+                listIndexInt                        --;
 
             }
 
         }
-        return                      exhibitionTargetStringList;
+
+        return                              exhibitionTargetNameAltStringList;
 
     }
 
@@ -2686,7 +2704,7 @@ class ObjectPlayer{
 
             /*Remove this player from the current child list of the parent,
                 before we move this player into another exhibition.*/
-            AddRemoveChildVoid(false);
+            AddRemoveChildVoid          (false);
 
             exhibitionCurrentObject     = FindObject(exhibitionObjectList   , exhibitionCurrentString                           );
             roomCurrentObject           = FindObject(roomObjectList         , exhibitionCurrentObject   .parentNameAltString    );
@@ -2697,8 +2715,10 @@ class ObjectPlayer{
 
         }
 
-        exhibitionCurrentString         = _targetNameAltString;             /*Chanhe the String for current exhibition.*/
-        exhibitionVisitedStringList     .add(exhibitionCurrentString);      /*Add the current exhibition to visited exhibition list.*/
+        exhibitionCurrentString                 = _targetNameAltString;                                         /*Chance the String for current exhibition.*/
+        exhibitionCurrentObject                 = FindObject(exhibitionObjectList, exhibitionCurrentString);
+        exhibitionVisitedNameAltStringList      .add(exhibitionCurrentObject.nameAltString );                   /*Add the current exhibition to visited exhibition list.*/
+        exhibitionVisitedNameFullStringList     .add(exhibitionCurrentObject.nameFullString);
         
         /*Re - instantiated all newly visited museum objects.*/
         exhibitionCurrentObject         = FindObject(exhibitionObjectList   , exhibitionCurrentString                           );
@@ -2716,13 +2736,13 @@ class ObjectPlayer{
         AddTagCounterVoid               (exhibitionCurrentObject);
         AddRemoveChildVoid              (true);
         
-        SetExhibitionTargetStringList   ();
+        SetExhibitionTargetNameAltStringList   ();
         SetSiblingObjectList            ();
 
         /*For everytime a player move to another exhibition iterate through all player to re - add the siblings.*/
         for(int i = 0; i < playerObjectList.size(); i ++){
 
-            playerObjectList.get(i).SetExhibitionTargetStringList   ();
+            playerObjectList.get(i).SetExhibitionTargetNameAltStringList   ();
             playerObjectList.get(i).SetSiblingObjectList            ();
 
         }
@@ -2731,46 +2751,47 @@ class ObjectPlayer{
 
     }
 
-    /*A function to find an object from an array.*/
+    /*A function to find an object from an array.
+    PROTOTYPE: Change this function so that it can also search from the full name.
+    PENDING: Change this so that it follows convention of String first then the List.*/
     public ObjectMuseum FindObject(
 
         List<ObjectMuseum>  _targetObjectList       ,
-        String              _targetNameAltString
+        String              _targetNameString
 
     ){
 
         ObjectMuseum objectMuseum = null;
         for(int i = 0; i < _targetObjectList.size(); i ++){
 
-            if(_targetObjectList.get(i).nameAltString.equals(_targetNameAltString)){
-
-                objectMuseum = _targetObjectList.get(i);
-
-            }
+            if(_targetObjectList.get(i).nameAltString .equals(_targetNameString)){ objectMuseum = _targetObjectList.get(i); return objectMuseum; }
+            if(_targetObjectList.get(i).nameFullString.equals(_targetNameString)){ objectMuseum = _targetObjectList.get(i); return objectMuseum; }
 
         }
 
-        return objectMuseum;
+        return null;
 
     }
     
     /*A function to draw panel.*/
     public Panel PanelDrawVoid()                                                                 {
 
-        SetPanelVariableInsideVoid  ();
+        exhibitionCurrentObject         = FindObject(exhibitionObjectList, exhibitionCurrentString);
+
+        SetPanelVariableInsideVoid      ();
 
         /*Here we determine the color based whether this player/visitor has visited total amount exhibition or not.*/
         int   usedColor;
-        if      (exhibitionVisitedStringList.size() == exhibitionObjectList.size()) { usedColor = panelFinishedColor;   }
-        else                                                                        { usedColor = panelUnfinishedColor; }
+        if      (exhibitionVisitedNameAltStringList.size() >= exhibitionObjectList.size())  { usedColor = panelFinishedColor;   }
+        else                                                                                { usedColor = panelUnfinishedColor; }
 
-        panelObject                 .DrawVoid(
+        panelObject                     .DrawVoid(
 
-            usedColor               ,
-            widthPanelInt           ,
-            heightPanelInt          ,
-            xPanelInt               ,
-            yPanelInt               ,
+            usedColor                   ,
+            widthPanelInt               ,
+            heightPanelInt              ,
+            xPanelInt                   ,
+            yPanelInt                   ,
             ("" + playerIndexInt)
 
         );
