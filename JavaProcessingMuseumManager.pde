@@ -109,14 +109,54 @@ This is not quite necessary because you can use the Name class instead.
 I guess I will put it here for the time being :).*/
 class Tag                                       {
 
-    Name            tagName         = null;
-    String          nameAltString   = "";
-    String          nameFullString  = "";
-    Tag(Name _nameObject)                       {
+    Name            tagName             = null;
+    String          nameAltString       = "";
+    String          nameFullString      = "";
 
-        tagName             = _nameObject;
-        nameAltString       = tagName.nameAltString;
-        nameFullString      = tagName.nameFullString;
+    String          tagTypeString       = "";
+    String          tagSubjectString    = "";
+    String          tagVerb1String      = "";
+    String          tagVerb2String      = "";
+    String          tagVerb3String      = "";
+    String          tagVerbSString      = "";
+    String          tagVerbIngString    = "";
+    String          tagNounString       = "";
+    String          tagNounSString      = "";
+    String          tagAdjectiveString  = "";
+    String          tagAdverbString     = "";
+
+    Tag(
+
+        Name        _nameObject                 ,
+        String      _tagTypeString              ,
+        String...   _wordDerivativeStringArray
+
+    ){
+
+        tagName                 = _nameObject;
+        nameAltString           = tagName.nameAltString;
+        nameFullString          = tagName.nameFullString;
+
+        tagTypeString           = _tagTypeString;
+
+        if      (tagTypeString.equals("SUB")){ tagSubjectString     = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("VER")){
+
+            tagVerb1String      = _wordDerivativeStringArray[0];
+            tagVerb2String      = _wordDerivativeStringArray[1];
+            tagVerb3String      = _wordDerivativeStringArray[2];
+            tagVerbSString      = _wordDerivativeStringArray[3];
+            tagVerbIngString    = _wordDerivativeStringArray[4];
+
+        }
+        else if (tagTypeString.equals("NOU")){
+
+            tagNounString       = _wordDerivativeStringArray[0];
+            tagNounSString      = _wordDerivativeStringArray[1];
+
+        }
+        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordDerivativeStringArray[0]; }
 
     }
 
