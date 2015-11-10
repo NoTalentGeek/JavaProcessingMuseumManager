@@ -81,10 +81,11 @@ class ObjectPlayer{
 
     ){
 
-        playerIndexInt      = _playerIndexInt;
-        playerObjectList    .add(this);
-        panelObject         = new Panel();
-        ExhibitionMoveObject(_exhibitionStartString);
+        playerIndexInt              = _playerIndexInt;
+        playerObjectList            .add(this);
+        panelObject                 = new Panel();
+        ExhibitionMoveObject        (_exhibitionStartString);
+        exhibitionCurrentObject     = FindObject(exhibitionObjectList, exhibitionCurrentString);
 
     }
 

@@ -25,6 +25,11 @@ class AddMuseumGUIObject{
     CColor          sChecklistTrueCColor                = new CColor();             /*The color of the item when an item in scroll checklist is selected.*/
     CColor          sChecklistFalseCColor               = new CColor();             /*The color of the item when an item in scroll checklist is not selected.*/
     String          typeObjectMuseumString              = "";                       /*The type of the object that will be added, it will be either floor, room, or exhibition object.*/
+    List<String>    tempSelectTagSubjectSList           = new ArrayList<String>();
+    List<String>    tempSelectTagVerbSList              = new ArrayList<String>();
+    List<String>    tempSelectTagNounSList              = new ArrayList<String>();
+    List<String>    tempSelectTagAdjectiveSList         = new ArrayList<String>();
+    List<String>    tempSelectTagAdverbSList            = new ArrayList<String>();
     String          selectedParentString                = "";                       /*Variable to be used and altered in the main class.*/
     String          selectedTypeObjectString            = "";                       /*Variable to be used and altered in the main class.*/
 
@@ -75,6 +80,25 @@ class AddMuseumGUIObject{
                                                 .setForeground      (color(0    , 116   , 217   , alphaFloat))
                                                 .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
+        if(useNameAltBoolean        == true ){
+
+            tempSelectTagSubjectSList           = subjectTagNameAltStringList;
+            tempSelectTagVerbSList              = verbTagNameAltStringList;
+            tempSelectTagNounSList              = nounTagNameAltStringList;
+            tempSelectTagAdjectiveSList         = adjectiveTagNameAltStringList;
+            tempSelectTagAdverbSList            = adverbTagNameAltStringList;
+
+        }
+        else if(useNameAltBoolean   == false){
+
+            tempSelectTagSubjectSList           = subjectTagNameFullStringList;
+            tempSelectTagVerbSList              = verbTagNameFullStringList;
+            tempSelectTagNounSList              = nounTagNameFullStringList;
+            tempSelectTagAdjectiveSList         = adjectiveTagNameFullStringList;
+            tempSelectTagAdverbSList            = adverbTagNameFullStringList;
+
+        }
+
         /*Create the group and all components.*/
         Group   AddMuseumGroupObject            =
                 cp5Object                       .addGroup               ("AddMuseumGroupObject")
@@ -109,7 +133,7 @@ class AddMuseumGUIObject{
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*2) + scrollableHeightInt))
                                                 .setSize                (scrollableWidthInt, scrollableHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (subjectTagStringList)
+                                                .addItems               (tempSelectTagSubjectSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
                                                 .setLabel               ("Subject Tag:");
@@ -118,7 +142,7 @@ class AddMuseumGUIObject{
                                                 .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
                                                 .setSize                (scrollableWidthInt, scrollableHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (verbTagStringList)
+                                                .addItems               (tempSelectTagVerbSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
                                                 .setLabel               ("Verb Tag:");
@@ -127,7 +151,7 @@ class AddMuseumGUIObject{
                                                 .setPosition            (((groupLayoutOffsetInt*3) + (scrollableWidthInt*2)), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
                                                 .setSize                (scrollableWidthInt, scrollableHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (nounTagStringList)
+                                                .addItems               (tempSelectTagNounSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
                                                 .setColor               (otherCColor)

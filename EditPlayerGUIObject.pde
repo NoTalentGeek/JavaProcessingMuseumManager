@@ -4,28 +4,34 @@ import java.util.*;
 import controlP5.*;
 class EditPlayerGUIObject{
 
-    color           groupBackgroundColor                    ;               /*The color of group panel group background.*/
-    color           groupColorBackgroundColor               ;               /*The title background color of panel group.*/
-    color           groupColorLabelColor                    ;               /*The title font colot of the panel group.*/
+    color           groupBackgroundColor                        ;                               /*The color of group panel group background.*/
+    color           groupColorBackgroundColor                   ;                               /*The title background color of panel group.*/
+    color           groupColorLabelColor                        ;                               /*The title font colot of the panel group.*/
     /*PENDING: alphaFloat is actually unecessary please delete this variable later and just directly refers the value from the arguments.*/
-    float           alphaFloat                              = 255;          /*The opacity for this object.*/
-    int             editPlayerModeInt                       = 2;               /*Whether the selected player object is controlled by AI, manual control, or hardware control.*/
-    int             playerGroupXInt                         ;               /*The x position of this graphical user interface.*/
-    int             playerGroupYInt                         ;               /*The x position of this graphical user interface.*/
-    int             parentButtonSizeInt                     ;               /*A variable for layout taken from the main class.*/
-    int             parentDropdownObjectWidthInt            ;               /*A variable for layout taken from the main class.*/
-    int             parentDropdownObjectHeightInt           ;               /*A variable for layout taken from the main class.*/
-    int             groupLayoutOffsetInt                    = 10;           /*This object offset.*/
-    //int           playerGroupWidthInt                     = (width/3);    /*This object width.*/
-    int             playerGroupWidthInt                     ;               /*This object width.*/
-    //int           playerGroupHeightInt                    = (367 + 2);    /*Additional 2 to fix layouting error in the radio buttons.*/
-    int             playerGroupHeightInt                    ;               /*This object height.*/
-    int             playerScrollableListHeightInt           = 62;           /*Height of scrollable list controller in this object that has five rows.*/
-    int             playerScrollableListHeight3Int          = 50;           /*Height of scrollable list controller in this object that has three rows.*/
-    CColor          otherCColor                             = new CColor(); /*The color for other component than the scrollableChecklist.*/
-    CColor          sListStaticCColor                       = new CColor(); /*The color of the scrollable list that has no interaction (User cannot choose the elements).*/
-    ObjectPlayer    selectedPlayerObject                    = null;         /*Selected object player from this graphical user interface.*/
-    //ObjectPlayer  selectedPlayerPrevObject                = null;         /*Selected object player from this graphical user interface.*/
+    float           alphaFloat                                  = 255;                          /*The opacity for this object.*/
+    int             editPlayerModeInt                           = 2;                            /*Whether the selected player object is controlled by AI, manual control, or hardware control.*/
+    int             playerGroupXInt                             ;                               /*The x position of this graphical user interface.*/
+    int             playerGroupYInt                             ;                               /*The x position of this graphical user interface.*/
+    int             parentButtonSizeInt                         ;                               /*A variable for layout taken from the main class.*/
+    int             parentDropdownObjectWidthInt                ;                               /*A variable for layout taken from the main class.*/
+    int             parentDropdownObjectHeightInt               ;                               /*A variable for layout taken from the main class.*/
+    int             groupLayoutOffsetInt                        = 10;                           /*This object offset.*/
+    //int           playerGroupWidthInt                         = (width/3);                    /*This object width.*/
+    int             playerGroupWidthInt                         ;                               /*This object width.*/
+    //int           playerGroupHeightInt                        = (367 + 2);                    /*Additional 2 to fix layouting error in the radio buttons.*/
+    int             playerGroupHeightInt                        ;                               /*This object height.*/
+    int             playerScrollableListHeightInt               = 62;                           /*Height of scrollable list controller in this object that has five rows.*/
+    int             playerScrollableListHeight3Int              = 50;                           /*Height of scrollable list controller in this object that has three rows.*/
+    CColor          otherCColor                                 = new CColor();                 /*The color for other component than the scrollableChecklist.*/
+    CColor          sListStaticCColor                           = new CColor();                 /*The color of the scrollable list that has no interaction (User cannot choose the elements).*/
+    /*Determine whether to display object name in full name or in alternate name.*/
+    String          tempPlayerExhibitionCurrentValueTextlabel   = "";
+    List<String>    tempPlayerExhibitionTargetSList             = new ArrayList<String>();
+    List<String>    tempPlayerExhibitionVisitedSList            = new ArrayList<String>();
+    List<String>    tempPlayerTagSList                          = new ArrayList<String>();
+    List<String>    tempPleaseSelectNextExhibitionSList         = new ArrayList<String>();
+    ObjectPlayer    selectedPlayerObject                        = null;                     /*Selected object player from this graphical user interface.*/
+    //ObjectPlayer  selectedPlayerPrevObject                    = null;                     /*Selected object player from this graphical user interface.*/
 
     /*Constructor.*/
     EditPlayerGUIObject     (
@@ -65,7 +71,27 @@ class EditPlayerGUIObject{
                                                 .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
         /*Set the default player object.*/
-        selectedPlayerObject                        = playerObjectList.get(0);
+        selectedPlayerObject                    = playerObjectList.get(0);
+        println(selectedPlayerObject.exhibitionCurrentObject);
+
+        if(useNameAltBoolean        == true ){
+
+            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameAltString;
+            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameAltStringList;
+            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameAltStringList;
+            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameAltStringList;
+            tempPleaseSelectNextExhibitionSList                     = exhibitionNameAltStringList;
+
+        }
+        else if(useNameAltBoolean   == false){
+
+            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameFullString;
+            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameFullStringList;
+            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameFullStringList;
+            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameFullStringList;
+            tempPleaseSelectNextExhibitionSList                     = exhibitionNameFullStringList;
+
+        }
 
         Group   EditPlayerGroupObject               = 
                 cp5Object   .addGroup               ("EditPlayerGroupObject")
@@ -106,14 +132,14 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                (selectedPlayerObject.exhibitionCurrentString);
+                            .setText                (tempPlayerExhibitionCurrentValueTextlabel);
 
                 /*PENDING - DONE: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*4))
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeight3Int)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (selectedPlayerObject.exhibitionTargetNameFullStringList)
+                            .addItems               (tempPlayerExhibitionTargetSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Target Exhibitions:");
@@ -123,7 +149,7 @@ class EditPlayerGUIObject{
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*5) + playerScrollableListHeight3Int)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (selectedPlayerObject.exhibitionVisitedNameFullStringList)
+                            .addItems               (tempPlayerExhibitionVisitedSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Visited Exhibitions:");
@@ -132,7 +158,7 @@ class EditPlayerGUIObject{
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
+                            .addItems               (tempPlayerTagSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("Player Collected Tags:");
@@ -158,7 +184,7 @@ class EditPlayerGUIObject{
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*12) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2) + 2))    /*Additional 2 to fix layouting error in the radio buttons.*/
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2 )), 64)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItems               (Arrays.asList("Exhibition Test 1", "Exhibition Test 2", "Exhibition Test 3", "Exhibition Test 4", "Exhibition Test 5"))
+                            .addItems               (tempPleaseSelectNextExhibitionSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (otherCColor)
                             .setLabel               ("Please Select Next Exhibition:");
@@ -172,17 +198,37 @@ class EditPlayerGUIObject{
 
     ){
 
+        if(useNameAltBoolean        == true ){
+
+            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameAltString;
+            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameAltStringList;
+            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameAltStringList;
+            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameAltStringList;
+            tempPleaseSelectNextExhibitionSList                     = exhibitionNameAltStringList;
+
+        }
+        else if(useNameAltBoolean   == false){
+
+            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameFullString;
+            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameFullStringList;
+            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameFullStringList;
+            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameFullStringList;
+            tempPleaseSelectNextExhibitionSList                     = exhibitionNameFullStringList;
+
+        }
+
         /*If there is a button open close for player is close then we need to reset the reference to the selected object.*/
-        if(_buttonOpenClosePlayerBoolean == false){ selectedPlayerObject = playerObjectList.get(0); }
+        if(_buttonOpenClosePlayerBoolean    == false){ selectedPlayerObject = playerObjectList.get(0); }
         /*If selected player object is not null than populate the controller using the value of the selected player object.*/
-        if(selectedPlayerObject != null){
+        if(selectedPlayerObject             != null ){
 
             cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
-            cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     selectedPlayerObject.exhibitionCurrentObject.nameFullString));
-            cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     selectedPlayerObject.exhibitionTargetNameFullStringList));
-            cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     selectedPlayerObject.exhibitionVisitedNameFullStringList));
-            cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     selectedPlayerObject.exhibitionTagCounterNameFullStringList));
-            cp5Object.get(ScrollableList    .class, "PleaseSelectNextExhibitionSList"       )   .setItems((     exhibitionNameFullStringList));
+            cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     tempPlayerExhibitionCurrentValueTextlabel));
+            cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     tempPlayerExhibitionTargetSList));
+            cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     tempPlayerExhibitionVisitedSList));
+            cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     tempPlayerTagSList));
+            cp5Object.get(ScrollableList    .class, "PleaseSelectNextExhibitionSList"       )   .setItems((     tempPleaseSelectNextExhibitionSList));
+
         }
 
         alphaFloat                  = _alphaFloat;

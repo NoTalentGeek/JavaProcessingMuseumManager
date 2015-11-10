@@ -39,10 +39,17 @@ List<String>            playerStringList                = new ArrayList<String>(
 /*PROTOTYPE: For testing.
 PENDING: In the future I want so that when a player visited an exhibition it received three different kind of tags.
 PENDING: And then when player visit different exhibition I want that the tags collected transformed into a neat japanese style poem called haiku.*/
-List<String>            subjectTagStringList            = new ArrayList<String>();
-List<String>            verbTagStringList               = new ArrayList<String>();
-List<String>            nounTagStringList               = new ArrayList<String>();
-List<String>            defaultStringList               = new ArrayList<String>();          /*When the object that you want to add has no parent, we need to show empty List of String.*/
+List<String>            subjectTagNameAltStringList     = new ArrayList<String>();
+List<String>            verbTagNameAltStringList        = new ArrayList<String>();
+List<String>            nounTagNameAltStringList        = new ArrayList<String>();
+List<String>            adjectiveTagNameAltStringList   = new ArrayList<String>();
+List<String>            adverbTagNameAltStringList      = new ArrayList<String>();
+List<String>            subjectTagNameFullStringList    = new ArrayList<String>();
+List<String>            verbTagNameFullStringList       = new ArrayList<String>();
+List<String>            nounTagNameFullStringList       = new ArrayList<String>();
+List<String>            adjectiveTagNameFullStringList  = new ArrayList<String>();
+List<String>            adverbTagNameFullStringList     = new ArrayList<String>();
+List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
 
 /*GUI variables.*/
 AddMuseumGUIObject      addMuseumGUIObject              ;
@@ -269,13 +276,6 @@ void setup()                                    {
 
     );
 
-    /*PROTOTYPE: For testing.*/
-    subjectTagStringList    = Arrays.asList("Mr. X"     , "Mr. Y"   , "Mr. Z");
-    verbTagStringList       = Arrays.asList("Eat"       , "Work"    , "Sleep");
-    nounTagStringList       = Arrays.asList("Airplane"  , "Car"     , "Ship" );
-    /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
-    defaultStringList       = Arrays.asList();
-
     /*Set up the museum objects.*/
     floorObjectList         = Arrays.asList(
 
@@ -313,7 +313,11 @@ void setup()                                    {
     );
 
     /*Copy the List to itself so it changed from static List into dynamic List.*/
-    //tagObjectList         = new ArrayList<Tag>            (tagObjectList          );
+    subjectTagObjectList    = new ArrayList<Tag>            (subjectTagObjectList   );
+    verbTagObjectList       = new ArrayList<Tag>            (verbTagObjectList      );
+    nounTagObjectList       = new ArrayList<Tag>            (nounTagObjectList      );
+    adjectiveTagObjectList  = new ArrayList<Tag>            (adjectiveTagObjectList );
+    adverbTagObjectList     = new ArrayList<Tag>            (adverbTagObjectList    );
     floorObjectList         = new ArrayList<ObjectMuseum>   (floorObjectList        );
     roomObjectList          = new ArrayList<ObjectMuseum>   (roomObjectList         );
     exhibitionObjectList    = new ArrayList<ObjectMuseum>   (exhibitionObjectList   );
@@ -322,8 +326,8 @@ void setup()                                    {
     for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList.get(i).SetChildObjectList  (roomObjectList); }
     for(int i = 0; i < roomObjectList.size()            ; i ++) {
 
-        roomObjectList              .get(i).SetInitialParentObject  (floorObjectList);
-        roomObjectList              .get(i).SetChildObjectList      (exhibitionObjectList);
+        roomObjectList      .get(i).SetInitialParentObject  (floorObjectList);
+        roomObjectList      .get(i).SetChildObjectList      (exhibitionObjectList);
 
     }
     for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList.get(i)   .SetInitialParentObject(roomObjectList); }
@@ -346,6 +350,13 @@ void setup()                                    {
     }
 
     /*Populate String list.*/
+    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList     .add(subjectTagObjectList   .get(i).nameAltString); subjectTagNameFullStringList    .add(subjectTagObjectList   .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList        .add(verbTagObjectList      .get(i).nameAltString); verbTagNameFullStringList       .add(verbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList        .add(nounTagObjectList      .get(i).nameAltString); nounTagNameFullStringList       .add(nounTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList   .add(adjectiveTagObjectList .get(i).nameAltString); adjectiveTagNameFullStringList  .add(adjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList      .add(adverbTagObjectList    .get(i).nameAltString); adverbTagNameFullStringList     .add(adverbTagObjectList    .get(i).nameFullString); }
+    /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
+    defaultStringList       = Arrays.asList();
     for(int i = 0; i < floorObjectList.size()       ; i ++){ floorNameAltStringList         .add(     floorObjectList       .get(i).nameAltString ); floorNameFullStringList        .add(floorObjectList       .get(i).nameFullString); }
     for(int i = 0; i < roomObjectList.size()        ; i ++){ roomNameAltStringList          .add(     roomObjectList        .get(i).nameAltString ); roomNameFullStringList         .add(roomObjectList        .get(i).nameFullString); }
     for(int i = 0; i < exhibitionObjectList.size()  ; i ++){ exhibitionNameAltStringList    .add(     exhibitionObjectList  .get(i).nameAltString ); exhibitionNameFullStringList   .add(exhibitionObjectList  .get(i).nameFullString); }
@@ -1072,6 +1083,7 @@ void AssignRandomTagLoopVoid(
 
 ){
 
+    /*Counter on how many tag is already in the museum object.*/
     int     counterInt                              = 0;
 
     /*This function need to be atleast gives three tags to a museum object.
@@ -1095,10 +1107,8 @@ void AssignRandomTagLoopVoid(
         /*Keep looping over and over until the random index is not a tag that is already in the list.*/
         for(int i = 0; i        < _targetTagObjectList.size(); i ++){
 
-            //int counterInt      = 0;
             while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
 
-                //counterInt      ++;
                 insideBoolean   = true;
                 randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
                 tagObject       = _sourceTagObjectList.get(randomIndexInt);
