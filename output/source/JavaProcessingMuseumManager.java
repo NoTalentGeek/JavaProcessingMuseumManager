@@ -2525,6 +2525,7 @@ class TagCounter{
 
     }
     public int     GetTagCounterInt        (){ return tagCounterInt;       }
+    public Tag     GetTagObject            (){ return tagObject;           }
     public String  GetTagNameAltString     (){ return tagNameAltString;    }
     public String  GetTagNameFullString    (){ return tagNameFullString;   }
 
@@ -2545,6 +2546,16 @@ class ObjectPlayer{
     List<String>        exhibitionVisitedNameFullStringList     = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
     List<String>        exhibitionTagCounterNameFullStringList  = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
     
+    List<String>        subjectCurrentPrevTagStringList         = new ArrayList<String>();
+    List<String>        verb1CurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        verb2CurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        verb3CurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        verbSCurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        verbIngCurrentPrevTagStringList         = new ArrayList<String>();
+    List<String>        nounCurrentPrevTagStringList            = new ArrayList<String>();
+    List<String>        nounSCurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        adjectiveCurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        adverbCurrentPrevTagStringList          = new ArrayList<String>();
     List<TagCounter>    exhibitionTagCounterList                = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
 
     int                 playerIndexInt                          = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
@@ -2591,7 +2602,7 @@ class ObjectPlayer{
 
     ){
 
-        for(int i = 0; i < _exhibitionCurrentObject.tagMuseumNameAltStringList.size(); i ++){
+        for(int i = 0; i < _exhibitionCurrentObject.tagMuseumObjectList.size(); i ++){
 
             /*Create new tag counter to count how many tags are in the user preference.*/
             TagCounter  tagCounterObject    = new TagCounter();
@@ -2716,6 +2727,62 @@ class ObjectPlayer{
                     tempTagNameFullString               = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameFullString());
             exhibitionTagCounterNameAltStringList       .add(tempTagNameAltString);
             exhibitionTagCounterNameFullStringList      .add(tempTagNameFullString);
+
+        }
+
+    }
+
+    /*A function to populate tag string received from the current exhibition.*/
+    public void PopulateTagStringList(boolean _isPreviousBoolean)                              {
+
+        ObjectMuseum    exhibitionCurrentObject     = FindObject(exhibitionObjectList, exhibitionCurrentString);
+
+        if(_isPreviousBoolean == true){
+
+            if(subjectCurrentPrevTagStringList      .size() > 0){ subjectCurrentPrevTagStringList     .clear(); }
+            if(verb1CurrentPrevTagStringList        .size() > 0){ verb1CurrentPrevTagStringList       .clear(); }
+            if(verb2CurrentPrevTagStringList        .size() > 0){ verb2CurrentPrevTagStringList       .clear(); }
+            if(verb3CurrentPrevTagStringList        .size() > 0){ verb3CurrentPrevTagStringList       .clear(); }
+            if(verbSCurrentPrevTagStringList        .size() > 0){ verbSCurrentPrevTagStringList       .clear(); }
+            if(verbIngCurrentPrevTagStringList      .size() > 0){ verbIngCurrentPrevTagStringList     .clear(); }
+            if(nounCurrentPrevTagStringList         .size() > 0){ nounCurrentPrevTagStringList        .clear(); }
+            if(nounSCurrentPrevTagStringList        .size() > 0){ nounSCurrentPrevTagStringList       .clear(); }
+            if(adjectiveCurrentPrevTagStringList    .size() > 0){ adjectiveCurrentPrevTagStringList   .clear(); }
+            if(adverbCurrentPrevTagStringList       .size() > 0){ adverbCurrentPrevTagStringList      .clear(); }
+
+        }
+        for(int i = 0; i < exhibitionCurrentObject.tagMuseumObjectList.size(); i ++){
+
+            if      (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("SUB")){
+
+                if(!subjectCurrentPrevTagStringList .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagSubjectString)) { subjectCurrentPrevTagStringList.add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagSubjectString); }
+
+            }
+            else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("VER")){
+
+                if(!verb1CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb1String))       { verb1CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb1String);      }
+                if(!verb2CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb2String))       { verb2CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb2String);      }
+                if(!verb3CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb3String))       { verb3CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb3String);      }
+                if(!verbSCurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbSString))       { verbSCurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbSString);      }
+                if(!verbIngCurrentPrevTagStringList     .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbIngString))     { verbIngCurrentPrevTagStringList         .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbIngString);    }
+
+            }
+            else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("NOU")){
+
+                if(!nounCurrentPrevTagStringList        .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounString))        { nounCurrentPrevTagStringList            .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounString);       }
+                if(!nounSCurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounSString))       { nounSCurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounSString);      }
+
+            }
+            else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("ADJ")){
+
+                if(!adjectiveCurrentPrevTagStringList   .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdjectiveString))   { adjectiveCurrentPrevTagStringList       .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdjectiveString);  }
+
+            }
+            else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("ADV")){
+
+                if(!adverbCurrentPrevTagStringList      .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdverbString))      { adverbCurrentPrevTagStringList          .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdverbString);     }
+
+            }
 
         }
 
@@ -2990,6 +3057,8 @@ class ObjectPlayer{
             roomCurrentObject           .visitorCurrentInt --;
             floorCurrentObject          .visitorCurrentInt --;
 
+            PopulateTagStringList       (true);
+            
         }
 
         exhibitionCurrentString                 = _targetNameAltString;                                         /*Chance the String for current exhibition.*/
@@ -3010,6 +3079,8 @@ class ObjectPlayer{
         roomCurrentObject               .visitorTotalInt    ++;
         floorCurrentObject              .visitorTotalInt    ++;
 
+        PopulateTagStringList           (false);
+
         AddTagCounterVoid               (exhibitionCurrentObject);
         AddRemoveChildVoid              (true);
         
@@ -3021,6 +3092,24 @@ class ObjectPlayer{
 
             playerObjectList.get(i).SetExhibitionTargetNameAltStringList   ();
             playerObjectList.get(i).SetSiblingObjectList            ();
+
+        }
+
+
+        if(playerIndexInt == 1){
+
+            println("===");
+            println(subjectCurrentPrevTagStringList);
+            println(verb1CurrentPrevTagStringList);
+            println(verb2CurrentPrevTagStringList);
+            println(verb3CurrentPrevTagStringList);
+            println(verbSCurrentPrevTagStringList);
+            println(verbIngCurrentPrevTagStringList);
+            println(nounCurrentPrevTagStringList);
+            println(nounSCurrentPrevTagStringList);
+            println(adjectiveCurrentPrevTagStringList);
+            println(adverbCurrentPrevTagStringList);
+            println("===");
 
         }
 
