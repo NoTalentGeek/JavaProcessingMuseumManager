@@ -8,7 +8,12 @@ ButtonOpenClose         buttonOpenClosePlayerObject     ;
 
 /*Determine global variables.*/
 int                     playerAmountInt                 = 2;                                /*The number of players in this simulation.*/
-List<Tag>               tagObjectList                   = new ArrayList<Tag>();             /*Array List of tag.*/
+//List<Tag>             tagObjectList                   = new ArrayList<Tag>();             /*Array List of tag.*/
+List<Tag>               subjectTagObjectList            = new ArrayList<Tag>();
+List<Tag>               verbTagObjectList               = new ArrayList<Tag>();
+List<Tag>               nounTagObjectList               = new ArrayList<Tag>();
+List<Tag>               adjectiveTagObjectList          = new ArrayList<Tag>();
+List<Tag>               adverbTagObjectList             = new ArrayList<Tag>();
 List<ObjectMuseum>      floorObjectList                 = new ArrayList<ObjectMuseum>();    /*Array List of museom object floor.*/
 List<ObjectMuseum>      roomObjectList                  = new ArrayList<ObjectMuseum>();    /*Array List of museum object room*/
 List<ObjectMuseum>      exhibitionObjectList            = new ArrayList<ObjectMuseum>();    /*Array List of museum object exhibition*/
@@ -24,10 +29,10 @@ List<String>            floorNameAltStringList          = new ArrayList<String>(
 List<String>            roomNameAltStringList           = new ArrayList<String>();
 List<String>            exhibitionNameAltStringList     = new ArrayList<String>();
 
-List<String>            museumNameFullStringList         = new ArrayList<String>();
-List<String>            floorNameFullStringList          = new ArrayList<String>();
-List<String>            roomNameFullStringList           = new ArrayList<String>();
-List<String>            exhibitionNameFullStringList     = new ArrayList<String>();
+List<String>            museumNameFullStringList        = new ArrayList<String>();
+List<String>            floorNameFullStringList         = new ArrayList<String>();
+List<String>            roomNameFullStringList          = new ArrayList<String>();
+List<String>            exhibitionNameFullStringList    = new ArrayList<String>();
 
 List<String>            playerStringList                = new ArrayList<String>();
 
@@ -113,6 +118,7 @@ class Tag                                       {
     String          nameAltString       = "";
     String          nameFullString      = "";
 
+    boolean         emotionIsGoodBoolean;
     String          tagTypeString       = "";
     String          tagSubjectString    = "";
     String          tagVerb1String      = "";
@@ -136,7 +142,6 @@ class Tag                                       {
         tagName                 = _nameObject;
         nameAltString           = tagName.nameAltString;
         nameFullString          = tagName.nameFullString;
-
         tagTypeString           = _tagTypeString;
 
         if      (tagTypeString.equals("SUB")){ tagSubjectString     = _wordDerivativeStringArray[0]; }
@@ -155,8 +160,28 @@ class Tag                                       {
             tagNounSString      = _wordDerivativeStringArray[1];
 
         }
-        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordDerivativeStringArray[0]; }
-        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordDerivativeStringArray[0]; }
+        
+
+    }
+
+    Tag(
+
+        Name        _nameObject             ,
+        String      _tagTypeString          ,
+        String      _wordString             ,
+        boolean     _emotionIsGoodBoolean
+
+    ){
+
+        tagName                 = _nameObject;
+        nameAltString           = tagName.nameAltString;
+        nameFullString          = tagName.nameFullString;
+        tagTypeString           = _tagTypeString;
+
+        if      (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordString; }
+        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordString; }
+
+        emotionIsGoodBoolean    = _emotionIsGoodBoolean;
 
     }
 
@@ -168,9 +193,11 @@ void setup()                                    {
     size                                (1024, 576, P2D);
     noStroke                            ();
 
-    /*Create the tag list.*/
+    /*
+    <<Create the tag list.>>
     tagObjectList           = Arrays.asList(
-    
+
+        <<
         new Tag(new Name("TAG_AGR", "Agreeable"     )),
         new Tag(new Name("TAG_BRA", "Brave"         )),
         new Tag(new Name("TAG_CAL", "Calm"          )),
@@ -191,7 +218,55 @@ void setup()                                    {
         new Tag(new Name("TAG_VIC", "Victorious"    )),
         new Tag(new Name("TAG_WIT", "Witty"         )),
         new Tag(new Name("TAG_ZEA", "Zealous"       ))
+        >>
+
+        new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
+        new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington"),
+        new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
+        new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running"),
+        new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
+        new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns"),
+        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good", true),
+        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad", false),
+        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly", true),
+        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly", false)
     
+    );
+    */
+
+    subjectTagObjectList    = Arrays.asList(
+
+        new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
+        new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington")
+
+    );
+
+    verbTagObjectList       = Arrays.asList(
+
+        new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
+        new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running")
+
+    );
+
+    nounTagObjectList       = Arrays.asList(
+
+        new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
+        new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns")
+
+    );
+
+    adjectiveTagObjectList  = Arrays.asList(
+
+        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good", true),
+        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad", false)
+
+    );
+
+    adverbTagObjectList     = Arrays.asList(
+
+        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly", true),
+        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly", false)
+
     );
 
     /*PROTOTYPE: For testing.*/
@@ -204,41 +279,41 @@ void setup()                                    {
     /*Set up the museum objects.*/
     floorObjectList         = Arrays.asList(
 
-        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagList(tagObjectList))
+        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
 
     );
     roomObjectList          = Arrays.asList(
 
-        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagList(tagObjectList))
+        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
 
     );
     exhibitionObjectList    = Arrays.asList(
 
-        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagList(tagObjectList)),
-        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagList(tagObjectList))
+        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
 
     );
 
     /*Copy the List to itself so it changed from static List into dynamic List.*/
-    tagObjectList           = new ArrayList<Tag>            (tagObjectList          );
+    //tagObjectList         = new ArrayList<Tag>            (tagObjectList          );
     floorObjectList         = new ArrayList<ObjectMuseum>   (floorObjectList        );
     roomObjectList          = new ArrayList<ObjectMuseum>   (roomObjectList         );
     exhibitionObjectList    = new ArrayList<ObjectMuseum>   (exhibitionObjectList   );
@@ -856,7 +931,7 @@ ObjectMuseum AddObjectMuseum(
     List<ObjectMuseum>  museumObjectList            = new ArrayList<ObjectMuseum>();
     List<ObjectMuseum>  parentMuseumObjectList      = new ArrayList<ObjectMuseum>();
     List<String>        temporaryMuseumStringList   = new ArrayList<String>();
-    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, AssignRandomTagList(tagObjectList));
+    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList));
 
     /*If statement to determine which List we should put in.*/
     if      (_typeString.equals("FLR")){
@@ -907,16 +982,17 @@ ObjectMuseum AddObjectMuseum(
 
 }
 
-/*A function to return an array of object tag to be put in the museum object, randomly.*/
-Tag[] AssignRandomTagList(List<Tag> _tagObjectList) {
+/*
+<<A function to return an array of object tag to be put in the museum object, randomly.>>
+Tag[] AssignRandomTagList(List<Tag> _tagObjectList)                                 {
 
-    /*Temporary tag object list to be returned later on this function.*/
+    <<Temporary tag object list to be returned later on this function.>>
     List<Tag> assignTagObjectList                   = new ArrayList<Tag>();
     
-    /*This function need to be atleast gives three tags to a museum object.
+    <<This function need to be atleast gives three tags to a museum object.
     After three tags is inside the List then we can randomly add another tag with a chance.
     The thing is that every tag added the chance of another tag will be added/pushed
-        is lower.*/
+        is lower.>>
     float randomChanceFloat                         = 1f;
     while(
 
@@ -925,16 +1001,16 @@ Tag[] AssignRandomTagList(List<Tag> _tagObjectList) {
 
     ){
 
-        /*Need to make sure the inputted random tag is not something that is already in the museum object
-        Create a temporary tag object to hold.*/
+        <<Need to make sure the inputted random tag is not something that is already in the museum object
+        Create a temporary tag object to hold.>>
         int randomIndexInt  = (int)((Math.random()*_tagObjectList.size()) + 0);
         Tag tagObject       = _tagObjectList.get(randomIndexInt);
         
-        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
+        <<Keep looping over and over until the random index is not a tag that is already in the list.>>
         for(int i = 0; i < assignTagObjectList.size(); i ++){
 
-            /*If the random tag is already inside the museum object then we need to iterate again to get new random tag
-                generated.*/
+            <<If the random tag is already inside the museum object then we need to iterate again to get new random tag
+                generated.>>
             while(assignTagObjectList.get(i) == tagObject){
                 
                 randomIndexInt  = (int)((Math.random()*_tagObjectList.size()) + 0);
@@ -944,25 +1020,105 @@ Tag[] AssignRandomTagList(List<Tag> _tagObjectList) {
 
         }
         
-        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
+        <<If the assignTagObjectList has three or more elements then we need to start reducing the changce.>>
         if(assignTagObjectList.size() > 3){ randomChanceFloat -= 0.2f; }
         
-        /*Add/push a tag object into the temporary list.*/
+        <<Add/push a tag object into the temporary list.>>
         assignTagObjectList.add(tagObject);
 
     }
     
-    /*Before returning the value, the object here is still in List, hence we need to convert it to array.
-    Thus, it can be used in params.*/
+    <<Before returning the value, the object here is still in List, hence we need to convert it to array.
+    Thus, it can be used in params.>>
     Tag[] assignTagObjectArray                      = new Tag[assignTagObjectList.size()];
     for(int i = 0; i < assignTagObjectArray.length; i ++){ assignTagObjectArray[i] = assignTagObjectList.get(i); }
     
     return assignTagObjectArray;
 
+}*/
+/*A function to return an array of object tag to be put in the museum object, randomly.*/
+Tag[] AssignRandomTagList(
+
+    List<Tag> _subjectTagObjectList     ,
+    List<Tag> _verbTagObjectList        ,
+    List<Tag> _nounTagObjectList        ,
+    List<Tag> _adjectiveTagObjectList   ,
+    List<Tag> _adverbTagObjectList
+
+){
+
+    /*Temporary tag object list to be returned later on this function.*/
+    List<Tag> assignTagObjectList                   = new ArrayList<Tag>();
+    
+    AssignRandomTagLoopVoid(_subjectTagObjectList   , assignTagObjectList);
+    AssignRandomTagLoopVoid(_verbTagObjectList      , assignTagObjectList);
+    AssignRandomTagLoopVoid(_nounTagObjectList      , assignTagObjectList);
+    AssignRandomTagLoopVoid(_adjectiveTagObjectList , assignTagObjectList);
+    AssignRandomTagLoopVoid(_adverbTagObjectList    , assignTagObjectList);
+
+    /*Before returning the value, the object here is still in List, hence we need to convert it to array.
+    Thus, it can be used in params.*/
+    Tag[] assignTagObjectArray                              = new Tag[assignTagObjectList.size()];
+    for(int i = 0; i < assignTagObjectArray.length; i ++)   { assignTagObjectArray[i] = assignTagObjectList.get(i); }
+    
+    return assignTagObjectArray;
+
+}
+/*Function to assign specific tag into the whole tag of object player.*/
+void AssignRandomTagLoopVoid(
+
+    List<Tag>   _sourceTagObjectList,
+    List<Tag>   _targetTagObjectList
+
+){
+
+    int     counterInt                              = 0;
+
+    /*This function need to be atleast gives three tags to a museum object.
+    After three tags is inside the List then we can randomly add another tag with a chance.
+    The thing is that every tag added the chance of another tag will be added/pushed
+        is lower.*/
+    float   randomCounterFloat                      = 1f;
+    while(
+
+        (counterInt             <= (_sourceTagObjectList.size()/2)) ||
+        (Math.random()          <  randomCounterFloat)
+
+    ){
+
+        /*Need to make sure the inputted random tag is not something that is already in the museum object
+        Create a temporary tag object to hold.*/
+        boolean insideBoolean   = false;
+        int     randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+        Tag     tagObject       = _sourceTagObjectList.get(randomIndexInt);
+        
+        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
+        for(int i = 0; i        < _targetTagObjectList.size(); i ++){
+
+            //int counterInt      = 0;
+            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
+
+                //counterInt      ++;
+                insideBoolean   = true;
+                randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+                tagObject       = _sourceTagObjectList.get(randomIndexInt);
+                
+            }
+
+        }
+        
+        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
+        if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
+        counterInt                                                          ++;
+        /*Add/push a tag object into the temporary list.*/
+        if(insideBoolean == false)                                          { _targetTagObjectList.add(tagObject); }
+
+    }
+
 }
 
 /*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
-void ExhibitionSList(int _indexInt)             {
+void ExhibitionSList(int _indexInt)                                                 {
 
     List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                    /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
     List<String>                        museumStringList                    = new ArrayList<String>();
