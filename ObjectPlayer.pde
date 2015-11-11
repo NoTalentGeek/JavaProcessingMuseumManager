@@ -51,6 +51,7 @@ class ObjectPlayer{
     List<String>        exhibitionVisitedNameFullStringList     = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
     List<String>        exhibitionTagCounterNameFullStringList  = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
     
+    List<String>        sentenceStringList                      = new ArrayList<String>();
     List<String>        subjectCurrentPrevTagStringList         = new ArrayList<String>();
     List<String>        verb1CurrentPrevTagStringList           = new ArrayList<String>();
     List<String>        verb2CurrentPrevTagStringList           = new ArrayList<String>();
@@ -607,6 +608,16 @@ class ObjectPlayer{
 
         }
 
+        /*If this is the second exhibition visited than put the sentence into the sentence List.
+        The sentence List is will the container of every sentences that has been collected by this player.*/
+        if(
+
+            (exhibitionVisitedNameAltStringList  .size() > 1) &&
+            (exhibitionVisitedNameFullStringList .size() > 1)
+
+        ){ sentenceStringList.add(SentenceMultipleGenerateString(3)); }
+
+        /*
         if(playerIndexInt == 1){
 
             println("===");
@@ -625,6 +636,7 @@ class ObjectPlayer{
             println("===");
 
         }
+        */
 
         return exhibitionCurrentObject;
 

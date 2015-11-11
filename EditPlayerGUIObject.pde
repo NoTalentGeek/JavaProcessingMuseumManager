@@ -72,7 +72,6 @@ class EditPlayerGUIObject{
 
         /*Set the default player object.*/
         selectedPlayerObject                    = playerObjectList.get(0);
-        println(selectedPlayerObject.exhibitionCurrentObject);
 
         if(useNameAltBoolean        == true ){
 

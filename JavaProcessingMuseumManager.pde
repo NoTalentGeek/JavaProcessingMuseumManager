@@ -279,36 +279,36 @@ void setup()                                    {
     /*Set up the museum objects.*/
     floorObjectList         = Arrays.asList(
 
-        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
 
     );
     roomObjectList          = Arrays.asList(
 
-        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
 
     );
     exhibitionObjectList    = Arrays.asList(
 
-        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
 
     );
 
@@ -378,7 +378,7 @@ void setup()                                    {
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        250                                                                 ,
+        250 + 20 + 65                                                                 ,
         buttonSizeInt                                                       ,
         dropdownObjectWidthInt                                              ,
         dropdownObjectHeightInt
@@ -981,7 +981,7 @@ int FindObjectMuseumIndexInt(
 
 /*Create a function to add museum object.
 PENDING: Later I need to add additional arguments so that the tags will also be added.*/
-ObjectMuseum AddObjectMuseum(
+ObjectMuseum AddMuseumObject(
 
     String _nameAltString       ,
     String _nameFullString      ,
@@ -994,7 +994,7 @@ ObjectMuseum AddObjectMuseum(
     List<ObjectMuseum>  museumObjectList            = new ArrayList<ObjectMuseum>();
     List<ObjectMuseum>  parentMuseumObjectList      = new ArrayList<ObjectMuseum>();
     List<String>        temporaryMuseumStringList   = new ArrayList<String>();
-    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, AssignRandomTagList(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList));
+    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList));
 
     /*If statement to determine which List we should put in.*/
     if      (_typeString.equals("FLR")){
@@ -1018,6 +1018,7 @@ ObjectMuseum AddObjectMuseum(
 
     }
 
+
     /*Assign the object into the object List and the String List.*/
     museumObjectList                    .add(museumObject);
     if      (useNameAltBoolean == true ){ temporaryMuseumStringList.add(museumObject.nameAltString ); }
@@ -1038,16 +1039,42 @@ ObjectMuseum AddObjectMuseum(
     museumNameAltStringList     = new ArrayList<String>(floorNameAltStringList );
     museumNameFullStringList    = new ArrayList<String>(floorNameFullStringList);
 
-    if      (useNameAltBoolean == true ){ cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumNameAltStringList);  }
+    if      (useNameAltBoolean == true ){ cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumNameAltStringList ); }
     else if (useNameAltBoolean == false){ cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumNameFullStringList); }
 
     return                      museumObject;
 
 }
 
+ObjectMuseum FindMuseumObject(String _objectNameString)                              {
+
+    ObjectMuseum tempObjectMuseum = null;
+    for(int i = 0; i < floorObjectList.size(); i ++){
+
+        if(floorObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempObjectMuseum = floorObjectList.get(i); }
+        if(floorObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempObjectMuseum = floorObjectList.get(i); }
+
+    }
+    for(int i = 0; i < roomObjectList.size(); i ++){
+
+        if(roomObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempObjectMuseum = roomObjectList.get(i); }
+        if(roomObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempObjectMuseum = roomObjectList.get(i); }
+
+    }
+    for(int i = 0; i < exhibitionObjectList.size(); i ++){
+
+        if(exhibitionObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempObjectMuseum = exhibitionObjectList.get(i); }
+        if(exhibitionObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempObjectMuseum = exhibitionObjectList.get(i); }
+
+    }
+
+    return tempObjectMuseum;
+
+}
+
 /*
 <<A function to return an array of object tag to be put in the museum object, randomly.>>
-Tag[] AssignRandomTagList(List<Tag> _tagObjectList)                                 {
+Tag[] AssignRandomTagArray(List<Tag> _tagObjectList)                                 {
 
     <<Temporary tag object list to be returned later on this function.>>
     List<Tag> assignTagObjectList                   = new ArrayList<Tag>();
@@ -1100,7 +1127,7 @@ Tag[] AssignRandomTagList(List<Tag> _tagObjectList)                             
 
 }*/
 /*A function to return an array of object tag to be put in the museum object, randomly.*/
-Tag[] AssignRandomTagList(
+Tag[] AssignRandomTagArray(
 
     List<Tag> _subjectTagObjectList     ,
     List<Tag> _verbTagObjectList        ,
@@ -1333,15 +1360,17 @@ void SubmitButton                   (int _indexInt)                             
     String tempNameAltString        = cp5Object.get(Textfield   .class, "NameAltTextfield" ).getText();
     String tempNameFullString       = cp5Object.get(Textfield   .class, "NameFullTextfield").getText();
     String tempParentNameAltString  = "";
-    String tempTypeString           = addMuseumGUIObject.selectedTypeObjectString   ; addMuseumGUIObject.selectedTypeObjectString   = "";
+    String tempTypeString           = addMuseumGUIObject.selectedTypeObjectString; addMuseumGUIObject.selectedTypeObjectString   = "";
 
     /*Due to museum object floor will ever have no parent object, then we need to specifically set its parent object.*/
     if      ( tempTypeString.equals("FLR")) { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
     else if (!tempTypeString.equals("FLR")) { tempParentNameAltString = addMuseumGUIObject.selectedParentString; addMuseumGUIObject.selectedParentString = ""; }
     else                                    { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
 
+    if(useNameAltBoolean == false){ tempParentNameAltString = FindMuseumObject(tempParentNameAltString).nameAltString; }
+
     /*Create the museum object.*/
-    AddObjectMuseum                         (tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeString);
+    AddMuseumObject                         (tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeString);
 
 }
 /*This function below is used to "convert" scrollable list into scrollable checklist.

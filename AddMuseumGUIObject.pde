@@ -122,7 +122,7 @@ class AddMuseumGUIObject{
 
                 cp5Object                       .addScrollableList      ("SelectParentObjectMuseumSList")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), groupLayoutOffsetInt)
-                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
+                                                .setSize                (((scrollableWidthInt*2) + groupLayoutOffsetInt), scrollableHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .addItems               (defaultStringList)
                                                 .setType                (ControlP5.LIST)
@@ -157,29 +157,48 @@ class AddMuseumGUIObject{
                                                 .setColor               (otherCColor)
                                                 .setLabel               ("Noun Tag:");
 
+                cp5Object                       .addScrollableList      ("SelectTagAdjectiveSList")
+                                                .setPosition            (((groupLayoutOffsetInt) + (scrollableWidthInt/2)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
+                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
+                                                .setGroup               (AddMuseumGroupObject)
+                                                .addItems               (tempSelectTagVerbSList)
+                                                .setType                (ControlP5.LIST)
+                                                .setColor               (sChecklistFalseCColor)
+                                                .setLabel               ("Adjective Tag:");
+
+                cp5Object                       .addScrollableList      ("SelectTagAdverbSList")
+                                                .setPosition            (((groupLayoutOffsetInt*2) + ((scrollableWidthInt/2)*3)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
+                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
+                                                .setGroup               (AddMuseumGroupObject)
+                                                .addItems               (tempSelectTagNounSList)
+                                                .setType                (ControlP5.LIST)
+                                                .setColor               (sChecklistFalseCColor)
+                                                .setColor               (otherCColor)
+                                                .setLabel               ("Adverb Tag:");
+
                 cp5Object                       .addTextlabel           ("CanAddMultipleTagsTextlabel")
-                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
+                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*4) + (scrollableHeightInt*3)))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
                                                 .setColorValue          (255)
                                                 .setText                ("*You can add multiple tags,\nbut minimum one tag in each category.");
 
                 cp5Object                       .addTextfield           ("NameFullTextfield")
-                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*6) + (scrollableHeightInt*2)))
+                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
                                                 .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
                                                 .setLabel               ("Name Full:");
 
                 cp5Object                       .addTextfield           ("NameAltTextfield")
-                                                .setPosition            (((groupLayoutOffsetInt*2) + oneLineComponentWidthInt), ((groupLayoutOffsetInt*6) + (scrollableHeightInt*2)))
+                                                .setPosition            (((groupLayoutOffsetInt*2) + oneLineComponentWidthInt), ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
                                                 .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
                                                 .setLabel               ("Name Alternative:");
 
                 cp5Object                       .addButton              ("SubmitButton")
-                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*9) + (scrollableHeightInt*2) + oneLineComponentHeightInt))
+                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + (scrollableHeightInt*3) + oneLineComponentHeightInt))
                                                 .setSize                (((oneLineComponentWidthInt*2) + groupLayoutOffsetInt), oneLineComponentHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
