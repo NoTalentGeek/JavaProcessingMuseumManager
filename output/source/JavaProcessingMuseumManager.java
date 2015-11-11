@@ -1374,9 +1374,11 @@ public void TypeObjectMuseumSList          (int _indexInt)                      
 
 }
 /*These three functions is used to convert the scrollable list into scrollable checklist.*/
-public void SelectTagSubjectSList          (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagSubjectSList"   , _indexInt); }
-public void SelectTagVerbSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagVerbSList"      , _indexInt); }
-public void SelectTagNounSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagNounSList"      , _indexInt); }
+public void SelectTagSubjectSList          (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagSubjectSList"   , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagSubjectSList      , "SelectTagSubjectSList"   ); }
+public void SelectTagVerbSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagVerbSList"      , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagVerbSList         , "SelectTagVerbSList"      ); }
+public void SelectTagNounSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagNounSList"      , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagNounSList         , "SelectTagNounSList"      ); }
+public void SelectTagAdjectiveSList        (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagAdjectiveSList" , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagAdjectiveSList    , "SelectTagAdjectiveSList" ); }
+public void SelectTagAdverbSList           (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagAdverbSList"    , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagAdverbSList       , "SelectTagAdverbSList"    ); }
 public void SelectParentObjectMuseumSList  (int _indexInt)                                 { addMuseumGUIObject.selectedParentString           = cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").getItem(_indexInt).get("text").toString(); }
 /*Submit button callback function.*/
 public void SubmitButton                   (int _indexInt)                                 {
@@ -1450,6 +1452,7 @@ class AddMuseumGUIObject{
     CColor          sChecklistTrueCColor                = new CColor();             /*The color of the item when an item in scroll checklist is selected.*/
     CColor          sChecklistFalseCColor               = new CColor();             /*The color of the item when an item in scroll checklist is not selected.*/
     String          typeObjectMuseumString              = "";                       /*The type of the object that will be added, it will be either floor, room, or exhibition object.*/
+    List<String>    selectedTagStringList               = new ArrayList<String>();
     List<String>    tempSelectTagSubjectSList           = new ArrayList<String>();
     List<String>    tempSelectTagVerbSList              = new ArrayList<String>();
     List<String>    tempSelectTagNounSList              = new ArrayList<String>();
@@ -1586,7 +1589,7 @@ class AddMuseumGUIObject{
                                                 .setPosition            (((groupLayoutOffsetInt) + (scrollableWidthInt/2)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
                                                 .setSize                (scrollableWidthInt, scrollableHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (tempSelectTagVerbSList)
+                                                .addItems               (tempSelectTagAdjectiveSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
                                                 .setLabel               ("Adjective Tag:");
@@ -1595,7 +1598,7 @@ class AddMuseumGUIObject{
                                                 .setPosition            (((groupLayoutOffsetInt*2) + ((scrollableWidthInt/2)*3)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
                                                 .setSize                (scrollableWidthInt, scrollableHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (tempSelectTagNounSList)
+                                                .addItems               (tempSelectTagAdverbSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
                                                 .setColor               (otherCColor)
@@ -1645,7 +1648,9 @@ class AddMuseumGUIObject{
 
     }
 
-    public void DrawVoid(float _alphaFloat){
+    public void DrawVoid(float _alphaFloat)        {
+
+        println(selectedTagStringList);
 
         /*For ebery tick/frame make sure to sync this object with the value received from the main class.*/
         alphaFloat                  = _alphaFloat;
@@ -1742,6 +1747,39 @@ class AddMuseumGUIObject{
                     parentDropdownObjectHeightInt
 
                 );
+
+        }
+
+    }
+
+    public void SetSelectedTagStringList(
+
+        List<String>    _specificTagStringList ,
+
+        String          _controllerName
+
+    ){
+
+        for(int i = 0; i < _specificTagStringList.size(); i ++){
+
+            if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected") != null){
+
+                if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("true" )){
+
+                    if(!selectedTagStringList.contains(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString())){
+
+                        selectedTagStringList.add(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString());
+
+                    }
+
+                }
+                else if (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("false")){
+
+                    selectedTagStringList.remove(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString()); 
+
+                }
+
+            }
 
         }
 
