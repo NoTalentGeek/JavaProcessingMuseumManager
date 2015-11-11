@@ -323,18 +323,23 @@ class AddMuseumGUIObject{
 
     }
 
+    /*This function is to put every selected tags into a String List.*/
     void SetSelectedTagStringList(
 
         List<String>    _specificTagStringList ,
-
         String          _controllerName
 
     ){
 
+        /*Iterate through all the list elements.*/
         for(int i = 0; i < _specificTagStringList.size(); i ++){
 
+            /*Check if there is property in the hash map named "isSelected".*/
             if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected") != null){
 
+                /*If there is a properties called "isSelected" and it is returned true then add the selected "text" properties into the String list if only
+                    it is not yet inside the list.
+                PENDING: Implementation of HashSet could be more suitable here instead of using List.*/
                 if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("true" )){
 
                     if(!selectedTagStringList.contains(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString())){
@@ -344,6 +349,7 @@ class AddMuseumGUIObject{
                     }
 
                 }
+                /*If "isSelected" is false then delete the element from the list.*/
                 else if (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("false")){
 
                     selectedTagStringList.remove(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString()); 

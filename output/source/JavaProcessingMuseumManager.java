@@ -1008,10 +1008,11 @@ public int FindObjectMuseumIndexInt(
 PENDING: Later I need to add additional arguments so that the tags will also be added.*/
 public ObjectMuseum AddMuseumObject(
 
-    String _nameAltString       ,
-    String _nameFullString      ,
-    String _parentNameAltString ,
-    String _typeString
+    String  _nameAltString       ,
+    String  _nameFullString      ,
+    String  _parentNameAltString ,
+    String  _typeString         ,
+    Tag[]   _tagObjectArray
 
 ){
 
@@ -1019,7 +1020,7 @@ public ObjectMuseum AddMuseumObject(
     List<ObjectMuseum>  museumObjectList            = new ArrayList<ObjectMuseum>();
     List<ObjectMuseum>  parentMuseumObjectList      = new ArrayList<ObjectMuseum>();
     List<String>        temporaryMuseumStringList   = new ArrayList<String>();
-    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList));
+    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, _tagObjectArray);
 
     /*If statement to determine which List we should put in.*/
     if      (_typeString.equals("FLR")){
@@ -1073,27 +1074,65 @@ public ObjectMuseum AddMuseumObject(
 
 public ObjectMuseum FindMuseumObject(String _objectNameString)                              {
 
-    ObjectMuseum tempObjectMuseum = null;
+    ObjectMuseum tempMuseumObject = null;
     for(int i = 0; i < floorObjectList.size(); i ++){
 
-        if(floorObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempObjectMuseum = floorObjectList.get(i); }
-        if(floorObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempObjectMuseum = floorObjectList.get(i); }
+        if(floorObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempMuseumObject = floorObjectList.get(i); }
+        if(floorObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempMuseumObject = floorObjectList.get(i); }
 
     }
     for(int i = 0; i < roomObjectList.size(); i ++){
 
-        if(roomObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempObjectMuseum = roomObjectList.get(i); }
-        if(roomObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempObjectMuseum = roomObjectList.get(i); }
+        if(roomObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempMuseumObject = roomObjectList.get(i); }
+        if(roomObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempMuseumObject = roomObjectList.get(i); }
 
     }
     for(int i = 0; i < exhibitionObjectList.size(); i ++){
 
-        if(exhibitionObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempObjectMuseum = exhibitionObjectList.get(i); }
-        if(exhibitionObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempObjectMuseum = exhibitionObjectList.get(i); }
+        if(exhibitionObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempMuseumObject = exhibitionObjectList.get(i); }
+        if(exhibitionObjectList.get(i).nameFullString    .equals(_objectNameString)){ tempMuseumObject = exhibitionObjectList.get(i); }
 
     }
 
-    return tempObjectMuseum;
+    return tempMuseumObject;
+
+}
+    
+public Tag FindTagObject(String _tagName){
+
+    Tag tempTagObject = null;
+    for(int i = 0; i < subjectTagObjectList.size(); i ++){
+
+        if(subjectTagObjectList.get(i).nameAltString     .equals(_tagName)){ tempTagObject = subjectTagObjectList.get(i); }
+        if(subjectTagObjectList.get(i).nameFullString    .equals(_tagName)){ tempTagObject = subjectTagObjectList.get(i); }
+
+    }
+    for(int i = 0; i < verbTagObjectList.size(); i ++){
+
+        if(verbTagObjectList.get(i).nameAltString     .equals(_tagName)){ tempTagObject = verbTagObjectList.get(i); }
+        if(verbTagObjectList.get(i).nameFullString    .equals(_tagName)){ tempTagObject = verbTagObjectList.get(i); }
+
+    }
+    for(int i = 0; i < nounTagObjectList.size(); i ++){
+
+        if(nounTagObjectList.get(i).nameAltString     .equals(_tagName)){ tempTagObject = nounTagObjectList.get(i); }
+        if(nounTagObjectList.get(i).nameFullString    .equals(_tagName)){ tempTagObject = nounTagObjectList.get(i); }
+
+    }
+    for(int i = 0; i < adjectiveTagObjectList.size(); i ++){
+
+        if(adjectiveTagObjectList.get(i).nameAltString     .equals(_tagName)){ tempTagObject = adjectiveTagObjectList.get(i); }
+        if(adjectiveTagObjectList.get(i).nameFullString    .equals(_tagName)){ tempTagObject = adjectiveTagObjectList.get(i); }
+
+    }
+    for(int i = 0; i < adverbTagObjectList.size(); i ++){
+
+        if(adverbTagObjectList.get(i).nameAltString     .equals(_tagName)){ tempTagObject = adverbTagObjectList.get(i); }
+        if(adverbTagObjectList.get(i).nameFullString    .equals(_tagName)){ tempTagObject = adverbTagObjectList.get(i); }
+
+    }
+
+    return tempTagObject;
 
 }
 
@@ -1368,9 +1407,10 @@ This function below is for to know what kind of object the class will have to ma
 public void TypeObjectMuseumSList          (int _indexInt)                                 {
 
     addMuseumGUIObject.typeObjectMuseumString   = cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList").getItem(_indexInt).get("text").toString();
-    if      (addMuseumGUIObject.typeObjectMuseumString.equals("Floor"      )){ addMuseumGUIObject.selectedTypeObjectString = "FLR"; }
-    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Room"       )){ addMuseumGUIObject.selectedTypeObjectString = "ROM"; }
-    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Exhibition" )){ addMuseumGUIObject.selectedTypeObjectString = "EXH"; }
+    if      (addMuseumGUIObject.typeObjectMuseumString.equals("Floor"      ))       { addMuseumGUIObject.selectedTypeObjectString = "FLR"; }
+    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Room"       ))       { addMuseumGUIObject.selectedTypeObjectString = "ROM"; }
+    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Exhibition" ))       { addMuseumGUIObject.selectedTypeObjectString = "EXH"; }
+    else                                                                            { addMuseumGUIObject.selectedTypeObjectString = addMuseumGUIObject.typeObjectMuseumString; }
 
 }
 /*These three functions is used to convert the scrollable list into scrollable checklist.*/
@@ -1384,20 +1424,23 @@ public void SelectParentObjectMuseumSList  (int _indexInt)                      
 public void SubmitButton                   (int _indexInt)                                 {
 
     /*Put everything into temporary variables.*/
-    String tempNameAltString        = cp5Object.get(Textfield   .class, "NameAltTextfield" ).getText();
-    String tempNameFullString       = cp5Object.get(Textfield   .class, "NameFullTextfield").getText();
-    String tempParentNameAltString  = "";
-    String tempTypeString           = addMuseumGUIObject.selectedTypeObjectString; addMuseumGUIObject.selectedTypeObjectString   = "";
+    String          tempNameAltString           = cp5Object.get(Textfield   .class, "NameAltTextfield" ).getText();
+    String          tempNameFullString          = cp5Object.get(Textfield   .class, "NameFullTextfield").getText();
+    String          tempParentNameAltString     = "";
+    String          tempTypeString              = addMuseumGUIObject.selectedTypeObjectString; addMuseumGUIObject.selectedTypeObjectString = "";
+    List<String>    tempSelectedTagStringList   = addMuseumGUIObject.selectedTagStringList;
+    Tag[]           tempSelectedTagObjectArray  = new Tag[tempSelectedTagStringList.size()];
 
     /*Due to museum object floor will ever have no parent object, then we need to specifically set its parent object.*/
     if      ( tempTypeString.equals("FLR")) { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
     else if (!tempTypeString.equals("FLR")) { tempParentNameAltString = addMuseumGUIObject.selectedParentString; addMuseumGUIObject.selectedParentString = ""; }
     else                                    { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
 
-    if(useNameAltBoolean == false){ tempParentNameAltString = FindMuseumObject(tempParentNameAltString).nameAltString; }
+    if(useNameAltBoolean == false){ tempParentNameAltString     = FindMuseumObject(tempParentNameAltString).nameAltString; }
+    for(int i = 0; i < tempSelectedTagStringList.size(); i ++)  { tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagStringList.get(i)); }
 
     /*Create the museum object.*/
-    AddMuseumObject                         (tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeString);
+    AddMuseumObject                         (tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeString, tempSelectedTagObjectArray);
 
 }
 /*This function below is used to "convert" scrollable list into scrollable checklist.
@@ -1650,8 +1693,6 @@ class AddMuseumGUIObject{
 
     public void DrawVoid(float _alphaFloat)        {
 
-        println(selectedTagStringList);
-
         /*For ebery tick/frame make sure to sync this object with the value received from the main class.*/
         alphaFloat                  = _alphaFloat;
 
@@ -1752,18 +1793,23 @@ class AddMuseumGUIObject{
 
     }
 
+    /*This function is to put every selected tags into a String List.*/
     public void SetSelectedTagStringList(
 
         List<String>    _specificTagStringList ,
-
         String          _controllerName
 
     ){
 
+        /*Iterate through all the list elements.*/
         for(int i = 0; i < _specificTagStringList.size(); i ++){
 
+            /*Check if there is property in the hash map named "isSelected".*/
             if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected") != null){
 
+                /*If there is a properties called "isSelected" and it is returned true then add the selected "text" properties into the String list if only
+                    it is not yet inside the list.
+                PENDING: Implementation of HashSet could be more suitable here instead of using List.*/
                 if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("true" )){
 
                     if(!selectedTagStringList.contains(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString())){
@@ -1773,6 +1819,7 @@ class AddMuseumGUIObject{
                     }
 
                 }
+                /*If "isSelected" is false then delete the element from the list.*/
                 else if (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("false")){
 
                     selectedTagStringList.remove(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString()); 
@@ -2343,6 +2390,7 @@ class   ObjectMuseum                                                            
         SetFullBoolean  ();
         SetHoverBoolean ();
         PanelDrawVoid   ();
+        if(nameAltString.equals("EXH_LUX")){ println(tagMuseumNameFullStringList); }
 
     }
 
