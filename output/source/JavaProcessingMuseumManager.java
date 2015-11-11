@@ -565,6 +565,58 @@ public void mousePressed()                             {
 
 }
 
+/*Function to assign specific tag into the whole tag of object player.*/
+public void AssignRandomTagLoopVoid(
+
+    List<Tag>   _sourceTagObjectList,
+    List<Tag>   _targetTagObjectList
+
+){
+
+    /*Counter on how many tag is already in the museum object.*/
+    int     counterInt                              = 0;
+
+    /*This function need to be atleast gives three tags to a museum object.
+    After three tags is inside the List then we can randomly add another tag with a chance.
+    The thing is that every tag added the chance of another tag will be added/pushed
+        is lower.*/
+    float   randomCounterFloat                      = 1f;
+    while(
+
+        (counterInt             <= (_sourceTagObjectList.size()/2)) ||
+        (Math.random()          <  randomCounterFloat)
+
+    ){
+
+        /*Need to make sure the inputted random tag is not something that is already in the museum object
+        Create a temporary tag object to hold.*/
+        boolean insideBoolean   = false;
+        int     randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+        Tag     tagObject       = _sourceTagObjectList.get(randomIndexInt);
+        
+        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
+        for(int i = 0; i        < _targetTagObjectList.size(); i ++){
+
+            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
+
+                insideBoolean   = true;
+                randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+                tagObject       = _sourceTagObjectList.get(randomIndexInt);
+                
+            }
+
+        }
+        
+        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
+        if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
+        counterInt                                                          ++;
+        /*Add/push a tag object into the temporary list.*/
+        if(insideBoolean == false)                                          { _targetTagObjectList.add(tagObject); }
+
+    }
+
+}
+
 /*A function to check whether an object of museum is hovered by mouse pointer.*/
 public void CheckMuseumObjectHoverVoid(
 
@@ -1098,57 +1150,6 @@ public Tag[] AssignRandomTagList(
     for(int i = 0; i < assignTagObjectArray.length; i ++)   { assignTagObjectArray[i] = assignTagObjectList.get(i); }
     
     return assignTagObjectArray;
-
-}
-/*Function to assign specific tag into the whole tag of object player.*/
-public void AssignRandomTagLoopVoid(
-
-    List<Tag>   _sourceTagObjectList,
-    List<Tag>   _targetTagObjectList
-
-){
-
-    /*Counter on how many tag is already in the museum object.*/
-    int     counterInt                              = 0;
-
-    /*This function need to be atleast gives three tags to a museum object.
-    After three tags is inside the List then we can randomly add another tag with a chance.
-    The thing is that every tag added the chance of another tag will be added/pushed
-        is lower.*/
-    float   randomCounterFloat                      = 1f;
-    while(
-
-        (counterInt             <= (_sourceTagObjectList.size()/2)) ||
-        (Math.random()          <  randomCounterFloat)
-
-    ){
-
-        /*Need to make sure the inputted random tag is not something that is already in the museum object
-        Create a temporary tag object to hold.*/
-        boolean insideBoolean   = false;
-        int     randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
-        Tag     tagObject       = _sourceTagObjectList.get(randomIndexInt);
-        
-        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
-        for(int i = 0; i        < _targetTagObjectList.size(); i ++){
-
-            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
-
-                insideBoolean   = true;
-                randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
-                tagObject       = _sourceTagObjectList.get(randomIndexInt);
-                
-            }
-
-        }
-        
-        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
-        if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
-        counterInt                                                          ++;
-        /*Add/push a tag object into the temporary list.*/
-        if(insideBoolean == false)                                          { _targetTagObjectList.add(tagObject); }
-
-    }
 
 }
 
@@ -2735,8 +2736,11 @@ class ObjectPlayer{
     /*A function to populate tag string received from the current exhibition.*/
     public void PopulateTagStringList(boolean _isPreviousBoolean)                              {
 
+        /*Determine the current exhibition.
+        PENDING: Please put current exhibition, current room , and current floor to be public variable of this class.*/
         ObjectMuseum    exhibitionCurrentObject     = FindObject(exhibitionObjectList, exhibitionCurrentString);
 
+        /*If there is a previous exhibition visited before you visit new exhibition clear all TagStringList before adding new one.*/
         if(_isPreviousBoolean == true){
 
             if(subjectCurrentPrevTagStringList      .size() > 0){ subjectCurrentPrevTagStringList     .clear(); }
@@ -2751,6 +2755,10 @@ class ObjectPlayer{
             if(adverbCurrentPrevTagStringList       .size() > 0){ adverbCurrentPrevTagStringList      .clear(); }
 
         }
+
+        /*Adding all the string into player word database.
+        Here, I make sure that the word entered is always unique to the words that is already in the List.
+        PENDING: Use HashSet instead of List.*/
         for(int i = 0; i < exhibitionCurrentObject.tagMuseumObjectList.size(); i ++){
 
             if      (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("SUB")){
@@ -3095,7 +3103,6 @@ class ObjectPlayer{
 
         }
 
-
         if(playerIndexInt == 1){
 
             println("===");
@@ -3109,6 +3116,8 @@ class ObjectPlayer{
             println(nounSCurrentPrevTagStringList);
             println(adjectiveCurrentPrevTagStringList);
             println(adverbCurrentPrevTagStringList);
+            println("===");
+            println(SentenceMultipleGenerateString(3));
             println("===");
 
         }
@@ -3163,6 +3172,74 @@ class ObjectPlayer{
         );
 
         return panelObject;
+
+    }
+
+    /*Set of functions to generate sentence.
+    PENDING: Make this functions into a class.*/
+    public int     SentenceRandomNumberGeneratorInt    (int        _randomNumber)          { return (int)(Math.round(Math.random()*(_randomNumber - 1))); }
+    public String  SentenceWordFixString               (String     _fixString)             { return _fixString.substring(0, 1).toUpperCase() + _fixString.substring(1, _fixString.length()); }
+    public String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
+
+        String  textString = "";
+        for     (int i = 0; i < _numberOfSentenceInt; i ++){ textString = textString + SentenceSingleGenerateString() + "\n"; }
+        return  textString;
+
+    }
+    public String  SentenceSingleGenerateString        (){
+
+        String[]    patternStringArray                          = new String[]{
+
+            "{ % +."              ,
+            "{ * to @."           ,
+            "I will & { to @."
+
+        };
+        String[]    verbVerbCurrentPrevTagStringList           = new String[]{ "agree", "demand", "desire", "expect", "know how", "like", "need", "offer", "promise", "refuse", "want", "wish" };
+        String[]    verbVerbSCurrentPrevTagStringList          = new String[]{ "agrees", "demands", "desires", "expects", "knows how", "likes", "needs", "offers", "promises", "refuses", "wants", "wishes" };
+        String[]    adjectiveHabitCurrentPrevTagStringList     = new String[]{ "every day", "about once a week", "all the time", "as often as possible", "at least twice a week", "every evening", "every month", "every night", "every other day", "every other month", "every other week", "every third day", "every thirty minutes", "every year", "four or five times a day", "three times a day", "more than four times a month", "once a week", "once or twice a year", "three times a year", "twice a day", "twice a month" };
+
+        String      patternString   = patternStringArray[SentenceRandomNumberGeneratorInt(patternStringArray.length)];
+        String      sentenceString  = "";
+
+        for         (int i = 0; i   < patternString.length(); i ++){
+
+            String  scanString      = patternString.substring(i, i + 1);
+            String  wordString      = "";
+
+            if      (scanString.equals("{")){
+
+                /*
+                if(playerNameString != ""){
+
+                    wordString          =           playerNameString;
+                    if(Math.random()    <= 0.33)    { wordString = subjectCurrentPrevTagStringList[SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.length)]; }
+
+                }
+                */
+
+                wordString      = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size()));
+
+            }
+            else if (scanString.equals("@"))    { wordString = verb1CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb1CurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("#"))    { wordString = verb2CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb2CurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("$"))    { wordString = verb3CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb3CurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("%"))    { wordString = verbSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verbSCurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("^"))    { wordString = verbIngCurrentPrevTagStringList          .get(SentenceRandomNumberGeneratorInt  (verbIngCurrentPrevTagStringList         .size())); }
+            else if (scanString.equals("&"))    { wordString = verbVerbCurrentPrevTagStringList         [SentenceRandomNumberGeneratorInt      (verbVerbCurrentPrevTagStringList        .length)]; }
+            else if (scanString.equals("*"))    { wordString = verbVerbSCurrentPrevTagStringList        [SentenceRandomNumberGeneratorInt      (verbVerbSCurrentPrevTagStringList       .length)]; }
+            else if (scanString.equals("("))    { wordString = nounCurrentPrevTagStringList             .get(SentenceRandomNumberGeneratorInt  (nounCurrentPrevTagStringList            .size())); }
+            else if (scanString.equals(")"))    { wordString = nounSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (nounSCurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("_"))    { wordString = adjectiveCurrentPrevTagStringList        .get(SentenceRandomNumberGeneratorInt  (adjectiveCurrentPrevTagStringList       .size())); }
+            else if (scanString.equals("+"))    { wordString = adjectiveHabitCurrentPrevTagStringList   [SentenceRandomNumberGeneratorInt      (adjectiveHabitCurrentPrevTagStringList  .length)]; }
+            else if (scanString.equals("="))    { wordString = adverbCurrentPrevTagStringList           .get(SentenceRandomNumberGeneratorInt  (adverbCurrentPrevTagStringList          .size())); }       
+            else                                { wordString = scanString; }
+    
+            sentenceString  += wordString;
+
+        }
+
+        return SentenceWordFixString(sentenceString);
 
     }
 

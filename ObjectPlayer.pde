@@ -240,8 +240,11 @@ class ObjectPlayer{
     /*A function to populate tag string received from the current exhibition.*/
     void PopulateTagStringList(boolean _isPreviousBoolean)                              {
 
+        /*Determine the current exhibition.
+        PENDING: Please put current exhibition, current room , and current floor to be public variable of this class.*/
         ObjectMuseum    exhibitionCurrentObject     = FindObject(exhibitionObjectList, exhibitionCurrentString);
 
+        /*If there is a previous exhibition visited before you visit new exhibition clear all TagStringList before adding new one.*/
         if(_isPreviousBoolean == true){
 
             if(subjectCurrentPrevTagStringList      .size() > 0){ subjectCurrentPrevTagStringList     .clear(); }
@@ -256,6 +259,10 @@ class ObjectPlayer{
             if(adverbCurrentPrevTagStringList       .size() > 0){ adverbCurrentPrevTagStringList      .clear(); }
 
         }
+
+        /*Adding all the string into player word database.
+        Here, I make sure that the word entered is always unique to the words that is already in the List.
+        PENDING: Use HashSet instead of List.*/
         for(int i = 0; i < exhibitionCurrentObject.tagMuseumObjectList.size(); i ++){
 
             if      (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("SUB")){
@@ -600,7 +607,6 @@ class ObjectPlayer{
 
         }
 
-
         if(playerIndexInt == 1){
 
             println("===");
@@ -614,6 +620,8 @@ class ObjectPlayer{
             println(nounSCurrentPrevTagStringList);
             println(adjectiveCurrentPrevTagStringList);
             println(adverbCurrentPrevTagStringList);
+            println("===");
+            println(SentenceMultipleGenerateString(3));
             println("===");
 
         }
@@ -668,6 +676,74 @@ class ObjectPlayer{
         );
 
         return panelObject;
+
+    }
+
+    /*Set of functions to generate sentence.
+    PENDING: Make this functions into a class.*/
+    int     SentenceRandomNumberGeneratorInt    (int        _randomNumber)          { return (int)(Math.round(Math.random()*(_randomNumber - 1))); }
+    String  SentenceWordFixString               (String     _fixString)             { return _fixString.substring(0, 1).toUpperCase() + _fixString.substring(1, _fixString.length()); }
+    String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
+
+        String  textString = "";
+        for     (int i = 0; i < _numberOfSentenceInt; i ++){ textString = textString + SentenceSingleGenerateString() + "\n"; }
+        return  textString;
+
+    }
+    String  SentenceSingleGenerateString        (){
+
+        String[]    patternStringArray                          = new String[]{
+
+            "{ % +."              ,
+            "{ * to @."           ,
+            "I will & { to @."
+
+        };
+        String[]    verbVerbCurrentPrevTagStringList           = new String[]{ "agree", "demand", "desire", "expect", "know how", "like", "need", "offer", "promise", "refuse", "want", "wish" };
+        String[]    verbVerbSCurrentPrevTagStringList          = new String[]{ "agrees", "demands", "desires", "expects", "knows how", "likes", "needs", "offers", "promises", "refuses", "wants", "wishes" };
+        String[]    adjectiveHabitCurrentPrevTagStringList     = new String[]{ "every day", "about once a week", "all the time", "as often as possible", "at least twice a week", "every evening", "every month", "every night", "every other day", "every other month", "every other week", "every third day", "every thirty minutes", "every year", "four or five times a day", "three times a day", "more than four times a month", "once a week", "once or twice a year", "three times a year", "twice a day", "twice a month" };
+
+        String      patternString   = patternStringArray[SentenceRandomNumberGeneratorInt(patternStringArray.length)];
+        String      sentenceString  = "";
+
+        for         (int i = 0; i   < patternString.length(); i ++){
+
+            String  scanString      = patternString.substring(i, i + 1);
+            String  wordString      = "";
+
+            if      (scanString.equals("{")){
+
+                /*
+                if(playerNameString != ""){
+
+                    wordString          =           playerNameString;
+                    if(Math.random()    <= 0.33)    { wordString = subjectCurrentPrevTagStringList[SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.length)]; }
+
+                }
+                */
+
+                wordString      = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size()));
+
+            }
+            else if (scanString.equals("@"))    { wordString = verb1CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb1CurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("#"))    { wordString = verb2CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb2CurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("$"))    { wordString = verb3CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb3CurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("%"))    { wordString = verbSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verbSCurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("^"))    { wordString = verbIngCurrentPrevTagStringList          .get(SentenceRandomNumberGeneratorInt  (verbIngCurrentPrevTagStringList         .size())); }
+            else if (scanString.equals("&"))    { wordString = verbVerbCurrentPrevTagStringList         [SentenceRandomNumberGeneratorInt      (verbVerbCurrentPrevTagStringList        .length)]; }
+            else if (scanString.equals("*"))    { wordString = verbVerbSCurrentPrevTagStringList        [SentenceRandomNumberGeneratorInt      (verbVerbSCurrentPrevTagStringList       .length)]; }
+            else if (scanString.equals("("))    { wordString = nounCurrentPrevTagStringList             .get(SentenceRandomNumberGeneratorInt  (nounCurrentPrevTagStringList            .size())); }
+            else if (scanString.equals(")"))    { wordString = nounSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (nounSCurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("_"))    { wordString = adjectiveCurrentPrevTagStringList        .get(SentenceRandomNumberGeneratorInt  (adjectiveCurrentPrevTagStringList       .size())); }
+            else if (scanString.equals("+"))    { wordString = adjectiveHabitCurrentPrevTagStringList   [SentenceRandomNumberGeneratorInt      (adjectiveHabitCurrentPrevTagStringList  .length)]; }
+            else if (scanString.equals("="))    { wordString = adverbCurrentPrevTagStringList           .get(SentenceRandomNumberGeneratorInt  (adverbCurrentPrevTagStringList          .size())); }       
+            else                                { wordString = scanString; }
+    
+            sentenceString  += wordString;
+
+        }
+
+        return SentenceWordFixString(sentenceString);
 
     }
 

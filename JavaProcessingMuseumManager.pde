@@ -540,6 +540,58 @@ void mousePressed()                             {
 
 }
 
+/*Function to assign specific tag into the whole tag of object player.*/
+void AssignRandomTagLoopVoid(
+
+    List<Tag>   _sourceTagObjectList,
+    List<Tag>   _targetTagObjectList
+
+){
+
+    /*Counter on how many tag is already in the museum object.*/
+    int     counterInt                              = 0;
+
+    /*This function need to be atleast gives three tags to a museum object.
+    After three tags is inside the List then we can randomly add another tag with a chance.
+    The thing is that every tag added the chance of another tag will be added/pushed
+        is lower.*/
+    float   randomCounterFloat                      = 1f;
+    while(
+
+        (counterInt             <= (_sourceTagObjectList.size()/2)) ||
+        (Math.random()          <  randomCounterFloat)
+
+    ){
+
+        /*Need to make sure the inputted random tag is not something that is already in the museum object
+        Create a temporary tag object to hold.*/
+        boolean insideBoolean   = false;
+        int     randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+        Tag     tagObject       = _sourceTagObjectList.get(randomIndexInt);
+        
+        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
+        for(int i = 0; i        < _targetTagObjectList.size(); i ++){
+
+            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
+
+                insideBoolean   = true;
+                randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+                tagObject       = _sourceTagObjectList.get(randomIndexInt);
+                
+            }
+
+        }
+        
+        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
+        if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
+        counterInt                                                          ++;
+        /*Add/push a tag object into the temporary list.*/
+        if(insideBoolean == false)                                          { _targetTagObjectList.add(tagObject); }
+
+    }
+
+}
+
 /*A function to check whether an object of museum is hovered by mouse pointer.*/
 void CheckMuseumObjectHoverVoid(
 
@@ -1073,57 +1125,6 @@ Tag[] AssignRandomTagList(
     for(int i = 0; i < assignTagObjectArray.length; i ++)   { assignTagObjectArray[i] = assignTagObjectList.get(i); }
     
     return assignTagObjectArray;
-
-}
-/*Function to assign specific tag into the whole tag of object player.*/
-void AssignRandomTagLoopVoid(
-
-    List<Tag>   _sourceTagObjectList,
-    List<Tag>   _targetTagObjectList
-
-){
-
-    /*Counter on how many tag is already in the museum object.*/
-    int     counterInt                              = 0;
-
-    /*This function need to be atleast gives three tags to a museum object.
-    After three tags is inside the List then we can randomly add another tag with a chance.
-    The thing is that every tag added the chance of another tag will be added/pushed
-        is lower.*/
-    float   randomCounterFloat                      = 1f;
-    while(
-
-        (counterInt             <= (_sourceTagObjectList.size()/2)) ||
-        (Math.random()          <  randomCounterFloat)
-
-    ){
-
-        /*Need to make sure the inputted random tag is not something that is already in the museum object
-        Create a temporary tag object to hold.*/
-        boolean insideBoolean   = false;
-        int     randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
-        Tag     tagObject       = _sourceTagObjectList.get(randomIndexInt);
-        
-        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
-        for(int i = 0; i        < _targetTagObjectList.size(); i ++){
-
-            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
-
-                insideBoolean   = true;
-                randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
-                tagObject       = _sourceTagObjectList.get(randomIndexInt);
-                
-            }
-
-        }
-        
-        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
-        if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
-        counterInt                                                          ++;
-        /*Add/push a tag object into the temporary list.*/
-        if(insideBoolean == false)                                          { _targetTagObjectList.add(tagObject); }
-
-    }
 
 }
 
