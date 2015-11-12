@@ -7,7 +7,7 @@ ButtonOpenClose         buttonOpenCloseMuseumObject     ;
 ButtonOpenClose         buttonOpenClosePlayerObject     ;
 
 /*Determine global variables.*/
-int                     playerAmountInt                 = 2;                                /*The number of players in this simulation.*/
+int                     playerAmountInt                 = 30;                                /*The number of players in this simulation.*/
 //List<Tag>             tagObjectList                   = new ArrayList<Tag>();             /*Array List of tag.*/
 List<Tag>               subjectTagObjectList            = new ArrayList<Tag>();
 List<Tag>               verbTagObjectList               = new ArrayList<Tag>();
@@ -389,7 +389,6 @@ void setup()                                    {
     /*Add the add player GUI.*/
     addPlayerGUIObject                  = new AddPlayerGUIObject(
 
-        this                                        ,
         (guiOffsetInt + (buttonSizeInt/2))          ,
         (guiOffsetInt + (buttonSizeInt/2))          ,
         dropdownObjectWidthInt                      ,
@@ -440,7 +439,7 @@ void setup()                                    {
             (guiOffsetInt + (buttonSizeInt/2))
 
         )
-        .setSize                        (dropdownObjectWidthInt, dropdownObjectHeightInt)
+        .setSize                        (dropdownObjectWidthInt, (dropdownObjectHeightInt - 21))
         .setBarHeight                   (itemHeightInt)
         .setItemHeight                  (itemHeightInt)
         .setType                        (ControlP5.LIST)

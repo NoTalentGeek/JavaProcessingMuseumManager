@@ -30,8 +30,8 @@ class EditPlayerGUIObject{
     List<String>    tempPlayerExhibitionVisitedSList            = new ArrayList<String>();
     List<String>    tempPlayerTagSList                          = new ArrayList<String>();
     List<String>    tempPleaseSelectNextExhibitionSList         = new ArrayList<String>();
-    ObjectPlayer    selectedPlayerObject                        = null;                     /*Selected object player from this graphical user interface.*/
-    //ObjectPlayer  selectedPlayerPrevObject                    = null;                     /*Selected object player from this graphical user interface.*/
+    ObjectPlayer    selectedPlayerObject                        = null;                         /*Selected object player from this graphical user interface.*/
+    //ObjectPlayer  selectedPlayerPrevObject                    = null;                         /*Selected object player from this graphical user interface.*/
 
     /*Constructor.*/
     EditPlayerGUIObject     (
@@ -102,7 +102,7 @@ class EditPlayerGUIObject{
                             .setColor               (otherCColor)
                             .setColorBackground     (groupColorBackgroundColor)
                             .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("Edit Player Object:");
+                            .setLabel               ("Edit Visitor:");
 
                 /*PENDING - DONE: Create the text panel. Many text panel!!!*/
                 cp5Object   .addTextlabel           ("PlayerIndexTextlabel")
@@ -283,15 +283,8 @@ class EditPlayerGUIObject{
                 /*Change the position when the group object is open.*/
                  cp5Object.get(ScrollableList.class, "VisitorSList").setPosition(
 
-                    ( guiOffsetInt      + (parentButtonSizeInt/2)),
-                    ((guiOffsetInt*1.5) + (parentButtonSizeInt/2) + playerGroupHeightInt    )
-
-                );
-                /*Change the size when the group object is open.*/
-                 cp5Object.get(ScrollableList.class, "VisitorSList").setSize(
-
-                    parentDropdownObjectWidthInt,
-                    parentDropdownObjectHeightInt - playerGroupHeightInt
+                    (guiOffsetInt + (parentButtonSizeInt/2)),
+                    (cp5Object.get(Group.class, "EditPlayerGroupObject").getPosition()[1] + playerGroupHeightInt)
 
                 );
                 
@@ -301,20 +294,12 @@ class EditPlayerGUIObject{
                 /*Change the position when the group object is close.*/
                  cp5Object.get(ScrollableList.class, "VisitorSList").setPosition(
 
-                    (guiOffsetInt + (parentButtonSizeInt/2)                         ),
-                    (guiOffsetInt + (parentButtonSizeInt/2) + groupLayoutOffsetInt  )
-
-                );
-                /*Change the size when the group object is close.*/
-                 cp5Object.get(ScrollableList.class, "VisitorSList").setSize(
-
-                    parentDropdownObjectWidthInt  ,
-                    parentDropdownObjectHeightInt
+                    (guiOffsetInt + (parentButtonSizeInt/2)),
+                    (cp5Object.get(Group.class, "EditPlayerGroupObject").getPosition()[1])
 
                 );
 
         }
-
     }
 
 }
