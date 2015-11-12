@@ -146,22 +146,29 @@ This is not quite necessary because you can use the Name class instead.
 I guess I will put it here for the time being :).*/
 class Tag                                       {
 
-    Name            tagName             = null;
-    String          nameAltString       = "";
-    String          nameFullString      = "";
+    Name            tagName                     = null;
+    String          nameAltString               = "";
+    String          nameFullString              = "";
 
-    String          tagTypeString       = "";
+    String          tagTypeString               = "";
 
-    String          tagSubjectString    = "";
-    String          tagVerb1String      = "";
-    String          tagVerb2String      = "";
-    String          tagVerb3String      = "";
-    String          tagVerbSString      = "";
-    String          tagVerbIngString    = "";
-    String          tagNounString       = "";
-    String          tagNounSString      = "";
-    String          tagAdjectiveString  = "";
-    String          tagAdverbString     = "";
+    String          tagSubjectString            = "";
+    String          tagVerb1String              = "";
+    String          tagVerb2String              = "";
+    String          tagVerb3String              = "";
+    String          tagVerbSString              = "";
+    String          tagVerbIngString            = "";
+    String          tagNegativeVerb1String      = "";
+    String          tagNegativeVerb2String      = "";
+    String          tagNegativeVerb3String      = "";
+    String          tagNegativeVerbSString      = "";
+    String          tagNegativeVerbIngString    = "";
+    String          tagNounString               = "";
+    String          tagNounSString              = "";
+    String          tagAdjectiveString          = "";
+    String          tagNegativeAdjectiveString  = "";
+    String          tagAdverbString             = "";
+    String          tagNegativeAdverbString     = "";
 
     Tag(
 
@@ -171,29 +178,40 @@ class Tag                                       {
 
     ){
 
-        tagName                 = _nameObject;
-        nameAltString           = tagName.nameAltString;
-        nameFullString          = tagName.nameFullString;
-        tagTypeString           = _tagTypeString;
+        tagName                         = _nameObject;
+        nameAltString                   = tagName.nameAltString;
+        nameFullString                  = tagName.nameFullString;
+        tagTypeString                   = _tagTypeString;
 
         if      (tagTypeString.equals("SUB")){ tagSubjectString     = _wordDerivativeStringArray[0]; }
         else if (tagTypeString.equals("VER")){
 
-            tagVerb1String      = _wordDerivativeStringArray[0];
-            tagVerb2String      = _wordDerivativeStringArray[1];
-            tagVerb3String      = _wordDerivativeStringArray[2];
-            tagVerbSString      = _wordDerivativeStringArray[3];
-            tagVerbIngString    = _wordDerivativeStringArray[4];
+            tagVerb1String              = _wordDerivativeStringArray[0];
+            tagVerb2String              = _wordDerivativeStringArray[1];
+            tagVerb3String              = _wordDerivativeStringArray[2];
+            tagVerbSString              = _wordDerivativeStringArray[3];
+            tagVerbIngString            = _wordDerivativeStringArray[4];
+
+        }
+        else if (tagTypeString.equals("NVE")){
+
+            tagNegativeVerb1String      = _wordDerivativeStringArray[0];
+            tagNegativeVerb2String      = _wordDerivativeStringArray[1];
+            tagNegativeVerb3String      = _wordDerivativeStringArray[2];
+            tagNegativeVerbSString      = _wordDerivativeStringArray[3];
+            tagNegativeVerbIngString    = _wordDerivativeStringArray[4];
 
         }
         else if (tagTypeString.equals("NOU")){
 
-            tagNounString       = _wordDerivativeStringArray[0];
-            tagNounSString      = _wordDerivativeStringArray[1];
+            tagNounString               = _wordDerivativeStringArray[0];
+            tagNounSString              = _wordDerivativeStringArray[1];
 
         }
-        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordDerivativeStringArray[0]; }
-        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString           = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("NDJ")){ tagNegativeAdjectiveString   = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("ADV")){ tagAdverbString              = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("NDV")){ tagNegativeAdverbString      = _wordDerivativeStringArray[0]; }
         
 
     }
@@ -247,74 +265,95 @@ void setup()                                    {
     );
     */
 
-    subjectTagObjectList    = Arrays.asList(
+    subjectTagObjectList            = Arrays.asList(
 
         new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
         new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington")
 
     );
 
-    verbTagObjectList       = Arrays.asList(
+    verbTagObjectList               = Arrays.asList(
 
         new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
         new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running")
 
     );
 
-    nounTagObjectList       = Arrays.asList(
+    negativeVerbTagObjectList       = Arrays.asList(
+
+        new Tag(new Name("NVE_DIE", "Verb Die"              ), "NVE", "die", "died", "died", "dies", "dying"),
+        new Tag(new Name("NVE_KIL", "Verb Kill"             ), "NVE", "kill", "killed", "killed", "kills", "killing")
+
+    );
+
+    nounTagObjectList               = Arrays.asList(
 
         new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
         new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns")
 
     );
 
-    adjectiveTagObjectList  = Arrays.asList(
+    adjectiveTagObjectList          = Arrays.asList(
 
-        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good"),
-        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad")
+        new Tag(new Name("ADJ_BAD", "Adjective Excellent"   ), "ADJ", "excellent"),
+        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good")
 
     );
 
-    adverbTagObjectList     = Arrays.asList(
+    negativeAdjectiveTagObjectList  = Arrays.asList(
 
-        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly"),
-        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly")
+        new Tag(new Name("NDJ_AWF", "Adjective Awful"       ), "NDJ", "awful"),
+        new Tag(new Name("NDJ_BAD", "Adjective Bad"         ), "NDJ", "bad")
+
+    );
+
+    adverbTagObjectList             = Arrays.asList(
+
+        new Tag(new Name("ADV_PER", "Adverb Perfectly"      ), "ADV", "perfectly"),
+        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly")
+
+    );
+
+    negativeAdverbTagObjectList     = Arrays.asList(
+
+        new Tag(new Name("NDV_DES", "Adverb Desperately"    ), "NDV", "desperately"),
+        new Tag(new Name("NDV_SLO", "Adverb Slowly"         ), "NDV", "slowly")
 
     );
 
     /*Set up the museum objects.*/
     floorObjectList         = Arrays.asList(
 
-        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
 
     );
     roomObjectList          = Arrays.asList(
 
-        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
 
     );
     exhibitionObjectList    = Arrays.asList(
 
-        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
 
     );
 
@@ -1229,22 +1268,28 @@ Tag[] AssignRandomTagArray(List<Tag> _tagObjectList)                            
 /*A function to return an array of object tag to be put in the museum object, randomly.*/
 Tag[] AssignRandomTagArray(
 
-    List<Tag> _subjectTagObjectList     ,
-    List<Tag> _verbTagObjectList        ,
-    List<Tag> _nounTagObjectList        ,
-    List<Tag> _adjectiveTagObjectList   ,
-    List<Tag> _adverbTagObjectList
+    List<Tag> _subjectTagObjectList             ,
+    List<Tag> _verbTagObjectList                ,
+    List<Tag> _negativeVerbTagObjectList        ,
+    List<Tag> _nounTagObjectList                ,
+    List<Tag> _adjectiveTagObjectList           ,
+    List<Tag> _negativeAdjectiveTagObjectList   ,
+    List<Tag> _adverbTagObjectList              ,
+    List<Tag> _negativeAdverbTagObjectList
 
 ){
 
     /*Temporary tag object list to be returned later on this function.*/
-    List<Tag> assignTagObjectList                   = new ArrayList<Tag>();
+    List<Tag> assignTagObjectList                           = new ArrayList<Tag>();
     
-    AssignRandomTagLoopVoid(_subjectTagObjectList   , assignTagObjectList);
-    AssignRandomTagLoopVoid(_verbTagObjectList      , assignTagObjectList);
-    AssignRandomTagLoopVoid(_nounTagObjectList      , assignTagObjectList);
-    AssignRandomTagLoopVoid(_adjectiveTagObjectList , assignTagObjectList);
-    AssignRandomTagLoopVoid(_adverbTagObjectList    , assignTagObjectList);
+    AssignRandomTagLoopVoid(_subjectTagObjectList           , assignTagObjectList);
+    AssignRandomTagLoopVoid(_verbTagObjectList              , assignTagObjectList);
+    AssignRandomTagLoopVoid(_negativeVerbTagObjectList      , assignTagObjectList);
+    AssignRandomTagLoopVoid(_nounTagObjectList              , assignTagObjectList);
+    AssignRandomTagLoopVoid(_adjectiveTagObjectList         , assignTagObjectList);
+    AssignRandomTagLoopVoid(_negativeAdjectiveTagObjectList , assignTagObjectList);
+    AssignRandomTagLoopVoid(_adverbTagObjectList            , assignTagObjectList);
+    AssignRandomTagLoopVoid(_negativeAdverbTagObjectList    , assignTagObjectList);
 
     /*Before returning the value, the object here is still in List, hence we need to convert it to array.
     Thus, it can be used in params.*/

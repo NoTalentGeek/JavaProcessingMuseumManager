@@ -177,22 +177,29 @@ This is not quite necessary because you can use the Name class instead.
 I guess I will put it here for the time being :).*/
 class Tag                                       {
 
-    Name            tagName             = null;
-    String          nameAltString       = "";
-    String          nameFullString      = "";
+    Name            tagName                     = null;
+    String          nameAltString               = "";
+    String          nameFullString              = "";
 
-    String          tagTypeString       = "";
+    String          tagTypeString               = "";
 
-    String          tagSubjectString    = "";
-    String          tagVerb1String      = "";
-    String          tagVerb2String      = "";
-    String          tagVerb3String      = "";
-    String          tagVerbSString      = "";
-    String          tagVerbIngString    = "";
-    String          tagNounString       = "";
-    String          tagNounSString      = "";
-    String          tagAdjectiveString  = "";
-    String          tagAdverbString     = "";
+    String          tagSubjectString            = "";
+    String          tagVerb1String              = "";
+    String          tagVerb2String              = "";
+    String          tagVerb3String              = "";
+    String          tagVerbSString              = "";
+    String          tagVerbIngString            = "";
+    String          tagNegativeVerb1String      = "";
+    String          tagNegativeVerb2String      = "";
+    String          tagNegativeVerb3String      = "";
+    String          tagNegativeVerbSString      = "";
+    String          tagNegativeVerbIngString    = "";
+    String          tagNounString               = "";
+    String          tagNounSString              = "";
+    String          tagAdjectiveString          = "";
+    String          tagNegativeAdjectiveString  = "";
+    String          tagAdverbString             = "";
+    String          tagNegativeAdverbString     = "";
 
     Tag(
 
@@ -202,29 +209,40 @@ class Tag                                       {
 
     ){
 
-        tagName                 = _nameObject;
-        nameAltString           = tagName.nameAltString;
-        nameFullString          = tagName.nameFullString;
-        tagTypeString           = _tagTypeString;
+        tagName                         = _nameObject;
+        nameAltString                   = tagName.nameAltString;
+        nameFullString                  = tagName.nameFullString;
+        tagTypeString                   = _tagTypeString;
 
         if      (tagTypeString.equals("SUB")){ tagSubjectString     = _wordDerivativeStringArray[0]; }
         else if (tagTypeString.equals("VER")){
 
-            tagVerb1String      = _wordDerivativeStringArray[0];
-            tagVerb2String      = _wordDerivativeStringArray[1];
-            tagVerb3String      = _wordDerivativeStringArray[2];
-            tagVerbSString      = _wordDerivativeStringArray[3];
-            tagVerbIngString    = _wordDerivativeStringArray[4];
+            tagVerb1String              = _wordDerivativeStringArray[0];
+            tagVerb2String              = _wordDerivativeStringArray[1];
+            tagVerb3String              = _wordDerivativeStringArray[2];
+            tagVerbSString              = _wordDerivativeStringArray[3];
+            tagVerbIngString            = _wordDerivativeStringArray[4];
+
+        }
+        else if (tagTypeString.equals("NVE")){
+
+            tagNegativeVerb1String      = _wordDerivativeStringArray[0];
+            tagNegativeVerb2String      = _wordDerivativeStringArray[1];
+            tagNegativeVerb3String      = _wordDerivativeStringArray[2];
+            tagNegativeVerbSString      = _wordDerivativeStringArray[3];
+            tagNegativeVerbIngString    = _wordDerivativeStringArray[4];
 
         }
         else if (tagTypeString.equals("NOU")){
 
-            tagNounString       = _wordDerivativeStringArray[0];
-            tagNounSString      = _wordDerivativeStringArray[1];
+            tagNounString               = _wordDerivativeStringArray[0];
+            tagNounSString              = _wordDerivativeStringArray[1];
 
         }
-        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordDerivativeStringArray[0]; }
-        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString           = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("NDJ")){ tagNegativeAdjectiveString   = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("ADV")){ tagAdverbString              = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("NDV")){ tagNegativeAdverbString      = _wordDerivativeStringArray[0]; }
         
 
     }
@@ -278,74 +296,95 @@ public void setup()                                    {
     );
     */
 
-    subjectTagObjectList    = Arrays.asList(
+    subjectTagObjectList            = Arrays.asList(
 
         new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
         new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington")
 
     );
 
-    verbTagObjectList       = Arrays.asList(
+    verbTagObjectList               = Arrays.asList(
 
         new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
         new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running")
 
     );
 
-    nounTagObjectList       = Arrays.asList(
+    negativeVerbTagObjectList       = Arrays.asList(
+
+        new Tag(new Name("NVE_DIE", "Verb Die"              ), "NVE", "die", "died", "died", "dies", "dying"),
+        new Tag(new Name("NVE_KIL", "Verb Kill"             ), "NVE", "kill", "killed", "killed", "kills", "killing")
+
+    );
+
+    nounTagObjectList               = Arrays.asList(
 
         new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
         new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns")
 
     );
 
-    adjectiveTagObjectList  = Arrays.asList(
+    adjectiveTagObjectList          = Arrays.asList(
 
-        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good"),
-        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad")
+        new Tag(new Name("ADJ_BAD", "Adjective Excellent"   ), "ADJ", "excellent"),
+        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good")
 
     );
 
-    adverbTagObjectList     = Arrays.asList(
+    negativeAdjectiveTagObjectList  = Arrays.asList(
 
-        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly"),
-        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly")
+        new Tag(new Name("NDJ_AWF", "Adjective Awful"       ), "NDJ", "awful"),
+        new Tag(new Name("NDJ_BAD", "Adjective Bad"         ), "NDJ", "bad")
+
+    );
+
+    adverbTagObjectList             = Arrays.asList(
+
+        new Tag(new Name("ADV_PER", "Adverb Perfectly"      ), "ADV", "perfectly"),
+        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly")
+
+    );
+
+    negativeAdverbTagObjectList     = Arrays.asList(
+
+        new Tag(new Name("NDV_DES", "Adverb Desperately"    ), "NDV", "desperately"),
+        new Tag(new Name("NDV_SLO", "Adverb Slowly"         ), "NDV", "slowly")
 
     );
 
     /*Set up the museum objects.*/
     floorObjectList         = Arrays.asList(
 
-        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
 
     );
     roomObjectList          = Arrays.asList(
 
-        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
 
     );
     exhibitionObjectList    = Arrays.asList(
 
-        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, nounTagObjectList, adjectiveTagObjectList, adverbTagObjectList))
+        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
 
     );
 
@@ -1260,22 +1299,28 @@ Tag[] AssignRandomTagArray(List<Tag> _tagObjectList)                            
 /*A function to return an array of object tag to be put in the museum object, randomly.*/
 public Tag[] AssignRandomTagArray(
 
-    List<Tag> _subjectTagObjectList     ,
-    List<Tag> _verbTagObjectList        ,
-    List<Tag> _nounTagObjectList        ,
-    List<Tag> _adjectiveTagObjectList   ,
-    List<Tag> _adverbTagObjectList
+    List<Tag> _subjectTagObjectList             ,
+    List<Tag> _verbTagObjectList                ,
+    List<Tag> _negativeVerbTagObjectList        ,
+    List<Tag> _nounTagObjectList                ,
+    List<Tag> _adjectiveTagObjectList           ,
+    List<Tag> _negativeAdjectiveTagObjectList   ,
+    List<Tag> _adverbTagObjectList              ,
+    List<Tag> _negativeAdverbTagObjectList
 
 ){
 
     /*Temporary tag object list to be returned later on this function.*/
-    List<Tag> assignTagObjectList                   = new ArrayList<Tag>();
+    List<Tag> assignTagObjectList                           = new ArrayList<Tag>();
     
-    AssignRandomTagLoopVoid(_subjectTagObjectList   , assignTagObjectList);
-    AssignRandomTagLoopVoid(_verbTagObjectList      , assignTagObjectList);
-    AssignRandomTagLoopVoid(_nounTagObjectList      , assignTagObjectList);
-    AssignRandomTagLoopVoid(_adjectiveTagObjectList , assignTagObjectList);
-    AssignRandomTagLoopVoid(_adverbTagObjectList    , assignTagObjectList);
+    AssignRandomTagLoopVoid(_subjectTagObjectList           , assignTagObjectList);
+    AssignRandomTagLoopVoid(_verbTagObjectList              , assignTagObjectList);
+    AssignRandomTagLoopVoid(_negativeVerbTagObjectList      , assignTagObjectList);
+    AssignRandomTagLoopVoid(_nounTagObjectList              , assignTagObjectList);
+    AssignRandomTagLoopVoid(_adjectiveTagObjectList         , assignTagObjectList);
+    AssignRandomTagLoopVoid(_negativeAdjectiveTagObjectList , assignTagObjectList);
+    AssignRandomTagLoopVoid(_adverbTagObjectList            , assignTagObjectList);
+    AssignRandomTagLoopVoid(_negativeAdverbTagObjectList    , assignTagObjectList);
 
     /*Before returning the value, the object here is still in List, hence we need to convert it to array.
     Thus, it can be used in params.*/
@@ -3628,50 +3673,60 @@ The player object will be the class that can be either played by the user (somek
     or being automated.*/
 class ObjectPlayer{
 
-    String              exhibitionCurrentString                 = "";                               /*Current exhibition in String.*/
-    ObjectMuseum        exhibitionCurrentObject                 = null;
-    List<String>        exhibitionTargetNameAltStringList       = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedNameAltStringList      = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<String>        exhibitionTagCounterNameAltStringList   = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
+    String              exhibitionCurrentString                     = "";                               /*Current exhibition in String.*/
+    ObjectMuseum        exhibitionCurrentObject                     = null;
+    List<String>        exhibitionTargetNameAltStringList           = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
+    List<String>        exhibitionVisitedNameAltStringList          = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
+    List<String>        exhibitionTagCounterNameAltStringList       = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
     
-    List<String>        exhibitionTargetNameFullStringList      = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedNameFullStringList     = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<String>        exhibitionTagCounterNameFullStringList  = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
+    List<String>        exhibitionTargetNameFullStringList          = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
+    List<String>        exhibitionVisitedNameFullStringList         = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
+    List<String>        exhibitionTagCounterNameFullStringList      = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
     
-    List<String>        sentenceStringList                      = new ArrayList<String>();
-    List<String>        subjectCurrentPrevTagStringList         = new ArrayList<String>();
-    List<String>        verb1CurrentPrevTagStringList           = new ArrayList<String>();
-    List<String>        verb2CurrentPrevTagStringList           = new ArrayList<String>();
-    List<String>        verb3CurrentPrevTagStringList           = new ArrayList<String>();
-    List<String>        verbSCurrentPrevTagStringList           = new ArrayList<String>();
-    List<String>        verbIngCurrentPrevTagStringList         = new ArrayList<String>();
-    List<String>        nounCurrentPrevTagStringList            = new ArrayList<String>();
-    List<String>        nounSCurrentPrevTagStringList           = new ArrayList<String>();
-    List<String>        adjectiveCurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        adverbCurrentPrevTagStringList          = new ArrayList<String>();
-    List<TagCounter>    exhibitionTagCounterList                = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
+    List<String>        sentenceStringList                          = new ArrayList<String>();
+    List<String>        subjectCurrentPrevTagStringList             = new ArrayList<String>();
+    List<String>        verb1CurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        verb2CurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        verb3CurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        verbSCurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        verbIngCurrentPrevTagStringList             = new ArrayList<String>();
+    List<String>        negativeVerb1CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerb2CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerb3CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerbSCurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerbIngCurrentPrevTagStringList     = new ArrayList<String>();
+    List<String>        nounCurrentPrevTagStringList                = new ArrayList<String>();
+    List<String>        nounSCurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        adjectiveCurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        negativeAdjectiveCurrentPrevTagStringList   = new ArrayList<String>();
+    List<String>        adverbCurrentPrevTagStringList              = new ArrayList<String>();
+    List<String>        negativeAdverbCurrentPrevTagStringList      = new ArrayList<String>();
+    List<TagCounter>    exhibitionTagCounterList                    = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
 
-    int                 playerIndexInt                          = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
-    String              playerNameString                        = "";
+    int                 playerIndexInt                              = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
+    String              playerNameString                            = "";
 
-    List<ObjectPlayer>  playerSiblingObjectList                 = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
-    int                 playerSiblingIndexInt                   = -1;                               /*The index of this object within the List of object player sibling.*/
+    List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
+    int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.*/
 
-    int                 editPlayerModeInt                       = 2;                               /*The mode that runs this player.
-                                                                                                        editPlayerMode =    1, this player controlled by AIAutoVoid.
-                                                                                                        editPlayerMode =    2, this player controlled manually using this application.
-                                                                                                        editPlayerMode =    3, this player controlled manually using Arduino.*/
-    float               timeCurrentExhibitionFloat              = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
+    int                 editPlayerModeInt                           = 2;                                /*The mode that runs this player.
+                                                                                                            editPlayerMode =    1, this player controlled by AIAutoVoid.
+                                                                                                            editPlayerMode =    2, this player controlled manually using this application.
+                                                                                                            editPlayerMode =    3, this player controlled manually using Arduino.*/
+    float               timeCurrentExhibitionFloat                  = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
 
     /*Panel variable.*/
-    boolean hoverBoolean                                        = false;
-    int   panelUnfinishedColor                                = color(217, 160, 102);
-    int   panelFinishedColor                                  = color(223, 113, 38 );
-    int     widthPanelInt                                       = 0;
-    int     heightPanelInt                                      = 0;
-    int     xPanelInt                                           = 0;
-    int     yPanelInt                                           = 0;
-    Panel   panelObject                                         = null;
+    boolean hoverBoolean                                            = false;
+    int   panelUnfinishedColor                                    = color(217, 160, 102);
+    int   panelFinishedColor                                      = color(223, 113, 38 );
+    int     widthPanelInt                                           = 0;
+    int     heightPanelInt                                          = 0;
+    int     xPanelInt                                               = 0;
+    int     yPanelInt                                               = 0;
+    Panel   panelObject                                             = null;
+
+    int     playerScoreInt                                          = 0;
+    boolean playerVisitCorrectExhibitionBoolean = false;
 
     /*Constructor.*/
     ObjectPlayer(
@@ -3833,21 +3888,28 @@ class ObjectPlayer{
 
         /*Determine the current exhibition.
         PENDING: Please put current exhibition, current room , and current floor to be public variable of this class.*/
-        ObjectMuseum    exhibitionCurrentObject     = FindObject(exhibitionObjectList, exhibitionCurrentString);
+        ObjectMuseum    exhibitionCurrentObject = FindObject(exhibitionObjectList, exhibitionCurrentString);
 
         /*If there is a previous exhibition visited before you visit new exhibition clear all TagStringList before adding new one.*/
         if(_isPreviousBoolean == true){
 
-            if(subjectCurrentPrevTagStringList      .size() > 0){ subjectCurrentPrevTagStringList     .clear(); }
-            if(verb1CurrentPrevTagStringList        .size() > 0){ verb1CurrentPrevTagStringList       .clear(); }
-            if(verb2CurrentPrevTagStringList        .size() > 0){ verb2CurrentPrevTagStringList       .clear(); }
-            if(verb3CurrentPrevTagStringList        .size() > 0){ verb3CurrentPrevTagStringList       .clear(); }
-            if(verbSCurrentPrevTagStringList        .size() > 0){ verbSCurrentPrevTagStringList       .clear(); }
-            if(verbIngCurrentPrevTagStringList      .size() > 0){ verbIngCurrentPrevTagStringList     .clear(); }
-            if(nounCurrentPrevTagStringList         .size() > 0){ nounCurrentPrevTagStringList        .clear(); }
-            if(nounSCurrentPrevTagStringList        .size() > 0){ nounSCurrentPrevTagStringList       .clear(); }
-            if(adjectiveCurrentPrevTagStringList    .size() > 0){ adjectiveCurrentPrevTagStringList   .clear(); }
-            if(adverbCurrentPrevTagStringList       .size() > 0){ adverbCurrentPrevTagStringList      .clear(); }
+            if(subjectCurrentPrevTagStringList              .size() > 0){ subjectCurrentPrevTagStringList           .clear(); }
+            if(verb1CurrentPrevTagStringList                .size() > 0){ verb1CurrentPrevTagStringList             .clear(); }
+            if(verb2CurrentPrevTagStringList                .size() > 0){ verb2CurrentPrevTagStringList             .clear(); }
+            if(verb3CurrentPrevTagStringList                .size() > 0){ verb3CurrentPrevTagStringList             .clear(); }
+            if(verbSCurrentPrevTagStringList                .size() > 0){ verbSCurrentPrevTagStringList             .clear(); }
+            if(verbIngCurrentPrevTagStringList              .size() > 0){ verbIngCurrentPrevTagStringList           .clear(); }
+            if(negativeVerb1CurrentPrevTagStringList        .size() > 0){ negativeVerb1CurrentPrevTagStringList     .clear(); }
+            if(negativeVerb2CurrentPrevTagStringList        .size() > 0){ negativeVerb2CurrentPrevTagStringList     .clear(); }
+            if(negativeVerb3CurrentPrevTagStringList        .size() > 0){ negativeVerb3CurrentPrevTagStringList     .clear(); }
+            if(negativeVerbSCurrentPrevTagStringList        .size() > 0){ negativeVerbSCurrentPrevTagStringList     .clear(); }
+            if(negativeVerbIngCurrentPrevTagStringList      .size() > 0){ negativeVerbIngCurrentPrevTagStringList   .clear(); }
+            if(nounCurrentPrevTagStringList                 .size() > 0){ nounCurrentPrevTagStringList              .clear(); }
+            if(nounSCurrentPrevTagStringList                .size() > 0){ nounSCurrentPrevTagStringList             .clear(); }
+            if(adjectiveCurrentPrevTagStringList            .size() > 0){ adjectiveCurrentPrevTagStringList         .clear(); }
+            if(negativeAdjectiveCurrentPrevTagStringList    .size() > 0){ negativeAdjectiveCurrentPrevTagStringList .clear(); }
+            if(adverbCurrentPrevTagStringList               .size() > 0){ adverbCurrentPrevTagStringList            .clear(); }
+            if(negativeAdverbCurrentPrevTagStringList       .size() > 0){ negativeAdverbCurrentPrevTagStringList    .clear(); }
 
         }
 
@@ -3863,27 +3925,46 @@ class ObjectPlayer{
             }
             else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("VER")){
 
-                if(!verb1CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb1String))       { verb1CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb1String);      }
-                if(!verb2CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb2String))       { verb2CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb2String);      }
-                if(!verb3CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb3String))       { verb3CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb3String);      }
-                if(!verbSCurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbSString))       { verbSCurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbSString);      }
-                if(!verbIngCurrentPrevTagStringList     .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbIngString))     { verbIngCurrentPrevTagStringList         .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbIngString);    }
+                if(!verb1CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb1String))                       { verb1CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb1String);      }
+                if(!verb2CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb2String))                       { verb2CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb2String);      }
+                if(!verb3CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb3String))                       { verb3CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerb3String);      }
+                if(!verbSCurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbSString))                       { verbSCurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbSString);      }
+                if(!verbIngCurrentPrevTagStringList     .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbIngString))                     { verbIngCurrentPrevTagStringList         .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagVerbIngString);    }
+
+            }
+            else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("NVE")){
+
+                if(!negativeVerb1CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerb1String))       { negativeVerb1CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerb1String);      }
+                if(!negativeVerb2CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerb2String))       { negativeVerb2CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerb2String);      }
+                if(!negativeVerb3CurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerb3String))       { negativeVerb3CurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerb3String);      }
+                if(!negativeVerbSCurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerbSString))       { negativeVerbSCurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerbSString);      }
+                if(!negativeVerbIngCurrentPrevTagStringList     .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerbIngString))     { negativeVerbIngCurrentPrevTagStringList         .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeVerbIngString);    }
 
             }
             else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("NOU")){
 
-                if(!nounCurrentPrevTagStringList        .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounString))        { nounCurrentPrevTagStringList            .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounString);       }
-                if(!nounSCurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounSString))       { nounSCurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounSString);      }
+                if(!nounCurrentPrevTagStringList        .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounString))                        { nounCurrentPrevTagStringList            .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounString);       }
+                if(!nounSCurrentPrevTagStringList       .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounSString))                       { nounSCurrentPrevTagStringList           .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNounSString);      }
 
             }
             else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("ADJ")){
 
-                if(!adjectiveCurrentPrevTagStringList   .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdjectiveString))   { adjectiveCurrentPrevTagStringList       .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdjectiveString);  }
+                if(!adjectiveCurrentPrevTagStringList   .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdjectiveString))                   { adjectiveCurrentPrevTagStringList       .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdjectiveString);  }
+
+            }
+            else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("NDJ")){
+
+                if(!negativeAdjectiveCurrentPrevTagStringList   .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdjectiveString))           { negativeAdjectiveCurrentPrevTagStringList       .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeAdjectiveString);  }
 
             }
             else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("ADV")){
 
-                if(!adverbCurrentPrevTagStringList      .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdverbString))      { adverbCurrentPrevTagStringList          .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdverbString);     }
+                if(!adverbCurrentPrevTagStringList      .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeAdverbString))              { adverbCurrentPrevTagStringList          .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagAdverbString);     }
+
+            }
+            else if (exhibitionCurrentObject.tagMuseumObjectList.get(i).tagTypeString.equals("NDV")){
+
+                if(!negativeAdverbCurrentPrevTagStringList      .contains(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeAdverbString))      { negativeAdverbCurrentPrevTagStringList          .add(exhibitionCurrentObject.tagMuseumObjectList.get(i).tagNegativeAdverbString);     }
 
             }
 
@@ -4164,6 +4245,14 @@ class ObjectPlayer{
             
         }
 
+        /*Calculate whether player score is increasing or decreasing.*/
+        for(int i = 0; i < exhibitionTargetNameAltStringList.size(); i ++){
+
+            if(exhibitionTargetNameAltStringList.get(i).equals(_targetNameAltString)){ playerScoreInt ++; playerVisitCorrectExhibitionBoolean = true; break; }
+            if(i == (exhibitionTargetNameAltStringList.size() - 1)){ playerScoreInt --; playerVisitCorrectExhibitionBoolean = false; }
+
+        }
+
         exhibitionCurrentString                 = _targetNameAltString;                                         /*Chance the String for current exhibition.*/
         exhibitionCurrentObject                 = FindObject(exhibitionObjectList, exhibitionCurrentString);
         exhibitionVisitedNameAltStringList      .add(exhibitionCurrentObject.nameAltString );                   /*Add the current exhibition to visited exhibition list.*/
@@ -4205,7 +4294,13 @@ class ObjectPlayer{
             (exhibitionVisitedNameAltStringList  .size() > 1) &&
             (exhibitionVisitedNameFullStringList .size() > 1)
 
-        ){ sentenceStringList.add(SentenceMultipleGenerateString(3)); }
+        ){
+
+            String tempThreeSentencesString = SentenceMultipleGenerateString(3);
+            if(playerIndexInt == 1){ println(tempThreeSentencesString); }
+            sentenceStringList.add(tempThreeSentencesString);
+
+        }
 
         /*
         if(playerIndexInt == 1){
@@ -4217,10 +4312,19 @@ class ObjectPlayer{
             println(verb3CurrentPrevTagStringList);
             println(verbSCurrentPrevTagStringList);
             println(verbIngCurrentPrevTagStringList);
+            println(negativeVerb1CurrentPrevTagStringList);
+            println(negativeVerb2CurrentPrevTagStringList);
+            println(negativeVerb3CurrentPrevTagStringList);
+            println(negativeVerbSCurrentPrevTagStringList);
+            println(negativeVerbIngCurrentPrevTagStringList);
             println(nounCurrentPrevTagStringList);
             println(nounSCurrentPrevTagStringList);
             println(adjectiveCurrentPrevTagStringList);
+            println(negativeAdjectiveCurrentPrevTagStringList);
             println(adverbCurrentPrevTagStringList);
+            println(negativeAdverbCurrentPrevTagStringList);
+            println("===");
+            println(exhibitionCurrentObject.tagMuseumNameAltStringList);
             println("===");
             println(SentenceMultipleGenerateString(3));
             println("===");
@@ -4313,7 +4417,7 @@ class ObjectPlayer{
             String  scanString      = patternString.substring(i, i + 1);
             String  wordString      = "";
 
-            if      (scanString.equals("{")){
+            if      (scanString.equals("{"))    {
 
                 if(playerNameString != ""){
 
@@ -4329,18 +4433,90 @@ class ObjectPlayer{
                 else{ wordString        = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size())); }
 
             }
-            else if (scanString.equals("@"))    { wordString = verb1CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb1CurrentPrevTagStringList           .size())); }
-            else if (scanString.equals("#"))    { wordString = verb2CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb2CurrentPrevTagStringList           .size())); }
-            else if (scanString.equals("$"))    { wordString = verb3CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb3CurrentPrevTagStringList           .size())); }
-            else if (scanString.equals("%"))    { wordString = verbSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verbSCurrentPrevTagStringList           .size())); }
-            else if (scanString.equals("^"))    { wordString = verbIngCurrentPrevTagStringList          .get(SentenceRandomNumberGeneratorInt  (verbIngCurrentPrevTagStringList         .size())); }
-            else if (scanString.equals("&"))    { wordString = verbVerbCurrentPrevTagStringList         [SentenceRandomNumberGeneratorInt      (verbVerbCurrentPrevTagStringList        .length)]; }
-            else if (scanString.equals("*"))    { wordString = verbVerbSCurrentPrevTagStringList        [SentenceRandomNumberGeneratorInt      (verbVerbSCurrentPrevTagStringList       .length)]; }
-            else if (scanString.equals("("))    { wordString = nounCurrentPrevTagStringList             .get(SentenceRandomNumberGeneratorInt  (nounCurrentPrevTagStringList            .size())); }
-            else if (scanString.equals(")"))    { wordString = nounSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (nounSCurrentPrevTagStringList           .size())); }
-            else if (scanString.equals("_"))    { wordString = adjectiveCurrentPrevTagStringList        .get(SentenceRandomNumberGeneratorInt  (adjectiveCurrentPrevTagStringList       .size())); }
+            else if (scanString.equals("@"))    {
+
+                if      (playerVisitCorrectExhibitionBoolean == true )  { wordString = verb1CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verb1CurrentPrevTagStringList             .size())); }
+                else if (playerVisitCorrectExhibitionBoolean == false)  {
+
+                    if(Math.random() > 0.80f)                            { wordString = verb1CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verb1CurrentPrevTagStringList             .size())); }
+                    else                                                { wordString = negativeVerb1CurrentPrevTagStringList    .get(SentenceRandomNumberGeneratorInt(negativeVerb1CurrentPrevTagStringList     .size())); }
+
+                }
+                
+
+            }
+            else if (scanString.equals("#"))    {
+
+                if      (playerVisitCorrectExhibitionBoolean == true )  { wordString = verb2CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verb2CurrentPrevTagStringList             .size())); }
+                else if (playerVisitCorrectExhibitionBoolean == false)  {
+
+                    if(Math.random() > 0.80f)                            { wordString = verb2CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verb2CurrentPrevTagStringList             .size())); }
+                    else                                                { wordString = negativeVerb2CurrentPrevTagStringList    .get(SentenceRandomNumberGeneratorInt(negativeVerb2CurrentPrevTagStringList     .size())); }
+
+                }
+
+            }
+            else if (scanString.equals("$"))    {
+
+                if      (playerVisitCorrectExhibitionBoolean == true )  { wordString = verb3CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verb3CurrentPrevTagStringList             .size())); }
+                else if (playerVisitCorrectExhibitionBoolean == false)  {
+
+                    if(Math.random() > 0.80f)                            { wordString = verb3CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verb3CurrentPrevTagStringList             .size())); }
+                    else                                                { wordString = negativeVerb3CurrentPrevTagStringList    .get(SentenceRandomNumberGeneratorInt(negativeVerb3CurrentPrevTagStringList     .size())); }
+
+                }
+
+            }
+            else if (scanString.equals("%"))    {
+
+                if      (playerVisitCorrectExhibitionBoolean == true )  { wordString = verbIngCurrentPrevTagStringList          .get(SentenceRandomNumberGeneratorInt(verbIngCurrentPrevTagStringList         .size())); }
+                else if (playerVisitCorrectExhibitionBoolean == false)  {
+
+                    if(Math.random() > 0.80f)                            { wordString = verbIngCurrentPrevTagStringList          .get(SentenceRandomNumberGeneratorInt(verbIngCurrentPrevTagStringList         .size())); }
+                    else                                                { wordString = negativeVerbIngCurrentPrevTagStringList  .get(SentenceRandomNumberGeneratorInt(negativeVerbIngCurrentPrevTagStringList .size())); }
+
+                }
+
+            }
+            else if (scanString.equals("^"))    {
+
+                if      (playerVisitCorrectExhibitionBoolean == true )  { wordString = verbSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verbSCurrentPrevTagStringList             .size())); }
+                else if (playerVisitCorrectExhibitionBoolean == false)  {
+
+                    if(Math.random() > 0.80f)                            { wordString = verbSCurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt(verbSCurrentPrevTagStringList             .size())); }
+                    else                                                { wordString = negativeVerbSCurrentPrevTagStringList    .get(SentenceRandomNumberGeneratorInt(negativeVerbSCurrentPrevTagStringList     .size())); }
+
+                }
+
+            }
+            else if (scanString.equals("&"))    { wordString = verbVerbCurrentPrevTagStringList     [SentenceRandomNumberGeneratorInt      (verbVerbCurrentPrevTagStringList        .length)]; }
+            else if (scanString.equals("*"))    { wordString = verbVerbSCurrentPrevTagStringList    [SentenceRandomNumberGeneratorInt      (verbVerbSCurrentPrevTagStringList       .length)]; }
+            else if (scanString.equals("("))    { wordString = nounCurrentPrevTagStringList         .get(SentenceRandomNumberGeneratorInt  (nounCurrentPrevTagStringList            .size())); }
+            else if (scanString.equals(")"))    { wordString = nounSCurrentPrevTagStringList        .get(SentenceRandomNumberGeneratorInt  (nounSCurrentPrevTagStringList           .size())); }
+            else if (scanString.equals("_"))    {
+
+                if      (playerVisitCorrectExhibitionBoolean == true )  { wordString = adjectiveCurrentPrevTagStringList        .get(SentenceRandomNumberGeneratorInt(adjectiveCurrentPrevTagStringList         .size())); }
+                else if (playerVisitCorrectExhibitionBoolean == false)  {
+
+                    if(Math.random() > 0.80f)                            { wordString = adjectiveCurrentPrevTagStringList        .get(SentenceRandomNumberGeneratorInt(adjectiveCurrentPrevTagStringList         .size())); }
+                    else                                                { wordString = negativeAdjectiveCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(negativeAdjectiveCurrentPrevTagStringList .size())); }
+
+                }
+
+            }
+            
             else if (scanString.equals("+"))    { wordString = adjectiveHabitCurrentPrevTagStringList   [SentenceRandomNumberGeneratorInt      (adjectiveHabitCurrentPrevTagStringList  .length)]; }
-            else if (scanString.equals("="))    { wordString = adverbCurrentPrevTagStringList           .get(SentenceRandomNumberGeneratorInt  (adverbCurrentPrevTagStringList          .size())); }       
+            else if (scanString.equals("="))    {
+
+                if      (playerVisitCorrectExhibitionBoolean == true )  { wordString = adverbCurrentPrevTagStringList           .get(SentenceRandomNumberGeneratorInt(adverbCurrentPrevTagStringList            .size())); }
+                else if (playerVisitCorrectExhibitionBoolean == false)  {
+
+                    if(Math.random() > 0.80f)                            { wordString = adverbCurrentPrevTagStringList           .get(SentenceRandomNumberGeneratorInt(adverbCurrentPrevTagStringList            .size())); }
+                    else                                                { wordString = negativeAdverbCurrentPrevTagStringList   .get(SentenceRandomNumberGeneratorInt(negativeAdverbCurrentPrevTagStringList    .size())); }
+
+                }
+
+            }       
             else                                { wordString = scanString; }
     
             sentenceString  += wordString;
