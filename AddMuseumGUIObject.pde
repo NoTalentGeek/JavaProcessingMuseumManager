@@ -155,7 +155,6 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagNounSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setColor               (otherCColor)
                                                 .setLabel               ("Noun Tag:");
 
                 cp5Object                       .addScrollableList      ("SelectTagAdjectiveSList")
@@ -174,7 +173,6 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagAdverbSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setColor               (otherCColor)
                                                 .setLabel               ("Adverb Tag:");
 
                 cp5Object                       .addTextlabel           ("CanAddMultipleTagsTextlabel")

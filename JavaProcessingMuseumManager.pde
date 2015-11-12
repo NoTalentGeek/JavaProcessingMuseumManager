@@ -53,6 +53,7 @@ List<String>            defaultStringList               ;                       
 
 /*GUI variables.*/
 AddMuseumGUIObject      addMuseumGUIObject              ;
+AddPlayerGUIObject      addPlayerGUIObject              ;
 EditPlayerGUIObject     editPlayerGUIObject             ;
 
 /*Variable to display information card when mouse pointer is hovered over either museum or player object.*/
@@ -378,10 +379,25 @@ void setup()                                    {
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        250 + 20 + 65                                                                 ,
+        335                                                                 ,
         buttonSizeInt                                                       ,
         dropdownObjectWidthInt                                              ,
         dropdownObjectHeightInt
+
+    );
+
+    /*Add the add player GUI.*/
+    addPlayerGUIObject                  = new AddPlayerGUIObject(
+
+        this                                        ,
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        dropdownObjectWidthInt                      ,
+        162                                         ,
+        buttonSizeInt                               ,
+        dropdownObjectWidthInt                      ,
+        dropdownObjectHeightInt
+
 
     );
 
@@ -521,10 +537,14 @@ void draw()                                     {
     /*Update the value for animation of both button open close.*/
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
+    
     /*Update the add museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
+    /*Update the add player object GUI.*/
+    addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the edit player object GUI.*/
     editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
+    
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
     /*Create the card.*/

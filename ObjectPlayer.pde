@@ -216,7 +216,7 @@ class ObjectPlayer{
     void DrawVoid()                                                                     {
 
         SetHoverBoolean ();
-        PanelDrawVoid   ();
+        //PanelDrawVoid ();
 
         /*PROTOTYPE: Changing player mode.*/
         if(editPlayerModeInt == 1){ AIAutoVoid(); }

@@ -90,8 +90,7 @@ class   ObjectMuseum                                                            
 
         SetFullBoolean  ();
         SetHoverBoolean ();
-        PanelDrawVoid   ();
-        if(nameAltString.equals("EXH_LUX")){ println(tagMuseumNameFullStringList); }
+        //PanelDrawVoid ();
 
     }
 
