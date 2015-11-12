@@ -7,13 +7,18 @@ ButtonOpenClose         buttonOpenCloseMuseumObject     ;
 ButtonOpenClose         buttonOpenClosePlayerObject     ;
 
 /*Determine global variables.*/
-int                     playerAmountInt                 = 30;                                /*The number of players in this simulation.*/
+int                     playerAmountInt                 = 30;                               /*The number of players in this simulation.*/
 //List<Tag>             tagObjectList                   = new ArrayList<Tag>();             /*Array List of tag.*/
+
 List<Tag>               subjectTagObjectList            = new ArrayList<Tag>();
 List<Tag>               verbTagObjectList               = new ArrayList<Tag>();
+List<Tag>               negativeVerbTagObjectList       = new ArrayList<Tag>();
 List<Tag>               nounTagObjectList               = new ArrayList<Tag>();
 List<Tag>               adjectiveTagObjectList          = new ArrayList<Tag>();
+List<Tag>               negativeAdjectiveTagObjectList  = new ArrayList<Tag>();
 List<Tag>               adverbTagObjectList             = new ArrayList<Tag>();
+List<Tag>               negativeAdverbTagObjectList     = new ArrayList<Tag>();
+
 List<ObjectMuseum>      floorObjectList                 = new ArrayList<ObjectMuseum>();    /*Array List of museom object floor.*/
 List<ObjectMuseum>      roomObjectList                  = new ArrayList<ObjectMuseum>();    /*Array List of museum object room*/
 List<ObjectMuseum>      exhibitionObjectList            = new ArrayList<ObjectMuseum>();    /*Array List of museum object exhibition*/
@@ -28,7 +33,6 @@ List<String>            museumNameAltStringList         = new ArrayList<String>(
 List<String>            floorNameAltStringList          = new ArrayList<String>();
 List<String>            roomNameAltStringList           = new ArrayList<String>();
 List<String>            exhibitionNameAltStringList     = new ArrayList<String>();
-
 List<String>            museumNameFullStringList        = new ArrayList<String>();
 List<String>            floorNameFullStringList         = new ArrayList<String>();
 List<String>            roomNameFullStringList          = new ArrayList<String>();
@@ -39,21 +43,31 @@ List<String>            playerStringList                = new ArrayList<String>(
 /*PROTOTYPE: For testing.
 PENDING: In the future I want so that when a player visited an exhibition it received three different kind of tags.
 PENDING: And then when player visit different exhibition I want that the tags collected transformed into a neat japanese style poem called haiku.*/
-List<String>            subjectTagNameAltStringList     = new ArrayList<String>();
-List<String>            verbTagNameAltStringList        = new ArrayList<String>();
-List<String>            nounTagNameAltStringList        = new ArrayList<String>();
-List<String>            adjectiveTagNameAltStringList   = new ArrayList<String>();
-List<String>            adverbTagNameAltStringList      = new ArrayList<String>();
-List<String>            subjectTagNameFullStringList    = new ArrayList<String>();
-List<String>            verbTagNameFullStringList       = new ArrayList<String>();
-List<String>            nounTagNameFullStringList       = new ArrayList<String>();
-List<String>            adjectiveTagNameFullStringList  = new ArrayList<String>();
-List<String>            adverbTagNameFullStringList     = new ArrayList<String>();
+List<String>            subjectTagNameAltStringList             = new ArrayList<String>();
+List<String>            verbTagNameAltStringList                = new ArrayList<String>();
+List<String>            negativeVerbTagNameAltStringList        = new ArrayList<String>();
+List<String>            nounTagNameAltStringList                = new ArrayList<String>();
+List<String>            adjectiveTagNameAltStringList           = new ArrayList<String>();
+List<String>            negativeAdjectiveTagNameAltStringList   = new ArrayList<String>();
+List<String>            adverbTagNameAltStringList              = new ArrayList<String>();
+List<String>            negativeAdverbTagNameAltStringList      = new ArrayList<String>();
+
+List<String>            subjectTagNameFullStringList            = new ArrayList<String>();
+List<String>            verbTagNameFullStringList               = new ArrayList<String>();
+List<String>            negativeVerbTagNameFullStringList       = new ArrayList<String>();
+List<String>            nounTagNameFullStringList               = new ArrayList<String>();
+List<String>            adjectiveTagNameFullStringList          = new ArrayList<String>();
+List<String>            negativeAdjectiveTagNameFullStringList  = new ArrayList<String>();
+List<String>            adverbTagNameFullStringList             = new ArrayList<String>();
+List<String>            negativeAdverbTagNameFullStringList     = new ArrayList<String>();
+
 List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
 
 /*GUI variables.*/
 AddMuseumGUIObject      addMuseumGUIObject              ;
+AddTagGUIObject         addTagGUIObject                 ;
 AddPlayerGUIObject      addPlayerGUIObject              ;
+RemovePlayerGUIObject   removePlayerGUIObject           ;
 EditPlayerGUIObject     editPlayerGUIObject             ;
 
 /*Variable to display information card when mouse pointer is hovered over either museum or player object.*/
@@ -98,6 +112,16 @@ float                   dropdownMObjectAlphaFloat       = 0;
 float                   dropdownPlayerAlphaFloat        = 0;                                /*The opacity number for dropdown player P5 component.*/
 int                     guiOffsetInt                    = 20;                               /*Offset for layouting the graphical user interface.*/
 
+
+
+
+
+
+int biggestPlayerIndexInt = 0;
+
+
+
+
 /*Name class to manage an object name.*/
 class Name                                      {
 
@@ -126,8 +150,8 @@ class Tag                                       {
     String          nameAltString       = "";
     String          nameFullString      = "";
 
-    boolean         emotionIsGoodBoolean;
     String          tagTypeString       = "";
+
     String          tagSubjectString    = "";
     String          tagVerb1String      = "";
     String          tagVerb2String      = "";
@@ -168,28 +192,9 @@ class Tag                                       {
             tagNounSString      = _wordDerivativeStringArray[1];
 
         }
+        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordDerivativeStringArray[0]; }
         
-
-    }
-
-    Tag(
-
-        Name        _nameObject             ,
-        String      _tagTypeString          ,
-        String      _wordString             ,
-        boolean     _emotionIsGoodBoolean
-
-    ){
-
-        tagName                 = _nameObject;
-        nameAltString           = tagName.nameAltString;
-        nameFullString          = tagName.nameFullString;
-        tagTypeString           = _tagTypeString;
-
-        if      (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordString; }
-        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordString; }
-
-        emotionIsGoodBoolean    = _emotionIsGoodBoolean;
 
     }
 
@@ -265,15 +270,15 @@ void setup()                                    {
 
     adjectiveTagObjectList  = Arrays.asList(
 
-        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good", true),
-        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad", false)
+        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good"),
+        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad")
 
     );
 
     adverbTagObjectList     = Arrays.asList(
 
-        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly", true),
-        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly", false)
+        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly"),
+        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly")
 
     );
 
@@ -344,6 +349,7 @@ void setup()                                    {
         ObjectPlayer objectPlayer = new ObjectPlayer(
 
             (i + 1),
+            "Mikael",
             exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString      /*Generate random starting exhibition for the player.*/
 
         );
@@ -379,7 +385,19 @@ void setup()                                    {
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        335                                                                 ,
+        325                                                                 ,
+        buttonSizeInt                                                       ,
+        dropdownObjectWidthInt                                              ,
+        dropdownObjectHeightInt
+
+    );
+
+    addTagGUIObject                     = new AddTagGUIObject(
+
+        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
+        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
+        dropdownObjectWidthInt                                              ,
+        382                                                                 ,
         buttonSizeInt                                                       ,
         dropdownObjectWidthInt                                              ,
         dropdownObjectHeightInt
@@ -393,6 +411,20 @@ void setup()                                    {
         (guiOffsetInt + (buttonSizeInt/2))          ,
         dropdownObjectWidthInt                      ,
         162                                         ,
+        buttonSizeInt                               ,
+        dropdownObjectWidthInt                      ,
+        dropdownObjectHeightInt
+
+
+    );
+
+    /*Add the remove player GUI.*/
+    removePlayerGUIObject                  = new RemovePlayerGUIObject(
+
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        dropdownObjectWidthInt                      ,
+        104                                         ,
         buttonSizeInt                               ,
         dropdownObjectWidthInt                      ,
         dropdownObjectHeightInt
@@ -539,8 +571,11 @@ void draw()                                     {
     
     /*Update the add museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
+    addTagGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
+    /*Update the remove player object GUI.*/
+    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the edit player object GUI.*/
     editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
     
@@ -548,6 +583,13 @@ void draw()                                     {
     SetButtonOpenCloseBoolean               ();    
     /*Create the card.*/
     if(buttonOpenCloseBoolean == false)     { CreatePanelCardVoid(); }
+
+
+
+    /*PENDING: Create a function to return next biggest player index int.*/
+    biggestPlayerIndexInt = GetBiggestPlayerIndexInt();
+    int nextBiggestPlayerIndexInt = biggestPlayerIndexInt + 1; 
+    cp5Object.get(Textlabel.class, "AddPlayerGUIObjectPlayerIndexValueTextlabel").setText("" + nextBiggestPlayerIndexInt);
 
 }
 
@@ -601,7 +643,7 @@ void AssignRandomTagLoopVoid(
 
         }
         
-        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
+        /*If the assignTagObjectList has three or more elements then we need to start reducing the chance.*/
         if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
         counterInt                                                          ++;
         /*Add/push a tag object into the temporary list.*/
@@ -1460,5 +1502,259 @@ void ScrollableChecklistVoid        (String _scrollableNameString, int _indexInt
         else if (stateBoolean == false){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.sChecklistFalseCColor); }
 
     }
+
+}
+
+
+
+
+
+
+
+
+
+
+/*Function to handle AddPlayerGUIObject.pde.*/
+void AddPlayerGUIObjectPickStartingExhibitionSList(int _indexInt){
+
+    String tempStartingExhibitionNameFullString = cp5Object.get(ScrollableList.class, "AddPlayerGUIObjectPickStartingExhibitionSList").getItem(_indexInt).get("text").toString();
+    String tempStartingExhibitionNameAltString = "";
+    ObjectMuseum tempStartingExhibitionObject = null;
+
+    tempStartingExhibitionObject = FindMuseumObject(tempStartingExhibitionNameFullString);
+    tempStartingExhibitionNameAltString = tempStartingExhibitionObject.nameAltString;
+    addPlayerGUIObject.startingExhibitionNameAltString = tempStartingExhibitionNameAltString;
+
+}
+void AddPlayerGUIObjectSubmitButton(int _index){
+
+    int temporaryBiggestPlayerIndexInt = biggestPlayerIndexInt + 1;
+    String tempStartingExhibitionNameAltString = addPlayerGUIObject.startingExhibitionNameAltString; addPlayerGUIObject.startingExhibitionNameAltString = "";
+    String tempPlayerNameString = cp5Object.get(Textfield.class, "AddPlayerGUIObjectVisitorNameTextfield" ).getText();
+    ObjectPlayer tempPlayerObject = new ObjectPlayer(temporaryBiggestPlayerIndexInt, tempPlayerNameString, tempStartingExhibitionNameAltString);
+    playerStringList.add("" + tempPlayerObject.playerIndexInt);
+    cp5Object.get(ScrollableList.class, "VisitorSList").setItems(playerStringList );
+    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").setItems(playerStringList );
+
+}
+
+int GetBiggestPlayerIndexInt(){
+
+    int tempBiggestIndexInt = 0;
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        if(playerObjectList.get(i).playerIndexInt > tempBiggestIndexInt){ tempBiggestIndexInt = playerObjectList.get(i).playerIndexInt; }
+
+    }
+    return tempBiggestIndexInt;
+
+}
+
+
+
+
+
+
+
+void RemovePlayerGUIObjectPickPlayer(int _indexInt){
+
+    String tempIndexSelectedPlayerString = cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").getItem(_indexInt).get("text").toString();
+    int tempIndexSelectedPlayerInt = Integer.parseInt(tempIndexSelectedPlayerString);
+    removePlayerGUIObject.playerToRemoveObject = FindPlayerObject(tempIndexSelectedPlayerInt);
+
+}
+
+void RemovePlayerGUIObjectRemoveButton(int _indexInt){
+
+    playerObjectList.remove(removePlayerGUIObject.playerToRemoveObject);
+    playerStringList.remove("" + removePlayerGUIObject.playerToRemoveObject.playerIndexInt);
+    cp5Object.get(ScrollableList.class, "VisitorSList").setItems(playerStringList );
+    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").setItems(playerStringList );
+
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        playerObjectList.get(i).SetSiblingObjectList();
+
+    }
+
+    removePlayerGUIObject.playerToRemoveObject = null;
+
+}
+
+ObjectPlayer FindPlayerObject(int _playerIndexInt){
+
+    ObjectPlayer tempPlayerObject = null;
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        if(playerObjectList.get(i).playerIndexInt == _playerIndexInt){ tempPlayerObject = playerObjectList.get(i); }
+
+    }
+
+    return tempPlayerObject;
+
+}
+
+
+
+
+
+
+
+
+
+
+void AddTagGUIObjectSelectTagTypeSList(int _indexInt){
+
+    addTagGUIObject.selectedTagTypeString = cp5Object.get(ScrollableList.class, "AddTagGUIObjectSelectTagTypeSList").getItem(_indexInt).get("text").toString();
+
+}
+
+void AddTagGUIObjectSubmitButton(int _indexInt){
+
+    String          tempTagNameAltString        = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameAltTextfield" ).getText();
+    String          tempTagNameFullString       = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameFullTextfield").getText();
+    String          tempTagTypeString           = "";
+    Tag             tempTagObject               = null;
+    List<Tag>       tempTagObjectList           = null;
+    List<String>    tempTagNameAltStringList    = null;
+    List<String>    tempTagNameFullStringList   = null;
+
+
+    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           {
+
+        tempTagTypeString                       = "SUB";
+        tempTagObjectList                       = subjectTagObjectList;
+        tempTagNameAltStringList                = subjectTagNameAltStringList;
+        tempTagNameFullStringList               = subjectTagNameFullStringList;
+
+        String tempSubjectString                = cp5Object.get(Textfield.class, "AddTagGUIObjectSubjectTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempSubjectString);
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              {
+
+        tempTagTypeString                       = "VER";
+        tempTagObjectList                       = verbTagObjectList;
+        tempTagNameAltStringList                = verbTagNameAltStringList;
+        tempTagNameFullStringList               = verbTagNameFullStringList;
+
+        String tempVerb1String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb1Textfield"   ).getText();
+        String tempVerb2String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb2Textfield"   ).getText();
+        String tempVer3bString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb3Textfield"   ).getText();
+        String tempVerIngbString                = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbIngTextfield" ).getText();
+        String tempVerbSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbSTextfield"   ).getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempVerb1String, tempVerb2String, tempVer3bString, tempVerIngbString, tempVerbSString);
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))     {
+
+        tempTagTypeString                       = "NVE";
+        tempTagObjectList                       = negativeVerbTagObjectList;
+        tempTagNameAltStringList                = negativeVerbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeVerbTagNameFullStringList;
+
+        String tempNegativeVerb1String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb1Textfield"   ).getText();
+        String tempNegativeVerb2String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb2Textfield"   ).getText();
+        String tempNegativeVer3bString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb3Textfield"   ).getText();
+        String tempNegativeVerIngbString        = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbIngTextfield" ).getText();
+        String tempNegativeVerbSString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbSTextfield"   ).getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeVerb1String, tempNegativeVerb2String, tempNegativeVer3bString, tempNegativeVerIngbString, tempNegativeVerbSString);
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              {
+
+        tempTagTypeString                       = "NOU";
+        tempTagObjectList                       = nounTagObjectList;
+        tempTagNameAltStringList                = nounTagNameAltStringList;
+        tempTagNameFullStringList               = nounTagNameFullStringList;
+
+        String tempNounString                   = cp5Object.get(Textfield.class, "AddTagGUIObjectNounTextfield"    ).getText();
+        String tempNounSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectNounSTextfield"   ).getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNounString, tempNounSString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         {
+
+        tempTagTypeString                       = "ADJ";
+        tempTagObjectList                       = adjectiveTagObjectList;
+        tempTagNameAltStringList                = adjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = adjectiveTagNameFullStringList;
+
+        String tempAdjectiveString              = cp5Object.get(Textfield.class, "AddTagGUIObjectAdjectiveTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdjectiveString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){
+
+        tempTagTypeString                       = "NDJ";
+        tempTagObjectList                       = negativeAdjectiveTagObjectList;
+        tempTagNameAltStringList                = negativeAdjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdjectiveTagNameFullStringList;
+
+        String tempNegativeAdjectiveString      = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdjectiveTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdjectiveString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            {
+
+        tempTagTypeString                       = "ADV";
+        tempTagObjectList                       = adverbTagObjectList;
+        tempTagNameAltStringList                = adverbTagNameAltStringList;
+        tempTagNameFullStringList               = adverbTagNameFullStringList;
+
+        String tempAdverbString                 = cp5Object.get(Textfield.class, "AddTagGUIObjectAdverbTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdverbString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))   {
+
+        tempTagTypeString                       = "NDV";
+        tempTagObjectList                       = negativeAdverbTagObjectList;
+        tempTagNameAltStringList                = negativeAdverbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdverbTagNameFullStringList;
+
+        String tempNegativeAdverbString         = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdverbTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdverbString);
+
+    }
+
+    tempTagObjectList                           .add(tempTagObject);
+    tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
+    tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
+
+
+    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           { cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"   ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              { cp5Object.get(ScrollableList.class, "SelectTagVerbSList"      ).setItems(tempTagNameFullStringList); }
+    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))   { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              { cp5Object.get(ScrollableList.class, "SelectTagNounSList"      ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         { cp5Object.get(ScrollableList.class, "SelectTagAdjectiveSList" ).setItems(tempTagNameFullStringList); }
+    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){ cp5Object.get(ScrollableList.class, "PENDING"               ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            { cp5Object.get(ScrollableList.class, "SelectTagAdverbSList"    ).setItems(tempTagNameFullStringList); }
+    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB")) { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
+
+    addTagGUIObject.selectedTagTypeString = "";
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).clear();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameAltTextfield"           ).clear();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).clear().hide();
 
 }

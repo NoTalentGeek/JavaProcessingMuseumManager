@@ -65,6 +65,7 @@ class ObjectPlayer{
     List<TagCounter>    exhibitionTagCounterList                = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
 
     int                 playerIndexInt                          = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
+    String              playerNameString                        = "";
 
     List<ObjectPlayer>  playerSiblingObjectList                 = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
     int                 playerSiblingIndexInt                   = -1;                               /*The index of this object within the List of object player sibling.*/
@@ -88,12 +89,14 @@ class ObjectPlayer{
     /*Constructor.*/
     ObjectPlayer(
 
-        int     _playerIndexInt            ,
+        int     _playerIndexInt             ,
+        String  _playerNameString           ,
         String  _exhibitionStartString
 
     ){
 
         playerIndexInt              = _playerIndexInt;
+        playerNameString            = _playerNameString;
         playerObjectList            .add(this);
         panelObject                 = new Panel();
         ExhibitionMoveObject        (_exhibitionStartString);
@@ -216,7 +219,7 @@ class ObjectPlayer{
     void DrawVoid()                                                                     {
 
         SetHoverBoolean ();
-        //PanelDrawVoid ();
+        PanelDrawVoid   ();
 
         /*PROTOTYPE: Changing player mode.*/
         if(editPlayerModeInt == 1){ AIAutoVoid(); }
@@ -597,8 +600,8 @@ class ObjectPlayer{
         AddTagCounterVoid               (exhibitionCurrentObject);
         AddRemoveChildVoid              (true);
         
-        SetExhibitionTargetNameAltStringList   ();
-        SetSiblingObjectList            ();
+        SetExhibitionTargetNameAltStringList    ();
+        SetSiblingObjectList                    ();
 
         /*For everytime a player move to another exhibition iterate through all player to re - add the siblings.*/
         for(int i = 0; i < playerObjectList.size(); i ++){
@@ -725,16 +728,18 @@ class ObjectPlayer{
 
             if      (scanString.equals("{")){
 
-                /*
                 if(playerNameString != ""){
 
                     wordString          =           playerNameString;
-                    if(Math.random()    <= 0.33)    { wordString = subjectCurrentPrevTagStringList[SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.length)]; }
+                    if(Math.random()    <= 0.50)    { wordString = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size())); }
 
                 }
-                */
+                else if(playerNameString == ""){
 
-                wordString      = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size()));
+                    wordString          = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size()));
+
+                }
+                else{ wordString        = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size())); }
 
             }
             else if (scanString.equals("@"))    { wordString = verb1CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb1CurrentPrevTagStringList           .size())); }

@@ -94,6 +94,7 @@ class EditPlayerGUIObject{
 
         Group   EditPlayerGroupObject               = 
                 cp5Object   .addGroup               ("EditPlayerGroupObject")
+                            .close                  ()
                             //.setPosition          (((width/2) - (playerGroupWidthInt/2)), ((height/2) - (playerGroupHeightInt/2)))
                             .setPosition            (playerGroupXInt, playerGroupYInt)
                             .setWidth               (playerGroupWidthInt)
@@ -102,7 +103,7 @@ class EditPlayerGUIObject{
                             .setColor               (otherCColor)
                             .setColorBackground     (groupColorBackgroundColor)
                             .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("Edit Visitor:");
+                            .setLabel               ("EDIT VISITOR:");
 
                 /*PENDING - DONE: Create the text panel. Many text panel!!!*/
                 cp5Object   .addTextlabel           ("PlayerIndexTextlabel")
@@ -110,7 +111,7 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("Player Index:");
+                            .setText                ("PLAYER INDEX:");
 
                 cp5Object   .addTextlabel           ("PlayerIndexValueTextlabel")
                             .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*1))
@@ -124,7 +125,7 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("Player Current Exhibition:");
+                            .setText                ("PLAYER CURRENT EXHIBITION:");
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentValueTextlabel")
                             .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*2))
@@ -141,7 +142,7 @@ class EditPlayerGUIObject{
                             .addItems               (tempPlayerExhibitionTargetSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
-                            .setLabel               ("Player Target Exhibitions:");
+                            .setLabel               ("PLAYER TARGET EXHIBITIONS:");
 
                 /*PENDING - DONE: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionVisitedSList")
@@ -151,7 +152,7 @@ class EditPlayerGUIObject{
                             .addItems               (tempPlayerExhibitionVisitedSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
-                            .setLabel               ("Player Visited Exhibitions:");
+                            .setLabel               ("PLAYER VISITED EXHIBITIONS:");
 
                 cp5Object   .addScrollableList      ("PlayerTagSList")
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
@@ -160,23 +161,23 @@ class EditPlayerGUIObject{
                             .addItems               (tempPlayerTagSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
-                            .setLabel               ("Player Collected Tags:");
+                            .setLabel               ("PLAYER COLLECTED TAGS:");
 
                 cp5Object   .addTextlabel           ("ModeTextlabel")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*7) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("Modes:");
+                            .setText                ("MODES:");
 
                 /*PENDING - DONE: Adding radio buttons to select mode on how player should be moved.*/
                 cp5Object   .addRadioButton         ("ModeRadioButton")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*8) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
                             .setSize                (groupLayoutOffsetInt, groupLayoutOffsetInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItem                ("Software - Auto"  , 1)
-                            .addItem                ("Software - Manual", 2)
-                            .addItem                ("hardware - Manual", 3)
+                            .addItem                ("SOFTWARE - AUTO"  , 1)
+                            .addItem                ("SOFTWARE - MANUAL", 2)
+                            .addItem                ("HARDWARE - MANUAL", 3)
                             .activate               (1);
 
                 cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
@@ -186,7 +187,7 @@ class EditPlayerGUIObject{
                             .addItems               (tempPleaseSelectNextExhibitionSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (otherCColor)
-                            .setLabel               ("Please Select Next Exhibition:");
+                            .setLabel               ("PLEASE SELECT NEXT EXHIBITION ACCORDING TO TARGET EXHIBITIONS (OR NOT):");
 
     }
 

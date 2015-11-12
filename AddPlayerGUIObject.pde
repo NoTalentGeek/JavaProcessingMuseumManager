@@ -20,6 +20,7 @@ class AddPlayerGUIObject{
     int			scrollableWidthInt				;
 	int			scrollableHeightInt				= 62;
 	CColor 		otherCColor						= new CColor();		/*The color for other component than the scrollableChecklist.*/
+	String 		startingExhibitionNameAltString = "";
 
 	AddPlayerGUIObject(
 
@@ -53,19 +54,9 @@ class AddPlayerGUIObject{
                                         .setForeground      (color(0    , 116   , 217   , alphaFloat))
                                         .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
-		if(useNameAltBoolean        == true ){
-
-
-
-		}
-		else if(useNameAltBoolean   == false){
-
-
-
-		}
-
 		Group   AddPlayerGroupObject				=
                 cp5Object	.addGroup               ("AddPlayerGUIObjectAddPlayerGroupObject")
+                			.close 					()
 							.setPosition            (groupXInt, groupYInt)
                             .setWidth               (groupWidthInt)
                             .setBackgroundHeight    (groupHeightInt)
@@ -73,21 +64,21 @@ class AddPlayerGUIObject{
                             .setColor               (otherCColor)
                             .setColorBackground     (groupColorBackgroundColor)
                             .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("Add Visitor:");
+                            .setLabel               ("ADD VISITOR:");
 
 	            cp5Object	.addTextlabel           ("AddPlayerGUIObjectPlayerIndexTextlabel")
 							.setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
 							.setGroup               (AddPlayerGroupObject)
 							.setColor               (otherCColor)
 							.setColorValue          (255)
-							.setText                ("Player Index:");
+							.setText                ("VISITOR INDEX:");
 
                 cp5Object	.addTextlabel           ("AddPlayerGUIObjectPlayerIndexValueTextlabel")
-							.setPosition            (((groupHeightInt/2) + (groupLayoutOffsetInt*2)), groupLayoutOffsetInt)
+							.setPosition            (((groupWidthInt/2) + (groupLayoutOffsetInt/2)), groupLayoutOffsetInt)
 							.setGroup               (AddPlayerGroupObject)
 							.setColor               (otherCColor)
 							.setColorValue          (255)
-							.setText                ("1");
+							.setText                ("" + playerAmountInt);
 
 				cp5Object	.addScrollableList      ("AddPlayerGUIObjectPickStartingExhibitionSList")
                             .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
@@ -96,21 +87,21 @@ class AddPlayerGUIObject{
                             .addItems               (exhibitionNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (otherCColor)
-                            .setLabel               ("Pick Starting Exhibition:");
+                            .setLabel               ("PICK STARTING EXHIBITION:");
 
                 cp5Object	.addTextfield           ("AddPlayerGUIObjectVisitorNameTextfield")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*4) + scrollableHeightInt))
                             .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
                             .setGroup               (AddPlayerGroupObject)
                             .setColor               (otherCColor)
-                            .setLabel               ("Visitor Name:");
+                            .setLabel               ("VISITOR NAME:");
 
 	            cp5Object	.addButton              ("AddPlayerGUIObjectSubmitButton")
-							.setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*6) + scrollableHeightInt + (groupLayoutOffsetInt*2)))
+							.setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*8) + scrollableHeightInt))
 							.setSize                (scrollableWidthInt, groupLayoutOffsetInt)
 							.setGroup               (AddPlayerGroupObject)
 							.setColor               (otherCColor)
-							.setLabel               ("Submit");
+							.setLabel               ("SUBMIT");
 
 	}
 
@@ -148,7 +139,7 @@ class AddPlayerGUIObject{
         if      (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").isOpen() == true ){
 
                 /*Change the position when the group object is open.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                 cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupHeightInt)
@@ -159,7 +150,7 @@ class AddPlayerGUIObject{
         else if (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").isOpen() == false){
 
                 /*Change the position when the group object is close.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                 cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt)

@@ -12,7 +12,11 @@ import controlP5.*;
 import java.util.*; 
 import controlP5.*; 
 import java.util.*; 
+import controlP5.*; 
 import java.util.*; 
+import java.util.*; 
+import java.util.*; 
+import controlP5.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 
@@ -34,13 +38,18 @@ ButtonOpenClose         buttonOpenCloseMuseumObject     ;
 ButtonOpenClose         buttonOpenClosePlayerObject     ;
 
 /*Determine global variables.*/
-int                     playerAmountInt                 = 30;                                /*The number of players in this simulation.*/
+int                     playerAmountInt                 = 30;                               /*The number of players in this simulation.*/
 //List<Tag>             tagObjectList                   = new ArrayList<Tag>();             /*Array List of tag.*/
+
 List<Tag>               subjectTagObjectList            = new ArrayList<Tag>();
 List<Tag>               verbTagObjectList               = new ArrayList<Tag>();
+List<Tag>               negativeVerbTagObjectList       = new ArrayList<Tag>();
 List<Tag>               nounTagObjectList               = new ArrayList<Tag>();
 List<Tag>               adjectiveTagObjectList          = new ArrayList<Tag>();
+List<Tag>               negativeAdjectiveTagObjectList  = new ArrayList<Tag>();
 List<Tag>               adverbTagObjectList             = new ArrayList<Tag>();
+List<Tag>               negativeAdverbTagObjectList     = new ArrayList<Tag>();
+
 List<ObjectMuseum>      floorObjectList                 = new ArrayList<ObjectMuseum>();    /*Array List of museom object floor.*/
 List<ObjectMuseum>      roomObjectList                  = new ArrayList<ObjectMuseum>();    /*Array List of museum object room*/
 List<ObjectMuseum>      exhibitionObjectList            = new ArrayList<ObjectMuseum>();    /*Array List of museum object exhibition*/
@@ -55,7 +64,6 @@ List<String>            museumNameAltStringList         = new ArrayList<String>(
 List<String>            floorNameAltStringList          = new ArrayList<String>();
 List<String>            roomNameAltStringList           = new ArrayList<String>();
 List<String>            exhibitionNameAltStringList     = new ArrayList<String>();
-
 List<String>            museumNameFullStringList        = new ArrayList<String>();
 List<String>            floorNameFullStringList         = new ArrayList<String>();
 List<String>            roomNameFullStringList          = new ArrayList<String>();
@@ -66,21 +74,31 @@ List<String>            playerStringList                = new ArrayList<String>(
 /*PROTOTYPE: For testing.
 PENDING: In the future I want so that when a player visited an exhibition it received three different kind of tags.
 PENDING: And then when player visit different exhibition I want that the tags collected transformed into a neat japanese style poem called haiku.*/
-List<String>            subjectTagNameAltStringList     = new ArrayList<String>();
-List<String>            verbTagNameAltStringList        = new ArrayList<String>();
-List<String>            nounTagNameAltStringList        = new ArrayList<String>();
-List<String>            adjectiveTagNameAltStringList   = new ArrayList<String>();
-List<String>            adverbTagNameAltStringList      = new ArrayList<String>();
-List<String>            subjectTagNameFullStringList    = new ArrayList<String>();
-List<String>            verbTagNameFullStringList       = new ArrayList<String>();
-List<String>            nounTagNameFullStringList       = new ArrayList<String>();
-List<String>            adjectiveTagNameFullStringList  = new ArrayList<String>();
-List<String>            adverbTagNameFullStringList     = new ArrayList<String>();
+List<String>            subjectTagNameAltStringList             = new ArrayList<String>();
+List<String>            verbTagNameAltStringList                = new ArrayList<String>();
+List<String>            negativeVerbTagNameAltStringList        = new ArrayList<String>();
+List<String>            nounTagNameAltStringList                = new ArrayList<String>();
+List<String>            adjectiveTagNameAltStringList           = new ArrayList<String>();
+List<String>            negativeAdjectiveTagNameAltStringList   = new ArrayList<String>();
+List<String>            adverbTagNameAltStringList              = new ArrayList<String>();
+List<String>            negativeAdverbTagNameAltStringList      = new ArrayList<String>();
+
+List<String>            subjectTagNameFullStringList            = new ArrayList<String>();
+List<String>            verbTagNameFullStringList               = new ArrayList<String>();
+List<String>            negativeVerbTagNameFullStringList       = new ArrayList<String>();
+List<String>            nounTagNameFullStringList               = new ArrayList<String>();
+List<String>            adjectiveTagNameFullStringList          = new ArrayList<String>();
+List<String>            negativeAdjectiveTagNameFullStringList  = new ArrayList<String>();
+List<String>            adverbTagNameFullStringList             = new ArrayList<String>();
+List<String>            negativeAdverbTagNameFullStringList     = new ArrayList<String>();
+
 List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
 
 /*GUI variables.*/
 AddMuseumGUIObject      addMuseumGUIObject              ;
+AddTagGUIObject         addTagGUIObject                 ;
 AddPlayerGUIObject      addPlayerGUIObject              ;
+RemovePlayerGUIObject   removePlayerGUIObject           ;
 EditPlayerGUIObject     editPlayerGUIObject             ;
 
 /*Variable to display information card when mouse pointer is hovered over either museum or player object.*/
@@ -125,6 +143,16 @@ float                   dropdownMObjectAlphaFloat       = 0;
 float                   dropdownPlayerAlphaFloat        = 0;                                /*The opacity number for dropdown player P5 component.*/
 int                     guiOffsetInt                    = 20;                               /*Offset for layouting the graphical user interface.*/
 
+
+
+
+
+
+int biggestPlayerIndexInt = 0;
+
+
+
+
 /*Name class to manage an object name.*/
 class Name                                      {
 
@@ -153,8 +181,8 @@ class Tag                                       {
     String          nameAltString       = "";
     String          nameFullString      = "";
 
-    boolean         emotionIsGoodBoolean;
     String          tagTypeString       = "";
+
     String          tagSubjectString    = "";
     String          tagVerb1String      = "";
     String          tagVerb2String      = "";
@@ -195,28 +223,9 @@ class Tag                                       {
             tagNounSString      = _wordDerivativeStringArray[1];
 
         }
+        else if (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordDerivativeStringArray[0]; }
+        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordDerivativeStringArray[0]; }
         
-
-    }
-
-    Tag(
-
-        Name        _nameObject             ,
-        String      _tagTypeString          ,
-        String      _wordString             ,
-        boolean     _emotionIsGoodBoolean
-
-    ){
-
-        tagName                 = _nameObject;
-        nameAltString           = tagName.nameAltString;
-        nameFullString          = tagName.nameFullString;
-        tagTypeString           = _tagTypeString;
-
-        if      (tagTypeString.equals("ADJ")){ tagAdjectiveString   = _wordString; }
-        else if (tagTypeString.equals("ADV")){ tagAdverbString      = _wordString; }
-
-        emotionIsGoodBoolean    = _emotionIsGoodBoolean;
 
     }
 
@@ -292,15 +301,15 @@ public void setup()                                    {
 
     adjectiveTagObjectList  = Arrays.asList(
 
-        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good", true),
-        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad", false)
+        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good"),
+        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad")
 
     );
 
     adverbTagObjectList     = Arrays.asList(
 
-        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly", true),
-        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly", false)
+        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly"),
+        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly")
 
     );
 
@@ -371,6 +380,7 @@ public void setup()                                    {
         ObjectPlayer objectPlayer = new ObjectPlayer(
 
             (i + 1),
+            "Mikael",
             exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString      /*Generate random starting exhibition for the player.*/
 
         );
@@ -406,7 +416,19 @@ public void setup()                                    {
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        335                                                                 ,
+        325                                                                 ,
+        buttonSizeInt                                                       ,
+        dropdownObjectWidthInt                                              ,
+        dropdownObjectHeightInt
+
+    );
+
+    addTagGUIObject                     = new AddTagGUIObject(
+
+        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
+        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
+        dropdownObjectWidthInt                                              ,
+        382                                                                 ,
         buttonSizeInt                                                       ,
         dropdownObjectWidthInt                                              ,
         dropdownObjectHeightInt
@@ -420,6 +442,20 @@ public void setup()                                    {
         (guiOffsetInt + (buttonSizeInt/2))          ,
         dropdownObjectWidthInt                      ,
         162                                         ,
+        buttonSizeInt                               ,
+        dropdownObjectWidthInt                      ,
+        dropdownObjectHeightInt
+
+
+    );
+
+    /*Add the remove player GUI.*/
+    removePlayerGUIObject                  = new RemovePlayerGUIObject(
+
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        dropdownObjectWidthInt                      ,
+        104                                         ,
         buttonSizeInt                               ,
         dropdownObjectWidthInt                      ,
         dropdownObjectHeightInt
@@ -566,8 +602,11 @@ public void draw()                                     {
     
     /*Update the add museum object GUI.*/
     addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
+    addTagGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
+    /*Update the remove player object GUI.*/
+    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the edit player object GUI.*/
     editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
     
@@ -575,6 +614,13 @@ public void draw()                                     {
     SetButtonOpenCloseBoolean               ();    
     /*Create the card.*/
     if(buttonOpenCloseBoolean == false)     { CreatePanelCardVoid(); }
+
+
+
+    /*PENDING: Create a function to return next biggest player index int.*/
+    biggestPlayerIndexInt = GetBiggestPlayerIndexInt();
+    int nextBiggestPlayerIndexInt = biggestPlayerIndexInt + 1; 
+    cp5Object.get(Textlabel.class, "AddPlayerGUIObjectPlayerIndexValueTextlabel").setText("" + nextBiggestPlayerIndexInt);
 
 }
 
@@ -628,7 +674,7 @@ public void AssignRandomTagLoopVoid(
 
         }
         
-        /*If the assignTagObjectList has three or more elements then we need to start reducing the changce.*/
+        /*If the assignTagObjectList has three or more elements then we need to start reducing the chance.*/
         if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
         counterInt                                                          ++;
         /*Add/push a tag object into the temporary list.*/
@@ -1489,6 +1535,260 @@ public void ScrollableChecklistVoid        (String _scrollableNameString, int _i
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+/*Function to handle AddPlayerGUIObject.pde.*/
+public void AddPlayerGUIObjectPickStartingExhibitionSList(int _indexInt){
+
+    String tempStartingExhibitionNameFullString = cp5Object.get(ScrollableList.class, "AddPlayerGUIObjectPickStartingExhibitionSList").getItem(_indexInt).get("text").toString();
+    String tempStartingExhibitionNameAltString = "";
+    ObjectMuseum tempStartingExhibitionObject = null;
+
+    tempStartingExhibitionObject = FindMuseumObject(tempStartingExhibitionNameFullString);
+    tempStartingExhibitionNameAltString = tempStartingExhibitionObject.nameAltString;
+    addPlayerGUIObject.startingExhibitionNameAltString = tempStartingExhibitionNameAltString;
+
+}
+public void AddPlayerGUIObjectSubmitButton(int _index){
+
+    int temporaryBiggestPlayerIndexInt = biggestPlayerIndexInt + 1;
+    String tempStartingExhibitionNameAltString = addPlayerGUIObject.startingExhibitionNameAltString; addPlayerGUIObject.startingExhibitionNameAltString = "";
+    String tempPlayerNameString = cp5Object.get(Textfield.class, "AddPlayerGUIObjectVisitorNameTextfield" ).getText();
+    ObjectPlayer tempPlayerObject = new ObjectPlayer(temporaryBiggestPlayerIndexInt, tempPlayerNameString, tempStartingExhibitionNameAltString);
+    playerStringList.add("" + tempPlayerObject.playerIndexInt);
+    cp5Object.get(ScrollableList.class, "VisitorSList").setItems(playerStringList );
+    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").setItems(playerStringList );
+
+}
+
+public int GetBiggestPlayerIndexInt(){
+
+    int tempBiggestIndexInt = 0;
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        if(playerObjectList.get(i).playerIndexInt > tempBiggestIndexInt){ tempBiggestIndexInt = playerObjectList.get(i).playerIndexInt; }
+
+    }
+    return tempBiggestIndexInt;
+
+}
+
+
+
+
+
+
+
+public void RemovePlayerGUIObjectPickPlayer(int _indexInt){
+
+    String tempIndexSelectedPlayerString = cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").getItem(_indexInt).get("text").toString();
+    int tempIndexSelectedPlayerInt = Integer.parseInt(tempIndexSelectedPlayerString);
+    removePlayerGUIObject.playerToRemoveObject = FindPlayerObject(tempIndexSelectedPlayerInt);
+
+}
+
+public void RemovePlayerGUIObjectRemoveButton(int _indexInt){
+
+    playerObjectList.remove(removePlayerGUIObject.playerToRemoveObject);
+    playerStringList.remove("" + removePlayerGUIObject.playerToRemoveObject.playerIndexInt);
+    cp5Object.get(ScrollableList.class, "VisitorSList").setItems(playerStringList );
+    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").setItems(playerStringList );
+
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        playerObjectList.get(i).SetSiblingObjectList();
+
+    }
+
+    removePlayerGUIObject.playerToRemoveObject = null;
+
+}
+
+public ObjectPlayer FindPlayerObject(int _playerIndexInt){
+
+    ObjectPlayer tempPlayerObject = null;
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        if(playerObjectList.get(i).playerIndexInt == _playerIndexInt){ tempPlayerObject = playerObjectList.get(i); }
+
+    }
+
+    return tempPlayerObject;
+
+}
+
+
+
+
+
+
+
+
+
+
+public void AddTagGUIObjectSelectTagTypeSList(int _indexInt){
+
+    addTagGUIObject.selectedTagTypeString = cp5Object.get(ScrollableList.class, "AddTagGUIObjectSelectTagTypeSList").getItem(_indexInt).get("text").toString();
+
+}
+
+public void AddTagGUIObjectSubmitButton(int _indexInt){
+
+    String          tempTagNameAltString        = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameAltTextfield" ).getText();
+    String          tempTagNameFullString       = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameFullTextfield").getText();
+    String          tempTagTypeString           = "";
+    Tag             tempTagObject               = null;
+    List<Tag>       tempTagObjectList           = null;
+    List<String>    tempTagNameAltStringList    = null;
+    List<String>    tempTagNameFullStringList   = null;
+
+
+    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           {
+
+        tempTagTypeString                       = "SUB";
+        tempTagObjectList                       = subjectTagObjectList;
+        tempTagNameAltStringList                = subjectTagNameAltStringList;
+        tempTagNameFullStringList               = subjectTagNameFullStringList;
+
+        String tempSubjectString                = cp5Object.get(Textfield.class, "AddTagGUIObjectSubjectTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempSubjectString);
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              {
+
+        tempTagTypeString                       = "VER";
+        tempTagObjectList                       = verbTagObjectList;
+        tempTagNameAltStringList                = verbTagNameAltStringList;
+        tempTagNameFullStringList               = verbTagNameFullStringList;
+
+        String tempVerb1String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb1Textfield"   ).getText();
+        String tempVerb2String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb2Textfield"   ).getText();
+        String tempVer3bString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb3Textfield"   ).getText();
+        String tempVerIngbString                = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbIngTextfield" ).getText();
+        String tempVerbSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbSTextfield"   ).getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempVerb1String, tempVerb2String, tempVer3bString, tempVerIngbString, tempVerbSString);
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))     {
+
+        tempTagTypeString                       = "NVE";
+        tempTagObjectList                       = negativeVerbTagObjectList;
+        tempTagNameAltStringList                = negativeVerbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeVerbTagNameFullStringList;
+
+        String tempNegativeVerb1String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb1Textfield"   ).getText();
+        String tempNegativeVerb2String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb2Textfield"   ).getText();
+        String tempNegativeVer3bString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb3Textfield"   ).getText();
+        String tempNegativeVerIngbString        = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbIngTextfield" ).getText();
+        String tempNegativeVerbSString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbSTextfield"   ).getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeVerb1String, tempNegativeVerb2String, tempNegativeVer3bString, tempNegativeVerIngbString, tempNegativeVerbSString);
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              {
+
+        tempTagTypeString                       = "NOU";
+        tempTagObjectList                       = nounTagObjectList;
+        tempTagNameAltStringList                = nounTagNameAltStringList;
+        tempTagNameFullStringList               = nounTagNameFullStringList;
+
+        String tempNounString                   = cp5Object.get(Textfield.class, "AddTagGUIObjectNounTextfield"    ).getText();
+        String tempNounSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectNounSTextfield"   ).getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNounString, tempNounSString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         {
+
+        tempTagTypeString                       = "ADJ";
+        tempTagObjectList                       = adjectiveTagObjectList;
+        tempTagNameAltStringList                = adjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = adjectiveTagNameFullStringList;
+
+        String tempAdjectiveString              = cp5Object.get(Textfield.class, "AddTagGUIObjectAdjectiveTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdjectiveString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){
+
+        tempTagTypeString                       = "NDJ";
+        tempTagObjectList                       = negativeAdjectiveTagObjectList;
+        tempTagNameAltStringList                = negativeAdjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdjectiveTagNameFullStringList;
+
+        String tempNegativeAdjectiveString      = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdjectiveTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdjectiveString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            {
+
+        tempTagTypeString                       = "ADV";
+        tempTagObjectList                       = adverbTagObjectList;
+        tempTagNameAltStringList                = adverbTagNameAltStringList;
+        tempTagNameFullStringList               = adverbTagNameFullStringList;
+
+        String tempAdverbString                 = cp5Object.get(Textfield.class, "AddTagGUIObjectAdverbTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdverbString);
+
+
+    }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))   {
+
+        tempTagTypeString                       = "NDV";
+        tempTagObjectList                       = negativeAdverbTagObjectList;
+        tempTagNameAltStringList                = negativeAdverbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdverbTagNameFullStringList;
+
+        String tempNegativeAdverbString         = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdverbTextfield").getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdverbString);
+
+    }
+
+    tempTagObjectList                           .add(tempTagObject);
+    tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
+    tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
+
+
+    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           { cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"   ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              { cp5Object.get(ScrollableList.class, "SelectTagVerbSList"      ).setItems(tempTagNameFullStringList); }
+    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))   { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              { cp5Object.get(ScrollableList.class, "SelectTagNounSList"      ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         { cp5Object.get(ScrollableList.class, "SelectTagAdjectiveSList" ).setItems(tempTagNameFullStringList); }
+    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){ cp5Object.get(ScrollableList.class, "PENDING"               ).setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            { cp5Object.get(ScrollableList.class, "SelectTagAdverbSList"    ).setItems(tempTagNameFullStringList); }
+    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB")) { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
+
+    addTagGUIObject.selectedTagTypeString = "";
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).clear();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameAltTextfield"           ).clear();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).clear().hide();
+    cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).clear().hide();
+
+}
 /*A class to creating a GUI object on adding museum object.*/
 
 
@@ -1594,6 +1894,7 @@ class AddMuseumGUIObject{
         /*Create the group and all components.*/
         Group   AddMuseumGroupObject            =
                 cp5Object                       .addGroup               ("AddMuseumGroupObject")
+                                                .close                  ()
                                                 .setPosition            (groupXInt, groupYInt)
                                                 .setWidth               (groupAddWidthInt)
                                                 .setBackgroundHeight    (groupAddHeightInt)
@@ -1601,7 +1902,7 @@ class AddMuseumGUIObject{
                                                 .setColor               (otherCColor)
                                                 .setColorBackground     (groupColorBackgroundColor)
                                                 .setColorLabel          (groupColorLabelColor)
-                                                .setLabel               ("Add Museum Object:");
+                                                .setLabel               ("ADD MUSEUM OBJECT:");
 
                 cp5Object                       .addScrollableList      ("TypeObjectMuseumSList")
                                                 .setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
@@ -1610,7 +1911,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (Arrays.asList("Floor", "Room", "Exhibition"))
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Choose Type:");
+                                                .setLabel               ("CHOOSE TYPE:");
 
                 cp5Object                       .addScrollableList      ("SelectParentObjectMuseumSList")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), groupLayoutOffsetInt)
@@ -1619,7 +1920,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (defaultStringList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Parent Object:");
+                                                .setLabel               ("PARENT OBJECT:");
 
                 cp5Object                       .addScrollableList      ("SelectTagSubjectSList")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*2) + scrollableHeightInt))
@@ -1628,7 +1929,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagSubjectSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Subject Tag:");
+                                                .setLabel               ("SUBJECT TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagVerbSList")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
@@ -1637,7 +1938,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagVerbSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Verb Tag:");
+                                                .setLabel               ("VERB TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagNounSList")
                                                 .setPosition            (((groupLayoutOffsetInt*3) + (scrollableWidthInt*2)), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
@@ -1646,7 +1947,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagNounSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Noun Tag:");
+                                                .setLabel               ("NOUN TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagAdjectiveSList")
                                                 .setPosition            (((groupLayoutOffsetInt) + (scrollableWidthInt/2)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
@@ -1655,7 +1956,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagAdjectiveSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Adjective Tag:");
+                                                .setLabel               ("ADJECTIVE TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagAdverbSList")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + ((scrollableWidthInt/2)*3)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
@@ -1664,35 +1965,35 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagAdverbSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Adverb Tag:");
+                                                .setLabel               ("ADVERB TAG:");
 
                 cp5Object                       .addTextlabel           ("CanAddMultipleTagsTextlabel")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*4) + (scrollableHeightInt*3)))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
                                                 .setColorValue          (255)
-                                                .setText                ("*You can add multiple tags,\nbut minimum one tag in each category.");
+                                                .setText                ("*YOU CAN ADD MULTIPLE TAGS\nBUT MINIMUM ONE TAG IN EACH CATEGORY.");
 
                 cp5Object                       .addTextfield           ("NameFullTextfield")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
                                                 .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Name Full:");
+                                                .setLabel               ("NAME FULL");
 
                 cp5Object                       .addTextfield           ("NameAltTextfield")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + oneLineComponentWidthInt), ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
                                                 .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Name Alternative:");
+                                                .setLabel               ("NAME ALTERNATIVE");
 
                 cp5Object                       .addButton              ("SubmitButton")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + (scrollableHeightInt*3) + oneLineComponentHeightInt))
                                                 .setSize                (((oneLineComponentWidthInt*2) + groupLayoutOffsetInt), oneLineComponentHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Submit");
+                                                .setLabel               ("SUBMIT");
 
         /*DEBUG.*/
         /*
@@ -1749,6 +2050,8 @@ class AddMuseumGUIObject{
         cp5Object.get(ScrollableList.class  , "SelectTagSubjectSList"           ).setColor              (sChecklistFalseCColor  );
         cp5Object.get(ScrollableList.class  , "SelectTagVerbSList"              ).setColor              (sChecklistFalseCColor  );
         cp5Object.get(ScrollableList.class  , "SelectTagNounSList"              ).setColor              (sChecklistFalseCColor  );
+        cp5Object.get(ScrollableList.class  , "SelectTagAdjectiveSList"         ).setColor              (sChecklistFalseCColor  );
+        cp5Object.get(ScrollableList.class  , "SelectTagAdverbSList"            ).setColor              (sChecklistFalseCColor  );
         cp5Object.get(Textlabel     .class  , "CanAddMultipleTagsTextlabel"     ).setColor              (otherCColor            );
         cp5Object.get(Textfield     .class  , "NameFullTextfield"               ).setColor              (otherCColor            );
         cp5Object.get(Textfield     .class  , "NameAltTextfield"                ).setColor              (otherCColor            );
@@ -1776,17 +2079,10 @@ class AddMuseumGUIObject{
         if      (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == true ){
 
                 /*Change the position when the group object is open.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+                 cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
 
-                    (width -  guiOffsetInt      - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt    ),
-                    (        (guiOffsetInt*1.5f) + (parentButtonSizeInt/2) + groupAddHeightInt               )
-
-                );
-                /*Change the size when the group object is open.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
-
-                    parentDropdownObjectWidthInt,
-                    parentDropdownObjectHeightInt - groupAddHeightInt
+                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
+                    (cp5Object.get(Group.class, "AddMuseumGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupAddHeightInt)
 
                 );
                 
@@ -1794,17 +2090,10 @@ class AddMuseumGUIObject{
         else if (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == false){
 
                 /*Change the position when the group object is close.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+                 cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
 
-                    (width -  guiOffsetInt - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt ),
-                    (         guiOffsetInt + (parentButtonSizeInt/2) + groupLayoutOffsetInt         )
-
-                );
-                /*Change the size when the group object is close.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
-
-                    parentDropdownObjectWidthInt  ,
-                    parentDropdownObjectHeightInt
+                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
+                    (cp5Object.get(Group.class, "AddMuseumGroupObject").getPosition()[1] + groupLayoutOffsetInt)
 
                 );
 
@@ -1874,6 +2163,7 @@ class AddPlayerGUIObject{
     int			scrollableWidthInt				;
 	int			scrollableHeightInt				= 62;
 	CColor 		otherCColor						= new CColor();		/*The color for other component than the scrollableChecklist.*/
+	String 		startingExhibitionNameAltString = "";
 
 	AddPlayerGUIObject(
 
@@ -1907,19 +2197,9 @@ class AddPlayerGUIObject{
                                         .setForeground      (color(0    , 116   , 217   , alphaFloat))
                                         .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
-		if(useNameAltBoolean        == true ){
-
-
-
-		}
-		else if(useNameAltBoolean   == false){
-
-
-
-		}
-
 		Group   AddPlayerGroupObject				=
                 cp5Object	.addGroup               ("AddPlayerGUIObjectAddPlayerGroupObject")
+                			.close 					()
 							.setPosition            (groupXInt, groupYInt)
                             .setWidth               (groupWidthInt)
                             .setBackgroundHeight    (groupHeightInt)
@@ -1927,21 +2207,21 @@ class AddPlayerGUIObject{
                             .setColor               (otherCColor)
                             .setColorBackground     (groupColorBackgroundColor)
                             .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("Add Visitor:");
+                            .setLabel               ("ADD VISITOR:");
 
 	            cp5Object	.addTextlabel           ("AddPlayerGUIObjectPlayerIndexTextlabel")
 							.setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
 							.setGroup               (AddPlayerGroupObject)
 							.setColor               (otherCColor)
 							.setColorValue          (255)
-							.setText                ("Player Index:");
+							.setText                ("VISITOR INDEX:");
 
                 cp5Object	.addTextlabel           ("AddPlayerGUIObjectPlayerIndexValueTextlabel")
-							.setPosition            (((groupHeightInt/2) + (groupLayoutOffsetInt*2)), groupLayoutOffsetInt)
+							.setPosition            (((groupWidthInt/2) + (groupLayoutOffsetInt/2)), groupLayoutOffsetInt)
 							.setGroup               (AddPlayerGroupObject)
 							.setColor               (otherCColor)
 							.setColorValue          (255)
-							.setText                ("1");
+							.setText                ("" + playerAmountInt);
 
 				cp5Object	.addScrollableList      ("AddPlayerGUIObjectPickStartingExhibitionSList")
                             .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
@@ -1950,21 +2230,21 @@ class AddPlayerGUIObject{
                             .addItems               (exhibitionNameFullStringList)
                             .setType                (ControlP5.LIST)
                             .setColor               (otherCColor)
-                            .setLabel               ("Pick Starting Exhibition:");
+                            .setLabel               ("PICK STARTING EXHIBITION:");
 
                 cp5Object	.addTextfield           ("AddPlayerGUIObjectVisitorNameTextfield")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*4) + scrollableHeightInt))
                             .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
                             .setGroup               (AddPlayerGroupObject)
                             .setColor               (otherCColor)
-                            .setLabel               ("Visitor Name:");
+                            .setLabel               ("VISITOR NAME:");
 
 	            cp5Object	.addButton              ("AddPlayerGUIObjectSubmitButton")
-							.setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*6) + scrollableHeightInt + (groupLayoutOffsetInt*2)))
+							.setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*8) + scrollableHeightInt))
 							.setSize                (scrollableWidthInt, groupLayoutOffsetInt)
 							.setGroup               (AddPlayerGroupObject)
 							.setColor               (otherCColor)
-							.setLabel               ("Submit");
+							.setLabel               ("SUBMIT");
 
 	}
 
@@ -2002,7 +2282,7 @@ class AddPlayerGUIObject{
         if      (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").isOpen() == true ){
 
                 /*Change the position when the group object is open.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                 cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupHeightInt)
@@ -2013,7 +2293,7 @@ class AddPlayerGUIObject{
         else if (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").isOpen() == false){
 
                 /*Change the position when the group object is close.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                 cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt)
@@ -2023,6 +2303,507 @@ class AddPlayerGUIObject{
         }
 
 	}
+
+}
+
+
+
+class AddTagGUIObject{
+
+    /*Add three color for the background color.*/
+    int       groupBackgroundColor            ;                   /*The color of group panel group background.*/
+    int       groupColorBackgroundColor       ;                   /*The title background color of panel group.*/
+    int       groupColorLabelColor            ;                   /*The title font colot of the panel group.*/
+    /*Add transparency variable.*/
+    float       alphaFloat                      = 255;              /*The opacity for this object.*/
+    int         groupXInt                       ;                   /*The x position of this graphical user interface.*/
+    int         groupYInt                       ;                   /*The x position of this graphical user interface.*/
+    int         groupLayoutOffsetInt            = 10;               /*This object offset.*/
+    int         groupWidthInt                   ;                   /*This object width.*/
+    int         groupHeightInt                  ;                   /*This object height.*/
+    int         parentButtonSizeInt             ;                   /*A variable for layout taken from the main class.*/
+    int         parentDropdownObjectWidthInt    ;                   /*A variable for layout taken from the main class.*/
+    int         parentDropdownObjectHeightInt   ;                   /*A variable for layout taken from the main class.*/
+    int         scrollableWidthInt              ;
+    int         scrollableHeightInt             = 62;
+    CColor      otherCColor                     = new CColor();     /*The color for other component than the scrollableChecklist.*/
+
+    String      selectedTagTypeString           = "";
+
+    AddTagGUIObject(
+
+        int     _groupXInt                      ,
+        int     _groupYInt                      ,
+        int     _groupWidthInt                  ,
+        int     _groupHeightInt                 ,
+        int     _parentButtonSizeInt            ,
+        int     _parentDropdownObjectWidthInt   ,
+        int     _parentDropdownObjwctHeightInt
+
+    ){
+
+        groupXInt                       = _groupXInt;
+        groupYInt                       = _groupYInt + groupLayoutOffsetInt;
+        groupWidthInt                   = _groupWidthInt;
+        groupHeightInt                  = _groupHeightInt;
+        parentButtonSizeInt             = _parentButtonSizeInt;
+        parentDropdownObjectWidthInt    = _parentDropdownObjectWidthInt;
+        parentDropdownObjectHeightInt   = _parentDropdownObjwctHeightInt;
+
+        scrollableWidthInt              = (groupWidthInt - (groupLayoutOffsetInt*2));           /*Create the scrollable list width to accomodate three scrollable list in a row.*/
+
+        /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
+        groupBackgroundColor            = color(50  , 60    , 57    , alphaFloat);
+        groupColorBackgroundColor       = color(2   , 45    , 89    , alphaFloat);
+        groupColorLabelColor            = color(255 , 255   , 255   , alphaFloat);
+        otherCColor                     .setActive          (color(0    , 170   , 255   , alphaFloat))
+                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
+                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
+                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+
+        Group   AddTagGroupObject                   =
+                cp5Object   .addGroup               ("AddTagGUIObjectAddTagGroupObject")
+                            .close                  ()
+                            .setPosition            (groupXInt, groupYInt)
+                            .setWidth               (groupWidthInt)
+                            .setBackgroundHeight    (groupHeightInt)
+                            .setBackgroundColor     (groupBackgroundColor)
+                            .setColor               (otherCColor)
+                            .setColorBackground     (groupColorBackgroundColor)
+                            .setColorLabel          (groupColorLabelColor)
+                            .setLabel               ("ADD TAG:");
+
+                cp5Object   .addScrollableList      ("AddTagGUIObjectSelectTagTypeSList")
+                            .setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
+                            .setSize                (scrollableWidthInt, scrollableHeightInt)
+                            .setGroup               (AddTagGroupObject)
+                            .addItems               (Arrays.asList("SUBJECT", "VERB", "NEGATIVE VERB", "NOUN", "ADJECTIVE", "NEGATIVE ADJECTIVE", "ADVERB", "ADVERB NEGATIVE"))
+                            .setType                (ControlP5.LIST)
+                            .setColor               (otherCColor)
+                            .setLabel               ("SELECT TAG TYPE:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectTagNameFullTextfield")
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*2) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("TAG NAME FULL:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectTagNameAltTextfield")
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*6) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("TAG NAME ALT:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectSubjectTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("SUBJECT:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectVerb1Textfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("VERB 1:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectVerb2Textfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*14) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("VERB 2:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectVerb3Textfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*18) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("VERB 3:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectVerbIngTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*22) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("VERB + ING:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectVerbSTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*26) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("VERB + S:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNegativeVerb1Textfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NEGATIVE VERB 1:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNegativeVerb2Textfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*14) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NEGATIVE VERB 2:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNegativeVerb3Textfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*18) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NEGATIVE VERB 3:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNegativeVerbIngTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*22) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NEGATIVE VERB + ING:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNegativeVerbSTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*26) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NEGATIVE VERB + S:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNounTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NOUN:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNounSTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*14) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NOUN + S:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectAdjectiveTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("ADJECTIVE:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNegativeAdjectiveTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*14) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NEGATIVE ADJECTIVE:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectAdverbTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("ADVERB:");
+
+                cp5Object   .addTextfield           ("AddTagGUIObjectNagetiveAdverbTextfield")
+                            .hide                   ()
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*14) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("NEGATIVE ADVERB:");
+
+                cp5Object   .addButton              ("AddTagGUIObjectSubmitButton")
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*30) + scrollableHeightInt))
+                            .setSize                (scrollableWidthInt, groupLayoutOffsetInt)
+                            .setGroup               (AddTagGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("SUBMIT");
+
+    }
+
+    public void DrawVoid(float   _alphaFloat){
+
+        alphaFloat                      = _alphaFloat;
+
+        /*Show/hide controller based on the alpha value received from the main class.*/
+        if                              (alphaFloat >  (255f/45f)){ cp5Object.get(Group   .class  , "AddTagGUIObjectAddTagGroupObject"            ).show(); }
+        else if                         (alphaFloat <= (255f/45f)){ cp5Object.get(Group   .class  , "AddTagGUIObjectAddTagGroupObject"            ).hide(); }
+        groupBackgroundColor            = color             (50         , 60    , 57    , alphaFloat    + (255f/45f));
+        groupColorBackgroundColor       = color             (2          , 45    , 89    , alphaFloat    + (255f/45f));
+        groupColorLabelColor            = color             (255        , 255   , 255   , alphaFloat    + (255f/45f));
+        otherCColor                     .setActive          (color(0    , 170   , 255   , alphaFloat))
+                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
+                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
+                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+
+        /*Especially for group controller you need to adjust four methods instead of just one methods.*/
+        cp5Object.get(Group             .class , "AddTagGUIObjectAddTagGroupObject"             ).setBackgroundColor    (groupBackgroundColor);
+        cp5Object.get(Group             .class , "AddTagGUIObjectAddTagGroupObject"             ).setColor              (otherCColor);
+        cp5Object.get(Group             .class , "AddTagGUIObjectAddTagGroupObject"             ).setColorBackground    (groupColorBackgroundColor);
+        cp5Object.get(Group             .class , "AddTagGUIObjectAddTagGroupObject"             ).setColorLabel         (groupColorLabelColor);
+
+        /*The rest of the controller you only need to adjust for one method, which is setColor().*/
+        cp5Object.get(ScrollableList    .class , "AddTagGUIObjectSelectTagTypeSList"            ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameAltTextfield"           ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).setColor(otherCColor);
+        cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).setColor(otherCColor);
+        cp5Object.get(Button            .class , "AddTagGUIObjectSubmitButton"                  ).setColor(otherCColor);
+
+        /*This code below is for controlling controllers outside of this class.
+        These two if statements is for controlling the position of the other object in the same open close button.*/
+        if      (cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").isOpen() == true ){
+
+                /*Change the position when the group object is open.*/
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+
+                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
+                    (cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").getPosition()[1] + groupHeightInt)
+
+                );
+                
+        }
+        else if (cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").isOpen() == false){
+
+                /*Change the position when the group object is close.*/
+                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+
+                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
+                    (cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").getPosition()[1])
+
+                );
+
+        }
+
+        ControlFormVoid();
+
+    }
+
+    public void ControlFormVoid(){
+
+        if(selectedTagTypeString.equals("SUBJECT"))                 {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).hide();
+
+
+
+        }
+        else if(selectedTagTypeString.equals("VERB"))               {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).hide();
+
+
+
+        }
+        else if(selectedTagTypeString.equals("NEGATIVE VERB"))      {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).hide();
+
+
+
+        }
+        else if(selectedTagTypeString.equals("NOUN"))               {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).hide();
+
+
+
+        }
+        else if(selectedTagTypeString.equals("ADJECTIVE"))          {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).hide();
+
+
+
+        }
+        else if(selectedTagTypeString.equals("NEGATIVE ADJECTIVE")) {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).hide();
+
+
+
+        }
+        else if(selectedTagTypeString.equals("ADVERB"))             {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).show();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).hide();
+
+
+
+        }
+        else if(selectedTagTypeString.equals("NEGATIVE ADVERB"))    {
+
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).hide();
+            cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).show();
+
+
+
+        }
+
+    }
 
 }
 /*A class for toggle open and close button.
@@ -2265,6 +3046,7 @@ class EditPlayerGUIObject{
 
         Group   EditPlayerGroupObject               = 
                 cp5Object   .addGroup               ("EditPlayerGroupObject")
+                            .close                  ()
                             //.setPosition          (((width/2) - (playerGroupWidthInt/2)), ((height/2) - (playerGroupHeightInt/2)))
                             .setPosition            (playerGroupXInt, playerGroupYInt)
                             .setWidth               (playerGroupWidthInt)
@@ -2273,7 +3055,7 @@ class EditPlayerGUIObject{
                             .setColor               (otherCColor)
                             .setColorBackground     (groupColorBackgroundColor)
                             .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("Edit Player Object:");
+                            .setLabel               ("EDIT VISITOR:");
 
                 /*PENDING - DONE: Create the text panel. Many text panel!!!*/
                 cp5Object   .addTextlabel           ("PlayerIndexTextlabel")
@@ -2281,7 +3063,7 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("Player Index:");
+                            .setText                ("PLAYER INDEX:");
 
                 cp5Object   .addTextlabel           ("PlayerIndexValueTextlabel")
                             .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*1))
@@ -2295,7 +3077,7 @@ class EditPlayerGUIObject{
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("Player Current Exhibition:");
+                            .setText                ("PLAYER CURRENT EXHIBITION:");
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentValueTextlabel")
                             .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*2))
@@ -2312,7 +3094,7 @@ class EditPlayerGUIObject{
                             .addItems               (tempPlayerExhibitionTargetSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
-                            .setLabel               ("Player Target Exhibitions:");
+                            .setLabel               ("PLAYER TARGET EXHIBITIONS:");
 
                 /*PENDING - DONE: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionVisitedSList")
@@ -2322,7 +3104,7 @@ class EditPlayerGUIObject{
                             .addItems               (tempPlayerExhibitionVisitedSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
-                            .setLabel               ("Player Visited Exhibitions:");
+                            .setLabel               ("PLAYER VISITED EXHIBITIONS:");
 
                 cp5Object   .addScrollableList      ("PlayerTagSList")
                             .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
@@ -2331,23 +3113,23 @@ class EditPlayerGUIObject{
                             .addItems               (tempPlayerTagSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
-                            .setLabel               ("Player Collected Tags:");
+                            .setLabel               ("PLAYER COLLECTED TAGS:");
 
                 cp5Object   .addTextlabel           ("ModeTextlabel")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*7) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
-                            .setText                ("Modes:");
+                            .setText                ("MODES:");
 
                 /*PENDING - DONE: Adding radio buttons to select mode on how player should be moved.*/
                 cp5Object   .addRadioButton         ("ModeRadioButton")
                             .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*8) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
                             .setSize                (groupLayoutOffsetInt, groupLayoutOffsetInt)
                             .setGroup               (EditPlayerGroupObject)
-                            .addItem                ("Software - Auto"  , 1)
-                            .addItem                ("Software - Manual", 2)
-                            .addItem                ("hardware - Manual", 3)
+                            .addItem                ("SOFTWARE - AUTO"  , 1)
+                            .addItem                ("SOFTWARE - MANUAL", 2)
+                            .addItem                ("HARDWARE - MANUAL", 3)
                             .activate               (1);
 
                 cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
@@ -2357,7 +3139,7 @@ class EditPlayerGUIObject{
                             .addItems               (tempPleaseSelectNextExhibitionSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (otherCColor)
-                            .setLabel               ("Please Select Next Exhibition:");
+                            .setLabel               ("PLEASE SELECT NEXT EXHIBITION ACCORDING TO TARGET EXHIBITIONS (OR NOT):");
 
     }
 
@@ -2566,7 +3348,7 @@ class   ObjectMuseum                                                            
 
         SetFullBoolean  ();
         SetHoverBoolean ();
-        //PanelDrawVoid ();
+        PanelDrawVoid   ();
 
     }
 
@@ -2870,6 +3652,7 @@ class ObjectPlayer{
     List<TagCounter>    exhibitionTagCounterList                = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
 
     int                 playerIndexInt                          = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
+    String              playerNameString                        = "";
 
     List<ObjectPlayer>  playerSiblingObjectList                 = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
     int                 playerSiblingIndexInt                   = -1;                               /*The index of this object within the List of object player sibling.*/
@@ -2893,12 +3676,14 @@ class ObjectPlayer{
     /*Constructor.*/
     ObjectPlayer(
 
-        int     _playerIndexInt            ,
+        int     _playerIndexInt             ,
+        String  _playerNameString           ,
         String  _exhibitionStartString
 
     ){
 
         playerIndexInt              = _playerIndexInt;
+        playerNameString            = _playerNameString;
         playerObjectList            .add(this);
         panelObject                 = new Panel();
         ExhibitionMoveObject        (_exhibitionStartString);
@@ -3021,7 +3806,7 @@ class ObjectPlayer{
     public void DrawVoid()                                                                     {
 
         SetHoverBoolean ();
-        //PanelDrawVoid ();
+        PanelDrawVoid   ();
 
         /*PROTOTYPE: Changing player mode.*/
         if(editPlayerModeInt == 1){ AIAutoVoid(); }
@@ -3402,8 +4187,8 @@ class ObjectPlayer{
         AddTagCounterVoid               (exhibitionCurrentObject);
         AddRemoveChildVoid              (true);
         
-        SetExhibitionTargetNameAltStringList   ();
-        SetSiblingObjectList            ();
+        SetExhibitionTargetNameAltStringList    ();
+        SetSiblingObjectList                    ();
 
         /*For everytime a player move to another exhibition iterate through all player to re - add the siblings.*/
         for(int i = 0; i < playerObjectList.size(); i ++){
@@ -3530,16 +4315,18 @@ class ObjectPlayer{
 
             if      (scanString.equals("{")){
 
-                /*
                 if(playerNameString != ""){
 
                     wordString          =           playerNameString;
-                    if(Math.random()    <= 0.33)    { wordString = subjectCurrentPrevTagStringList[SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.length)]; }
+                    if(Math.random()    <= 0.50f)    { wordString = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size())); }
 
                 }
-                */
+                else if(playerNameString == ""){
 
-                wordString      = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size()));
+                    wordString          = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size()));
+
+                }
+                else{ wordString        = subjectCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectCurrentPrevTagStringList.size())); }
 
             }
             else if (scanString.equals("@"))    { wordString = verb1CurrentPrevTagStringList            .get(SentenceRandomNumberGeneratorInt  (verb1CurrentPrevTagStringList           .size())); }
@@ -3622,6 +4409,147 @@ class Panel                                         {
 
     }
 
+
+}
+
+
+
+class RemovePlayerGUIObject{
+
+    /*Add three color for the background color.*/
+    int       groupBackgroundColor                ;                   /*The color of group panel group background.*/
+    int       groupColorBackgroundColor           ;                   /*The title background color of panel group.*/
+    int       groupColorLabelColor                ;                   /*The title font colot of the panel group.*/
+    /*Add transparency variable.*/
+    float       alphaFloat                          = 255;              /*The opacity for this object.*/
+    int         groupXInt                           ;                   /*The x position of this graphical user interface.*/
+    int         groupYInt                           ;                   /*The x position of this graphical user interface.*/
+    int         groupLayoutOffsetInt                = 10;               /*This object offset.*/
+    int         groupWidthInt                       ;                   /*This object width.*/
+    int         groupHeightInt                      ;                   /*This object height.*/
+    int         parentButtonSizeInt                 ;                   /*A variable for layout taken from the main class.*/
+    int         parentDropdownObjectWidthInt        ;                   /*A variable for layout taken from the main class.*/
+    int         parentDropdownObjectHeightInt       ;                   /*A variable for layout taken from the main class.*/
+    int         scrollableWidthInt                  ;
+    int         scrollableHeightInt                 = 62;
+    CColor      otherCColor                         = new CColor();     /*The color for other component than the scrollableChecklist.*/
+
+    ObjectPlayer playerToRemoveObject               = null;
+
+    RemovePlayerGUIObject(
+
+        int     _groupXInt                      ,
+        int     _groupYInt                      ,
+        int     _groupWidthInt                  ,
+        int     _groupHeightInt                 ,
+        int     _parentButtonSizeInt            ,
+        int     _parentDropdownObjectWidthInt   ,
+        int     _parentDropdownObjwctHeightInt
+
+    ){
+
+        groupXInt                       = _groupXInt;
+        groupYInt                       = _groupYInt + groupLayoutOffsetInt;
+        groupWidthInt                   = _groupWidthInt;
+        groupHeightInt                  = _groupHeightInt;
+        parentButtonSizeInt             = _parentButtonSizeInt;
+        parentDropdownObjectWidthInt    = _parentDropdownObjectWidthInt;
+        parentDropdownObjectHeightInt   = _parentDropdownObjwctHeightInt;
+
+        scrollableWidthInt              = (groupWidthInt - (groupLayoutOffsetInt*2));           /*Create the scrollable list width to accomodate three scrollable list in a row.*/
+
+        /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
+        groupBackgroundColor            = color(50  , 60    , 57    , alphaFloat);
+        groupColorBackgroundColor       = color(2   , 45    , 89    , alphaFloat);
+        groupColorLabelColor            = color(255 , 255   , 255   , alphaFloat);
+        otherCColor                     .setActive          (color(0    , 170   , 255   , alphaFloat))
+                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
+                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
+                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+
+        Group   RemovePlayerGroupObject             =
+                cp5Object   .addGroup               ("RemovePlayerGUIObjectRemovePlayerGroupObject")
+                            .close                  ()
+                            .setPosition            (groupXInt, groupYInt)
+                            .setWidth               (groupWidthInt)
+                            .setBackgroundHeight    (groupHeightInt)
+                            .setBackgroundColor     (groupBackgroundColor)
+                            .setColor               (otherCColor)
+                            .setColorBackground     (groupColorBackgroundColor)
+                            .setColorLabel          (groupColorLabelColor)
+                            .setLabel               ("REMOVE VISITOR:");
+
+                cp5Object   .addScrollableList      ("RemovePlayerGUIObjectPickPlayer")
+                            .setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
+                            .setSize                (scrollableWidthInt, scrollableHeightInt)
+                            .setGroup               (RemovePlayerGroupObject)
+                            .addItems               (playerStringList)
+                            .setType                (ControlP5.LIST)
+                            .setColor               (otherCColor)
+                            .setLabel               ("PICK VISITOR YOU WANT TO REMOVE:");
+
+                cp5Object   .addButton              ("RemovePlayerGUIObjectRemoveButton")
+                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2) + scrollableHeightInt)
+                            .setSize                (scrollableWidthInt, groupLayoutOffsetInt)
+                            .setGroup               (RemovePlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("REMOVE");
+
+    }
+
+    public void DrawVoid(float   _alphaFloat){
+
+        alphaFloat                      = _alphaFloat;
+
+        /*Show/hide controller based on the alpha value received from the main class.*/
+        if                              (alphaFloat >  (255f/45f)){ cp5Object.get(Group   .class  , "RemovePlayerGUIObjectRemovePlayerGroupObject"            ).show(); }
+        else if                         (alphaFloat <= (255f/45f)){ cp5Object.get(Group   .class  , "RemovePlayerGUIObjectRemovePlayerGroupObject"            ).hide(); }
+        groupBackgroundColor            = color             (50         , 60    , 57    , alphaFloat    + (255f/45f));
+        groupColorBackgroundColor       = color             (2          , 45    , 89    , alphaFloat    + (255f/45f));
+        groupColorLabelColor            = color             (255        , 255   , 255   , alphaFloat    + (255f/45f));
+        otherCColor                     .setActive          (color(0    , 170   , 255   , alphaFloat))
+                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
+                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
+                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
+                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+
+        /*Especially for group controller you need to adjust four methods instead of just one methods.*/
+        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setBackgroundColor    (groupBackgroundColor);
+        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setColor              (otherCColor);
+        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setColorBackground    (groupColorBackgroundColor);
+        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setColorLabel         (groupColorLabelColor);
+
+        /*The rest of the controller you only need to adjust for one method, which is setColor().*/
+        cp5Object.get(ScrollableList    .class , "RemovePlayerGUIObjectPickPlayer"                          ).setColor(otherCColor);
+        cp5Object.get(Button            .class , "RemovePlayerGUIObjectRemoveButton"                        ).setColor(otherCColor);
+
+        /*This code below is for controlling controllers outside of this class.
+        These two if statements is for controlling the position of the other object in the same open close button.*/
+        if      (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == true ){
+
+                /*Change the position when the group object is open.*/
+                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+
+                    (guiOffsetInt + (parentButtonSizeInt/2)),
+                    (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupHeightInt)
+
+                );
+                
+        }
+        else if (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == false){
+
+                /*Change the position when the group object is close.*/
+                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+
+                    (guiOffsetInt + (parentButtonSizeInt/2)),
+                    (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt)
+
+                );
+
+        }
+
+    }
 
 }
   static public void main(String[] passedArgs) {

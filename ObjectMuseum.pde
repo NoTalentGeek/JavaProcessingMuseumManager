@@ -90,7 +90,7 @@ class   ObjectMuseum                                                            
 
         SetFullBoolean  ();
         SetHoverBoolean ();
-        //PanelDrawVoid ();
+        PanelDrawVoid   ();
 
     }
 

@@ -103,6 +103,7 @@ class AddMuseumGUIObject{
         /*Create the group and all components.*/
         Group   AddMuseumGroupObject            =
                 cp5Object                       .addGroup               ("AddMuseumGroupObject")
+                                                .close                  ()
                                                 .setPosition            (groupXInt, groupYInt)
                                                 .setWidth               (groupAddWidthInt)
                                                 .setBackgroundHeight    (groupAddHeightInt)
@@ -110,7 +111,7 @@ class AddMuseumGUIObject{
                                                 .setColor               (otherCColor)
                                                 .setColorBackground     (groupColorBackgroundColor)
                                                 .setColorLabel          (groupColorLabelColor)
-                                                .setLabel               ("Add Museum Object:");
+                                                .setLabel               ("ADD MUSEUM OBJECT:");
 
                 cp5Object                       .addScrollableList      ("TypeObjectMuseumSList")
                                                 .setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
@@ -119,7 +120,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (Arrays.asList("Floor", "Room", "Exhibition"))
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Choose Type:");
+                                                .setLabel               ("CHOOSE TYPE:");
 
                 cp5Object                       .addScrollableList      ("SelectParentObjectMuseumSList")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), groupLayoutOffsetInt)
@@ -128,7 +129,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (defaultStringList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Parent Object:");
+                                                .setLabel               ("PARENT OBJECT:");
 
                 cp5Object                       .addScrollableList      ("SelectTagSubjectSList")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*2) + scrollableHeightInt))
@@ -137,7 +138,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagSubjectSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Subject Tag:");
+                                                .setLabel               ("SUBJECT TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagVerbSList")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
@@ -146,7 +147,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagVerbSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Verb Tag:");
+                                                .setLabel               ("VERB TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagNounSList")
                                                 .setPosition            (((groupLayoutOffsetInt*3) + (scrollableWidthInt*2)), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
@@ -155,7 +156,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagNounSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Noun Tag:");
+                                                .setLabel               ("NOUN TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagAdjectiveSList")
                                                 .setPosition            (((groupLayoutOffsetInt) + (scrollableWidthInt/2)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
@@ -164,7 +165,7 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagAdjectiveSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Adjective Tag:");
+                                                .setLabel               ("ADJECTIVE TAG:");
 
                 cp5Object                       .addScrollableList      ("SelectTagAdverbSList")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + ((scrollableWidthInt/2)*3)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
@@ -173,35 +174,35 @@ class AddMuseumGUIObject{
                                                 .addItems               (tempSelectTagAdverbSList)
                                                 .setType                (ControlP5.LIST)
                                                 .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("Adverb Tag:");
+                                                .setLabel               ("ADVERB TAG:");
 
                 cp5Object                       .addTextlabel           ("CanAddMultipleTagsTextlabel")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*4) + (scrollableHeightInt*3)))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
                                                 .setColorValue          (255)
-                                                .setText                ("*You can add multiple tags,\nbut minimum one tag in each category.");
+                                                .setText                ("*YOU CAN ADD MULTIPLE TAGS\nBUT MINIMUM ONE TAG IN EACH CATEGORY.");
 
                 cp5Object                       .addTextfield           ("NameFullTextfield")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
                                                 .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Name Full:");
+                                                .setLabel               ("NAME FULL");
 
                 cp5Object                       .addTextfield           ("NameAltTextfield")
                                                 .setPosition            (((groupLayoutOffsetInt*2) + oneLineComponentWidthInt), ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
                                                 .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Name Alternative:");
+                                                .setLabel               ("NAME ALTERNATIVE");
 
                 cp5Object                       .addButton              ("SubmitButton")
                                                 .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + (scrollableHeightInt*3) + oneLineComponentHeightInt))
                                                 .setSize                (((oneLineComponentWidthInt*2) + groupLayoutOffsetInt), oneLineComponentHeightInt)
                                                 .setGroup               (AddMuseumGroupObject)
                                                 .setColor               (otherCColor)
-                                                .setLabel               ("Submit");
+                                                .setLabel               ("SUBMIT");
 
         /*DEBUG.*/
         /*
@@ -258,6 +259,8 @@ class AddMuseumGUIObject{
         cp5Object.get(ScrollableList.class  , "SelectTagSubjectSList"           ).setColor              (sChecklistFalseCColor  );
         cp5Object.get(ScrollableList.class  , "SelectTagVerbSList"              ).setColor              (sChecklistFalseCColor  );
         cp5Object.get(ScrollableList.class  , "SelectTagNounSList"              ).setColor              (sChecklistFalseCColor  );
+        cp5Object.get(ScrollableList.class  , "SelectTagAdjectiveSList"         ).setColor              (sChecklistFalseCColor  );
+        cp5Object.get(ScrollableList.class  , "SelectTagAdverbSList"            ).setColor              (sChecklistFalseCColor  );
         cp5Object.get(Textlabel     .class  , "CanAddMultipleTagsTextlabel"     ).setColor              (otherCColor            );
         cp5Object.get(Textfield     .class  , "NameFullTextfield"               ).setColor              (otherCColor            );
         cp5Object.get(Textfield     .class  , "NameAltTextfield"                ).setColor              (otherCColor            );
@@ -285,17 +288,10 @@ class AddMuseumGUIObject{
         if      (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == true ){
 
                 /*Change the position when the group object is open.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+                 cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
 
-                    (width -  guiOffsetInt      - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt    ),
-                    (        (guiOffsetInt*1.5) + (parentButtonSizeInt/2) + groupAddHeightInt               )
-
-                );
-                /*Change the size when the group object is open.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
-
-                    parentDropdownObjectWidthInt,
-                    parentDropdownObjectHeightInt - groupAddHeightInt
+                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
+                    (cp5Object.get(Group.class, "AddMuseumGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupAddHeightInt)
 
                 );
                 
@@ -303,17 +299,10 @@ class AddMuseumGUIObject{
         else if (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == false){
 
                 /*Change the position when the group object is close.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setPosition(
+                 cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
 
-                    (width -  guiOffsetInt - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt ),
-                    (         guiOffsetInt + (parentButtonSizeInt/2) + groupLayoutOffsetInt         )
-
-                );
-                /*Change the size when the group object is close.*/
-                 cp5Object.get(ScrollableList.class, "ExhibitionSList").setSize(
-
-                    parentDropdownObjectWidthInt  ,
-                    parentDropdownObjectHeightInt
+                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
+                    (cp5Object.get(Group.class, "AddMuseumGroupObject").getPosition()[1] + groupLayoutOffsetInt)
 
                 );
 
