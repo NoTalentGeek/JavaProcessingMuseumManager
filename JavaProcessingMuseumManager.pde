@@ -478,7 +478,7 @@ void setup()                                    {
         (guiOffsetInt + (buttonSizeInt/2))  ,
         (guiOffsetInt + (buttonSizeInt/2))  ,
         dropdownObjectWidthInt              ,
-        369                                 ,
+        500                                 ,
         buttonSizeInt                       ,
         dropdownObjectWidthInt              ,
         dropdownObjectHeightInt
