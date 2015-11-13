@@ -3089,6 +3089,8 @@ class EditPlayerGUIObject{
 
         }
 
+        String tempPlayerFinishedBoolean = (selectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";
+
         Group   EditPlayerGroupObject               = 
                 cp5Object   .addGroup               ("EditPlayerGroupObject")
                             .close                  ()
@@ -3117,29 +3119,43 @@ class EditPlayerGUIObject{
                             .setColorValue          (255)
                             .setText                ("" + selectedPlayerObject.playerIndexInt);
 
-                cp5Object   .addTextlabel           ("PlayerScoreTextlabel")
+                cp5Object   .addTextlabel           ("PlayerFinishedTextlabel")
                             .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2))
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setColorValue          (255)
+                            .setText                ("PLAYER FINISHED:");
+
+                cp5Object   .addTextlabel           ("PlayerFinishedValueTextlabel")
+                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*2))
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setColorValue          (255)
+                            .setText                (tempPlayerFinishedBoolean);
+
+                cp5Object   .addTextlabel           ("PlayerScoreTextlabel")
+                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                ("PLAYER SCORE:");
 
                 cp5Object   .addTextlabel           ("PlayerScoreValueTextlabel")
-                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*2))
+                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*3))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                ("" + selectedPlayerObject.playerScoreInt);
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
+                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*4))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                ("PLAYER CURRENT EXHIBITION:");
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentValueTextlabel")
-                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*3))
+                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*4))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
@@ -3147,7 +3163,7 @@ class EditPlayerGUIObject{
 
                 /*PENDING - DONE: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")
-                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*5))
+                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6))
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeight3Int)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPlayerExhibitionTargetSList)
@@ -3157,7 +3173,7 @@ class EditPlayerGUIObject{
 
                 /*PENDING - DONE: Please make this unselectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionVisitedSList")
-                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6) + playerScrollableListHeight3Int)
+                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*7) + playerScrollableListHeight3Int)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPlayerExhibitionVisitedSList)
@@ -3166,7 +3182,7 @@ class EditPlayerGUIObject{
                             .setLabel               ("PLAYER VISITED EXHIBITIONS:");
 
                 cp5Object   .addScrollableList      ("PlayerTagSList")
-                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*7) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
+                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*8) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPlayerTagSList)
@@ -3174,8 +3190,15 @@ class EditPlayerGUIObject{
                             .setColor               (sListStaticCColor)
                             .setLabel               ("PLAYER COLLECTED TAGS:");
 
+                cp5Object   .addTextarea            ("PlayerSentenceTextarea")
+                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*9) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
+                            .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setText                ("PlayerSentenceTextarea");
+
                 cp5Object   .addTextlabel           ("ModeTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*8) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*3)))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
@@ -3183,7 +3206,7 @@ class EditPlayerGUIObject{
 
                 /*PENDING - DONE: Adding radio buttons to select mode on how player should be moved.*/
                 cp5Object   .addRadioButton         ("ModeRadioButton")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*9) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*11) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*3)))
                             .setSize                (groupLayoutOffsetInt, groupLayoutOffsetInt)
                             .setGroup               (EditPlayerGroupObject)
                             .addItem                ("SOFTWARE - AUTO"  , 1)
@@ -3192,7 +3215,7 @@ class EditPlayerGUIObject{
                             .activate               (1);
 
                 cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*13) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2) + 2))    /*Additional 2 to fix layouting error in the radio buttons.*/
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*15) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*3) + 2))    /*Additional 2 to fix layouting error in the radio buttons.*/
                             .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2 )), 64)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPleaseSelectNextExhibitionSList)
@@ -3233,12 +3256,24 @@ class EditPlayerGUIObject{
         /*If selected player object is not null than populate the controller using the value of the selected player object.*/
         if(selectedPlayerObject             != null ){
 
+            String tempPlayerFinishedBooleanString = (selectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";
+            String tempSentenceTextareaString = "";
+            for(int i = 0; i < selectedPlayerObject.sentenceStringList.size(); i ++){
+
+                if(i == 0) { tempSentenceTextareaString = selectedPlayerObject.sentenceStringList.get(i); }
+                else                                { tempSentenceTextareaString = tempSentenceTextareaString + "\n\n" + selectedPlayerObject.sentenceStringList.get(i); }
+
+            }
+            println(tempSentenceTextareaString);
+
             cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
+            cp5Object.get(Textlabel         .class, "PlayerFinishedValueTextlabel"          )   .setText ((     tempPlayerFinishedBooleanString));
             cp5Object.get(Textlabel         .class, "PlayerScoreValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerScoreInt));
             cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     tempPlayerExhibitionCurrentValueTextlabel));
             cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     tempPlayerExhibitionTargetSList));
             cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     tempPlayerExhibitionVisitedSList));
             cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     tempPlayerTagSList));
+            cp5Object.get(Textarea          .class, "PlayerSentenceTextarea"                )   .setText ((     tempSentenceTextareaString));
             cp5Object.get(ScrollableList    .class, "PleaseSelectNextExhibitionSList"       )   .setItems((     tempPleaseSelectNextExhibitionSList));
 
         }
@@ -3741,7 +3776,8 @@ class ObjectPlayer{
     Panel   panelObject                                             = null;
 
     int     playerScoreInt                                          = 0;
-    boolean playerVisitCorrectExhibitionBoolean = false;
+    boolean playerVisitCorrectExhibitionBoolean                     = false;
+    boolean playerFinishedBoolean                                   = false;
 
     /*Constructor.*/
     ObjectPlayer(
@@ -3850,7 +3886,7 @@ class ObjectPlayer{
         I checked the whether the exhibition visited has the same amount of length with total exhibition length.
         It is not necessary for this player to have all exhibitions visited due to there is a chance that this player
             visited same exhibitions twice or more.*/
-        if(exhibitionObjectList.size()                      > exhibitionVisitedNameAltStringList.size()){
+        if(playerFinishedBoolean == false){
 
             /*Increase the amount of time of this player in the current exhibition the visitor visits.
             The more time this player spent time in the exhibition the more chance the visitor will move to the
@@ -3895,6 +3931,14 @@ class ObjectPlayer{
             exhibitionTagCounterNameFullStringList      .add(tempTagNameFullString);
 
         }
+
+        if(exhibitionVisitedNameAltStringList.size() > exhibitionObjectList.size()){ playerFinishedBoolean = true; }
+
+    }
+
+    public void ResetVoid(){
+
+        println("Function under construction.");
 
     }
 
@@ -4312,7 +4356,6 @@ class ObjectPlayer{
         ){
 
             String tempThreeSentencesString = SentenceMultipleGenerateString(3);
-            if(playerIndexInt == 1){ println(tempThreeSentencesString); }
             sentenceStringList.add(tempThreeSentencesString);
 
         }
@@ -4407,7 +4450,13 @@ class ObjectPlayer{
     public String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
 
         String  textString = "";
-        for     (int i = 0; i < _numberOfSentenceInt; i ++){ textString = textString + SentenceSingleGenerateString() + "\n"; }
+        for     (int i = 0; i < _numberOfSentenceInt; i ++){
+
+            if(i == 0) { textString = SentenceSingleGenerateString(); }
+            else                                { textString = textString + "\n" + SentenceSingleGenerateString(); }
+            
+
+        }
         return  textString;
 
     }

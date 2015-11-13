@@ -94,7 +94,8 @@ class ObjectPlayer{
     Panel   panelObject                                             = null;
 
     int     playerScoreInt                                          = 0;
-    boolean playerVisitCorrectExhibitionBoolean = false;
+    boolean playerVisitCorrectExhibitionBoolean                     = false;
+    boolean playerFinishedBoolean                                   = false;
 
     /*Constructor.*/
     ObjectPlayer(
@@ -203,7 +204,7 @@ class ObjectPlayer{
         I checked the whether the exhibition visited has the same amount of length with total exhibition length.
         It is not necessary for this player to have all exhibitions visited due to there is a chance that this player
             visited same exhibitions twice or more.*/
-        if(exhibitionObjectList.size()                      > exhibitionVisitedNameAltStringList.size()){
+        if(playerFinishedBoolean == false){
 
             /*Increase the amount of time of this player in the current exhibition the visitor visits.
             The more time this player spent time in the exhibition the more chance the visitor will move to the
@@ -248,6 +249,14 @@ class ObjectPlayer{
             exhibitionTagCounterNameFullStringList      .add(tempTagNameFullString);
 
         }
+
+        if(exhibitionVisitedNameAltStringList.size() > exhibitionObjectList.size()){ playerFinishedBoolean = true; }
+
+    }
+
+    void ResetVoid(){
+
+        println("Function under construction.");
 
     }
 
@@ -665,7 +674,6 @@ class ObjectPlayer{
         ){
 
             String tempThreeSentencesString = SentenceMultipleGenerateString(3);
-            if(playerIndexInt == 1){ println(tempThreeSentencesString); }
             sentenceStringList.add(tempThreeSentencesString);
 
         }
@@ -760,7 +768,13 @@ class ObjectPlayer{
     String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
 
         String  textString = "";
-        for     (int i = 0; i < _numberOfSentenceInt; i ++){ textString = textString + SentenceSingleGenerateString() + "\n"; }
+        for     (int i = 0; i < _numberOfSentenceInt; i ++){
+
+            if(i == 0) { textString = SentenceSingleGenerateString(); }
+            else                                { textString = textString + "\n" + SentenceSingleGenerateString(); }
+            
+
+        }
         return  textString;
 
     }
