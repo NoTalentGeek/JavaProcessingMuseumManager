@@ -509,7 +509,7 @@ public void setup()                                    {
         (guiOffsetInt + (buttonSizeInt/2))  ,
         (guiOffsetInt + (buttonSizeInt/2))  ,
         dropdownObjectWidthInt              ,
-        500                                 ,
+        427                                 ,
         buttonSizeInt                       ,
         dropdownObjectWidthInt              ,
         dropdownObjectHeightInt
@@ -3119,86 +3119,141 @@ class EditPlayerGUIObject{
                             .setColorValue          (255)
                             .setText                ("" + selectedPlayerObject.playerIndexInt);
 
+
+
+
+                cp5Object   .addTextfield           ("PlayerNameTextfield")
+                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2)  ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("PLAYER NAME:");
+
+                cp5Object   .addButton              ("PlayerChangeNameButton")
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*3))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) ,  (groupLayoutOffsetInt*2))
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("CHANGE NAME");
+
+
+
+
                 cp5Object   .addTextlabel           ("PlayerFinishedTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2))
+                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*7))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                ("PLAYER FINISHED:");
 
                 cp5Object   .addTextlabel           ("PlayerFinishedValueTextlabel")
-                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*2))
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*7))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                (tempPlayerFinishedBoolean);
 
                 cp5Object   .addTextlabel           ("PlayerScoreTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
+                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*8))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                ("PLAYER SCORE:");
 
                 cp5Object   .addTextlabel           ("PlayerScoreValueTextlabel")
-                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*3))
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*8))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                ("" + selectedPlayerObject.playerScoreInt);
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*4))
+                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*9))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                ("PLAYER CURRENT EXHIBITION:");
 
                 cp5Object   .addTextlabel           ("PlayerExhibitionCurrentValueTextlabel")
-                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*4))
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*9))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
                             .setText                (tempPlayerExhibitionCurrentValueTextlabel);
 
-                /*PENDING - DONE: Please make this unselectable.*/
+
+
+
+
+                /*PENDING - DONE: Please make this un - selectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")
-                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*6))
-                            .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeight3Int)
+                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*11))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeight3Int)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPlayerExhibitionTargetSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("PLAYER TARGET EXHIBITIONS:");
 
-                /*PENDING - DONE: Please make this unselectable.*/
+                /*PENDING - DONE: Please make this un - selectable.*/
                 cp5Object   .addScrollableList      ("PlayerExhibitionVisitedSList")
-                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*7) + playerScrollableListHeight3Int)
-                            .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2),  (groupLayoutOffsetInt*11))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPlayerExhibitionVisitedSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("PLAYER VISITED EXHIBITIONS:");
 
+
+                cp5Object   .addTextlabel           ("PlayerSentenceTextlabel")
+                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*12) + playerScrollableListHeightInt - 2))
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setColorValue          (255)
+                            .setText                ("PLAYER SENTENCES:");
+
+                cp5Object   .addTextarea            ("PlayerSentenceValueTextarea")
+                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*13) + playerScrollableListHeightInt - 2))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeightInt)
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor);
+
+
+
+
+                cp5Object   .addTextlabel           ("PlayerExplanationTextlabel")
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2),  ((groupLayoutOffsetInt*12) + playerScrollableListHeightInt - 2))
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setColorValue          (255)
+                            .setText                ("PLAYER EXPLANATIONS:");
+
+                cp5Object   .addTextarea            ("PlayerExplanationValueTextlabel")
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2),  ((groupLayoutOffsetInt*13) + playerScrollableListHeightInt - 2))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeightInt)
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor);
+
+
+
+
+
+
+
+
+
                 cp5Object   .addScrollableList      ("PlayerTagSList")
-                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*8) + playerScrollableListHeight3Int + playerScrollableListHeightInt)
-                            .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
+                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*14) + (playerScrollableListHeightInt*2)))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*2))) , playerScrollableListHeightInt)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPlayerTagSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (sListStaticCColor)
                             .setLabel               ("PLAYER COLLECTED TAGS:");
 
-                cp5Object   .addTextarea            ("PlayerSentenceTextarea")
-                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*9) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*2)))
-                            .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2)), playerScrollableListHeightInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setText                ("PlayerSentenceTextarea");
-
                 cp5Object   .addTextlabel           ("ModeTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*3)))
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*15) + (playerScrollableListHeightInt*3)))
                             .setGroup               (EditPlayerGroupObject)
                             .setColor               (otherCColor)
                             .setColorValue          (255)
@@ -3206,7 +3261,7 @@ class EditPlayerGUIObject{
 
                 /*PENDING - DONE: Adding radio buttons to select mode on how player should be moved.*/
                 cp5Object   .addRadioButton         ("ModeRadioButton")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*11) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*3)))
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*16) + (playerScrollableListHeightInt*3)))
                             .setSize                (groupLayoutOffsetInt, groupLayoutOffsetInt)
                             .setGroup               (EditPlayerGroupObject)
                             .addItem                ("SOFTWARE - AUTO"  , 1)
@@ -3215,13 +3270,31 @@ class EditPlayerGUIObject{
                             .activate               (1);
 
                 cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*15) + playerScrollableListHeight3Int + (playerScrollableListHeightInt*3) + 2))    /*Additional 2 to fix layouting error in the radio buttons.*/
-                            .setSize                ((playerGroupWidthInt - (groupLayoutOffsetInt*2 )), 64)
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), ((groupLayoutOffsetInt*15) + (playerScrollableListHeightInt*3)))    /*Additional 2 to fix layouting error in the radio buttons.*/
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , 64)
                             .setGroup               (EditPlayerGroupObject)
                             .addItems               (tempPleaseSelectNextExhibitionSList)
                             .setType                (ControlP5.LIST)
                             .setColor               (otherCColor)
-                            .setLabel               ("PLEASE SELECT NEXT EXHIBITION ACCORDING TO TARGET EXHIBITIONS (OR NOT):");
+                            .setLabel               ("SELECT NEXT EXHIBITION:");
+
+                cp5Object   .addButton              ("ResetPlayerButton")
+                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*16) + (playerScrollableListHeightInt*4)))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), groupLayoutOffsetInt)
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("RESET PLAYER");
+
+                cp5Object   .addButton              ("GeneratePatternButton")
+                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), ((groupLayoutOffsetInt*16) + (playerScrollableListHeightInt*4)))
+                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), groupLayoutOffsetInt)
+                            .setGroup               (EditPlayerGroupObject)
+                            .setColor               (otherCColor)
+                            .setLabel               ("GENERATE PATTERN");
+
+
+
+
 
     }
 
@@ -3264,7 +3337,6 @@ class EditPlayerGUIObject{
                 else                                { tempSentenceTextareaString = tempSentenceTextareaString + "\n\n" + selectedPlayerObject.sentenceStringList.get(i); }
 
             }
-            println(tempSentenceTextareaString);
 
             cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
             cp5Object.get(Textlabel         .class, "PlayerFinishedValueTextlabel"          )   .setText ((     tempPlayerFinishedBooleanString));
@@ -3273,7 +3345,7 @@ class EditPlayerGUIObject{
             cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     tempPlayerExhibitionTargetSList));
             cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     tempPlayerExhibitionVisitedSList));
             cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     tempPlayerTagSList));
-            cp5Object.get(Textarea          .class, "PlayerSentenceTextarea"                )   .setText ((     tempSentenceTextareaString));
+            cp5Object.get(Textarea          .class, "PlayerSentenceValueTextarea"           )   .setText ((     tempSentenceTextareaString));
             cp5Object.get(ScrollableList    .class, "PleaseSelectNextExhibitionSList"       )   .setItems((     tempPleaseSelectNextExhibitionSList));
 
         }
