@@ -97,7 +97,7 @@ List<String>            negativeAdverbTagNameFullStringList     = new ArrayList<
 List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
 
 /*GUI variables.*/
-AddMuseumGUIObject          addMuseumGUIObject              ;
+AddMuseumGroupGUIObject          addMuseumGroupGUIObject              ;
 AddTagGUIObject             addTagGUIObject                 ;
 AddPlayerGUIObject          addPlayerGUIObject              ;
 RemovePlayerGUIObject       removePlayerGUIObject           ;
@@ -429,11 +429,14 @@ public void setup()                                    {
     }
 
     /*Populate String list.*/
-    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList     .add(subjectTagObjectList   .get(i).nameAltString); subjectTagNameFullStringList    .add(subjectTagObjectList   .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList        .add(verbTagObjectList      .get(i).nameAltString); verbTagNameFullStringList       .add(verbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList        .add(nounTagObjectList      .get(i).nameAltString); nounTagNameFullStringList       .add(nounTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList   .add(adjectiveTagObjectList .get(i).nameAltString); adjectiveTagNameFullStringList  .add(adjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList      .add(adverbTagObjectList    .get(i).nameAltString); adverbTagNameFullStringList     .add(adverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(subjectTagObjectList   .get(i).nameAltString); subjectTagNameFullStringList            .add(subjectTagObjectList   .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(verbTagObjectList      .get(i).nameAltString); verbTagNameFullStringList               .add(verbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(verbTagObjectList      .get(i).nameAltString); negativeVerbTagNameFullStringList       .add(verbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(nounTagObjectList      .get(i).nameAltString); nounTagNameFullStringList               .add(nounTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(adjectiveTagObjectList .get(i).nameAltString); adjectiveTagNameFullStringList          .add(adjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(adjectiveTagObjectList .get(i).nameAltString); negativeAdjectiveTagNameFullStringList  .add(adjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(adverbTagObjectList    .get(i).nameAltString); adverbTagNameFullStringList             .add(adverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(adverbTagObjectList    .get(i).nameAltString); negativeAdverbTagNameFullStringList     .add(adverbTagObjectList    .get(i).nameFullString); }
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
     defaultStringList       = Arrays.asList();
     for(int i = 0; i < floorObjectList.size()       ; i ++){ floorNameAltStringList         .add(     floorObjectList       .get(i).nameAltString ); floorNameFullStringList        .add(floorObjectList       .get(i).nameFullString); }
@@ -452,15 +455,14 @@ public void setup()                                    {
     int itemHeightInt                   = (dropdownObjectHeightInt/20);
 
     /*Add the museum object GUI.*/
-    addMuseumGUIObject                  = new AddMuseumGUIObject(
+    addMuseumGroupGUIObject                  = new AddMuseumGroupGUIObject(
 
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        325                                                                 ,
-        buttonSizeInt                                                       ,
-        dropdownObjectWidthInt                                              ,
-        dropdownObjectHeightInt
+        442                                                                 ,
+        cp5Object                                                           ,
+        this
 
     );
 
@@ -640,14 +642,14 @@ public void draw()                                     {
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
     
     /*Update the add museum object GUI.*/
-    addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
+    addMuseumGroupGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
     addTagGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
     removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGroupGUIObject);
     /*Update the edit player object GUI.*/
-    editPlayerGroupGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
+    editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat);
     
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
@@ -1495,72 +1497,7 @@ public void VisitorSList                   (int _indexInt)                      
     editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
 
 }
-/*Control functions for the AddMuseumGUIObject.pde.
-This function below is for to know what kind of object the class will have to make.*/
-public void TypeObjectMuseumSList          (int _indexInt)                                 {
 
-    addMuseumGUIObject.typeObjectMuseumString   = cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList").getItem(_indexInt).get("text").toString();
-    if      (addMuseumGUIObject.typeObjectMuseumString.equals("Floor"      ))       { addMuseumGUIObject.selectedTypeObjectString = "FLR"; }
-    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Room"       ))       { addMuseumGUIObject.selectedTypeObjectString = "ROM"; }
-    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Exhibition" ))       { addMuseumGUIObject.selectedTypeObjectString = "EXH"; }
-    else                                                                            { addMuseumGUIObject.selectedTypeObjectString = addMuseumGUIObject.typeObjectMuseumString; }
-
-}
-/*These three functions is used to convert the scrollable list into scrollable checklist.*/
-public void SelectTagSubjectSList          (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagSubjectSList"   , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagSubjectSList      , "SelectTagSubjectSList"   ); }
-public void SelectTagVerbSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagVerbSList"      , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagVerbSList         , "SelectTagVerbSList"      ); }
-public void SelectTagNounSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagNounSList"      , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagNounSList         , "SelectTagNounSList"      ); }
-public void SelectTagAdjectiveSList        (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagAdjectiveSList" , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagAdjectiveSList    , "SelectTagAdjectiveSList" ); }
-public void SelectTagAdverbSList           (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagAdverbSList"    , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagAdverbSList       , "SelectTagAdverbSList"    ); }
-public void SelectParentObjectMuseumSList  (int _indexInt)                                 { addMuseumGUIObject.selectedParentString           = cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").getItem(_indexInt).get("text").toString(); }
-/*Submit button callback function.*/
-public void SubmitButton                   (int _indexInt)                                 {
-
-    /*Put everything into temporary variables.*/
-    String          tempNameAltString           = cp5Object.get(Textfield   .class, "NameAltTextfield" ).getText();
-    String          tempNameFullString          = cp5Object.get(Textfield   .class, "NameFullTextfield").getText();
-    String          tempParentNameAltString     = "";
-    String          tempTypeString              = addMuseumGUIObject.selectedTypeObjectString; addMuseumGUIObject.selectedTypeObjectString = "";
-    List<String>    tempSelectedTagStringList   = addMuseumGUIObject.selectedTagStringList;
-    Tag[]           tempSelectedTagObjectArray  = new Tag[tempSelectedTagStringList.size()];
-
-    /*Due to museum object floor will ever have no parent object, then we need to specifically set its parent object.*/
-    if      ( tempTypeString.equals("FLR")) { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
-    else if (!tempTypeString.equals("FLR")) { tempParentNameAltString = addMuseumGUIObject.selectedParentString; addMuseumGUIObject.selectedParentString = ""; }
-    else                                    { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
-
-    if(useNameAltBoolean == false){ tempParentNameAltString     = FindMuseumObject(tempParentNameAltString).nameAltString; }
-    for(int i = 0; i < tempSelectedTagStringList.size(); i ++)  { tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagStringList.get(i)); }
-
-    /*Create the museum object.*/
-    AddMuseumObject                         (tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeString, tempSelectedTagObjectArray);
-
-}
-/*This function below is used to "convert" scrollable list into scrollable checklist.
-The arguments are the name of the controller and the index of which the controller's item is selected.*/
-public void ScrollableChecklistVoid        (String _scrollableNameString, int _indexInt)   {
-
-    /*If there is no property named isSelected in the hashmap than we need to create one.
-    After that assign the isSelected value to true and also assign the color.*/
-    if( cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected") == null){
-
-        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("isSelected" , true                                       );
-        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color"      , addMuseumGUIObject.sChecklistTrueCColor    );
-
-    }
-    /*If there is isSelected property than revert it between true and false everytime we clicked it and set the appropriate color scheme.*/
-    else{
-
-        boolean stateBoolean    =   cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected").toString().equals("true") ? true : false;
-                                    cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("isSelected", !stateBoolean           );
-                stateBoolean    =   cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected").toString().equals("true") ? true : false;
-
-        if      (stateBoolean == true ){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.sChecklistTrueCColor ); }
-        else if (stateBoolean == false){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.sChecklistFalseCColor); }
-
-    }
-
-}
 
 
 
@@ -1783,15 +1720,16 @@ public void AddTagGUIObjectSubmitButton(int _indexInt){
     tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
     tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
 
+    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))               { addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))             { addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE"))    { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))                { addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
 
-    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           { cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"   ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              { cp5Object.get(ScrollableList.class, "SelectTagVerbSList"      ).setItems(tempTagNameFullStringList); }
-    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))   { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              { cp5Object.get(ScrollableList.class, "SelectTagNounSList"      ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         { cp5Object.get(ScrollableList.class, "SelectTagAdjectiveSList" ).setItems(tempTagNameFullStringList); }
-    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){ cp5Object.get(ScrollableList.class, "PENDING"               ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            { cp5Object.get(ScrollableList.class, "SelectTagAdverbSList"    ).setItems(tempTagNameFullStringList); }
-    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB")) { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
+    println("\n\n\n\n\nTEST\n\n\n\n\n");
 
     addTagGUIObject.selectedTagTypeString = "";
     cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).clear();
@@ -1816,28 +1754,97 @@ public void AddTagGUIObjectSubmitButton(int _indexInt){
 
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
-//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////   
-/*Controller's function to control radio button and assign which movement mode to selected player object.*/
-public void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
 
-    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
-    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//AddMuseumGroupGUIObject.pde Controller's Functions.////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Set what kind of museum object the user will make.*/
+public void AddMuseumGroupSelectTypeMuseumObjectScrollableListObject                   (int _indexInt) {
+
+    addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString                                  = addMuseumGroupGUIObject.addMuseumGroupSelectTypeMuseumObjectScrollableListObject.getItem(_indexInt).get("text").toString();   /*Take the full name type of object museum that the user will make.*/
+    /*Convert the object museum type name full into object museum type name alternate name.*/
+    if      (addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString.equals("Floor"      ))  {
+        addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString                   = "FLR";
+        addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject  .setItems(defaultStringList);
+    }
+    else if (addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString.equals("Room"       ))  {
+        addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString                   = "ROM";
+        addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject  .setItems(floorNameFullStringList);
+    }
+    else if (addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString.equals("Exhibition" ))  {
+        addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString                   = "EXH";
+        addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject  .setItems(roomNameFullStringList);
+    }
 
 }
-/*Controller's function to move selected player exhibition according to scrollable list that contains all exhibition full name.*/
+/*These functions is for assigning tags into museum object that the user will add.*/
+public void AddMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject             (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject           ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(subjectTagNameFullStringList               , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            ); }
+public void AddMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject              ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(verbTagNameFullStringList                  , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               ); }
+public void AddMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject        (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject      ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeVerbTagNameFullStringList          , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject       ); }
+public void AddMuseumGroupSelectNounTagMuseumObjectScrollableListObject                (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject              ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(nounTagNameFullStringList                  , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               ); }
+public void AddMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject           (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject         ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(adjectiveTagNameFullStringList             , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          ); }
+public void AddMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject   (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeAdjectiveTagNameFullStringList     , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  ); }
+public void AddMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject              (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject            ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(adverbTagNameFullStringList                , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             ); }
+public void AddMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject      (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject    ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList     = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeAdverbTagNameFullStringList        , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     ); }
+/*A function to set the full name of parent object.*/
+public void AddMuseumGroupSelectParentMuseumObjectScrollableListObject                 (int _indexInt) {
+
+    addMuseumGroupGUIObject.tempSelectedParentNameFullString        = addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject.getItem(_indexInt).get("text").toString();
+    addMuseumGroupGUIObject.tempSelectedParentNameAltString         = FindMuseumObject(addMuseumGroupGUIObject.tempSelectedParentNameFullString).nameAltString;
+
+}
+/*Add new museum object with all collected property values.*/
+public void AddMuseumGroupAddMuseumObjectButtonObject                                  (int _indexInt) {
+
+    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject .getText();                          /*Get the alternate  name for the new museum object that the user will add.     */
+    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject.getText();                          /*Get the full       name for the new museum object that the user will add.     */
+    String          tempParentNameAltString             = addMuseumGroupGUIObject.tempSelectedParentNameAltString;                                                      /*Parent  alr        name for the new museum object that the user will add.     */
+    String          tempTypeObjectMuseumNameAltString   = addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString;                                            /*Type    alternate  name for the new museum object that the user will add.     */
+    List<String>    tempSelectedTagNameFullStringList   = addMuseumGroupGUIObject.tempSelectedTagNameFullStringList;                                                    /*Tags    full       name for the new museum object that the user will add.     */
+    Tag[]           tempSelectedTagObjectArray          = new Tag[tempSelectedTagNameFullStringList.size()];                                                            /*Converted full name String List of Tag full name into an array of Tag object. */
+    
+    for(int i = 0; i < tempSelectedTagNameFullStringList.size(); i ++){ tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagNameFullStringList.get(i)); }      /*Convert   full name String List of Tag full name into an array of Tag object. */
+    if( tempTypeObjectMuseumNameAltString.equals("FLR")){ tempParentNameAltString = "XXX_XXX"; }                                                                        /*If the object that will be added is a floor object, then set the  alternate parent name into XXX_XXX.*/
+
+    AddMuseumObject(tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeObjectMuseumNameAltString, tempSelectedTagObjectArray);
+    
+    /*After getting all processing done and the museum object is added, reset all value.
+    PENDING: The display were not actually set back off.
+    addMuseumGroupGUIObject.tempSelectedParentNameAltString             = "";
+    addMuseumGroupGUIObject.tempSelectedParentNameFullString            = "";
+    addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString   = "";
+    addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString  = "";
+    addMuseumGroupGUIObject.tempSelectedTagNameFullStringList.clear();
+    */
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//AddMuseumGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Set the movement mode for both player object and the graphical user interface object.
+This function is to make sure that both mode is always the same.*/
+public void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
+
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex;
+    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex;
+
+}
+/*A function to move the selected player into new exhibition.
+This function need to only happened when the appropriate movement mode is selected.*/
 public void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
 
-    /*If selected player object movement mode is two then user can move the player manually.*/
     if(editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt == 2){
 
-        /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
-        String                  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
-        ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
+        String  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
+        String  receivedMuseumNameAltString     = FindMuseumObject(receivedMuseumNameFullString).nameAltString;
 
-        /*Move the selected player object into the new exhibition that the user choose.*/
-        editPlayerGroupGUIObject.selectedPlayerObject    .ExhibitionMoveObject(receivedMuseumObject.nameAltString);
+        editPlayerGroupGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
 
     }
 
@@ -1845,353 +1852,281 @@ public void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _ind
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
 //END//EditPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
-/*A class to creating a GUI object on adding museum object.*/
 
 
-class AddMuseumGUIObject{
 
-    /*Some variables :).*/
-    int           groupBackgroundColor                ;                           /*The color of group panel group background.*/
-    int           groupColorBackgroundColor           ;                           /*The title background color of panel group.*/
-    int           groupColorLabelColor                ;                           /*The title font colot of the panel group.*/
-    float           alphaFloat                          = 255;                      /*The opacity of this object.*/
-    int             parentButtonSizeInt                 ;                           /*A variable for layout taken from the main class.*/
-    int             parentDropdownObjectWidthInt        ;                           /*A variable for layout taken from the main class.*/
-    int             parentDropdownObjectHeightInt       ;                           /*A variable for layout taken from the main class.*/
-    int             groupLayoutOffsetInt                = 10;                       /*This object layout offset.*/
-    int             groupXInt                           ;                           /*X position of this GUI object in the main class.*/
-    int             groupYInt                           ;                           /*Y position of this GUI object in the main class.*/
-    int             groupAddWidthInt                    ;                           /*Width of the group, dependent on screen size.*/
-    int             groupAddHeightInt                   ;                           /*Fixed height of the group, you need to carefully arrange the height of this variable using pixel ruler..*/
-    int             scrollableOffsetInt                 = 1;                        /*Fixed offset of scrollable list.*/
-    int             scrollableWidthInt                  ;                           /*Width of every scrollable list component, dependent on group size.*/
-    int             scrollableHeightInt                 ;                           /*Height of every scrollable list component, dependent group label height.*/
-    int             oneLineComponentWidthInt            ;                           /*Width for every one line component like button or text field, dependent on scrollable component size.*/
-    int             oneLineComponentHeightInt           ;                           /*Height for every one line component like button or text field, dependent on scrollable component size.*/
-    CColor          otherCColor                         = new CColor();             /*The color for other component than the scrollableChecklist.*/
-    CColor          sChecklistTrueCColor                = new CColor();             /*The color of the item when an item in scroll checklist is selected.*/
-    CColor          sChecklistFalseCColor               = new CColor();             /*The color of the item when an item in scroll checklist is not selected.*/
-    String          typeObjectMuseumString              = "";                       /*The type of the object that will be added, it will be either floor, room, or exhibition object.*/
-    List<String>    selectedTagStringList               = new ArrayList<String>();
-    List<String>    tempSelectTagSubjectSList           = new ArrayList<String>();
-    List<String>    tempSelectTagVerbSList              = new ArrayList<String>();
-    List<String>    tempSelectTagNounSList              = new ArrayList<String>();
-    List<String>    tempSelectTagAdjectiveSList         = new ArrayList<String>();
-    List<String>    tempSelectTagAdverbSList            = new ArrayList<String>();
-    String          selectedParentString                = "";                       /*Variable to be used and altered in the main class.*/
-    String          selectedTypeObjectString            = "";                       /*Variable to be used and altered in the main class.*/
+class AddMuseumGroupGUIObject extends GroupGUIObject{
 
-    /*Constructor.
-    PENDING: Move the parent argument into the argument for DrawVoid() method.*/
-    AddMuseumGUIObject(
+    ControlP5               addMuseumGroupControlP5Object                                               ;                           /*ControlP5 object to control all graphical user interface controller.              */
 
-        int     _groupXInt                      ,
-        int     _groupYInt                      ,
-        int     _groupAddWidthInt               ,
-        int     _groupAddHeightInt              ,
-        int     _parentButtonSizeInt            ,
-        int     _parentDropdownObjectWidthInt   ,
-        int     _parentDropdownObjwctHeightInt
+    //AddTagGroupGUIObject  addTagGroupGUIObject                                                        ;                           /*PENDING*/
+    ControlP5               addTagGroupGUIObject                                                        ;                           /*PENDING*/
+
+    String                  tempSelectedParentNameAltString                                             = "";                       /*Selected object museum parent name alt  string.                                   */
+    String                  tempSelectedParentNameFullString                                            = "";                       /*Selected object museum parent name full string.                                   */
+    String                  tempSelectedTypeObjectMuseumNameAltString                                   = "";                       /*Selected object museum type   name alt  string ("FLR"  , "ROM" , "EXH"       ).   */
+    String                  tempSelectedTypeObjectMuseumNameFullString                                  = "";                       /*Selected object museum type   name full string ("Floor", "Room", "Exhibition").   */
+    List<String>            tempSelectedTagNameFullStringList                                           = new ArrayList<String>();  /*Selected object museum tag    name full string.                                   */
+
+    /*ControlP5 related graphical user interface controller variables.*/
+    Group                   addMuseumGroupObject                                                        ;
+    ScrollableList          addMuseumGroupSelectTypeMuseumObjectScrollableListObject                    ;
+    ScrollableList          addMuseumGroupSelectParentMuseumObjectScrollableListObject                  ;
+    Textlabel               addMuseumGroupCanAddMultipleTagTextlabelObject                              ;
+    ScrollableList          addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject              ;
+    ScrollableList          addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                 ;
+    ScrollableList          addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         ;
+    ScrollableList          addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                 ;
+    ScrollableList          addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject            ;
+    ScrollableList          addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    ;
+    ScrollableList          addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               ;
+    ScrollableList          addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       ;
+    Textfield               addMuseumGroupNameFullMuseumObjectTextfieldObject                           ;
+    Textfield               addMuseumGroupNameAltMuseumObjectTextfieldObject                            ;
+    Button                  addMuseumGroupAddMuseumObjectButtonObject                                   ;
+
+    /*PENDING.
+    AddMuseumGroupGUIObject                                         (
+
+        int                                     _guiXInt                ,
+        int                                     _guiYInt                ,
+        int                                     _guiWidthInt            ,
+        int                                     _guiHeightInt           ,
+        AddTagGroupGUIObject                    _addTagGroupGUIObject   ,
+        PApplet                                 _pAppletObject
+
+    ){
+    */
+    /*PENDING.*/
+    AddMuseumGroupGUIObject                                         (
+
+        int                                     _guiXInt                ,
+        int                                     _guiYInt                ,
+        int                                     _guiWidthInt            ,
+        int                                     _guiHeightInt           ,
+        ControlP5                               _addTagGroupGUIObject   ,
+        PApplet                                 _pAppletObject
 
     ){
 
-        groupXInt                               = _groupXInt;
-        groupYInt                               = _groupYInt + groupLayoutOffsetInt;
-        groupAddWidthInt                        = _groupAddWidthInt;
-        groupAddHeightInt                       = _groupAddHeightInt;
-        parentButtonSizeInt                     = _parentButtonSizeInt;
-        parentDropdownObjectWidthInt            = _parentDropdownObjectWidthInt;
-        parentDropdownObjectHeightInt           = _parentDropdownObjwctHeightInt;
+        super                                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
+        addMuseumGroupControlP5Object                                               = new ControlP5(_pAppletObject);
 
-        scrollableWidthInt                      = ((groupAddWidthInt - groupLayoutOffsetInt*4)/3);      /*Create the scrollable list width to accomodate three scrollable list in a row.*/
-        scrollableHeightInt                     = ((6*groupLayoutOffsetInt) + (5*scrollableOffsetInt)); /*Create the scrollable list height to accomodate five items + header in.*/
-        oneLineComponentWidthInt                = ((groupAddWidthInt - groupLayoutOffsetInt*3)/2);      /*Create the one line object width to accomodate two similar object in a row.*/
-        oneLineComponentHeightInt               = groupLayoutOffsetInt;                                 /*This need to be at the same height as the layout offset or the label height.*/
-
-        /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
-        groupBackgroundColor                    = color(50  , 60    , 57    , alphaFloat);
-        groupColorBackgroundColor               = color(2   , 45    , 89    , alphaFloat);
-        groupColorLabelColor                    = color(255 , 255   , 255   , alphaFloat);
-        otherCColor                             .setActive          (color(0    , 170   , 255   , alphaFloat))
-                                                .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                                .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                                .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                                .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-        sChecklistFalseCColor                   .setActive          (color(0    , 45    , 90    , alphaFloat))
-                                                .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                                .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                                .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                                .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-        sChecklistTrueCColor                    .setActive          (color(0    , 116   , 217   , alphaFloat))
-                                                .setBackground      (color(0    , 116   , 217   , alphaFloat))
-                                                .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                                .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                                .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-
-        if(useNameAltBoolean        == true ){
-
-            tempSelectTagSubjectSList           = subjectTagNameAltStringList;
-            tempSelectTagVerbSList              = verbTagNameAltStringList;
-            tempSelectTagNounSList              = nounTagNameAltStringList;
-            tempSelectTagAdjectiveSList         = adjectiveTagNameAltStringList;
-            tempSelectTagAdverbSList            = adverbTagNameAltStringList;
-
-        }
-        else if(useNameAltBoolean   == false){
-
-            tempSelectTagSubjectSList           = subjectTagNameFullStringList;
-            tempSelectTagVerbSList              = verbTagNameFullStringList;
-            tempSelectTagNounSList              = nounTagNameFullStringList;
-            tempSelectTagAdjectiveSList         = adjectiveTagNameFullStringList;
-            tempSelectTagAdverbSList            = adverbTagNameFullStringList;
-
-        }
-
-        /*Create the group and all components.*/
-        Group   AddMuseumGroupObject            =
-                cp5Object                       .addGroup               ("AddMuseumGroupObject")
-                                                .close                  ()
-                                                .setPosition            (groupXInt, groupYInt)
-                                                .setWidth               (groupAddWidthInt)
-                                                .setBackgroundHeight    (groupAddHeightInt)
-                                                .setBackgroundColor     (groupBackgroundColor)
-                                                .setColor               (otherCColor)
-                                                .setColorBackground     (groupColorBackgroundColor)
-                                                .setColorLabel          (groupColorLabelColor)
-                                                .setLabel               ("ADD MUSEUM OBJECT:");
-
-                cp5Object                       .addScrollableList      ("TypeObjectMuseumSList")
-                                                .setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
-                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (Arrays.asList("Floor", "Room", "Exhibition"))
-                                                .setType                (ControlP5.LIST)
-                                                .setColor               (otherCColor)
-                                                .setLabel               ("CHOOSE TYPE:");
-
-                cp5Object                       .addScrollableList      ("SelectParentObjectMuseumSList")
-                                                .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), groupLayoutOffsetInt)
-                                                .setSize                (((scrollableWidthInt*2) + groupLayoutOffsetInt), scrollableHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (defaultStringList)
-                                                .setType                (ControlP5.LIST)
-                                                .setColor               (otherCColor)
-                                                .setLabel               ("PARENT OBJECT:");
-
-                cp5Object                       .addScrollableList      ("SelectTagSubjectSList")
-                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*2) + scrollableHeightInt))
-                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (tempSelectTagSubjectSList)
-                                                .setType                (ControlP5.LIST)
-                                                .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("SUBJECT TAG:");
-
-                cp5Object                       .addScrollableList      ("SelectTagVerbSList")
-                                                .setPosition            (((groupLayoutOffsetInt*2) + scrollableWidthInt), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
-                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (tempSelectTagVerbSList)
-                                                .setType                (ControlP5.LIST)
-                                                .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("VERB TAG:");
-
-                cp5Object                       .addScrollableList      ("SelectTagNounSList")
-                                                .setPosition            (((groupLayoutOffsetInt*3) + (scrollableWidthInt*2)), ((groupLayoutOffsetInt*2) + scrollableHeightInt))
-                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (tempSelectTagNounSList)
-                                                .setType                (ControlP5.LIST)
-                                                .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("NOUN TAG:");
-
-                cp5Object                       .addScrollableList      ("SelectTagAdjectiveSList")
-                                                .setPosition            (((groupLayoutOffsetInt) + (scrollableWidthInt/2)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
-                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (tempSelectTagAdjectiveSList)
-                                                .setType                (ControlP5.LIST)
-                                                .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("ADJECTIVE TAG:");
-
-                cp5Object                       .addScrollableList      ("SelectTagAdverbSList")
-                                                .setPosition            (((groupLayoutOffsetInt*2) + ((scrollableWidthInt/2)*3)), ((groupLayoutOffsetInt*3) + (scrollableHeightInt*2)))
-                                                .setSize                (scrollableWidthInt, scrollableHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .addItems               (tempSelectTagAdverbSList)
-                                                .setType                (ControlP5.LIST)
-                                                .setColor               (sChecklistFalseCColor)
-                                                .setLabel               ("ADVERB TAG:");
-
-                cp5Object                       .addTextlabel           ("CanAddMultipleTagsTextlabel")
-                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*4) + (scrollableHeightInt*3)))
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .setColor               (otherCColor)
-                                                .setColorValue          (255)
-                                                .setText                ("*YOU CAN ADD MULTIPLE TAGS\nBUT MINIMUM ONE TAG IN EACH CATEGORY.");
-
-                cp5Object                       .addTextfield           ("NameFullTextfield")
-                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
-                                                .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .setColor               (otherCColor)
-                                                .setLabel               ("NAME FULL");
-
-                cp5Object                       .addTextfield           ("NameAltTextfield")
-                                                .setPosition            (((groupLayoutOffsetInt*2) + oneLineComponentWidthInt), ((groupLayoutOffsetInt*7) + (scrollableHeightInt*3)))
-                                                .setSize                (oneLineComponentWidthInt, (oneLineComponentHeightInt*2))
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .setColor               (otherCColor)
-                                                .setLabel               ("NAME ALTERNATIVE");
-
-                cp5Object                       .addButton              ("SubmitButton")
-                                                .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*10) + (scrollableHeightInt*3) + oneLineComponentHeightInt))
-                                                .setSize                (((oneLineComponentWidthInt*2) + groupLayoutOffsetInt), oneLineComponentHeightInt)
-                                                .setGroup               (AddMuseumGroupObject)
-                                                .setColor               (otherCColor)
-                                                .setLabel               ("SUBMIT");
-
-        /*DEBUG.*/
-        /*
-        println("AddMuseumGroupObject\t\t"                              + cp5Object.get(Group.class         , "AddMuseumGroupObject"            ).getColor());
-        println("TypeObjectMuseumSList\t\t"                             + cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList"           ).getColor());
-        println("SelectParentObjectMuseumSList\t"                       + cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList"   ).getColor());
-        println("SelectTagSubjectSList\t\t"                             + cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"           ).getColor());
-        println("SelectTagVerbSList\t\t"                                + cp5Object.get(ScrollableList.class, "SelectTagVerbSList"              ).getColor());
-        println("SelectTagNounSList\t\t"                                + cp5Object.get(ScrollableList.class, "SelectTagNounSList"              ).getColor());
-        println("CanAddMultipleTagsTextlabel\t"                         + cp5Object.get(Textlabel.class     , "CanAddMultipleTagsTextlabel"     ).getColor());
-        println("NameFullTextfield\t\t"                                 + cp5Object.get(Textfield.class     , "NameFullTextfield"               ).getColor());
-        println("NameAltTextfield\t\t"                                  + cp5Object.get(Textfield.class     , "NameAltTextfield"                ).getColor());
-        println("SubmitButton\t\t\t"                                    + cp5Object.get(Button.class        , "SubmitButton"                    ).getColor());
-        */
-
-    }
-
-    public void DrawVoid(float _alphaFloat)        {
-
-        /*For ebery tick/frame make sure to sync this object with the value received from the main class.*/
-        alphaFloat                  = _alphaFloat;
-
-        /*Show/hide controller based on the alpha value received from the main class.*/
-        if                          (alphaFloat >  (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).show(); }
-        else if                     (alphaFloat <= (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).hide(); }
-
-        groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat + (255f/45f));
-        groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat + (255f/45f));
-        groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat + (255f/45f));
-        otherCColor                 .setActive          (color(0    , 170   , 255   , alphaFloat))
-                                    .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                    .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                    .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                    .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-        sChecklistFalseCColor       .setActive          (color(0    , 45    , 90    , alphaFloat))
-                                    .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                    .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                    .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                    .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-        sChecklistTrueCColor        .setActive          (color(0    , 116   , 217   , alphaFloat))
-                                    .setBackground      (color(0    , 116   , 217   , alphaFloat))
-                                    .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                    .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                    .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-
-        /*Especially for group controller you need to adjust four methods instead of just one methods.*/
-        cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setBackgroundColor    (groupBackgroundColor);
-        cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColor              (otherCColor);
-        cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColorBackground    (groupColorBackgroundColor);
-        cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).setColorLabel         (groupColorLabelColor);
-
-        /*The rest of the controller you only need to adjust for one method, which is setColor().*/
-        cp5Object.get(ScrollableList.class  , "TypeObjectMuseumSList"           ).setColor              (otherCColor            );
-        cp5Object.get(ScrollableList.class  , "SelectParentObjectMuseumSList"   ).setColor              (otherCColor            );
-        cp5Object.get(ScrollableList.class  , "SelectTagSubjectSList"           ).setColor              (sChecklistFalseCColor  );
-        cp5Object.get(ScrollableList.class  , "SelectTagVerbSList"              ).setColor              (sChecklistFalseCColor  );
-        cp5Object.get(ScrollableList.class  , "SelectTagNounSList"              ).setColor              (sChecklistFalseCColor  );
-        cp5Object.get(ScrollableList.class  , "SelectTagAdjectiveSList"         ).setColor              (sChecklistFalseCColor  );
-        cp5Object.get(ScrollableList.class  , "SelectTagAdverbSList"            ).setColor              (sChecklistFalseCColor  );
-        cp5Object.get(Textlabel     .class  , "CanAddMultipleTagsTextlabel"     ).setColor              (otherCColor            );
-        cp5Object.get(Textfield     .class  , "NameFullTextfield"               ).setColor              (otherCColor            );
-        cp5Object.get(Textfield     .class  , "NameAltTextfield"                ).setColor              (otherCColor            );
-        cp5Object.get(Button        .class  , "SubmitButton"                    ).setColor              (otherCColor            );
-
-        /*This to re - set SelectParentObjectMuseumSList so that it display options according to the TypeObjectMuseumSList selection.*/
-        if      (useNameAltBoolean == true ){
-
-            if      (typeObjectMuseumString.equals("Floor"      )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(defaultStringList         ); typeObjectMuseumString = ""; }
-            else if (typeObjectMuseumString.equals("Room"       )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(floorNameAltStringList    ); typeObjectMuseumString = ""; }
-            else if (typeObjectMuseumString.equals("Exhibition" )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(roomNameAltStringList     ); typeObjectMuseumString = ""; }
-
-        }
-        else if (useNameAltBoolean == false){
-
-            if      (typeObjectMuseumString.equals("Floor"      )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(defaultStringList         ); typeObjectMuseumString = ""; }
-            else if (typeObjectMuseumString.equals("Room"       )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(floorNameFullStringList   ); typeObjectMuseumString = ""; }
-            else if (typeObjectMuseumString.equals("Exhibition" )){ cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").setItems(roomNameFullStringList    ); typeObjectMuseumString = ""; }
-
-        }
+        addTagGroupGUIObject                                                        = _addTagGroupGUIObject;                                               /*PENDING.*/
 
 
-        /*This code below is for controlling controllers outside of this class.
-        These two if statements is for controlling the position of the other object in the same open close button.*/
-        if      (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == true ){
 
-                /*Change the position when the group object is open.*/
-                 cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+        addMuseumGroupObject                                                        =
+            addMuseumGroupControlP5Object   .addGroup                               ("AddMuseumGroupObject")
+                                            .close                                  ()
+                                            .setBackgroundColor                     (groupBackgroundColor)
+                                            .setBackgroundHeight                    (guiHeightInt)
+                                            .setColor                               (defaultCColor)
+                                            .setColorBackground                     (groupColorBackgroundColor)
+                                            .setColorLabel                          (groupColorLabelColor)
+                                            .setLabel                               ("ADD MUSEUM OBJECT:")
+                                            .setPosition                            (guiXInt, guiYInt)
+                                            .setWidth                               (guiWidthInt);
 
-                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
-                    (cp5Object.get(Group.class, "AddMuseumGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupAddHeightInt)
 
-                );
-                
-        }
-        else if (cp5Object.get(Group.class, "AddMuseumGroupObject").isOpen() == false){
 
-                /*Change the position when the group object is close.*/
-                 cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+        addMuseumGroupSelectTypeMuseumObjectScrollableListObject                    =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectTypeMuseumObjectScrollableListObject")
+                                            .addItems                               (Arrays.asList("Floor", "Room", "Exhibition"))
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("CHOOSE TYPE:")
+                                            .setPosition                            (guiElement4CollumnFirstCollumnXInt, guiLayoutOffsetInt)
+                                            .setSize                                (guiElement4CollumnWidth, guiScrollableList4RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
 
-                    (width - groupLayoutOffsetInt*2 - (parentButtonSizeInt/2) - parentDropdownObjectWidthInt),
-                    (cp5Object.get(Group.class, "AddMuseumGroupObject").getPosition()[1] + groupLayoutOffsetInt)
 
-                );
 
-        }
+        addMuseumGroupSelectParentMuseumObjectScrollableListObject                  =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectParentMuseumObjectScrollableListObject")
+                                            .addItems                               (defaultStringList)
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("PARENT OBJECT:")
+                                            .setPosition                            (guiElement4CollumnSecondCollumnXInt, guiLayoutOffsetInt)
+                                            .setSize                                (((guiElement4CollumnWidth*3) + (guiLayoutOffsetInt*2)), guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupCanAddMultipleTagTextlabelObject                              =
+            addMuseumGroupControlP5Object   .addTextlabel                           ("AddMuseumGroupCanAddMultipleTagTextlabelObject")
+                                            .setColor                               (defaultCColor)
+                                            .setColorValue                          (255)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setPosition                            (guiElement1CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setText                                ("*YOU CAN ADD MULTIPLE TAGS\nBUT MINIMUM ONE TAG IN EACH CATEGORY.");
+
+
+
+        addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject              =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject")
+                                            .addItems                               (subjectTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("SUBJECT TAG:")
+                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                 =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectNounTagMuseumObjectScrollableListObject")
+                                            .addItems                               (nounTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("NOUN TAG:")
+                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                 =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectVerbTagMuseumObjectScrollableListObject")
+                                            .addItems                               (verbTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setLabel                               ("VERB TAG:")
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject")
+                                            .addItems                               (negativeVerbTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("NEGATIVE VERB TAG:")
+                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject            =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject")
+                                            .addItems                               (adjectiveTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("ADJECTIVE TAG:")
+                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject")
+                                            .addItems                               (negativeAdjectiveTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("NEGATIVE ADJECTIVE TAG:")
+                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject")
+                                            .addItems                               (adverbTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("ADVERB TAG:")
+                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       =
+            addMuseumGroupControlP5Object   .addScrollableList                      ("AddMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject")
+                                            .addItems                               (negativeAdverbTagNameFullStringList)
+                                            .setColor                               (falseCheckListCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("NEGATIVE ADVERB TAG:")
+                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                                (ControlP5.LIST);
+
+
+
+        addMuseumGroupNameFullMuseumObjectTextfieldObject                           =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupNameFullMuseumObjectTextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("NAME FULL")
+                                            .setPosition                            (guiElement3CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setSize                                (guiElement3CollumnWidth, guiElement2LineHeight);
+
+
+
+        addMuseumGroupNameAltMuseumObjectTextfieldObject                            =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupNameAltMuseumObjectTextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("NAME ALTERNATIVE")
+                                            .setPosition                            (guiElement3CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setSize                                (guiElement3CollumnWidth, guiElement2LineHeight);
+
+
+
+        addMuseumGroupAddMuseumObjectButtonObject                                   =
+            addMuseumGroupControlP5Object   .addButton                              ("AddMuseumGroupAddMuseumObjectButtonObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("ADD MUSEUM OBJECT")
+                                            .setPosition                            (guiElement3CollumnThirdCollumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setSize                                (guiElement3CollumnWidth, guiElement2LineHeight);
+
+
 
     }
 
-    /*This function is to put every selected tags into a String List.*/
-    public void SetSelectedTagStringList(
+    public void DrawVoid                                                   (float _alphaFloat){
 
-        List<String>    _specificTagStringList ,
-        String          _controllerName
+        super.DrawVoid(_alphaFloat, addMuseumGroupObject);
 
-    ){
+        /*Specify the position of another controller below this group controller.*/
+        if      (addMuseumGroupObject.isOpen() == true ){
 
-        /*Iterate through all the list elements.*/
-        for(int i = 0; i < _specificTagStringList.size(); i ++){
+                /*PENDING.*/
+                addTagGroupGUIObject.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+                    addMuseumGroupObject.getPosition()[0],
+                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
+                );
 
-            /*Check if there is property in the hash map named "isSelected".*/
-            if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected") != null){
+                /*PENDING.
+                addTagGroupGUIObject.addTagGroupObject.setPosition(
+                    addMuseumGroupObject.getPosition()[0],
+                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
+                );
+                */
 
-                /*If there is a properties called "isSelected" and it is returned true then add the selected "text" properties into the String list if only
-                    it is not yet inside the list.
-                PENDING: Implementation of HashSet could be more suitable here instead of using List.*/
-                if      (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("true" )){
+        }
+        else if (addMuseumGroupObject.isOpen() == false){
 
-                    if(!selectedTagStringList.contains(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString())){
+                /*PENDING.*/
+                addTagGroupGUIObject.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+                    addMuseumGroupObject.getPosition()[0],
+                    addMuseumGroupObject.getPosition()[1] + guiLayoutOffsetInt
+                );
 
-                        selectedTagStringList.add(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString());
-
-                    }
-
-                }
-                /*If "isSelected" is false then delete the element from the list.*/
-                else if (cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("isSelected").toString().equals("false")){
-
-                    selectedTagStringList.remove(cp5Object.get(ScrollableList.class, _controllerName).getItem(i).get("text").toString()); 
-
-                }
-
-            }
+                /*PENDING.
+                addTagGroupGUIObject.addTagGroupObject.setPosition(
+                    addMuseumGroupObject.getPosition()[0],
+                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
+                );
+                */
 
         }
 
@@ -3014,8 +2949,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5                               editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
-    //ChoosePlayerScrollableListGUIObject   choosePlayerScrollableListGUIObject                         ;                           /*PENDING: Object is not yet created.                                                               */
-    ControlP5                               playerScrollableListObject                                  ;                           /*PENDING: Change later with variable of ObjectGUI.                                                 */
+    //SelectPlayerScrollableListGUIObject   selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Object is not yet created.                                                               */
+    ControlP5                               selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Change later with variable of ObjectGUI.                                                 */
 
     ObjectPlayer                            selectedPlayerObject                                        ;                           /*Selected player object.*/
 
@@ -3052,13 +2987,13 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
     Button                                  editPlayerGroupPlayerGeneratePatternButtonObject            ;
 
     /*PENDING.
-    public EditPlayerGUIObject                                      (
+    EditPlayerGUIObject                                             (
 
         int                                     _guiXInt                                ,
         int                                     _guiYInt                                ,
         int                                     _guiWidthInt                            ,
         int                                     _guiHeightInt                           ,
-        ChoosePlayerScrollableListGUIObject     _choosePlayerScrollableListGUIObject    ,
+        SelectPlayerScrollableListGUIObject     _selectPlayerScrollableListGUIObject    ,
         PApplet                                 _pAppletObject
 
     ){
@@ -3070,7 +3005,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         int                                     _guiYInt                                ,
         int                                     _guiWidthInt                            ,
         int                                     _guiHeightInt                           ,
-        ControlP5                               _playerScrollableListObject             ,
+        ControlP5                               _selectPlayerScrollableListGUIObject    ,
         PApplet                                 _pAppletObject
 
     ){
@@ -3078,8 +3013,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         editPlayerGroupControlP5Object                              = new ControlP5(_pAppletObject);
 
-        //choosePlayerScrollableListGUIObject                       = _choosePlayerScrollableListGUIObject;                                                         /*PENDING.*/
-        playerScrollableListObject                                  = _playerScrollableListObject;                                                                  /*PENDING.*/
+        selectPlayerScrollableListGUIObject                         = _selectPlayerScrollableListGUIObject;                                                            /*PENDING.*/
 
         selectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
@@ -3145,7 +3079,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addButton                                          ("EditPlayerGroupPlayerNameChangeButtonObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setLabel                                           ("CHANGE NAME")
+                .setLabel                                           ("CHANGE VISITOR NAME")
                 .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*3))
                 .setSize                                            (guiElement2CollumnWidth,  guiElement2LineHeight);
 
@@ -3218,15 +3152,15 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
 
         editPlayerGroupPlayerExhibitionTargetScrollableListObject   =
-                editPlayerGroupControlP5Object
-                    .addScrollableList                              ("EditPlayerGroupPlayerExhibitionTargetScrollableListObject")
-                    .addItems                                       (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
-                    .setColor                                       (staticScrollableListCColor)
-                    .setGroup                                       (editPlayerGroupObject)
-                    .setLabel                                       ("VISITOR TARGET EXHIBITIONS:")
-                    .setPosition                                    (guiElement2CollumnFirstCollumnXInt,  (guiLayoutOffsetInt*11))
-                    .setSize                                        (guiElement2CollumnWidth, guiScrollableList4RowHeightInt)
-                    .setType                                        (ControlP5.LIST);
+            editPlayerGroupControlP5Object
+                .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionTargetScrollableListObject")
+                .addItems                                           (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
+                .setColor                                           (staticScrollableListCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("VISITOR TARGET EXHIBITIONS:")
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  (guiLayoutOffsetInt*11))
+                .setSize                                            (guiElement2CollumnWidth, guiScrollableList4RowHeightInt)
+                .setType                                            (ControlP5.LIST);
 
 
 
@@ -3361,12 +3295,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     }
 
-    public void DrawVoid                                                   (
-
-        boolean _buttonOpenCloseBoolean ,
-        float   _alphaFloat
-
-    ){
+    public void DrawVoid                                                   (float   _alphaFloat){
 
         super.DrawVoid(_alphaFloat, editPlayerGroupObject);
 
@@ -3374,14 +3303,14 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         if      (editPlayerGroupObject.isOpen() == true ){
 
                 /*PENDING.*/
-                playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
 
                 /*PENDING.
-                choosePlayerScrollableList.choosePlayerScrollableListObject.setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2)              ),
+                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
                 */
@@ -3390,23 +3319,19 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         else if (editPlayerGroupObject.isOpen() == false){
 
                 /*PENDING.*/
-                playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
 
                 /*PENDING.
-                choosePlayerScrollableList.choosePlayerScrollableListObject.setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2) ),
+                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
                 */
 
         }
-
-        /*If button to open this group is in closed state then assign this group controller player selected object back to
-            the default player (the first index in the object player list).*/
-        if(_buttonOpenCloseBoolean == false){ selectedPlayerObject = playerObjectList.get(0); }
 
         /*Always assign values to the controllers.*/
         if(selectedPlayerObject                             != null ){
@@ -3467,10 +3392,15 @@ class GroupGUIObject{
     int             guiElement3CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 3 collumns row.*/
     int             guiElement3CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 3 collumns row.*/
     int             guiElement3CollumnThirdCollumnXInt                          ;                           /*The x position of third  controller in 3 collumns row.*/
+    int             guiElement4CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 4 collumns row.*/
+    int             guiElement4CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 4 collumns row.*/
+    int             guiElement4CollumnThirdCollumnXInt                          ;                           /*The x position of third  controller in 4 collumns row.*/
+    int             guiElement4CollumnFourthCollumnXInt                         ;                           /*The x position of fourth controller in 4 collumns row.*/
 
     int 			guiElement1CollumnWidth 									; 							/*The width of any controller in 1 collumn  row.*/
     int             guiElement2CollumnWidth                                     ;                           /*The width of any controller in 2 collumns row.*/
     int             guiElement3CollumnWidth                                     ;                           /*The width of any controller in 3 collumns row.*/
+    int             guiElement4CollumnWidth                                     ;                           /*The width of any controller in 4 collumns row.*/
 
     int             guiElement1LineHeight                                       = 10;                       /*The height of any element that only one line height.
                                                                                                             For example, button, text label.*/
@@ -3480,12 +3410,14 @@ class GroupGUIObject{
     int             guiScrollableList5RowHeightInt                              = 62;                       /*The height of scrollable list controller that contains four  elements with additional one element of controller's title panel.*/
     int             guiScrollableList4RowHeightInt                              = 50;                       /*The height of scrollable list controller that contains three elements with additional one element of controller's title panel.*/
 
-    CColor          defaultCColor                                               = new CColor();             /*This is controller color for default                object.*/
-    CColor          staticScrollableListCColor                                  = new CColor();             /*This is controller color for static scrollable list object.*/
+    CColor          defaultCColor                                               = new CColor();             /*This is controller color for default                            object.*/
+    CColor          trueCheckListCColor                							= new CColor();             /*This is controller color for selected checklist scrollable list object.*/
+    CColor          falseCheckListCColor               							= new CColor();             /*This is controller color for selected checklist scrollable list object.*/
+    CColor          staticScrollableListCColor                                  = new CColor();             /*This is controller color for static             scrollable list object.*/
 
     PApplet         pAppletObject                                               ;                           /*Refer this object back to main PApplet object.*/
 
-    GroupGUIObject 		(
+    GroupGUIObject 								(
 
     	int     _guiXInt        ,
         int     _guiYInt        ,
@@ -3504,12 +3436,17 @@ class GroupGUIObject{
         guiElement1CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*2))/1)                ;
         guiElement2CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*3))/2)                ;
         guiElement3CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*4))/3)                ;
-        guiElement1CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement2CollumnWidth*0))    ;
+        guiElement4CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*5))/4)                ;
+        guiElement1CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement1CollumnWidth*0))    ;
         guiElement2CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement2CollumnWidth*0))    ;
         guiElement2CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement2CollumnWidth*1))    ;
         guiElement3CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement3CollumnWidth*0))    ;
         guiElement3CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement3CollumnWidth*1))    ;
         guiElement3CollumnThirdCollumnXInt              = ((guiLayoutOffsetInt*3) + (guiElement3CollumnWidth*2))    ;
+        guiElement4CollumnFirstCollumnXInt				= ((guiLayoutOffsetInt*1) + (guiElement4CollumnWidth*0))    ;
+		guiElement4CollumnSecondCollumnXInt				= ((guiLayoutOffsetInt*2) + (guiElement4CollumnWidth*1))    ;
+		guiElement4CollumnThirdCollumnXInt				= ((guiLayoutOffsetInt*3) + (guiElement4CollumnWidth*2))    ;
+		guiElement4CollumnFourthCollumnXInt				= ((guiLayoutOffsetInt*4) + (guiElement4CollumnWidth*3))    ;
 
         groupBackgroundColor                            = color(50 , 60 , 57 , alphaFloat)  ;
         groupColorBackgroundColor                       = color(2  , 45 , 89 , alphaFloat)  ;
@@ -3525,10 +3462,20 @@ class GroupGUIObject{
                                     .setCaptionLabel    (color(255, 255, 255, alphaFloat))						/*The color of controller         elements text.                       */
                                     .setForeground      (color(0  , 45 , 90 , alphaFloat))						/*The color of controller when an element  is hovered by mouse pointer */
                                     .setValueLabel      (color(255, 255, 255, alphaFloat));						/*The color of controller         elements text.                       */
+        trueCheckListCColor			.setActive          (color(0  , 116, 217, alphaFloat))						/*The color of controller when an element  is clicked by mouse pointer.*/
+                                    .setBackground      (color(0  , 116, 217, alphaFloat))						/*The color of controller         elements background.                 */
+                                    .setCaptionLabel    (color(255, 255, 255, alphaFloat))						/*The color of controller         elements text.                       */
+                                    .setForeground      (color(0  , 116, 217, alphaFloat))						/*The color of controller when an element  is hovered by mouse pointer */
+                                    .setValueLabel      (color(255, 255, 255, alphaFloat));						/*The color of controller         elements text.                       */
+        falseCheckListCColor		.setActive          (color(0  , 45 , 90 , alphaFloat))						/*The color of controller when an element  is clicked by mouse pointer.*/
+	                                .setBackground      (color(0  , 45 , 90 , alphaFloat))						/*The color of controller         elements background.                 */
+	                                .setCaptionLabel    (color(255, 255, 255, alphaFloat))						/*The color of controller         elements text.                       */
+	                                .setForeground      (color(0  , 116, 217, alphaFloat))						/*The color of controller when an element  is hovered by mouse pointer */
+	                                .setValueLabel      (color(255, 255, 255, alphaFloat));						/*The color of controller         elements text.                       */
 
     }
 
-    public void DrawVoid 		(
+    public void DrawVoid 								(
 
     	float _alphaFloat		,
     	Group _mainGroupObject
@@ -3555,11 +3502,82 @@ class GroupGUIObject{
                                     .setCaptionLabel    (color(255, 255, 255, alphaFloat))                      /*The color of controller         elements text.                       */
                                     .setForeground      (color(0  , 45 , 90 , alphaFloat))                      /*The color of controller when an element  is hovered by mouse pointer */
                                     .setValueLabel      (color(255, 255, 255, alphaFloat));                     /*The color of controller         elements text.                       */
+        trueCheckListCColor			.setActive          (color(0  , 116, 217, alphaFloat))						/*The color of controller when an element  is clicked by mouse pointer.*/
+                                    .setBackground      (color(0  , 116, 217, alphaFloat))						/*The color of controller         elements background.                 */
+                                    .setCaptionLabel    (color(255, 255, 255, alphaFloat))						/*The color of controller         elements text.                       */
+                                    .setForeground      (color(0  , 116, 217, alphaFloat))						/*The color of controller when an element  is hovered by mouse pointer */
+                                    .setValueLabel      (color(255, 255, 255, alphaFloat));						/*The color of controller         elements text.                       */
+        falseCheckListCColor		.setActive          (color(0  , 45 , 90 , alphaFloat))						/*The color of controller when an element  is clicked by mouse pointer.*/
+	                                .setBackground      (color(0  , 45 , 90 , alphaFloat))						/*The color of controller         elements background.                 */
+	                                .setCaptionLabel    (color(255, 255, 255, alphaFloat))						/*The color of controller         elements text.                       */
+	                                .setForeground      (color(0  , 116, 217, alphaFloat))						/*The color of controller when an element  is hovered by mouse pointer */
+	                                .setValueLabel      (color(255, 255, 255, alphaFloat));						/*The color of controller         elements text.                       */
 
         _mainGroupObject       		.setBackgroundColor (groupBackgroundColor           );
         _mainGroupObject       		.setColor           (defaultCColor                  );
         _mainGroupObject       		.setColorBackground (groupColorBackgroundColor      );
         _mainGroupObject       		.setColorLabel      (groupColorLabelColor           );
+
+    }
+
+	/*This function below is used to "convert" scrollable list into checklist.*/
+	public void CovertScrollableListIntoCheckListVoid	(int _indexInt, ScrollableList _scrollableListObject)   {
+
+	    /*If there is no property named isSelected in the hashmap than we need to create one.
+	    After that assign the isSelected value to true and also assign the color.*/
+	    if( _scrollableListObject.getItem(_indexInt).get("isSelected") == null){
+
+	        _scrollableListObject.getItem(_indexInt).put("isSelected" , true				); /*Create a new property called "isSelected" and assign initial value of true.*/
+	        _scrollableListObject.getItem(_indexInt).put("color"      , trueCheckListCColor	); /*Change the color of this specific element into trueCheckListColor.         */
+
+	    }
+	    /*If there is isSelected property than revert it between true and false everytime we clicked it and set the appropriate color scheme.*/
+	    else{
+
+	        boolean  stateBoolean	=   _scrollableListObject.getItem(_indexInt).get("isSelected").toString().equals("true") ? true : false; 	/*Check wheter the currently selected element is used to be selected or not.                         */
+	                                    _scrollableListObject.getItem(_indexInt).put("isSelected", !stateBoolean           ); 					/*If the selected element is used to be selected then unselect it, vice versa.                       */
+	                 stateBoolean	=   _scrollableListObject.getItem(_indexInt).get("isSelected").toString().equals("true") ? true : false; 	/*Since the returned value of the hash map is in string we need to convert the value back to boolean.*/
+
+	        if      (stateBoolean 	== true ){ _scrollableListObject.getItem(_indexInt).put("color", trueCheckListCColor ); } 					/*Assign the appropriate color whether the newly selected element is not selected or not.            */
+	        else if (stateBoolean 	== false){ _scrollableListObject.getItem(_indexInt).put("color", falseCheckListCColor); } 					/*Assign the appropriate color whether the newly selected element is not selected or not.            */
+
+	    }
+
+	}
+
+    /*This function is to put every selected tags into a String List.*/
+    public List<String> SetSelectedCheckListStringList	(
+
+        List<String>    _scrollableListItemStringList 	,
+        List<String> 	_selectedItemStringList			,
+        ScrollableList  _scrollableListObject
+
+    ){
+
+        /*Iterate through all the content elements..*/
+        for(int i = 0; i < _scrollableListItemStringList.size(); i ++){
+
+            /*Check if there is property in the hash map named "isSelected".*/
+            if      (_scrollableListObject.getItem(i).get("isSelected") != null){
+
+            	String selectedItemString = _scrollableListObject.getItem(i).get("text").toString();
+
+                /*If there is a properties called "isSelected" and it is returned true then add the selected "text" properties into the String list if only
+                    it is not yet inside the list.
+                PENDING: Implementation of HashSet could be more suitable in here instead of using List.*/
+                if      (_scrollableListObject 		.getItem(i)	.get("isSelected").toString().equals("true" )){
+                    if  (!_selectedItemStringList 	.contains	(selectedItemString)){ _selectedItemStringList.add		(selectedItemString); }
+                }
+                /*If "isSelected" is false then remove the element from the list.*/
+                else if (_scrollableListObject 		.getItem(i)	.get("isSelected").toString().equals("false")){
+                   	if  (_selectedItemStringList 	.contains	(selectedItemString)){ _selectedItemStringList.remove	(selectedItemString); }
+                }
+
+            }
+
+        }
+
+        return _selectedItemStringList;
 
     }
 
@@ -4495,8 +4513,6 @@ class ObjectPlayer{
 
     ){
 
-        println("\n\n\n\n\n TEST " + playerIndexInt + "\n\n\n\n\n");
-        
         /*Variable to hold currently visited museum object.*/
         ObjectMuseum exhibitionCurrentObject    = null;
         ObjectMuseum roomCurrentObject          = null;

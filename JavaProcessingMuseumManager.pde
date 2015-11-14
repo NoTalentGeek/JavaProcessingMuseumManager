@@ -64,7 +64,7 @@ List<String>            negativeAdverbTagNameFullStringList     = new ArrayList<
 List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
 
 /*GUI variables.*/
-AddMuseumGUIObject          addMuseumGUIObject              ;
+AddMuseumGroupGUIObject          addMuseumGroupGUIObject              ;
 AddTagGUIObject             addTagGUIObject                 ;
 AddPlayerGUIObject          addPlayerGUIObject              ;
 RemovePlayerGUIObject       removePlayerGUIObject           ;
@@ -396,11 +396,14 @@ void setup()                                    {
     }
 
     /*Populate String list.*/
-    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList     .add(subjectTagObjectList   .get(i).nameAltString); subjectTagNameFullStringList    .add(subjectTagObjectList   .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList        .add(verbTagObjectList      .get(i).nameAltString); verbTagNameFullStringList       .add(verbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList        .add(nounTagObjectList      .get(i).nameAltString); nounTagNameFullStringList       .add(nounTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList   .add(adjectiveTagObjectList .get(i).nameAltString); adjectiveTagNameFullStringList  .add(adjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList      .add(adverbTagObjectList    .get(i).nameAltString); adverbTagNameFullStringList     .add(adverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(subjectTagObjectList   .get(i).nameAltString); subjectTagNameFullStringList            .add(subjectTagObjectList   .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(verbTagObjectList      .get(i).nameAltString); verbTagNameFullStringList               .add(verbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(verbTagObjectList      .get(i).nameAltString); negativeVerbTagNameFullStringList       .add(verbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(nounTagObjectList      .get(i).nameAltString); nounTagNameFullStringList               .add(nounTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(adjectiveTagObjectList .get(i).nameAltString); adjectiveTagNameFullStringList          .add(adjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(adjectiveTagObjectList .get(i).nameAltString); negativeAdjectiveTagNameFullStringList  .add(adjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(adverbTagObjectList    .get(i).nameAltString); adverbTagNameFullStringList             .add(adverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(adverbTagObjectList    .get(i).nameAltString); negativeAdverbTagNameFullStringList     .add(adverbTagObjectList    .get(i).nameFullString); }
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
     defaultStringList       = Arrays.asList();
     for(int i = 0; i < floorObjectList.size()       ; i ++){ floorNameAltStringList         .add(     floorObjectList       .get(i).nameAltString ); floorNameFullStringList        .add(floorObjectList       .get(i).nameFullString); }
@@ -419,15 +422,14 @@ void setup()                                    {
     int itemHeightInt                   = (dropdownObjectHeightInt/20);
 
     /*Add the museum object GUI.*/
-    addMuseumGUIObject                  = new AddMuseumGUIObject(
+    addMuseumGroupGUIObject                  = new AddMuseumGroupGUIObject(
 
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        325                                                                 ,
-        buttonSizeInt                                                       ,
-        dropdownObjectWidthInt                                              ,
-        dropdownObjectHeightInt
+        442                                                                 ,
+        cp5Object                                                           ,
+        this
 
     );
 
@@ -607,14 +609,14 @@ void draw()                                     {
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
     
     /*Update the add museum object GUI.*/
-    addMuseumGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
+    addMuseumGroupGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
     addTagGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
     removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGroupGUIObject);
     /*Update the edit player object GUI.*/
-    editPlayerGroupGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
+    editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat);
     
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
@@ -1462,72 +1464,7 @@ void VisitorSList                   (int _indexInt)                             
     editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
 
 }
-/*Control functions for the AddMuseumGUIObject.pde.
-This function below is for to know what kind of object the class will have to make.*/
-void TypeObjectMuseumSList          (int _indexInt)                                 {
 
-    addMuseumGUIObject.typeObjectMuseumString   = cp5Object.get(ScrollableList.class, "TypeObjectMuseumSList").getItem(_indexInt).get("text").toString();
-    if      (addMuseumGUIObject.typeObjectMuseumString.equals("Floor"      ))       { addMuseumGUIObject.selectedTypeObjectString = "FLR"; }
-    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Room"       ))       { addMuseumGUIObject.selectedTypeObjectString = "ROM"; }
-    else if (addMuseumGUIObject.typeObjectMuseumString.equals("Exhibition" ))       { addMuseumGUIObject.selectedTypeObjectString = "EXH"; }
-    else                                                                            { addMuseumGUIObject.selectedTypeObjectString = addMuseumGUIObject.typeObjectMuseumString; }
-
-}
-/*These three functions is used to convert the scrollable list into scrollable checklist.*/
-void SelectTagSubjectSList          (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagSubjectSList"   , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagSubjectSList      , "SelectTagSubjectSList"   ); }
-void SelectTagVerbSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagVerbSList"      , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagVerbSList         , "SelectTagVerbSList"      ); }
-void SelectTagNounSList             (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagNounSList"      , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagNounSList         , "SelectTagNounSList"      ); }
-void SelectTagAdjectiveSList        (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagAdjectiveSList" , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagAdjectiveSList    , "SelectTagAdjectiveSList" ); }
-void SelectTagAdverbSList           (int _indexInt)                                 { ScrollableChecklistVoid("SelectTagAdverbSList"    , _indexInt); addMuseumGUIObject.SetSelectedTagStringList(addMuseumGUIObject.tempSelectTagAdverbSList       , "SelectTagAdverbSList"    ); }
-void SelectParentObjectMuseumSList  (int _indexInt)                                 { addMuseumGUIObject.selectedParentString           = cp5Object.get(ScrollableList.class, "SelectParentObjectMuseumSList").getItem(_indexInt).get("text").toString(); }
-/*Submit button callback function.*/
-void SubmitButton                   (int _indexInt)                                 {
-
-    /*Put everything into temporary variables.*/
-    String          tempNameAltString           = cp5Object.get(Textfield   .class, "NameAltTextfield" ).getText();
-    String          tempNameFullString          = cp5Object.get(Textfield   .class, "NameFullTextfield").getText();
-    String          tempParentNameAltString     = "";
-    String          tempTypeString              = addMuseumGUIObject.selectedTypeObjectString; addMuseumGUIObject.selectedTypeObjectString = "";
-    List<String>    tempSelectedTagStringList   = addMuseumGUIObject.selectedTagStringList;
-    Tag[]           tempSelectedTagObjectArray  = new Tag[tempSelectedTagStringList.size()];
-
-    /*Due to museum object floor will ever have no parent object, then we need to specifically set its parent object.*/
-    if      ( tempTypeString.equals("FLR")) { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
-    else if (!tempTypeString.equals("FLR")) { tempParentNameAltString = addMuseumGUIObject.selectedParentString; addMuseumGUIObject.selectedParentString = ""; }
-    else                                    { tempParentNameAltString = "XXX_XXX";                               addMuseumGUIObject.selectedParentString = ""; }
-
-    if(useNameAltBoolean == false){ tempParentNameAltString     = FindMuseumObject(tempParentNameAltString).nameAltString; }
-    for(int i = 0; i < tempSelectedTagStringList.size(); i ++)  { tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagStringList.get(i)); }
-
-    /*Create the museum object.*/
-    AddMuseumObject                         (tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeString, tempSelectedTagObjectArray);
-
-}
-/*This function below is used to "convert" scrollable list into scrollable checklist.
-The arguments are the name of the controller and the index of which the controller's item is selected.*/
-void ScrollableChecklistVoid        (String _scrollableNameString, int _indexInt)   {
-
-    /*If there is no property named isSelected in the hashmap than we need to create one.
-    After that assign the isSelected value to true and also assign the color.*/
-    if( cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected") == null){
-
-        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("isSelected" , true                                       );
-        cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color"      , addMuseumGUIObject.sChecklistTrueCColor    );
-
-    }
-    /*If there is isSelected property than revert it between true and false everytime we clicked it and set the appropriate color scheme.*/
-    else{
-
-        boolean stateBoolean    =   cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected").toString().equals("true") ? true : false;
-                                    cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("isSelected", !stateBoolean           );
-                stateBoolean    =   cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).get("isSelected").toString().equals("true") ? true : false;
-
-        if      (stateBoolean == true ){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.sChecklistTrueCColor ); }
-        else if (stateBoolean == false){ cp5Object.get(ScrollableList.class, _scrollableNameString).getItem(_indexInt).put("color", addMuseumGUIObject.sChecklistFalseCColor); }
-
-    }
-
-}
 
 
 
@@ -1750,15 +1687,15 @@ void AddTagGUIObjectSubmitButton(int _indexInt){
     tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
     tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
 
+    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))               { addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))             { addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE"))    { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))                { addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
+    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
 
-    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           { cp5Object.get(ScrollableList.class, "SelectTagSubjectSList"   ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              { cp5Object.get(ScrollableList.class, "SelectTagVerbSList"      ).setItems(tempTagNameFullStringList); }
-    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))   { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              { cp5Object.get(ScrollableList.class, "SelectTagNounSList"      ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         { cp5Object.get(ScrollableList.class, "SelectTagAdjectiveSList" ).setItems(tempTagNameFullStringList); }
-    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){ cp5Object.get(ScrollableList.class, "PENDING"               ).setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            { cp5Object.get(ScrollableList.class, "SelectTagAdverbSList"    ).setItems(tempTagNameFullStringList); }
-    //else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB")) { cp5Object.get(ScrollableList.class, "PENDING"                 ).setItems(tempTagNameFullStringList); }
 
     addTagGUIObject.selectedTagTypeString = "";
     cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).clear();
@@ -1783,28 +1720,97 @@ void AddTagGUIObjectSubmitButton(int _indexInt){
 
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
-//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////   
-/*Controller's function to control radio button and assign which movement mode to selected player object.*/
-void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
 
-    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
-    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//AddMuseumGroupGUIObject.pde Controller's Functions.////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Set what kind of museum object the user will make.*/
+void AddMuseumGroupSelectTypeMuseumObjectScrollableListObject                   (int _indexInt) {
+
+    addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString                                  = addMuseumGroupGUIObject.addMuseumGroupSelectTypeMuseumObjectScrollableListObject.getItem(_indexInt).get("text").toString();   /*Take the full name type of object museum that the user will make.*/
+    /*Convert the object museum type name full into object museum type name alternate name.*/
+    if      (addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString.equals("Floor"      ))  {
+        addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString                   = "FLR";
+        addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject  .setItems(defaultStringList);
+    }
+    else if (addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString.equals("Room"       ))  {
+        addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString                   = "ROM";
+        addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject  .setItems(floorNameFullStringList);
+    }
+    else if (addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString.equals("Exhibition" ))  {
+        addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString                   = "EXH";
+        addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject  .setItems(roomNameFullStringList);
+    }
 
 }
-/*Controller's function to move selected player exhibition according to scrollable list that contains all exhibition full name.*/
+/*These functions is for assigning tags into museum object that the user will add.*/
+void AddMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject             (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject           ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(subjectTagNameFullStringList               , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            ); }
+void AddMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject              ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(verbTagNameFullStringList                  , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               ); }
+void AddMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject        (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject      ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeVerbTagNameFullStringList          , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject       ); }
+void AddMuseumGroupSelectNounTagMuseumObjectScrollableListObject                (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject              ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(nounTagNameFullStringList                  , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               ); }
+void AddMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject           (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject         ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(adjectiveTagNameFullStringList             , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          ); }
+void AddMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject   (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeAdjectiveTagNameFullStringList     , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  ); }
+void AddMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject              (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject            ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(adverbTagNameFullStringList                , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             ); }
+void AddMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject      (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject    ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList     = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeAdverbTagNameFullStringList        , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     ); }
+/*A function to set the full name of parent object.*/
+void AddMuseumGroupSelectParentMuseumObjectScrollableListObject                 (int _indexInt) {
+
+    addMuseumGroupGUIObject.tempSelectedParentNameFullString        = addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject.getItem(_indexInt).get("text").toString();
+    addMuseumGroupGUIObject.tempSelectedParentNameAltString         = FindMuseumObject(addMuseumGroupGUIObject.tempSelectedParentNameFullString).nameAltString;
+
+}
+/*Add new museum object with all collected property values.*/
+void AddMuseumGroupAddMuseumObjectButtonObject                                  (int _indexInt) {
+
+    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject .getText();                          /*Get the alternate  name for the new museum object that the user will add.     */
+    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject.getText();                          /*Get the full       name for the new museum object that the user will add.     */
+    String          tempParentNameAltString             = addMuseumGroupGUIObject.tempSelectedParentNameAltString;                                                      /*Parent  alr        name for the new museum object that the user will add.     */
+    String          tempTypeObjectMuseumNameAltString   = addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString;                                            /*Type    alternate  name for the new museum object that the user will add.     */
+    List<String>    tempSelectedTagNameFullStringList   = addMuseumGroupGUIObject.tempSelectedTagNameFullStringList;                                                    /*Tags    full       name for the new museum object that the user will add.     */
+    Tag[]           tempSelectedTagObjectArray          = new Tag[tempSelectedTagNameFullStringList.size()];                                                            /*Converted full name String List of Tag full name into an array of Tag object. */
+    
+    for(int i = 0; i < tempSelectedTagNameFullStringList.size(); i ++){ tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagNameFullStringList.get(i)); }      /*Convert   full name String List of Tag full name into an array of Tag object. */
+    if( tempTypeObjectMuseumNameAltString.equals("FLR")){ tempParentNameAltString = "XXX_XXX"; }                                                                        /*If the object that will be added is a floor object, then set the  alternate parent name into XXX_XXX.*/
+
+    AddMuseumObject(tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeObjectMuseumNameAltString, tempSelectedTagObjectArray);
+    
+    /*After getting all processing done and the museum object is added, reset all value.
+    PENDING: The display were not actually set back off.
+    addMuseumGroupGUIObject.tempSelectedParentNameAltString             = "";
+    addMuseumGroupGUIObject.tempSelectedParentNameFullString            = "";
+    addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString   = "";
+    addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameFullString  = "";
+    addMuseumGroupGUIObject.tempSelectedTagNameFullStringList.clear();
+    */
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//AddMuseumGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Set the movement mode for both player object and the graphical user interface object.
+This function is to make sure that both mode is always the same.*/
+void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
+
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex;
+    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex;
+
+}
+/*A function to move the selected player into new exhibition.
+This function need to only happened when the appropriate movement mode is selected.*/
 void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
 
-    /*If selected player object movement mode is two then user can move the player manually.*/
     if(editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt == 2){
 
-        /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
-        String                  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
-        ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
+        String  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
+        String  receivedMuseumNameAltString     = FindMuseumObject(receivedMuseumNameFullString).nameAltString;
 
-        /*Move the selected player object into the new exhibition that the user choose.*/
-        editPlayerGroupGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumObject.nameAltString);
+        editPlayerGroupGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
 
     }
 

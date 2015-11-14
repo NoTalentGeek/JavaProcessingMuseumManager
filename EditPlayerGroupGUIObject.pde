@@ -5,8 +5,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5                               editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
-    //ChoosePlayerScrollableListGUIObject   choosePlayerScrollableListGUIObject                         ;                           /*PENDING: Object is not yet created.                                                               */
-    ControlP5                               playerScrollableListObject                                  ;                           /*PENDING: Change later with variable of ObjectGUI.                                                 */
+    //SelectPlayerScrollableListGUIObject   selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Object is not yet created.                                                               */
+    ControlP5                               selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Change later with variable of ObjectGUI.                                                 */
 
     ObjectPlayer                            selectedPlayerObject                                        ;                           /*Selected player object.*/
 
@@ -43,13 +43,13 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
     Button                                  editPlayerGroupPlayerGeneratePatternButtonObject            ;
 
     /*PENDING.
-    public EditPlayerGUIObject                                      (
+    EditPlayerGUIObject                                             (
 
         int                                     _guiXInt                                ,
         int                                     _guiYInt                                ,
         int                                     _guiWidthInt                            ,
         int                                     _guiHeightInt                           ,
-        ChoosePlayerScrollableListGUIObject     _choosePlayerScrollableListGUIObject    ,
+        SelectPlayerScrollableListGUIObject     _selectPlayerScrollableListGUIObject    ,
         PApplet                                 _pAppletObject
 
     ){
@@ -61,7 +61,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         int                                     _guiYInt                                ,
         int                                     _guiWidthInt                            ,
         int                                     _guiHeightInt                           ,
-        ControlP5                               _playerScrollableListObject             ,
+        ControlP5                               _selectPlayerScrollableListGUIObject    ,
         PApplet                                 _pAppletObject
 
     ){
@@ -69,8 +69,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         editPlayerGroupControlP5Object                              = new ControlP5(_pAppletObject);
 
-        //choosePlayerScrollableListGUIObject                       = _choosePlayerScrollableListGUIObject;                                                         /*PENDING.*/
-        playerScrollableListObject                                  = _playerScrollableListObject;                                                                  /*PENDING.*/
+        selectPlayerScrollableListGUIObject                         = _selectPlayerScrollableListGUIObject;                                                            /*PENDING.*/
 
         selectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
@@ -136,7 +135,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addButton                                          ("EditPlayerGroupPlayerNameChangeButtonObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setLabel                                           ("CHANGE NAME")
+                .setLabel                                           ("CHANGE VISITOR NAME")
                 .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*3))
                 .setSize                                            (guiElement2CollumnWidth,  guiElement2LineHeight);
 
@@ -209,15 +208,15 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
 
         editPlayerGroupPlayerExhibitionTargetScrollableListObject   =
-                editPlayerGroupControlP5Object
-                    .addScrollableList                              ("EditPlayerGroupPlayerExhibitionTargetScrollableListObject")
-                    .addItems                                       (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
-                    .setColor                                       (staticScrollableListCColor)
-                    .setGroup                                       (editPlayerGroupObject)
-                    .setLabel                                       ("VISITOR TARGET EXHIBITIONS:")
-                    .setPosition                                    (guiElement2CollumnFirstCollumnXInt,  (guiLayoutOffsetInt*11))
-                    .setSize                                        (guiElement2CollumnWidth, guiScrollableList4RowHeightInt)
-                    .setType                                        (ControlP5.LIST);
+            editPlayerGroupControlP5Object
+                .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionTargetScrollableListObject")
+                .addItems                                           (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
+                .setColor                                           (staticScrollableListCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("VISITOR TARGET EXHIBITIONS:")
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  (guiLayoutOffsetInt*11))
+                .setSize                                            (guiElement2CollumnWidth, guiScrollableList4RowHeightInt)
+                .setType                                            (ControlP5.LIST);
 
 
 
@@ -352,12 +351,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     }
 
-    void DrawVoid                                                   (
-
-        boolean _buttonOpenCloseBoolean ,
-        float   _alphaFloat
-
-    ){
+    void DrawVoid                                                   (float   _alphaFloat){
 
         super.DrawVoid(_alphaFloat, editPlayerGroupObject);
 
@@ -365,14 +359,14 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         if      (editPlayerGroupObject.isOpen() == true ){
 
                 /*PENDING.*/
-                playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
 
                 /*PENDING.
-                choosePlayerScrollableList.choosePlayerScrollableListObject.setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2)              ),
+                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
                 */
@@ -381,23 +375,19 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         else if (editPlayerGroupObject.isOpen() == false){
 
                 /*PENDING.*/
-                playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
 
                 /*PENDING.
-                choosePlayerScrollableList.choosePlayerScrollableListObject.setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2) ),
+                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
                 */
 
         }
-
-        /*If button to open this group is in closed state then assign this group controller player selected object back to
-            the default player (the first index in the object player list).*/
-        if(_buttonOpenCloseBoolean == false){ selectedPlayerObject = playerObjectList.get(0); }
 
         /*Always assign values to the controllers.*/
         if(selectedPlayerObject                             != null ){
