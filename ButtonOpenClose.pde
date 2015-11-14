@@ -1,7 +1,7 @@
 /*A class for toggle open and close button.
 This button will be used to open a panel made using
     P5 user interface.*/
-public class ButtonOpenClose{
+class ButtonOpenClose{
 
     PShape  buttonOpenCloseCircleObject = null; /*This is a child shape of this button, later will be combined together into main shape.*/
     PShape  buttonOpenCloseCross1Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/

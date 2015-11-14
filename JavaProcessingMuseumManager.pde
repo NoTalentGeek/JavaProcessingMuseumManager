@@ -114,7 +114,7 @@ int                     guiOffsetInt                    = 20;                   
 
 
 
-
+int buttonSizeInt                   = 0;  /*Button size temporary variable.*/
 
 
 int biggestPlayerIndexInt = 0;
@@ -410,7 +410,7 @@ void setup()                                    {
 
     cp5Object                           = new ControlP5(this);
 
-    int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
+    buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
     buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
     buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
 
@@ -1150,6 +1150,7 @@ ObjectMuseum AddMuseumObject(
 ObjectMuseum FindMuseumObject(String _objectNameString)                              {
 
     ObjectMuseum tempMuseumObject = null;
+
     for(int i = 0; i < floorObjectList.size(); i ++){
 
         if(floorObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempMuseumObject = floorObjectList.get(i); }
@@ -1461,26 +1462,6 @@ void VisitorSList                   (int _indexInt)                             
     editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
     /*Change the radio button accordingly.*/
     cp5Object.get(RadioButton.class, "ModeRadioButton").activate((editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt - 1));
-
-}
-/*Control function for the EditPlayerGUIObject.pde.*/              
-void ModeRadioButton                (int _intIndex)                                 {
-
-    /*Change the mode for both in player object and in the player GUI object.*/
-    editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt  = _intIndex;
-    editPlayerGUIObject                     .editPlayerModeInt  = _intIndex;
-
-}
-/*Function to move to new exhibition.*/
-void PleaseSelectNextExhibitionSList(int _indexInt)                                 {
-
-    if(editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt == 2){
-
-        String          receivedString          = cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt).get("text").toString();
-        ObjectMuseum    receivedMuseumObject    = editPlayerGUIObject.selectedPlayerObject.FindObject(exhibitionObjectList, receivedString);
-        editPlayerGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumObject.nameAltString);
-
-    }
 
 }
 /*Control functions for the AddMuseumGUIObject.pde.
