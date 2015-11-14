@@ -1,9 +1,7 @@
-/*A class to creating a GUI object on adding museum object.*/
 import java.util.*;
 import controlP5.*;
 class AddMuseumGUIObject{
 
-    /*Some variables :).*/
     color           groupBackgroundColor                ;                           /*The color of group panel group background.*/
     color           groupColorBackgroundColor           ;                           /*The title background color of panel group.*/
     color           groupColorLabelColor                ;                           /*The title font colot of the panel group.*/
