@@ -85,7 +85,7 @@ class RemovePlayerGUIObject{
 
     }
 
-    void DrawVoid(float   _alphaFloat, EditPlayerGUIObject _editPlayerGUIObject){
+    void DrawVoid(float   _alphaFloat, EditPlayerGroupGUIObject _editPlayerGUIObject){
 
         alphaFloat                      = _alphaFloat;
 

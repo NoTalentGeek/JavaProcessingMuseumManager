@@ -1,7 +1,7 @@
 import java.util.*;
 import controlP5.*;
 
-class GUIObject{
+class GroupGUIObject{
 
     color           groupBackgroundColor                                        ;                           /*The color of group main  panel background color.*/
     color           groupColorBackgroundColor                                   ;                           /*The color of group title panel background color.*/
@@ -40,7 +40,7 @@ class GUIObject{
 
     PApplet         pAppletObject                                               ;                           /*Refer this object back to main PApplet object.*/
 
-    GUIObject(
+    GroupGUIObject 		(
 
     	int     _guiXInt        ,
         int     _guiYInt        ,
@@ -83,7 +83,7 @@ class GUIObject{
 
     }
 
-    void DrawVoid(
+    void DrawVoid 		(
 
     	float _alphaFloat		,
     	Group _mainGroupObject

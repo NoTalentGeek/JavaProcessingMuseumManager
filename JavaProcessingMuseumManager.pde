@@ -64,11 +64,11 @@ List<String>            negativeAdverbTagNameFullStringList     = new ArrayList<
 List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
 
 /*GUI variables.*/
-AddMuseumGUIObject      addMuseumGUIObject              ;
-AddTagGUIObject         addTagGUIObject                 ;
-AddPlayerGUIObject      addPlayerGUIObject              ;
-RemovePlayerGUIObject   removePlayerGUIObject           ;
-EditPlayerGUIObject     editPlayerGUIObject             ;
+AddMuseumGUIObject          addMuseumGUIObject              ;
+AddTagGUIObject             addTagGUIObject                 ;
+AddPlayerGUIObject          addPlayerGUIObject              ;
+RemovePlayerGUIObject       removePlayerGUIObject           ;
+EditPlayerGroupGUIObject    editPlayerGroupGUIObject             ;
 
 /*Variable to display information card when mouse pointer is hovered over either museum or player object.*/
 boolean                 panelCardChangeBoolean          = true;                             /*Whether panel need to be re - created or not.*/
@@ -472,7 +472,7 @@ void setup()                                    {
     );
 
     /*Add the edit player GUI.*/
-    editPlayerGUIObject                 = new EditPlayerGUIObject(
+    editPlayerGroupGUIObject            = new EditPlayerGroupGUIObject(
 
         (guiOffsetInt + (buttonSizeInt/2))  ,
         (guiOffsetInt + (buttonSizeInt/2))  ,
@@ -612,9 +612,9 @@ void draw()                                     {
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
-    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGUIObject);
+    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGroupGUIObject);
     /*Update the edit player object GUI.*/
-    editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
+    editPlayerGroupGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
     
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
@@ -1457,9 +1457,9 @@ void ExhibitionSList(int _indexInt)                                             
 void VisitorSList                   (int _indexInt)                                 {
 
     /*Assign the selected player.*/
-    editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
+    editPlayerGroupGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
     /*Change the radio button accordingly.*/
-    editPlayerGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
+    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
 
 }
 /*Control functions for the AddMuseumGUIObject.pde.
@@ -1789,8 +1789,8 @@ void AddTagGUIObjectSubmitButton(int _indexInt){
 /*Controller's function to control radio button and assign which movement mode to selected player object.*/
 void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
 
-    editPlayerGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
-    editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
+    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
 
 }
 /*Controller's function to move selected player exhibition according to scrollable list that contains all exhibition full name.*/
@@ -1800,7 +1800,7 @@ void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt) 
     if(selectedPlayerObject.playerMovementModeInt == 2){
 
         /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
-        String                  receivedMuseumNameFullString    = editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
+        String                  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
         ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
         
         /*Move the selected player object into the new exhibition that the user choose.*/

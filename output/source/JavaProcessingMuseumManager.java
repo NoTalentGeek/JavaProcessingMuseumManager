@@ -97,11 +97,11 @@ List<String>            negativeAdverbTagNameFullStringList     = new ArrayList<
 List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
 
 /*GUI variables.*/
-AddMuseumGUIObject      addMuseumGUIObject              ;
-AddTagGUIObject         addTagGUIObject                 ;
-AddPlayerGUIObject      addPlayerGUIObject              ;
-RemovePlayerGUIObject   removePlayerGUIObject           ;
-EditPlayerGUIObject     editPlayerGUIObject             ;
+AddMuseumGUIObject          addMuseumGUIObject              ;
+AddTagGUIObject             addTagGUIObject                 ;
+AddPlayerGUIObject          addPlayerGUIObject              ;
+RemovePlayerGUIObject       removePlayerGUIObject           ;
+EditPlayerGroupGUIObject    editPlayerGroupGUIObject             ;
 
 /*Variable to display information card when mouse pointer is hovered over either museum or player object.*/
 boolean                 panelCardChangeBoolean          = true;                             /*Whether panel need to be re - created or not.*/
@@ -505,7 +505,7 @@ public void setup()                                    {
     );
 
     /*Add the edit player GUI.*/
-    editPlayerGUIObject                 = new EditPlayerGUIObject(
+    editPlayerGroupGUIObject            = new EditPlayerGroupGUIObject(
 
         (guiOffsetInt + (buttonSizeInt/2))  ,
         (guiOffsetInt + (buttonSizeInt/2))  ,
@@ -645,9 +645,9 @@ public void draw()                                     {
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
-    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGUIObject);
+    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGroupGUIObject);
     /*Update the edit player object GUI.*/
-    editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
+    editPlayerGroupGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
     
     /*Update buttonOpenCloseBoolean.*/
     SetButtonOpenCloseBoolean               ();    
@@ -1490,9 +1490,9 @@ public void ExhibitionSList(int _indexInt)                                      
 public void VisitorSList                   (int _indexInt)                                 {
 
     /*Assign the selected player.*/
-    editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
+    editPlayerGroupGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
     /*Change the radio button accordingly.*/
-    editPlayerGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
+    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
 
 }
 /*Control functions for the AddMuseumGUIObject.pde.
@@ -1816,16 +1816,35 @@ public void AddTagGUIObjectSubmitButton(int _indexInt){
 
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////   
+/*Controller's function to control radio button and assign which movement mode to selected player object.*/
+public void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
 
-    
-    /*Controller's function to control radio button and assign which movement mode to selected player object.*/
-    public void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
-    
-        println("TEST");
-        editPlayerGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
-        editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
+    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
+
+}
+/*Controller's function to move selected player exhibition according to scrollable list that contains all exhibition full name.*/
+public void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
+
+    /*If selected player object movement mode is two then user can move the player manually.*/
+    if(selectedPlayerObject.playerMovementModeInt == 2){
+
+        /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
+        String                  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
+        ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
+        
+        /*Move the selected player object into the new exhibition that the user choose.*/
+        selectedPlayerObject    .ExhibitionMoveObject(receivedMuseumObject.nameAltString);
 
     }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//EditPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
 /*A class to creating a GUI object on adding museum object.*/
 
 
@@ -2991,7 +3010,7 @@ class ButtonOpenClose{
 
 
 
-class EditPlayerGUIObject extends GUIObject{
+class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5                               editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
@@ -3000,7 +3019,7 @@ class EditPlayerGUIObject extends GUIObject{
 
     ObjectPlayer                            selectedPlayerObject                                        ;                           /*Selected player object.*/
 
-    int                                     tempSelectedPlayerMovementModeInt                               = 2;                        /*Movement mode of selected player object.                                                          */
+    int                                     tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
     String                                  tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
     String                                  tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
     List<String>                            tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
@@ -3045,7 +3064,7 @@ class EditPlayerGUIObject extends GUIObject{
     ){
     */
     /*PENDING.*/
-    EditPlayerGUIObject                                      (
+    EditPlayerGroupGUIObject                                        (
 
         int                                     _guiXInt                                ,
         int                                     _guiYInt                                ,
@@ -3356,7 +3375,7 @@ class EditPlayerGUIObject extends GUIObject{
 
                 /*PENDING.*/
                 playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2)              ),
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
 
@@ -3372,7 +3391,7 @@ class EditPlayerGUIObject extends GUIObject{
 
                 /*PENDING.*/
                 playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2) ),
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
 
@@ -3386,10 +3405,10 @@ class EditPlayerGUIObject extends GUIObject{
         }
 
         /*If button to open this group is in closed state then assign this group controller player selected object back to
-            the default player (the first index in the player object lisy).*/
+            the default player (the first index in the object player list).*/
         if(_buttonOpenCloseBoolean == false){ selectedPlayerObject = playerObjectList.get(0); }
 
-        /*Always assign values to display in this object controllers.*/
+        /*Always assign values to the controllers.*/
         if(selectedPlayerObject                             != null ){
 
             tempSelectedPlayerFinishedString                = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
@@ -3399,6 +3418,7 @@ class EditPlayerGUIObject extends GUIObject{
                 else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n" + selectedPlayerObject.sentenceStringList.get(i); }
 
             }
+
             editPlayerGroupPlayerIndexValueTextlabelObject              .setText (("" + selectedPlayerObject.playerIndexInt                         ));
             editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                            ));
             editPlayerGroupPlayerScoreValueTextlabelObject              .setText (("" + selectedPlayerObject.playerScoreInt                         ));
@@ -3421,30 +3441,12 @@ class EditPlayerGUIObject extends GUIObject{
 
     }
 
-    /*Controller's function to move selected player exhibition according to scrollable list that contains all exhibition full name.*/
-    public void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
-
-        /*If selected player object movement mode is two then user can move the player manually.*/
-        if(selectedPlayerObject.playerMovementModeInt == 2){
-
-            /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
-            String                  receivedMuseumNameFullString    = editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
-            ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
-            
-            /*Move the selected player object into the new exhibition that the user choose.*/
-            selectedPlayerObject    .ExhibitionMoveObject(receivedMuseumObject.nameAltString);
-
-        }
-
-    }
-
 }
 
 
 
-class GUIObject{
+class GroupGUIObject{
 
-    /*Parent variables.*/
     int           groupBackgroundColor                                        ;                           /*The color of group main  panel background color.*/
     int           groupColorBackgroundColor                                   ;                           /*The color of group title panel background color.*/
     int           groupColorLabelColor                                        ;                           /*The color of group title panel text       color.*/
@@ -3482,7 +3484,7 @@ class GUIObject{
 
     PApplet         pAppletObject                                               ;                           /*Refer this object back to main PApplet object.*/
 
-    GUIObject(
+    GroupGUIObject 		(
 
     	int     _guiXInt        ,
         int     _guiYInt        ,
@@ -3492,7 +3494,6 @@ class GUIObject{
 
     ){
 
-        /*Parent.*/
         guiXInt                                         =  _guiXInt                         ;
         guiYInt                                         = (_guiYInt + guiLayoutOffsetInt)   ;
         guiWidthInt                                     =  _guiWidthInt                     ;
@@ -3526,16 +3527,16 @@ class GUIObject{
 
     }
 
-    public void DrawVoid(
+    public void DrawVoid 		(
 
     	float _alphaFloat		,
     	Group _mainGroupObject
 
     ){
 
-    	/*Parent*/
         alphaFloat                  = _alphaFloat;
 
+        /*Codes to create fade in and fade out animation.*/
         if                          (alphaFloat >  (255f/45f)){ _mainGroupObject.show(); }
         else if                     (alphaFloat <= (255f/45f)){ _mainGroupObject.hide(); }
 
@@ -4954,7 +4955,7 @@ class RemovePlayerGUIObject{
 
     }
 
-    public void DrawVoid(float   _alphaFloat, EditPlayerGUIObject _editPlayerGUIObject){
+    public void DrawVoid(float   _alphaFloat, EditPlayerGroupGUIObject _editPlayerGUIObject){
 
         alphaFloat                      = _alphaFloat;
 

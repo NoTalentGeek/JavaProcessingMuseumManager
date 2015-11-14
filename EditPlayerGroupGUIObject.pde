@@ -1,7 +1,7 @@
 import java.util.*;
 import controlP5.*;
 
-class EditPlayerGUIObject extends GUIObject{
+class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5                               editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
@@ -55,7 +55,7 @@ class EditPlayerGUIObject extends GUIObject{
     ){
     */
     /*PENDING.*/
-    EditPlayerGUIObject                                      (
+    EditPlayerGroupGUIObject                                        (
 
         int                                     _guiXInt                                ,
         int                                     _guiYInt                                ,
@@ -366,7 +366,7 @@ class EditPlayerGUIObject extends GUIObject{
 
                 /*PENDING.*/
                 playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2)              ),
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
 
@@ -382,7 +382,7 @@ class EditPlayerGUIObject extends GUIObject{
 
                 /*PENDING.*/
                 playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
-                    (guiLayoutOffsetInt + (buttonSizeInt/2) ),
+                    editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
 
