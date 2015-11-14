@@ -136,7 +136,7 @@ class ObjectPlayer{
                         tagCounterObject    .SetTagNameAltString    (_exhibitionCurrentObject   .tagMuseumNameAltStringList     .get(i));
                         tagCounterObject    .SetTagNameFullString   (_exhibitionCurrentObject   .tagMuseumNameFullStringList    .get(i));
 
-            boolean     newBoolean             = true;     /*Whether the tag is new to the array or there is already existing one.*/
+            boolean     newBoolean          = true;     /*Whether the tag is new to the array or there is already existing one.*/
             int         indexInt            = -1;       /*If there is the corresponding tag already in the array return its index with this variable, otherwise it keeps -1.*/
 
             /*Iterate through all tag those already gathered to find if there any tag that
@@ -662,8 +662,8 @@ class ObjectPlayer{
         /*For everytime a player move to another exhibition iterate through all player to re - add the siblings.*/
         for(int i = 0; i < playerObjectList.size(); i ++){
 
-            playerObjectList.get(i).SetExhibitionTargetNameAltStringList   ();
-            playerObjectList.get(i).SetSiblingObjectList            ();
+            playerObjectList.get(i).SetExhibitionTargetNameAltStringList    ();
+            playerObjectList.get(i).SetSiblingObjectList                    ();
 
         }
 

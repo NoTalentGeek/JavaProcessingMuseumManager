@@ -105,7 +105,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt, guiLayoutOffsetInt)
-                .setText                                            ("PLAYER INDEX:");
+                .setText                                            ("VISITOR INDEX:");
 
 
 
@@ -125,7 +125,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addTextfield                                       ("EditPlayerGroupPlayerNameTextfieldObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setLabel                                           ("PLAYER NAME:")
+                .setLabel                                           ("VISITOR NAME:")
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*3))
                 .setSize                                            (guiElement2CollumnWidth,  guiElement2LineHeight);
 
@@ -149,7 +149,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*7))
-                .setText                                            ("PLAYER FINISHED:");
+                .setText                                            ("VISITOR FINISHED:");
 
 
 
@@ -171,7 +171,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*8))
-                .setText                                            ("PLAYER SCORE:");
+                .setText                                            ("VISITOR SCORE:");
 
 
 
@@ -193,7 +193,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*9))
-                .setText                                            ("PLAYER CURRENT EXHIBITION:");
+                .setText                                            ("VISITOR CURRENT EXHIBITION:");
 
 
 
@@ -214,7 +214,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                     .addItems                                       (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
                     .setColor                                       (staticScrollableListCColor)
                     .setGroup                                       (editPlayerGroupObject)
-                    .setLabel                                       ("PLAYER TARGET EXHIBITIONS:")
+                    .setLabel                                       ("VISITOR TARGET EXHIBITIONS:")
                     .setPosition                                    (guiElement2CollumnFirstCollumnXInt,  (guiLayoutOffsetInt*11))
                     .setSize                                        (guiElement2CollumnWidth, guiScrollableList4RowHeightInt)
                     .setType                                        (ControlP5.LIST);
@@ -227,7 +227,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addItems                                           (tempSelectedPlayerExhibitionVisitedNameFullStringList)
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setLabel                                           ("PLAYER VISITED EXHIBITIONS:")
+                .setLabel                                           ("VISITOR VISITED EXHIBITIONS:")
                 .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  (guiLayoutOffsetInt*11))
                 .setSize                                            (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
                 .setType                                            (ControlP5.LIST);
@@ -241,7 +241,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
-                .setText                                            ("PLAYER SENTENCES:");
+                .setText                                            ("VISITOR SENTENCES:");
 
 
 
@@ -263,7 +263,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
-                .setText                                            ("PLAYER EXPLANATIONS:");
+                .setText                                            ("VISITOR EXPLANATIONS:");
 
 
 
@@ -284,7 +284,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addItems                                           (tempSelectedPlayerTagNameFullStringList)
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setLabel                                           ("PLAYER COLLECTED TAGS:")
+                .setLabel                                           ("VISITOR COLLECTED TAGS:")
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*14) + (guiScrollableList5RowHeightInt*2)))
                 .setSize                                            (guiElement1CollumnWidth , guiScrollableList5RowHeightInt)
                 .setType                                            (ControlP5.LIST);
@@ -321,7 +321,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addItems                                           (exhibitionNameFullStringList)
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setLabel                                           ("SELECT NEXT EXHIBITION:")
+                .setLabel                                           ("SELECT VISITOR NEXT EXHIBITION:")
                 .setPosition                                        (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*15) + (guiScrollableList5RowHeightInt*3)))
                 .setSize                                            (guiElement2CollumnWidth , 64)
                 .setType                                            (ControlP5.LIST);
@@ -333,7 +333,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addButton                                          ("EditPlayerGroupPlayerResetButtonObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setLabel                                           ("RESET PLAYER")
+                .setLabel                                           ("RESET VISITOR")
                 .setPosition                                        (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
                 .setSize                                            (guiElement2CollumnWidth, guiLayoutOffsetInt);
 
@@ -420,6 +420,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
             editPlayerGroupPlayerSentenceValueTextareaObject            .setText ((     tempSelectedPlayerSentenceString                            ));
             editPlayerGroupPlayerExaplanationValueTextareaObject        .setText ((     tempSelectedPlayerSentenceString                            ));
             editPlayerGroupPlayerExhibitionNextScrollableListObject     .setItems((     exhibitionNameFullStringList                                ));
+            editPlayerGroupPlayerModeValueRadioButtonObject             .activate((     (selectedPlayerObject.playerMovementModeInt - 1)            ));
 
         }
 

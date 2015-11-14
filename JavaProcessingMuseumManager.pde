@@ -1797,14 +1797,14 @@ void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex) 
 void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
 
     /*If selected player object movement mode is two then user can move the player manually.*/
-    if(selectedPlayerObject.playerMovementModeInt == 2){
+    if(editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt == 2){
 
         /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
         String                  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
         ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
-        
+
         /*Move the selected player object into the new exhibition that the user choose.*/
-        selectedPlayerObject    .ExhibitionMoveObject(receivedMuseumObject.nameAltString);
+        editPlayerGroupGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumObject.nameAltString);
 
     }
 
