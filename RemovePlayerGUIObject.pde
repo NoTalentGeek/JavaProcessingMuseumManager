@@ -85,7 +85,7 @@ class RemovePlayerGUIObject{
 
     }
 
-    void DrawVoid(float   _alphaFloat){
+    void DrawVoid(float   _alphaFloat, EditPlayerGUIObject _editPlayerGUIObject){
 
         alphaFloat                      = _alphaFloat;
 
@@ -116,7 +116,7 @@ class RemovePlayerGUIObject{
         if      (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == true ){
 
                 /*Change the position when the group object is open.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                _editPlayerGUIObject.editPlayerGroupObject.setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupHeightInt)
@@ -127,7 +127,7 @@ class RemovePlayerGUIObject{
         else if (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == false){
 
                 /*Change the position when the group object is close.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                _editPlayerGUIObject.editPlayerGroupObject.setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt)

@@ -474,14 +474,12 @@ void setup()                                    {
     /*Add the edit player GUI.*/
     editPlayerGUIObject                 = new EditPlayerGUIObject(
 
-
         (guiOffsetInt + (buttonSizeInt/2))  ,
         (guiOffsetInt + (buttonSizeInt/2))  ,
         dropdownObjectWidthInt              ,
         427                                 ,
-        buttonSizeInt                       ,
-        dropdownObjectWidthInt              ,
-        dropdownObjectHeightInt
+        cp5Object                           ,
+        this
 
     );
 
@@ -614,7 +612,7 @@ void draw()                                     {
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
-    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat);
+    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGUIObject);
     /*Update the edit player object GUI.*/
     editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
     
@@ -1461,7 +1459,7 @@ void VisitorSList                   (int _indexInt)                             
     /*Assign the selected player.*/
     editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
     /*Change the radio button accordingly.*/
-    cp5Object.get(RadioButton.class, "ModeRadioButton").activate((editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt - 1));
+    editPlayerGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
 
 }
 /*Control functions for the AddMuseumGUIObject.pde.
@@ -1784,3 +1782,33 @@ void AddTagGUIObjectSubmitButton(int _indexInt){
     cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).clear().hide();
 
 }
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////   
+/*Controller's function to control radio button and assign which movement mode to selected player object.*/
+void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
+
+    editPlayerGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
+    editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
+
+}
+/*Controller's function to move selected player exhibition according to scrollable list that contains all exhibition full name.*/
+void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
+
+    /*If selected player object movement mode is two then user can move the player manually.*/
+    if(selectedPlayerObject.playerMovementModeInt == 2){
+
+        /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
+        String                  receivedMuseumNameFullString    = editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
+        ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
+        
+        /*Move the selected player object into the new exhibition that the user choose.*/
+        selectedPlayerObject    .ExhibitionMoveObject(receivedMuseumObject.nameAltString);
+
+    }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//EditPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////// 

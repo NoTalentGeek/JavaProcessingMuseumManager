@@ -41,6 +41,9 @@ The player object will be the class that can be either played by the user (somek
     or being automated.*/
 class ObjectPlayer{
 
+    String exhibitionCurrentNameAltString = "";
+    String exhibitionCurrentNameFullString = "";
+
     String              exhibitionCurrentString                     = "";                               /*Current exhibition in String.*/
     ObjectMuseum        exhibitionCurrentObject                     = null;
     List<String>        exhibitionTargetNameAltStringList           = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
@@ -77,7 +80,7 @@ class ObjectPlayer{
     List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
     int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.*/
 
-    int                 editPlayerModeInt                           = 2;                                /*The mode that runs this player.
+    int                 playerMovementModeInt                           = 2;                                /*The mode that runs this player.
                                                                                                             editPlayerMode =    1, this player controlled by AIAutoVoid.
                                                                                                             editPlayerMode =    2, this player controlled manually using this application.
                                                                                                             editPlayerMode =    3, this player controlled manually using Arduino.*/
@@ -233,7 +236,7 @@ class ObjectPlayer{
         PanelDrawVoid   ();
 
         /*PROTOTYPE: Changing player mode.*/
-        if(editPlayerModeInt == 1){ AIAutoVoid(); }
+        if(playerMovementModeInt == 1){ AIAutoVoid(); }
         /*PROTOTYPE: Creating function to move this player manually.*/
 
         /*PENDING: Give the codes below in the new own method and create commentation for these code below.*/
@@ -738,6 +741,8 @@ class ObjectPlayer{
     Panel PanelDrawVoid()                                                                 {
 
         exhibitionCurrentObject         = FindObject(exhibitionObjectList, exhibitionCurrentString);
+        exhibitionCurrentNameAltString  = exhibitionCurrentObject.nameAltString;
+        exhibitionCurrentNameFullString = exhibitionCurrentObject.nameFullString;
 
         SetPanelVariableInsideVoid      ();
 

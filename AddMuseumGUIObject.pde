@@ -228,6 +228,7 @@ class AddMuseumGUIObject{
         /*Show/hide controller based on the alpha value received from the main class.*/
         if                          (alphaFloat >  (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).show(); }
         else if                     (alphaFloat <= (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).hide(); }
+
         groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat + (255f/45f));
         groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat + (255f/45f));
         groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat + (255f/45f));

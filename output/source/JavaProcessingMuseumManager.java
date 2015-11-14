@@ -14,6 +14,8 @@ import controlP5.*;
 import java.util.*; 
 import controlP5.*; 
 import java.util.*; 
+import controlP5.*; 
+import java.util.*; 
 import java.util.*; 
 import java.util.*; 
 import controlP5.*; 
@@ -145,7 +147,7 @@ int                     guiOffsetInt                    = 20;                   
 
 
 
-
+int buttonSizeInt                   = 0;  /*Button size temporary variable.*/
 
 
 int biggestPlayerIndexInt = 0;
@@ -441,7 +443,7 @@ public void setup()                                    {
 
     cp5Object                           = new ControlP5(this);
 
-    int buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
+    buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
     buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
     buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
 
@@ -505,14 +507,12 @@ public void setup()                                    {
     /*Add the edit player GUI.*/
     editPlayerGUIObject                 = new EditPlayerGUIObject(
 
-
         (guiOffsetInt + (buttonSizeInt/2))  ,
         (guiOffsetInt + (buttonSizeInt/2))  ,
         dropdownObjectWidthInt              ,
         427                                 ,
-        buttonSizeInt                       ,
-        dropdownObjectWidthInt              ,
-        dropdownObjectHeightInt
+        cp5Object                           ,
+        this
 
     );
 
@@ -645,7 +645,7 @@ public void draw()                                     {
     /*Update the add player object GUI.*/
     addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
-    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat);
+    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGUIObject);
     /*Update the edit player object GUI.*/
     editPlayerGUIObject                     .DrawVoid(buttonOpenClosePlayerObject.isButtonOpenBoolean, dropdownPlayerAlphaFloat);
     
@@ -1181,6 +1181,7 @@ public ObjectMuseum AddMuseumObject(
 public ObjectMuseum FindMuseumObject(String _objectNameString)                              {
 
     ObjectMuseum tempMuseumObject = null;
+
     for(int i = 0; i < floorObjectList.size(); i ++){
 
         if(floorObjectList.get(i).nameAltString     .equals(_objectNameString)){ tempMuseumObject = floorObjectList.get(i); }
@@ -1491,27 +1492,7 @@ public void VisitorSList                   (int _indexInt)                      
     /*Assign the selected player.*/
     editPlayerGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
     /*Change the radio button accordingly.*/
-    cp5Object.get(RadioButton.class, "ModeRadioButton").activate((editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt - 1));
-
-}
-/*Control function for the EditPlayerGUIObject.pde.*/              
-public void ModeRadioButton                (int _intIndex)                                 {
-
-    /*Change the mode for both in player object and in the player GUI object.*/
-    editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt  = _intIndex;
-    editPlayerGUIObject                     .editPlayerModeInt  = _intIndex;
-
-}
-/*Function to move to new exhibition.*/
-public void PleaseSelectNextExhibitionSList(int _indexInt)                                 {
-
-    if(editPlayerGUIObject.selectedPlayerObject.editPlayerModeInt == 2){
-
-        String          receivedString          = cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").getItem(_indexInt).get("text").toString();
-        ObjectMuseum    receivedMuseumObject    = editPlayerGUIObject.selectedPlayerObject.FindObject(exhibitionObjectList, receivedString);
-        editPlayerGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumObject.nameAltString);
-
-    }
+    editPlayerGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
 
 }
 /*Control functions for the AddMuseumGUIObject.pde.
@@ -1834,6 +1815,17 @@ public void AddTagGUIObjectSubmitButton(int _indexInt){
     cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).clear().hide();
 
 }
+
+
+    
+    /*Controller's function to control radio button and assign which movement mode to selected player object.*/
+    public void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
+    
+        println("TEST");
+        editPlayerGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex; /*Assign a value (1, 2, 3) to this class.              */
+        editPlayerGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex; /*Assign a value (1, 2, 3) to selected player object.  */
+
+    }
 /*A class to creating a GUI object on adding museum object.*/
 
 
@@ -2064,6 +2056,7 @@ class AddMuseumGUIObject{
         /*Show/hide controller based on the alpha value received from the main class.*/
         if                          (alphaFloat >  (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).show(); }
         else if                     (alphaFloat <= (255f/45f)){ cp5Object.get(Group         .class  , "AddMuseumGroupObject"            ).hide(); }
+
         groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat + (255f/45f));
         groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat + (255f/45f));
         groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat + (255f/45f));
@@ -2854,7 +2847,7 @@ class AddTagGUIObject{
 /*A class for toggle open and close button.
 This button will be used to open a panel made using
     P5 user interface.*/
-public class ButtonOpenClose{
+class ButtonOpenClose{
 
     PShape  buttonOpenCloseCircleObject = null; /*This is a child shape of this button, later will be combined together into main shape.*/
     PShape  buttonOpenCloseCross1Object = null; /*This is a child shape of this button, later will be combined together into main shape.*/
@@ -2995,431 +2988,577 @@ public class ButtonOpenClose{
 
 
 
-/*A class for creating GUI object for editing player movement around the museum.
-PENDING: Please do not forget to create default value, so when the system starts this GUI object displays the information of the first player.*/
 
 
-class EditPlayerGUIObject{
 
-    int           groupBackgroundColor                        ;                               /*The color of group panel group background.*/
-    int           groupColorBackgroundColor                   ;                               /*The title background color of panel group.*/
-    int           groupColorLabelColor                        ;                               /*The title font colot of the panel group.*/
-    /*PENDING: alphaFloat is actually unecessary please delete this variable later and just directly refers the value from the arguments.*/
-    float           alphaFloat                                  = 255;                          /*The opacity for this object.*/
-    int             editPlayerModeInt                           = 2;                            /*Whether the selected player object is controlled by AI, manual control, or hardware control.*/
-    int             playerGroupXInt                             ;                               /*The x position of this graphical user interface.*/
-    int             playerGroupYInt                             ;                               /*The x position of this graphical user interface.*/
-    int             parentButtonSizeInt                         ;                               /*A variable for layout taken from the main class.*/
-    int             parentDropdownObjectWidthInt                ;                               /*A variable for layout taken from the main class.*/
-    int             parentDropdownObjectHeightInt               ;                               /*A variable for layout taken from the main class.*/
-    int             groupLayoutOffsetInt                        = 10;                           /*This object offset.*/
-    //int           playerGroupWidthInt                         = (width/3);                    /*This object width.*/
-    int             playerGroupWidthInt                         ;                               /*This object width.*/
-    //int           playerGroupHeightInt                        = (367 + 2);                    /*Additional 2 to fix layouting error in the radio buttons.*/
-    int             playerGroupHeightInt                        ;                               /*This object height.*/
-    int             playerScrollableListHeightInt               = 62;                           /*Height of scrollable list controller in this object that has five rows.*/
-    int             playerScrollableListHeight3Int              = 50;                           /*Height of scrollable list controller in this object that has three rows.*/
-    CColor          otherCColor                                 = new CColor();                 /*The color for other component than the scrollableChecklist.*/
-    CColor          sListStaticCColor                           = new CColor();                 /*The color of the scrollable list that has no interaction (User cannot choose the elements).*/
-    /*Determine whether to display object name in full name or in alternate name.*/
-    String          tempPlayerExhibitionCurrentValueTextlabel   = "";
-    List<String>    tempPlayerExhibitionTargetSList             = new ArrayList<String>();
-    List<String>    tempPlayerExhibitionVisitedSList            = new ArrayList<String>();
-    List<String>    tempPlayerTagSList                          = new ArrayList<String>();
-    List<String>    tempPleaseSelectNextExhibitionSList         = new ArrayList<String>();
-    ObjectPlayer    selectedPlayerObject                        = null;                         /*Selected object player from this graphical user interface.*/
-    //ObjectPlayer  selectedPlayerPrevObject                    = null;                         /*Selected object player from this graphical user interface.*/
+class EditPlayerGUIObject extends GUIObject{
 
-    /*Constructor.*/
-    EditPlayerGUIObject     (
+    ControlP5                               editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
-        int _playerGroupXInt                ,
-        int _playerGroupYInt                ,
-        int _playerGroupWidthInt            ,
-        int _playerGroupHeightInt           ,
-        int _parentButtonSizeInt            ,
-        int _parentDropdownObjectWidthInt   ,
-        int _parentDropdownObjwctHeightInt
+    //ChoosePlayerScrollableListGUIObject   choosePlayerScrollableListGUIObject                         ;                           /*PENDING: Object is not yet created.                                                               */
+    ControlP5                               playerScrollableListObject                                  ;                           /*PENDING: Change later with variable of ObjectGUI.                                                 */
+
+    ObjectPlayer                            selectedPlayerObject                                        ;                           /*Selected player object.*/
+
+    int                                     tempSelectedPlayerMovementModeInt                               = 2;                        /*Movement mode of selected player object.                                                          */
+    String                                  tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
+    String                                  tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
+    List<String>                            tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
+    List<String>                            tempSelectedPlayerExhibitionVisitedNameFullStringList       = new ArrayList<String>();  /*Temporary variable that contains selected player object visited  exhibition list full name String.*/
+    List<String>                            tempSelectedPlayerTagNameFullStringList                     = new ArrayList<String>();  /*Temporary variable that contains selected player object tag                 list full name String.*/
+
+    /*ControlP5 related graphical user interface controller variables.*/
+    Group                                   editPlayerGroupObject                                       ;
+    Textlabel                               editPlayerGroupPlayerIndexTextlabelObject                   ;
+    Textlabel                               editPlayerGroupPlayerIndexValueTextlabelObject              ;
+    Textfield                               editPlayerGroupPlayerNameTextfieldObject                    ;
+    Button                                  editPlayerGroupPlayerNameChangeButtonObject                 ;
+    Textlabel                               editPlayerGroupPlayerFinishedTextlabelObject                ;
+    Textlabel                               editPlayerGroupPlayerFinishedValueTextlabelObject           ;
+    Textlabel                               editPlayerGroupPlayerScoreTextlabelObject                   ;
+    Textlabel                               editPlayerGroupPlayerScoreValueTextlabelObject              ;
+    Textlabel                               editPlayerGroupPlayerExhibitionCurrentTextlabelObject       ;
+    Textlabel                               editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  ;
+    ScrollableList                          editPlayerGroupPlayerExhibitionTargetScrollableListObject   ;
+    ScrollableList                          editPlayerGroupPlayerExhibitionVisitedScrollableListObject  ;
+    Textlabel                               editPlayerGroupPlayerSentenceTextlabelObject                ;
+    Textarea                                editPlayerGroupPlayerSentenceValueTextareaObject            ;
+    Textlabel                               editPlayerGroupPlayerExplanationTextlabelObject             ;
+    Textarea                                editPlayerGroupPlayerExaplanationValueTextareaObject        ;
+    ScrollableList                          editPlayerGroupPlayerTagScrollableListObject                ;
+    Textlabel                               editPlayerGroupPlayerModeTextlabelObject                    ;
+    RadioButton                             editPlayerGroupPlayerModeValueRadioButtonObject             ;
+    ScrollableList                          editPlayerGroupPlayerExhibitionNextScrollableListObject     ;
+    Button                                  editPlayerGroupPlayerResetButtonObject                      ;
+    Button                                  editPlayerGroupPlayerGeneratePatternButtonObject            ;
+
+    /*PENDING.
+    public EditPlayerGUIObject                                      (
+
+        int                                     _guiXInt                                ,
+        int                                     _guiYInt                                ,
+        int                                     _guiWidthInt                            ,
+        int                                     _guiHeightInt                           ,
+        ChoosePlayerScrollableListGUIObject     _choosePlayerScrollableListGUIObject    ,
+        PApplet                                 _pAppletObject
+
+    ){
+    */
+    /*PENDING.*/
+    EditPlayerGUIObject                                      (
+
+        int                                     _guiXInt                                ,
+        int                                     _guiYInt                                ,
+        int                                     _guiWidthInt                            ,
+        int                                     _guiHeightInt                           ,
+        ControlP5                               _playerScrollableListObject             ,
+        PApplet                                 _pAppletObject
 
     ){
 
-        /*Fill the argument in.*/
-        playerGroupXInt                         = _playerGroupXInt;
-        playerGroupYInt                         = _playerGroupYInt + groupLayoutOffsetInt;
-        playerGroupWidthInt                     = _playerGroupWidthInt;
-        playerGroupHeightInt                    = _playerGroupHeightInt;
-        parentButtonSizeInt                     = _parentButtonSizeInt;
-        parentDropdownObjectWidthInt            = _parentDropdownObjectWidthInt;
-        parentDropdownObjectHeightInt           = _parentDropdownObjwctHeightInt;
+        super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
+        editPlayerGroupControlP5Object                              = new ControlP5(_pAppletObject);
 
-        /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
-        groupBackgroundColor                    = color(50  , 60    , 57    , alphaFloat);
-        groupColorBackgroundColor               = color(2   , 45    , 89    , alphaFloat);
-        groupColorLabelColor                    = color(255 , 255   , 255   , alphaFloat);
-        otherCColor                             .setActive          (color(0    , 170   , 255   , alphaFloat))
-                                                .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                                .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                                .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                                .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-        sListStaticCColor                       .setActive          (color(0    , 45    , 90    , alphaFloat))
-                                                .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                                .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                                .setForeground      (color(0    , 45    , 90    , alphaFloat))
-                                                .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+        //choosePlayerScrollableListGUIObject                       = _choosePlayerScrollableListGUIObject;                                                         /*PENDING.*/
+        playerScrollableListObject                                  = _playerScrollableListObject;                                                                  /*PENDING.*/
 
-        /*Set the default player object.*/
-        selectedPlayerObject                    = playerObjectList.get(0);
+        selectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
+        tempSelectedPlayerFinishedString                            = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
+        for(int i = 0; i < selectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-        if(useNameAltBoolean        == true ){
-
-            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameAltString;
-            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameAltStringList;
-            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameAltStringList;
-            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameAltStringList;
-            tempPleaseSelectNextExhibitionSList                     = exhibitionNameAltStringList;
-
-        }
-        else if(useNameAltBoolean   == false){
-
-            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameFullString;
-            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameFullStringList;
-            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameFullStringList;
-            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameFullStringList;
-            tempPleaseSelectNextExhibitionSList                     = exhibitionNameFullStringList;
+            if(i == 0)  { tempSelectedPlayerSentenceString          =                                           selectedPlayerObject.sentenceStringList.get(i); }
+            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n" + selectedPlayerObject.sentenceStringList.get(i); }
 
         }
 
-        String tempPlayerFinishedBoolean = (selectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";
 
-        Group   EditPlayerGroupObject               = 
-                cp5Object   .addGroup               ("EditPlayerGroupObject")
-                            .close                  ()
-                            //.setPosition          (((width/2) - (playerGroupWidthInt/2)), ((height/2) - (playerGroupHeightInt/2)))
-                            .setPosition            (playerGroupXInt, playerGroupYInt)
-                            .setWidth               (playerGroupWidthInt)
-                            .setBackgroundHeight    (playerGroupHeightInt)
-                            .setBackgroundColor     (groupBackgroundColor)
-                            .setColor               (otherCColor)
-                            .setColorBackground     (groupColorBackgroundColor)
-                            .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("EDIT VISITOR:");
 
-                /*PENDING - DONE: Create the text panel. Many text panel!!!*/
-                cp5Object   .addTextlabel           ("PlayerIndexTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*1))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("PLAYER INDEX:");
-
-                cp5Object   .addTextlabel           ("PlayerIndexValueTextlabel")
-                            .setPosition            (((playerGroupWidthInt/2) + (groupLayoutOffsetInt/2)), (groupLayoutOffsetInt*1))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("" + selectedPlayerObject.playerIndexInt);
+        editPlayerGroupObject                                       =
+            editPlayerGroupControlP5Object
+                .addGroup                                           ("EditPlayerGroupObject")
+                .close                                              ()
+                .setBackgroundColor                                 (groupBackgroundColor)
+                .setBackgroundHeight                                (guiHeightInt)
+                .setColor                                           (defaultCColor)
+                .setColorBackground                                 (groupColorBackgroundColor)
+                .setColorLabel                                      (groupColorLabelColor)
+                .setLabel                                           ("EDIT VISITOR:")
+                .setPosition                                        (guiXInt, guiYInt)
+                .setWidth                                           (guiWidthInt);
 
 
 
-
-                cp5Object   .addTextfield           ("PlayerNameTextfield")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2)  ,  (groupLayoutOffsetInt*2))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setLabel               ("PLAYER NAME:");
-
-                cp5Object   .addButton              ("PlayerChangeNameButton")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*3))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) ,  (groupLayoutOffsetInt*2))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setLabel               ("CHANGE NAME");
+        editPlayerGroupPlayerIndexTextlabelObject                   =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerIndexTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, guiLayoutOffsetInt)
+                .setText                                            ("PLAYER INDEX:");
 
 
 
-
-                cp5Object   .addTextlabel           ("PlayerFinishedTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*7))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("PLAYER FINISHED:");
-
-                cp5Object   .addTextlabel           ("PlayerFinishedValueTextlabel")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*7))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                (tempPlayerFinishedBoolean);
-
-                cp5Object   .addTextlabel           ("PlayerScoreTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*8))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("PLAYER SCORE:");
-
-                cp5Object   .addTextlabel           ("PlayerScoreValueTextlabel")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*8))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("" + selectedPlayerObject.playerScoreInt);
-
-                cp5Object   .addTextlabel           ("PlayerExhibitionCurrentTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*9))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("PLAYER CURRENT EXHIBITION:");
-
-                cp5Object   .addTextlabel           ("PlayerExhibitionCurrentValueTextlabel")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), (groupLayoutOffsetInt*9))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                (tempPlayerExhibitionCurrentValueTextlabel);
+        editPlayerGroupPlayerIndexValueTextlabelObject              =   
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerIndexValueTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, guiLayoutOffsetInt)
+                .setText                                            ("" + selectedPlayerObject.playerIndexInt);
 
 
 
-
-
-                /*PENDING - DONE: Please make this un - selectable.*/
-                cp5Object   .addScrollableList      ("PlayerExhibitionTargetSList")
-                            .setPosition            (groupLayoutOffsetInt,  (groupLayoutOffsetInt*11))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeight3Int)
-                            .setGroup               (EditPlayerGroupObject)
-                            .addItems               (tempPlayerExhibitionTargetSList)
-                            .setType                (ControlP5.LIST)
-                            .setColor               (sListStaticCColor)
-                            .setLabel               ("PLAYER TARGET EXHIBITIONS:");
-
-                /*PENDING - DONE: Please make this un - selectable.*/
-                cp5Object   .addScrollableList      ("PlayerExhibitionVisitedSList")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2),  (groupLayoutOffsetInt*11))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeightInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .addItems               (tempPlayerExhibitionVisitedSList)
-                            .setType                (ControlP5.LIST)
-                            .setColor               (sListStaticCColor)
-                            .setLabel               ("PLAYER VISITED EXHIBITIONS:");
-
-
-                cp5Object   .addTextlabel           ("PlayerSentenceTextlabel")
-                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*12) + playerScrollableListHeightInt - 2))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("PLAYER SENTENCES:");
-
-                cp5Object   .addTextarea            ("PlayerSentenceValueTextarea")
-                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*13) + playerScrollableListHeightInt - 2))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeightInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor);
+        editPlayerGroupPlayerNameTextfieldObject                    =
+            editPlayerGroupControlP5Object
+                .addTextfield                                       ("EditPlayerGroupPlayerNameTextfieldObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("PLAYER NAME:")
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*3))
+                .setSize                                            (guiElement2CollumnWidth,  guiElement2LineHeight);
 
 
 
-
-                cp5Object   .addTextlabel           ("PlayerExplanationTextlabel")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2),  ((groupLayoutOffsetInt*12) + playerScrollableListHeightInt - 2))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("PLAYER EXPLANATIONS:");
-
-                cp5Object   .addTextarea            ("PlayerExplanationValueTextlabel")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2),  ((groupLayoutOffsetInt*13) + playerScrollableListHeightInt - 2))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , playerScrollableListHeightInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor);
+        editPlayerGroupPlayerNameChangeButtonObject                 =
+            editPlayerGroupControlP5Object
+                .addButton                                          ("EditPlayerGroupPlayerNameChangeButtonObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("CHANGE NAME")
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*3))
+                .setSize                                            (guiElement2CollumnWidth,  guiElement2LineHeight);
 
 
 
+        editPlayerGroupPlayerFinishedTextlabelObject                =   
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerFinishedTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*7))
+                .setText                                            ("PLAYER FINISHED:");
 
 
 
+        editPlayerGroupPlayerFinishedValueTextlabelObject           =
+                editPlayerGroupControlP5Object
+                    .addTextlabel                                   ("EditPlayerGroupPlayerFinishedValueTextlabelObject")
+                    .setColor                                       (defaultCColor)
+                    .setColorValue                                  (255)
+                    .setGroup                                       (editPlayerGroupObject)
+                    .setPosition                                    (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*7))
+                    .setText                                        (tempSelectedPlayerFinishedString);
 
 
 
-                cp5Object   .addScrollableList      ("PlayerTagSList")
-                            .setPosition            (groupLayoutOffsetInt,  ((groupLayoutOffsetInt*14) + (playerScrollableListHeightInt*2)))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*2))) , playerScrollableListHeightInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .addItems               (tempPlayerTagSList)
-                            .setType                (ControlP5.LIST)
-                            .setColor               (sListStaticCColor)
-                            .setLabel               ("PLAYER COLLECTED TAGS:");
-
-                cp5Object   .addTextlabel           ("ModeTextlabel")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*15) + (playerScrollableListHeightInt*3)))
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setColorValue          (255)
-                            .setText                ("MODES:");
-
-                /*PENDING - DONE: Adding radio buttons to select mode on how player should be moved.*/
-                cp5Object   .addRadioButton         ("ModeRadioButton")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*16) + (playerScrollableListHeightInt*3)))
-                            .setSize                (groupLayoutOffsetInt, groupLayoutOffsetInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .addItem                ("SOFTWARE - AUTO"  , 1)
-                            .addItem                ("SOFTWARE - MANUAL", 2)
-                            .addItem                ("HARDWARE - MANUAL", 3)
-                            .activate               (1);
-
-                cp5Object   .addScrollableList      ("PleaseSelectNextExhibitionSList")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), ((groupLayoutOffsetInt*15) + (playerScrollableListHeightInt*3)))    /*Additional 2 to fix layouting error in the radio buttons.*/
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2) , 64)
-                            .setGroup               (EditPlayerGroupObject)
-                            .addItems               (tempPleaseSelectNextExhibitionSList)
-                            .setType                (ControlP5.LIST)
-                            .setColor               (otherCColor)
-                            .setLabel               ("SELECT NEXT EXHIBITION:");
-
-                cp5Object   .addButton              ("ResetPlayerButton")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*16) + (playerScrollableListHeightInt*4)))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), groupLayoutOffsetInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setLabel               ("RESET PLAYER");
-
-                cp5Object   .addButton              ("GeneratePatternButton")
-                            .setPosition            ((groupLayoutOffsetInt*2) + ((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), ((groupLayoutOffsetInt*16) + (playerScrollableListHeightInt*4)))
-                            .setSize                (((playerGroupWidthInt - (groupLayoutOffsetInt*3))/2), groupLayoutOffsetInt)
-                            .setGroup               (EditPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setLabel               ("GENERATE PATTERN");
+        editPlayerGroupPlayerScoreTextlabelObject                   =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerScoreTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*8))
+                .setText                                            ("PLAYER SCORE:");
 
 
+
+        editPlayerGroupPlayerScoreValueTextlabelObject              =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerScoreValueTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*8))
+                .setText                                            ("" + selectedPlayerObject.playerScoreInt);
+
+
+
+        editPlayerGroupPlayerExhibitionCurrentTextlabelObject       =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerExhibitionCurrentTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*9))
+                .setText                                            ("PLAYER CURRENT EXHIBITION:");
+
+
+
+        editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerExhibitionCurrentValueTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*9))
+                .setText                                            ("" + selectedPlayerObject.exhibitionCurrentNameFullString);
+
+
+
+        editPlayerGroupPlayerExhibitionTargetScrollableListObject   =
+                editPlayerGroupControlP5Object
+                    .addScrollableList                              ("EditPlayerGroupPlayerExhibitionTargetScrollableListObject")
+                    .addItems                                       (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
+                    .setColor                                       (staticScrollableListCColor)
+                    .setGroup                                       (editPlayerGroupObject)
+                    .setLabel                                       ("PLAYER TARGET EXHIBITIONS:")
+                    .setPosition                                    (guiElement2CollumnFirstCollumnXInt,  (guiLayoutOffsetInt*11))
+                    .setSize                                        (guiElement2CollumnWidth, guiScrollableList4RowHeightInt)
+                    .setType                                        (ControlP5.LIST);
+
+
+
+        editPlayerGroupPlayerExhibitionVisitedScrollableListObject  =
+            editPlayerGroupControlP5Object
+                .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionVisitedScrollableListObject")
+                .addItems                                           (tempSelectedPlayerExhibitionVisitedNameFullStringList)
+                .setColor                                           (staticScrollableListCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("PLAYER VISITED EXHIBITIONS:")
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  (guiLayoutOffsetInt*11))
+                .setSize                                            (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                .setType                                            (ControlP5.LIST);
+
+
+
+        editPlayerGroupPlayerSentenceTextlabelObject                =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerSentenceTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
+                .setText                                            ("PLAYER SENTENCES:");
+
+
+
+        editPlayerGroupPlayerSentenceValueTextareaObject            =
+            editPlayerGroupControlP5Object
+                .addTextarea                                        ("editPlayerGroupPlayerSentenceValueTextareaObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
+                .setSize                                            (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                .setText                                            (tempSelectedPlayerSentenceString);
+
+        
+
+        editPlayerGroupPlayerExplanationTextlabelObject             =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerExplanationTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
+                .setText                                            ("PLAYER EXPLANATIONS:");
+
+
+
+        editPlayerGroupPlayerExaplanationValueTextareaObject        =
+            editPlayerGroupControlP5Object
+                .addTextarea                                        ("EditPlayerGroupPlayerExaplanationValueTextareaObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
+                .setSize                                            (guiElement2CollumnWidth , guiScrollableList5RowHeightInt)
+                .setText                                            (tempSelectedPlayerSentenceString);
+
+
+
+        editPlayerGroupPlayerTagScrollableListObject                =
+            editPlayerGroupControlP5Object
+                .addScrollableList                                  ("EditPlayerGroupPlayerTagScrollableListObject")
+                .addItems                                           (tempSelectedPlayerTagNameFullStringList)
+                .setColor                                           (staticScrollableListCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("PLAYER COLLECTED TAGS:")
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*14) + (guiScrollableList5RowHeightInt*2)))
+                .setSize                                            (guiElement1CollumnWidth , guiScrollableList5RowHeightInt)
+                .setType                                            (ControlP5.LIST);
+
+
+
+        editPlayerGroupPlayerModeTextlabelObject                    =
+            editPlayerGroupControlP5Object
+                .addTextlabel                                       ("EditPlayerGroupPlayerModeTextlabelObject")
+                .setColor                                           (defaultCColor)
+                .setColorValue                                      (255)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*15) + (guiScrollableList5RowHeightInt*3)))
+                .setText                                            ("MODES:");
+
+
+
+        editPlayerGroupPlayerModeValueRadioButtonObject             =
+            editPlayerGroupControlP5Object
+                .addRadioButton                                     ("EditPlayerGroupPlayerModeValueRadioButtonObject")
+                .activate                                           (1)
+                .addItem                                            ("SOFTWARE - AUTO"  , 1)
+                .addItem                                            ("SOFTWARE - MANUAL", 2)
+                .addItem                                            ("HARDWARE - MANUAL", 3)
+                .setGroup                                           (editPlayerGroupObject)
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*3)))
+                .setSize                                            (guiLayoutOffsetInt, guiLayoutOffsetInt);
+
+
+
+        editPlayerGroupPlayerExhibitionNextScrollableListObject     =
+            editPlayerGroupControlP5Object
+                .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionNextScrollableListObject")
+                .addItems                                           (exhibitionNameFullStringList)
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("SELECT NEXT EXHIBITION:")
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*15) + (guiScrollableList5RowHeightInt*3)))
+                .setSize                                            (guiElement2CollumnWidth , 64)
+                .setType                                            (ControlP5.LIST);
+
+
+
+        editPlayerGroupPlayerResetButtonObject                      =
+            editPlayerGroupControlP5Object
+                .addButton                                          ("EditPlayerGroupPlayerResetButtonObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("RESET PLAYER")
+                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement2CollumnWidth, guiLayoutOffsetInt);
+
+
+
+        editPlayerGroupPlayerGeneratePatternButtonObject            =
+            editPlayerGroupControlP5Object
+                .addButton                                          ("EditPlayerGroupPlayerGeneratePatternButtonObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("GENERATE PATTERN")
+                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement2CollumnWidth, guiLayoutOffsetInt);
 
 
 
     }
 
-    public void DrawVoid           (
+    public void DrawVoid                                                   (
 
-        boolean _buttonOpenClosePlayerBoolean,
+        boolean _buttonOpenCloseBoolean ,
         float   _alphaFloat
 
     ){
 
-        if(useNameAltBoolean        == true ){
+        super.DrawVoid(_alphaFloat, editPlayerGroupObject);
 
-            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameAltString;
-            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameAltStringList;
-            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameAltStringList;
-            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameAltStringList;
-            tempPleaseSelectNextExhibitionSList                     = exhibitionNameAltStringList;
+        /*Specify the position of another controller below this group controller.*/
+        if      (editPlayerGroupObject.isOpen() == true ){
+
+                /*PENDING.*/
+                playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                    (guiLayoutOffsetInt + (buttonSizeInt/2)              ),
+                    editPlayerGroupObject.getPosition()[1] + guiHeightInt
+                );
+
+                /*PENDING.
+                choosePlayerScrollableList.choosePlayerScrollableListObject.setPosition(
+                    (guiLayoutOffsetInt + (buttonSizeInt/2)              ),
+                    editPlayerGroupObject.getPosition()[1] + guiHeightInt
+                );
+                */
 
         }
-        else if(useNameAltBoolean   == false){
+        else if (editPlayerGroupObject.isOpen() == false){
 
-            tempPlayerExhibitionCurrentValueTextlabel               = selectedPlayerObject.exhibitionCurrentObject.nameFullString;
-            tempPlayerExhibitionTargetSList                         = selectedPlayerObject.exhibitionTargetNameFullStringList;
-            tempPlayerExhibitionVisitedSList                        = selectedPlayerObject.exhibitionVisitedNameFullStringList;
-            tempPlayerTagSList                                      = selectedPlayerObject.exhibitionTagCounterNameFullStringList;
-            tempPleaseSelectNextExhibitionSList                     = exhibitionNameFullStringList;
+                /*PENDING.*/
+                playerScrollableListObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                    (guiLayoutOffsetInt + (buttonSizeInt/2) ),
+                    editPlayerGroupObject.getPosition()[1]
+                );
+
+                /*PENDING.
+                choosePlayerScrollableList.choosePlayerScrollableListObject.setPosition(
+                    (guiLayoutOffsetInt + (buttonSizeInt/2) ),
+                    editPlayerGroupObject.getPosition()[1]
+                );
+                */
 
         }
 
-        /*If there is a button open close for player is close then we need to reset the reference to the selected object.*/
-        if(_buttonOpenClosePlayerBoolean    == false){ selectedPlayerObject = playerObjectList.get(0); }
-        /*If selected player object is not null than populate the controller using the value of the selected player object.*/
-        if(selectedPlayerObject             != null ){
+        /*If button to open this group is in closed state then assign this group controller player selected object back to
+            the default player (the first index in the player object lisy).*/
+        if(_buttonOpenCloseBoolean == false){ selectedPlayerObject = playerObjectList.get(0); }
 
-            String tempPlayerFinishedBooleanString = (selectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";
-            String tempSentenceTextareaString = "";
-            for(int i = 0; i < selectedPlayerObject.sentenceStringList.size(); i ++){
+        /*Always assign values to display in this object controllers.*/
+        if(selectedPlayerObject                             != null ){
 
-                if(i == 0) { tempSentenceTextareaString = selectedPlayerObject.sentenceStringList.get(i); }
-                else                                { tempSentenceTextareaString = tempSentenceTextareaString + "\n\n" + selectedPlayerObject.sentenceStringList.get(i); }
+            tempSelectedPlayerFinishedString                = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
+            for(int i = 0; i < selectedPlayerObject.sentenceStringList.size(); i ++){                                                       /*Put all selected player sentences into one paragraph of a String variable.*/
+
+                if(i == 0)  { tempSelectedPlayerSentenceString =                                           selectedPlayerObject.sentenceStringList.get(i); }
+                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n" + selectedPlayerObject.sentenceStringList.get(i); }
 
             }
-
-            cp5Object.get(Textlabel         .class, "PlayerIndexValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerIndexInt));
-            cp5Object.get(Textlabel         .class, "PlayerFinishedValueTextlabel"          )   .setText ((     tempPlayerFinishedBooleanString));
-            cp5Object.get(Textlabel         .class, "PlayerScoreValueTextlabel"             )   .setText (("" + selectedPlayerObject.playerScoreInt));
-            cp5Object.get(Textlabel         .class, "PlayerExhibitionCurrentValueTextlabel" )   .setText ((     tempPlayerExhibitionCurrentValueTextlabel));
-            cp5Object.get(ScrollableList    .class, "PlayerExhibitionTargetSList"           )   .setItems((     tempPlayerExhibitionTargetSList));
-            cp5Object.get(ScrollableList    .class, "PlayerExhibitionVisitedSList"          )   .setItems((     tempPlayerExhibitionVisitedSList));
-            cp5Object.get(ScrollableList    .class, "PlayerTagSList"                        )   .setItems((     tempPlayerTagSList));
-            cp5Object.get(Textarea          .class, "PlayerSentenceValueTextarea"           )   .setText ((     tempSentenceTextareaString));
-            cp5Object.get(ScrollableList    .class, "PleaseSelectNextExhibitionSList"       )   .setItems((     tempPleaseSelectNextExhibitionSList));
+            editPlayerGroupPlayerIndexValueTextlabelObject              .setText (("" + selectedPlayerObject.playerIndexInt                         ));
+            editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                            ));
+            editPlayerGroupPlayerScoreValueTextlabelObject              .setText (("" + selectedPlayerObject.playerScoreInt                         ));
+            editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  .setText ((     selectedPlayerObject.exhibitionCurrentNameFullString        ));
+            editPlayerGroupPlayerExhibitionTargetScrollableListObject   .setItems((     selectedPlayerObject.exhibitionTargetNameFullStringList     ));
+            editPlayerGroupPlayerExhibitionVisitedScrollableListObject  .setItems((     selectedPlayerObject.exhibitionVisitedNameFullStringList    ));
+            editPlayerGroupPlayerTagScrollableListObject                .setItems((     selectedPlayerObject.exhibitionTagCounterNameFullStringList ));
+            editPlayerGroupPlayerSentenceValueTextareaObject            .setText ((     tempSelectedPlayerSentenceString                            ));
+            editPlayerGroupPlayerExaplanationValueTextareaObject        .setText ((     tempSelectedPlayerSentenceString                            ));
+            editPlayerGroupPlayerExhibitionNextScrollableListObject     .setItems((     exhibitionNameFullStringList                                ));
 
         }
 
+        /*Hide the unecessary controller, for example when movement player mode int is not 2 (software, manual control) then
+            we do not need to show scrollable list that show next exhibition to be choose.*/
+        if      (tempSelectedPlayerMovementModeInt == 1){ editPlayerGroupPlayerExhibitionNextScrollableListObject.hide(); }
+        else if (tempSelectedPlayerMovementModeInt == 2){ editPlayerGroupPlayerExhibitionNextScrollableListObject.show(); }
+        else if (tempSelectedPlayerMovementModeInt == 3){ editPlayerGroupPlayerExhibitionNextScrollableListObject.hide(); }
+        else                                            { editPlayerGroupPlayerExhibitionNextScrollableListObject.hide(); }
+
+    }
+
+    /*Controller's function to move selected player exhibition according to scrollable list that contains all exhibition full name.*/
+    public void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
+
+        /*If selected player object movement mode is two then user can move the player manually.*/
+        if(selectedPlayerObject.playerMovementModeInt == 2){
+
+            /*Get the full name String of the selected exhibition and then find the object in the all museum object list.*/
+            String                  receivedMuseumNameFullString    = editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
+            ObjectMuseum            receivedMuseumObject            = FindMuseumObject(receivedMuseumNameFullString);
+            
+            /*Move the selected player object into the new exhibition that the user choose.*/
+            selectedPlayerObject    .ExhibitionMoveObject(receivedMuseumObject.nameAltString);
+
+        }
+
+    }
+
+}
+
+
+
+class GUIObject{
+
+    /*Parent variables.*/
+    int           groupBackgroundColor                                        ;                           /*The color of group main  panel background color.*/
+    int           groupColorBackgroundColor                                   ;                           /*The color of group title panel background color.*/
+    int           groupColorLabelColor                                        ;                           /*The color of group title panel text       color.*/
+
+    float           alphaFloat                                                  = 255;                      /*The opacity of all controllers in group object. */
+
+    int             guiXInt                                                     ;                           /*The x position  of group object.*/
+    int             guiYInt                                                     ;                           /*The y position  of group object.*/
+    int             guiWidthInt                                                 ;                           /*The height size of group object.*/
+    int             guiHeightInt                                                ;                           /*The width  size of group object.*/
+
+    int             guiLayoutOffsetInt                                          = 10;                       /*The offset used to space each controllers in group object.*/
+
+    int 			guiElement1CollumnFirstCollumnXInt 							;                           /*The x position of first  controller in 1 collumns row.*/
+    int             guiElement2CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 2 collumns row.*/
+    int             guiElement2CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 2 collumns row.*/
+    int             guiElement3CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 3 collumns row.*/
+    int             guiElement3CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 3 collumns row.*/
+    int             guiElement3CollumnThirdCollumnXInt                          ;                           /*The x position of third  controller in 3 collumns row.*/
+
+    int 			guiElement1CollumnWidth 									; 							/*The width of any controller in 1 collumn  row.*/
+    int             guiElement2CollumnWidth                                     ;                           /*The width of any controller in 2 collumns row.*/
+    int             guiElement3CollumnWidth                                     ;                           /*The width of any controller in 3 collumns row.*/
+
+    int             guiElement1LineHeight                                       = 10;                       /*The height of any element that only one line height.
+                                                                                                            For example, button, text label.*/
+    int             guiElement2LineHeight                                       = 20;                       /*The height of any element that only one line height.
+                                                                                                            For example, text field.*/
+
+    int             guiScrollableList5RowHeightInt                              = 62;                       /*The height of scrollable list controller that contains four  elements with additional one element of controller's title panel.*/
+    int             guiScrollableList4RowHeightInt                              = 50;                       /*The height of scrollable list controller that contains three elements with additional one element of controller's title panel.*/
+
+    CColor          defaultCColor                                               = new CColor();             /*This is controller color for default                object.*/
+    CColor          staticScrollableListCColor                                  = new CColor();             /*This is controller color for static scrollable list object.*/
+
+    PApplet         pAppletObject                                               ;                           /*Refer this object back to main PApplet object.*/
+
+    GUIObject(
+
+    	int     _guiXInt        ,
+        int     _guiYInt        ,
+        int     _guiWidthInt    ,
+        int     _guiHeightInt   ,
+        PApplet _pAppletObject
+
+    ){
+
+        /*Parent.*/
+        guiXInt                                         =  _guiXInt                         ;
+        guiYInt                                         = (_guiYInt + guiLayoutOffsetInt)   ;
+        guiWidthInt                                     =  _guiWidthInt                     ;
+        guiHeightInt                                    =  _guiHeightInt                    ;
+        pAppletObject                                   =  _pAppletObject                   ;
+
+        guiElement1CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*2))/1)                ;
+        guiElement2CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*3))/2)                ;
+        guiElement3CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*4))/3)                ;
+        guiElement1CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement2CollumnWidth*0))    ;
+        guiElement2CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement2CollumnWidth*0))    ;
+        guiElement2CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement2CollumnWidth*1))    ;
+        guiElement3CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement3CollumnWidth*0))    ;
+        guiElement3CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement3CollumnWidth*1))    ;
+        guiElement3CollumnThirdCollumnXInt              = ((guiLayoutOffsetInt*3) + (guiElement3CollumnWidth*2))    ;
+
+        groupBackgroundColor                            = color(50 , 60 , 57 , alphaFloat)  ;
+        groupColorBackgroundColor                       = color(2  , 45 , 89 , alphaFloat)  ;
+        groupColorLabelColor                            = color(255, 255, 255, alphaFloat)  ;
+
+        defaultCColor               .setActive          (color(0  , 170, 255, alphaFloat))						/*The color of controller when an element  is clicked by mouse pointer.*/
+                                    .setBackground      (color(0  , 45 , 90 , alphaFloat))						/*The color of controller         elements background.                 */
+                                    .setCaptionLabel    (color(255, 255, 255, alphaFloat))						/*The color of controller         elements text.                       */
+                                    .setForeground      (color(0  , 116, 217, alphaFloat))						/*The color of controller when an element  is hovered by mouse pointer */
+                                    .setValueLabel      (color(255, 255, 255, alphaFloat));						/*The color of controller         elements text.                       */
+        staticScrollableListCColor  .setActive          (color(0  , 45 , 90 , alphaFloat))						/*The color of controller when an element  is clicked by mouse pointer.*/
+                                    .setBackground      (color(0  , 45 , 90 , alphaFloat))						/*The color of controller         elements background.                 */
+                                    .setCaptionLabel    (color(255, 255, 255, alphaFloat))						/*The color of controller         elements text.                       */
+                                    .setForeground      (color(0  , 45 , 90 , alphaFloat))						/*The color of controller when an element  is hovered by mouse pointer */
+                                    .setValueLabel      (color(255, 255, 255, alphaFloat));						/*The color of controller         elements text.                       */
+
+    }
+
+    public void DrawVoid(
+
+    	float _alphaFloat		,
+    	Group _mainGroupObject
+
+    ){
+
+    	/*Parent*/
         alphaFloat                  = _alphaFloat;
 
-        /*Show/hide controller based on the alpha value received from the main class.*/
-        if                          (alphaFloat >  (255f/45f)){ cp5Object.get(Group   .class  , "EditPlayerGroupObject"            ).show(); }
-        else if                     (alphaFloat <= (255f/45f)){ cp5Object.get(Group   .class  , "EditPlayerGroupObject"            ).hide(); }
-        groupBackgroundColor        = color             (50         , 60    , 57    , alphaFloat    + (255f/45f));
-        groupColorBackgroundColor   = color             (2          , 45    , 89    , alphaFloat    + (255f/45f));
-        groupColorLabelColor        = color             (255        , 255   , 255   , alphaFloat    + (255f/45f));
-        otherCColor                 .setActive          (color(0    , 170   , 255   , alphaFloat))
-                                    .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                    .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                    .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                    .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-        sListStaticCColor           .setActive          (color(0    , 45    , 90    , alphaFloat))
-                                    .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                    .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                    .setForeground      (color(0    , 45    , 90    , alphaFloat))
-                                    .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+        if                          (alphaFloat >  (255f/45f)){ _mainGroupObject.show(); }
+        else if                     (alphaFloat <= (255f/45f)){ _mainGroupObject.hide(); }
 
-        /*Especially for group controller you need to adjust four methods instead of just one methods.*/
-        cp5Object.get(Group             .class , "EditPlayerGroupObject"            ).setBackgroundColor    (groupBackgroundColor);
-        cp5Object.get(Group             .class , "EditPlayerGroupObject"            ).setColor              (otherCColor);
-        cp5Object.get(Group             .class , "EditPlayerGroupObject"            ).setColorBackground    (groupColorBackgroundColor);
-        cp5Object.get(Group             .class , "EditPlayerGroupObject"            ).setColorLabel         (groupColorLabelColor);
+        groupBackgroundColor        = color(50 , 60 , 57 , alphaFloat + (255f/45f)) ;
+        groupColorBackgroundColor   = color(2  , 45 , 89 , alphaFloat + (255f/45f)) ;
+        groupColorLabelColor        = color(255, 255, 255, alphaFloat + (255f/45f)) ;
 
-        /*The rest of the controller you only need to adjust for one method, which is setColor().*/
-        cp5Object.get(Textlabel         .class , "PlayerIndexTextlabel"                    ).setColor(otherCColor       );
-        cp5Object.get(Textlabel         .class , "PlayerIndexValueTextlabel"               ).setColor(otherCColor       );
-        cp5Object.get(Textlabel         .class , "PlayerExhibitionCurrentTextlabel"        ).setColor(otherCColor       );
-        cp5Object.get(Textlabel         .class , "PlayerExhibitionCurrentValueTextlabel"   ).setColor(otherCColor       );
-        cp5Object.get(ScrollableList    .class , "PlayerExhibitionTargetSList"             ).setColor(sListStaticCColor );
-        cp5Object.get(ScrollableList    .class , "PlayerExhibitionVisitedSList"            ).setColor(sListStaticCColor );
-        cp5Object.get(ScrollableList    .class , "PlayerTagSList"                          ).setColor(sListStaticCColor );
-        cp5Object.get(Textlabel         .class , "ModeTextlabel"                           ).setColor(otherCColor       );
-        cp5Object.get(RadioButton       .class , "ModeRadioButton"                         ).setColor(otherCColor       );
-        cp5Object.get(ScrollableList    .class , "PleaseSelectNextExhibitionSList"         ).setColor(otherCColor       );
+        defaultCColor               .setActive          (color(0  , 170, 255, alphaFloat))                      /*The color of controller when an element  is clicked by mouse pointer.*/
+                                    .setBackground      (color(0  , 45 , 90 , alphaFloat))                      /*The color of controller         elements background.                 */
+                                    .setCaptionLabel    (color(255, 255, 255, alphaFloat))                      /*The color of controller         elements text.                       */
+                                    .setForeground      (color(0  , 116, 217, alphaFloat))                      /*The color of controller when an element  is hovered by mouse pointer */
+                                    .setValueLabel      (color(255, 255, 255, alphaFloat));                     /*The color of controller         elements text.                       */
+        staticScrollableListCColor  .setActive          (color(0  , 45 , 90 , alphaFloat))                      /*The color of controller when an element  is clicked by mouse pointer.*/
+                                    .setBackground      (color(0  , 45 , 90 , alphaFloat))                      /*The color of controller         elements background.                 */
+                                    .setCaptionLabel    (color(255, 255, 255, alphaFloat))                      /*The color of controller         elements text.                       */
+                                    .setForeground      (color(0  , 45 , 90 , alphaFloat))                      /*The color of controller when an element  is hovered by mouse pointer */
+                                    .setValueLabel      (color(255, 255, 255, alphaFloat));                     /*The color of controller         elements text.                       */
 
+        _mainGroupObject       		.setBackgroundColor (groupBackgroundColor           );
+        _mainGroupObject       		.setColor           (defaultCColor                  );
+        _mainGroupObject       		.setColorBackground (groupColorBackgroundColor      );
+        _mainGroupObject       		.setColorLabel      (groupColorLabelColor           );
 
-        /*If the user does not need the exhibition list we hide it.
-        For example when the player/visitor that user currently inspecting is not in Software - Manual,
-            then the scrollable list of exhibitions is not neccessary, hence we hide it.*/
-        if      (editPlayerModeInt == 1){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
-        else if (editPlayerModeInt == 2){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").show(); }
-        else if (editPlayerModeInt == 3){ cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
-        else                            { cp5Object.get(ScrollableList.class, "PleaseSelectNextExhibitionSList").hide(); }
-
-        /*This code below is for controlling controllers outside of this class.
-        These two if statements is for controlling the position of the other object in the same open close button.*/
-        if      (cp5Object.get(Group.class, "EditPlayerGroupObject").isOpen() == true ){
-
-                /*Change the position when the group object is open.*/
-                 cp5Object.get(ScrollableList.class, "VisitorSList").setPosition(
-
-                    (guiOffsetInt + (parentButtonSizeInt/2)),
-                    (cp5Object.get(Group.class, "EditPlayerGroupObject").getPosition()[1] + playerGroupHeightInt)
-
-                );
-                
-        }
-        else if (cp5Object.get(Group.class, "EditPlayerGroupObject").isOpen() == false){
-
-                /*Change the position when the group object is close.*/
-                 cp5Object.get(ScrollableList.class, "VisitorSList").setPosition(
-
-                    (guiOffsetInt + (parentButtonSizeInt/2)),
-                    (cp5Object.get(Group.class, "EditPlayerGroupObject").getPosition()[1])
-
-                );
-
-        }
     }
 
 }
@@ -3795,6 +3934,9 @@ The player object will be the class that can be either played by the user (somek
     or being automated.*/
 class ObjectPlayer{
 
+    String exhibitionCurrentNameAltString = "";
+    String exhibitionCurrentNameFullString = "";
+
     String              exhibitionCurrentString                     = "";                               /*Current exhibition in String.*/
     ObjectMuseum        exhibitionCurrentObject                     = null;
     List<String>        exhibitionTargetNameAltStringList           = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
@@ -3831,7 +3973,7 @@ class ObjectPlayer{
     List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
     int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.*/
 
-    int                 editPlayerModeInt                           = 2;                                /*The mode that runs this player.
+    int                 playerMovementModeInt                           = 2;                                /*The mode that runs this player.
                                                                                                             editPlayerMode =    1, this player controlled by AIAutoVoid.
                                                                                                             editPlayerMode =    2, this player controlled manually using this application.
                                                                                                             editPlayerMode =    3, this player controlled manually using Arduino.*/
@@ -3987,7 +4129,7 @@ class ObjectPlayer{
         PanelDrawVoid   ();
 
         /*PROTOTYPE: Changing player mode.*/
-        if(editPlayerModeInt == 1){ AIAutoVoid(); }
+        if(playerMovementModeInt == 1){ AIAutoVoid(); }
         /*PROTOTYPE: Creating function to move this player manually.*/
 
         /*PENDING: Give the codes below in the new own method and create commentation for these code below.*/
@@ -4492,6 +4634,8 @@ class ObjectPlayer{
     public Panel PanelDrawVoid()                                                                 {
 
         exhibitionCurrentObject         = FindObject(exhibitionObjectList, exhibitionCurrentString);
+        exhibitionCurrentNameAltString  = exhibitionCurrentObject.nameAltString;
+        exhibitionCurrentNameFullString = exhibitionCurrentObject.nameFullString;
 
         SetPanelVariableInsideVoid      ();
 
@@ -4810,7 +4954,7 @@ class RemovePlayerGUIObject{
 
     }
 
-    public void DrawVoid(float   _alphaFloat){
+    public void DrawVoid(float   _alphaFloat, EditPlayerGUIObject _editPlayerGUIObject){
 
         alphaFloat                      = _alphaFloat;
 
@@ -4841,7 +4985,7 @@ class RemovePlayerGUIObject{
         if      (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == true ){
 
                 /*Change the position when the group object is open.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                _editPlayerGUIObject.editPlayerGroupObject.setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupHeightInt)
@@ -4852,7 +4996,7 @@ class RemovePlayerGUIObject{
         else if (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == false){
 
                 /*Change the position when the group object is close.*/
-                 cp5Object.get(Group.class, "EditPlayerGroupObject").setPosition(
+                _editPlayerGUIObject.editPlayerGroupObject.setPosition(
 
                     (guiOffsetInt + (parentButtonSizeInt/2)),
                     (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt)
