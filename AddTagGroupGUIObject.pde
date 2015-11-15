@@ -323,6 +323,7 @@ class AddTagGroupGUIObject extends GroupGUIObject{
 
     }
 
+    /*Show the necessary text field according to the selected type tag.*/
     void ControlFormVoid(){
 
         if(tempSelectedTagTypeNameFullString.equals("SUBJECT"))                 {
