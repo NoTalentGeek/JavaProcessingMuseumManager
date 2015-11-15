@@ -67,7 +67,7 @@ List<String>            defaultStringList               ;                       
 AddMuseumGroupGUIObject          addMuseumGroupGUIObject              ;
 AddTagGroupGUIObject             addTagGroupGUIObject                 ;
 AddPlayerGroupGUIObject          addPlayerGroupGUIObject              ;
-RemovePlayerGUIObject       removePlayerGUIObject           ;
+RemovePlayerGroupGUIObject       removePlayerGroupGUIObject           ;
 EditPlayerGroupGUIObject    editPlayerGroupGUIObject             ;
 
 /*Variable to display information card when mouse pointer is hovered over either museum or player object.*/
@@ -478,16 +478,27 @@ void setup()                                    {
     );
 
 
+
+    /*Add the edit player GUI.*/
+    editPlayerGroupGUIObject            = new EditPlayerGroupGUIObject(
+
+        (guiOffsetInt + (buttonSizeInt/2))                  ,
+        (guiOffsetInt + (buttonSizeInt/2))                  ,
+        dropdownObjectWidthInt                              ,
+        427                                                 ,
+        cp5Object.get(ScrollableList.class, "VisitorSList") ,
+        this
+
+    );
     /*Add the remove player GUI.*/
-    removePlayerGUIObject                  = new RemovePlayerGUIObject(
+    removePlayerGroupGUIObject                  = new RemovePlayerGroupGUIObject(
 
         (guiOffsetInt + (buttonSizeInt/2))          ,
         (guiOffsetInt + (buttonSizeInt/2))          ,
         dropdownObjectWidthInt                      ,
         104                                         ,
-        buttonSizeInt                               ,
-        dropdownObjectWidthInt                      ,
-        dropdownObjectHeightInt
+        editPlayerGroupGUIObject.editPlayerGroupObject ,
+        this
 
 
     );
@@ -499,21 +510,9 @@ void setup()                                    {
         (guiOffsetInt + (buttonSizeInt/2))                                          ,
         dropdownObjectWidthInt                                                      ,
         144                                                                         ,
-        cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject")  ,
+        removePlayerGroupGUIObject.removePlayerGroupObject ,
         this
 
-
-    );
-
-    /*Add the edit player GUI.*/
-    editPlayerGroupGUIObject            = new EditPlayerGroupGUIObject(
-
-        (guiOffsetInt + (buttonSizeInt/2))                  ,
-        (guiOffsetInt + (buttonSizeInt/2))                  ,
-        dropdownObjectWidthInt                              ,
-        427                                                 ,
-        cp5Object.get(ScrollableList.class, "VisitorSList") ,
-        this
 
     );
 
@@ -616,7 +615,7 @@ void draw()                                     {
     /*Update the add player object GUI.*/
     addPlayerGroupGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
-    removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGroupGUIObject);
+    removePlayerGroupGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the edit player object GUI.*/
     editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat);
     
@@ -1497,30 +1496,7 @@ int GetBiggestPlayerIndexInt(){
 
 
 
-void RemovePlayerGUIObjectPickPlayer(int _indexInt){
 
-    String tempIndexSelectedPlayerString = cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").getItem(_indexInt).get("text").toString();
-    int tempIndexSelectedPlayerInt = Integer.parseInt(tempIndexSelectedPlayerString);
-    removePlayerGUIObject.playerToRemoveObject = FindPlayerObject(tempIndexSelectedPlayerInt);
-
-}
-
-void RemovePlayerGUIObjectRemoveButton(int _indexInt){
-
-    playerObjectList.remove(removePlayerGUIObject.playerToRemoveObject);
-    playerStringList.remove("" + removePlayerGUIObject.playerToRemoveObject.playerIndexInt);
-    cp5Object.get(ScrollableList.class, "VisitorSList").setItems(playerStringList );
-    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").setItems(playerStringList );
-
-    for(int i = 0; i < playerObjectList.size(); i ++){
-
-        playerObjectList.get(i).SetSiblingObjectList();
-
-    }
-
-    removePlayerGUIObject.playerToRemoveObject = null;
-
-}
 
 ObjectPlayer FindPlayerObject(int _playerIndexInt){
 
@@ -1546,7 +1522,9 @@ ObjectPlayer FindPlayerObject(int _playerIndexInt){
 
 
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//START//Controller's Functions.////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
 //START//AddMuseumGroupGUIObject.pde Controller's Functions.////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1610,13 +1588,13 @@ void AddMuseumGroupAddMuseumObjectButtonObject                                  
     */
 
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //END//AddMuseumGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //START//AddTagGroupGUIObject.pde Controller's Functions.///////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 void AddTagGroupTagTypeNameFullScrollableListObject (int _indexInt){
@@ -1751,13 +1729,13 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"))      { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
 
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //END//AddTagGroupGUIObject.pde Controller's Functions./////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //START//AddPlayerGroupGUIObject.pde Controller's Functions.////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*Find the starting exhibition alternate name String.*/
@@ -1782,16 +1760,51 @@ void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
     playerStringList.add("" + tempPlayerObject.playerIndexInt);
 
     cp5Object.get(ScrollableList.class, "VisitorSList")                     .setItems(playerStringList );
-    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer")  .setItems(playerStringList );
+    cp5Object.get(ScrollableList.class, "RemovePlayerGroupGUIObjectPickPlayer")  .setItems(playerStringList );
 
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //END//AddPlayerGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//START//RemovePlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*This function below is for the user to pick which player they want to remove.*/
+void RemovePlayerGroupSelectPlayerToRemoveScrollableListObject  (int _indexInt){
+
+    String  tempIndexSelectedPlayerString                   = removePlayerGroupGUIObject.removePlayerGroupSelectPlayerToRemoveScrollableListObject.getItem(_indexInt).get("text").toString();
+    int     tempIndexSelectedPlayerInt                      = Integer.parseInt(tempIndexSelectedPlayerString);
+    removePlayerGroupGUIObject.tempPlayerToRemoveObject     = FindPlayerObject(tempIndexSelectedPlayerInt   );
+
+}
+void RemovePlayerGroupRemoveButtonObject                        (int _indexInt){
+
+    if(removePlayerGroupGUIObject.tempPlayerToRemoveObject != null){
+        
+        /*Remove the player from both player object list and the player string object list.*/
+        playerObjectList                .remove(     removePlayerGroupGUIObject.tempPlayerToRemoveObject                );
+        playerStringList                .remove("" + removePlayerGroupGUIObject.tempPlayerToRemoveObject.playerIndexInt );
+        removePlayerGroupGUIObject.removePlayerGroupSelectPlayerToRemoveScrollableListObject.setItems(playerStringList  );
+        cp5Object.get(ScrollableList.class, "VisitorSList")                                 .setItems(playerStringList  );
+
+        /*When the user remove the player do not forget to set every player sibling object list.*/
+        for(int i = 0; i < playerObjectList.size(); i ++){ playerObjectList.get(i).SetSiblingObjectList(); }
+        /*Reset the selected player value so that when user click the button again it will not returned a null pointer error.*/
+        removePlayerGroupGUIObject.tempPlayerToRemoveObject = null;
+        
+    }
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//END//RemovePlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*Set the movement mode for both player object and the graphical user interface object.
@@ -1816,6 +1829,9 @@ void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt) 
     }
 
 }
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //END//EditPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//END//Controller's Functions.//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

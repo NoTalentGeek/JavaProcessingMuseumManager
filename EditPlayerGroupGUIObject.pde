@@ -54,9 +54,9 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);
 
-        selectPlayerScrollableListObject                            = _selectPlayerScrollableListObject;                                                            /*PENDING.*/
+        selectPlayerScrollableListObject                            = _selectPlayerScrollableListObject;                                                                /*PENDING.*/
 
-        tempSelectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
+        tempSelectedPlayerObject                                    =  playerObjectList     .get(0);                                                                    /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
