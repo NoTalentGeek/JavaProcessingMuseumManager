@@ -16,21 +16,21 @@ class GroupGUIObject{
 
     int             guiLayoutOffsetInt                                          = 10;                       /*The offset used to space each controllers in group object.*/
 
-    int 			guiElement1CollumnFirstCollumnXInt 							;                           /*The x position of first  controller in 1 collumns row.*/
-    int             guiElement2CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 2 collumns row.*/
-    int             guiElement2CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 2 collumns row.*/
-    int             guiElement3CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 3 collumns row.*/
-    int             guiElement3CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 3 collumns row.*/
-    int             guiElement3CollumnThirdCollumnXInt                          ;                           /*The x position of third  controller in 3 collumns row.*/
-    int             guiElement4CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 4 collumns row.*/
-    int             guiElement4CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 4 collumns row.*/
-    int             guiElement4CollumnThirdCollumnXInt                          ;                           /*The x position of third  controller in 4 collumns row.*/
-    int             guiElement4CollumnFourthCollumnXInt                         ;                           /*The x position of fourth controller in 4 collumns row.*/
+    int 			guiElement1ColumnFirstColumnXInt 							;                           /*The x position of first  controller in 1 Columns row.*/
+    int             guiElement2ColumnFirstColumnXInt                            ;                           /*The x position of first  controller in 2 Columns row.*/
+    int             guiElement2ColumnSecondColumnXInt                           ;                           /*The x position of second controller in 2 Columns row.*/
+    int             guiElement3ColumnFirstColumnXInt                            ;                           /*The x position of first  controller in 3 Columns row.*/
+    int             guiElement3ColumnSecondColumnXInt                           ;                           /*The x position of second controller in 3 Columns row.*/
+    int             guiElement3ColumnThirdColumnXInt                            ;                           /*The x position of third  controller in 3 Columns row.*/
+    int             guiElement4ColumnFirstColumnXInt                            ;                           /*The x position of first  controller in 4 Columns row.*/
+    int             guiElement4ColumnSecondColumnXInt                           ;                           /*The x position of second controller in 4 Columns row.*/
+    int             guiElement4ColumnThirdColumnXInt                            ;                           /*The x position of third  controller in 4 Columns row.*/
+    int             guiElement4ColumnFourthColumnXInt                           ;                           /*The x position of fourth controller in 4 Columns row.*/
 
-    int 			guiElement1CollumnWidth 									; 							/*The width of any controller in 1 collumn  row.*/
-    int             guiElement2CollumnWidth                                     ;                           /*The width of any controller in 2 collumns row.*/
-    int             guiElement3CollumnWidth                                     ;                           /*The width of any controller in 3 collumns row.*/
-    int             guiElement4CollumnWidth                                     ;                           /*The width of any controller in 4 collumns row.*/
+    int 			guiElement1ColumnWidth 									    ; 							/*The width of any controller in 1 Column  row.*/
+    int             guiElement2ColumnWidth                                      ;                           /*The width of any controller in 2 Columns row.*/
+    int             guiElement3ColumnWidth                                      ;                           /*The width of any controller in 3 Columns row.*/
+    int             guiElement4ColumnWidth                                      ;                           /*The width of any controller in 4 Columns row.*/
 
     int             guiElement1LineHeight                                       = 10;                       /*The height of any element that only one line height.
                                                                                                             For example, button, text label.*/
@@ -63,20 +63,20 @@ class GroupGUIObject{
         guiHeightInt                                    =  _guiHeightInt                    ;
         pAppletObject                                   =  _pAppletObject                   ;
 
-        guiElement1CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*2))/1)                ;
-        guiElement2CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*3))/2)                ;
-        guiElement3CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*4))/3)                ;
-        guiElement4CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*5))/4)                ;
-        guiElement1CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement1CollumnWidth*0))    ;
-        guiElement2CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement2CollumnWidth*0))    ;
-        guiElement2CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement2CollumnWidth*1))    ;
-        guiElement3CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement3CollumnWidth*0))    ;
-        guiElement3CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement3CollumnWidth*1))    ;
-        guiElement3CollumnThirdCollumnXInt              = ((guiLayoutOffsetInt*3) + (guiElement3CollumnWidth*2))    ;
-        guiElement4CollumnFirstCollumnXInt				= ((guiLayoutOffsetInt*1) + (guiElement4CollumnWidth*0))    ;
-		guiElement4CollumnSecondCollumnXInt				= ((guiLayoutOffsetInt*2) + (guiElement4CollumnWidth*1))    ;
-		guiElement4CollumnThirdCollumnXInt				= ((guiLayoutOffsetInt*3) + (guiElement4CollumnWidth*2))    ;
-		guiElement4CollumnFourthCollumnXInt				= ((guiLayoutOffsetInt*4) + (guiElement4CollumnWidth*3))    ;
+        guiElement1ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*2))/1)                ;
+        guiElement2ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*3))/2)                ;
+        guiElement3ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*4))/3)                ;
+        guiElement4ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*5))/4)                ;
+        guiElement1ColumnFirstColumnXInt                = ((guiLayoutOffsetInt*1) + (guiElement1ColumnWidth*0))     ;
+        guiElement2ColumnFirstColumnXInt                = ((guiLayoutOffsetInt*1) + (guiElement2ColumnWidth*0))     ;
+        guiElement2ColumnSecondColumnXInt               = ((guiLayoutOffsetInt*2) + (guiElement2ColumnWidth*1))     ;
+        guiElement3ColumnFirstColumnXInt                = ((guiLayoutOffsetInt*1) + (guiElement3ColumnWidth*0))     ;
+        guiElement3ColumnSecondColumnXInt               = ((guiLayoutOffsetInt*2) + (guiElement3ColumnWidth*1))     ;
+        guiElement3ColumnThirdColumnXInt                = ((guiLayoutOffsetInt*3) + (guiElement3ColumnWidth*2))     ;
+        guiElement4ColumnFirstColumnXInt	 			= ((guiLayoutOffsetInt*1) + (guiElement4ColumnWidth*0))     ;
+		guiElement4ColumnSecondColumnXInt	 			= ((guiLayoutOffsetInt*2) + (guiElement4ColumnWidth*1))     ;
+		guiElement4ColumnThirdColumnXInt	 			= ((guiLayoutOffsetInt*3) + (guiElement4ColumnWidth*2))     ;
+		guiElement4ColumnFourthColumnXInt	 			= ((guiLayoutOffsetInt*4) + (guiElement4ColumnWidth*3))     ;
 
         groupBackgroundColor                            = color(50 , 60 , 57 , alphaFloat)  ;
         groupColorBackgroundColor                       = color(2  , 45 , 89 , alphaFloat)  ;

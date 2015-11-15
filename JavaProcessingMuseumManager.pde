@@ -65,7 +65,7 @@ List<String>            defaultStringList               ;                       
 
 /*GUI variables.*/
 AddMuseumGroupGUIObject          addMuseumGroupGUIObject              ;
-AddTagGUIObject             addTagGUIObject                 ;
+AddTagGroupGUIObject             addTagGroupGUIObject                 ;
 AddPlayerGroupGUIObject          addPlayerGroupGUIObject              ;
 RemovePlayerGUIObject       removePlayerGUIObject           ;
 EditPlayerGroupGUIObject    editPlayerGroupGUIObject             ;
@@ -82,7 +82,7 @@ int                     rowInt                          = 0;                    
 int                     textSizePanelInt                = 16;                               /*Text size of the panel.*/
 /*PENDING: Instead of using "selected" change the name of these two variables below into "hovered".*/
 ObjectMuseum            selectedMuseumObject            = null;                             /*Which museum object is hovered.*/
-ObjectPlayer            selectedPlayerObject            = null;                             /*Which player object is hovered.*/
+ObjectPlayer            tempSelectedPlayerObject            = null;                             /*Which player object is hovered.*/
 PFont                   panelCardPFont                  ;                                   /*Font setting for panel object.*/
 String                  panelFontString                 = "Monospaced.plain";               /*String name of font we used in this application.*/
 String                  panelString                     = "";                               /*String in the panel object.*/
@@ -454,15 +454,14 @@ void setup()                                    {
         .setLabel                       ("Visitor:")
         .hide                           ();
 
-    addTagGUIObject                     = new AddTagGUIObject(
+    addTagGroupGUIObject                     = new AddTagGroupGUIObject(
 
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        382                                                                 ,
-        buttonSizeInt                                                       ,
-        dropdownObjectWidthInt                                              ,
-        dropdownObjectHeightInt
+        244                                                                 ,
+        cp5Object.get(ScrollableList.class, "ExhibitionSList")              ,
+        this
 
     );
 
@@ -473,7 +472,7 @@ void setup()                                    {
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
         442                                                                 ,
-        cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject")      ,
+        addTagGroupGUIObject.addTagGroupObject ,
         this
 
     );
@@ -570,14 +569,14 @@ void draw()                                     {
         ){ panelCardChangeBoolean = true; }
 
     }
-    else if (selectedPlayerObject != null){
+    else if (tempSelectedPlayerObject != null){
 
         if(
 
-            (mouseX > xPanelCardInt + (selectedPlayerObject.panelObject.widthPanelInt /2)) ||
-            (mouseX < xPanelCardInt - (selectedPlayerObject.panelObject.widthPanelInt /2)) ||
-            (mouseY > yPanelCardInt + (selectedPlayerObject.panelObject.heightPanelInt/2)) ||
-            (mouseY < yPanelCardInt - (selectedPlayerObject.panelObject.heightPanelInt/2))
+            (mouseX > xPanelCardInt + (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
+            (mouseX < xPanelCardInt - (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
+            (mouseY > yPanelCardInt + (tempSelectedPlayerObject.panelObject.heightPanelInt/2)) ||
+            (mouseY < yPanelCardInt - (tempSelectedPlayerObject.panelObject.heightPanelInt/2))
 
         ){ panelCardChangeBoolean = true; }
 
@@ -590,7 +589,7 @@ void draw()                                     {
         yPanelCardInt           = -1;
         rowInt                  = 0;
         selectedMuseumObject    = null;
-        selectedPlayerObject    = null;
+        tempSelectedPlayerObject    = null;
 
     }
 
@@ -613,7 +612,7 @@ void draw()                                     {
 
     /*Update the add museum object GUI.*/
     addMuseumGroupGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
-    addTagGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
+    addTagGroupGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the add player object GUI.*/
     addPlayerGroupGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
@@ -724,7 +723,7 @@ void CheckPlayerObjectHoverVoid(int _indexInt)  {
 
         xPanelCardInt           = playerObjectList.get(_indexInt).panelObject.xPanelInt + (playerObjectList.get(_indexInt).panelObject.widthPanelInt/2 );
         yPanelCardInt           = playerObjectList.get(_indexInt).panelObject.yPanelInt + (playerObjectList.get(_indexInt).panelObject.heightPanelInt/2);
-        selectedPlayerObject    = playerObjectList.get(_indexInt);
+        tempSelectedPlayerObject    = playerObjectList.get(_indexInt);
 
         panelCardChangeBoolean  = false;
 
@@ -803,27 +802,27 @@ void CreatePanelCardVoid()                      {
 
             rowInt      = 9;
 
-            ObjectMuseum exhibitionCurrentObject    = selectedPlayerObject.FindObject(exhibitionObjectList  , selectedPlayerObject.exhibitionCurrentString          );
-            ObjectMuseum roomCurrentObject          = selectedPlayerObject.FindObject(roomObjectList        , exhibitionCurrentObject   .parentObject.nameAltString );
-            ObjectMuseum floorCurrentObject         = selectedPlayerObject.FindObject(floorObjectList       , roomCurrentObject         .parentObject.nameAltString );
+            ObjectMuseum exhibitionCurrentObject    = tempSelectedPlayerObject.FindObject(exhibitionObjectList  , tempSelectedPlayerObject.exhibitionCurrentString          );
+            ObjectMuseum roomCurrentObject          = tempSelectedPlayerObject.FindObject(roomObjectList        , exhibitionCurrentObject   .parentObject.nameAltString );
+            ObjectMuseum floorCurrentObject         = tempSelectedPlayerObject.FindObject(floorObjectList       , roomCurrentObject         .parentObject.nameAltString );
 
             panelString  =
 
                 "FLR_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
                 "ROM_CUR = " + roomCurrentObject.nameAltString                                                  + "\n" +
                 "EXH_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(0)                   + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(1)                   + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(2)                   + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
+                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(0)                   + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(1)                   + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(2)                   + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
 
             ;
 
         }
         /*String display for the museum object.*/
-        else if     (selectedPlayerObject == null){
+        else if     (tempSelectedPlayerObject == null){
 
             rowInt      = 4;
 
@@ -1462,9 +1461,9 @@ void ExhibitionSList(int _indexInt)                                             
 void VisitorSList                   (int _indexInt)                                 {
 
     /*Assign the selected player.*/
-    editPlayerGroupGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
+    editPlayerGroupGUIObject.tempSelectedPlayerObject = playerObjectList.get(_indexInt);
     /*Change the radio button accordingly.*/
-    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
+    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt - 1));
 
 }
 
@@ -1545,161 +1544,7 @@ ObjectPlayer FindPlayerObject(int _playerIndexInt){
 
 
 
-void AddTagGUIObjectSelectTagTypeSList(int _indexInt){
 
-    addTagGUIObject.selectedTagTypeString = cp5Object.get(ScrollableList.class, "AddTagGUIObjectSelectTagTypeSList").getItem(_indexInt).get("text").toString();
-
-}
-
-void AddTagGUIObjectSubmitButton(int _indexInt){
-
-    String          tempTagNameAltString        = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameAltTextfield" ).getText();
-    String          tempTagNameFullString       = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameFullTextfield").getText();
-    String          tempTagTypeString           = "";
-    Tag             tempTagObject               = null;
-    List<Tag>       tempTagObjectList           = null;
-    List<String>    tempTagNameAltStringList    = null;
-    List<String>    tempTagNameFullStringList   = null;
-
-
-    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           {
-
-        tempTagTypeString                       = "SUB";
-        tempTagObjectList                       = subjectTagObjectList;
-        tempTagNameAltStringList                = subjectTagNameAltStringList;
-        tempTagNameFullStringList               = subjectTagNameFullStringList;
-
-        String tempSubjectString                = cp5Object.get(Textfield.class, "AddTagGUIObjectSubjectTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempSubjectString);
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              {
-
-        tempTagTypeString                       = "VER";
-        tempTagObjectList                       = verbTagObjectList;
-        tempTagNameAltStringList                = verbTagNameAltStringList;
-        tempTagNameFullStringList               = verbTagNameFullStringList;
-
-        String tempVerb1String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb1Textfield"   ).getText();
-        String tempVerb2String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb2Textfield"   ).getText();
-        String tempVer3bString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb3Textfield"   ).getText();
-        String tempVerIngbString                = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbIngTextfield" ).getText();
-        String tempVerbSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbSTextfield"   ).getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempVerb1String, tempVerb2String, tempVer3bString, tempVerIngbString, tempVerbSString);
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))     {
-
-        tempTagTypeString                       = "NVE";
-        tempTagObjectList                       = negativeVerbTagObjectList;
-        tempTagNameAltStringList                = negativeVerbTagNameAltStringList;
-        tempTagNameFullStringList               = negativeVerbTagNameFullStringList;
-
-        String tempNegativeVerb1String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb1Textfield"   ).getText();
-        String tempNegativeVerb2String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb2Textfield"   ).getText();
-        String tempNegativeVer3bString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb3Textfield"   ).getText();
-        String tempNegativeVerIngbString        = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbIngTextfield" ).getText();
-        String tempNegativeVerbSString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbSTextfield"   ).getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeVerb1String, tempNegativeVerb2String, tempNegativeVer3bString, tempNegativeVerIngbString, tempNegativeVerbSString);
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              {
-
-        tempTagTypeString                       = "NOU";
-        tempTagObjectList                       = nounTagObjectList;
-        tempTagNameAltStringList                = nounTagNameAltStringList;
-        tempTagNameFullStringList               = nounTagNameFullStringList;
-
-        String tempNounString                   = cp5Object.get(Textfield.class, "AddTagGUIObjectNounTextfield"    ).getText();
-        String tempNounSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectNounSTextfield"   ).getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNounString, tempNounSString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         {
-
-        tempTagTypeString                       = "ADJ";
-        tempTagObjectList                       = adjectiveTagObjectList;
-        tempTagNameAltStringList                = adjectiveTagNameAltStringList;
-        tempTagNameFullStringList               = adjectiveTagNameFullStringList;
-
-        String tempAdjectiveString              = cp5Object.get(Textfield.class, "AddTagGUIObjectAdjectiveTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdjectiveString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){
-
-        tempTagTypeString                       = "NDJ";
-        tempTagObjectList                       = negativeAdjectiveTagObjectList;
-        tempTagNameAltStringList                = negativeAdjectiveTagNameAltStringList;
-        tempTagNameFullStringList               = negativeAdjectiveTagNameFullStringList;
-
-        String tempNegativeAdjectiveString      = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdjectiveTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdjectiveString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            {
-
-        tempTagTypeString                       = "ADV";
-        tempTagObjectList                       = adverbTagObjectList;
-        tempTagNameAltStringList                = adverbTagNameAltStringList;
-        tempTagNameFullStringList               = adverbTagNameFullStringList;
-
-        String tempAdverbString                 = cp5Object.get(Textfield.class, "AddTagGUIObjectAdverbTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdverbString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))   {
-
-        tempTagTypeString                       = "NDV";
-        tempTagObjectList                       = negativeAdverbTagObjectList;
-        tempTagNameAltStringList                = negativeAdverbTagNameAltStringList;
-        tempTagNameFullStringList               = negativeAdverbTagNameFullStringList;
-
-        String tempNegativeAdverbString         = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdverbTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdverbString);
-
-    }
-
-    tempTagObjectList                           .add(tempTagObject);
-    tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
-    tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
-
-    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))               { addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))             { addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE"))    { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))                { addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
-
-
-    addTagGUIObject.selectedTagTypeString = "";
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).clear();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameAltTextfield"           ).clear();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).clear().hide();
-
-}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -1772,7 +1617,148 @@ void AddMuseumGroupAddMuseumObjectButtonObject                                  
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
-//START//AddPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+//START//AddTagGroupGUIObject.pde Controller's Functions.///////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void AddTagGroupTagTypeNameFullScrollableListObject (int _indexInt){
+
+    addTagGroupGUIObject.tempSelectedTagTypeNameFullString = addTagGroupGUIObject.addTagGroupTagTypeNameFullScrollableListObject.getItem(_indexInt).get("text").toString();
+
+}
+void AddTagGroupTagAddButtonObject                  (int _indexInt){
+
+    String          tempTagNameAltString        = addTagGroupGUIObject.addTagGroupTagNameAltTextfieldObject     .getText();
+    String          tempTagNameFullString       = addTagGroupGUIObject.addTagGroupTagNameFullTextfieldObject    .getText();
+    String          tempTagTypeString           = "";
+    Tag             tempTagObject               = null;
+    List<Tag>       tempTagObjectList           = null;
+    List<String>    tempTagNameAltStringList    = null;
+    List<String>    tempTagNameFullStringList   = null;
+
+
+    if      (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("SUBJECT"))           {
+
+        tempTagTypeString                       = "SUB";
+        tempTagObjectList                       = subjectTagObjectList;
+        tempTagNameAltStringList                = subjectTagNameAltStringList;
+        tempTagNameFullStringList               = subjectTagNameFullStringList;
+
+        String tempSubjectString                = addTagGroupGUIObject.addTagGroupTagSubjectTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempSubjectString);
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("VERB"))              {
+
+        tempTagTypeString                       = "VER";
+        tempTagObjectList                       = verbTagObjectList;
+        tempTagNameAltStringList                = verbTagNameAltStringList;
+        tempTagNameFullStringList               = verbTagNameFullStringList;
+
+        String tempVerb1String                  = addTagGroupGUIObject.addTagGroupTagVerb1TextfieldObject   .getText();
+        String tempVerb2String                  = addTagGroupGUIObject.addTagGroupTagVerb2TextfieldObject   .getText();
+        String tempVer3bString                  = addTagGroupGUIObject.addTagGroupTagVerb3TextfieldObject   .getText();
+        String tempVerIngbString                = addTagGroupGUIObject.addTagGroupTagVerbIngTextfieldObject .getText();
+        String tempVerbSString                  = addTagGroupGUIObject.addTagGroupTagVerbSTextfieldObject   .getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempVerb1String, tempVerb2String, tempVer3bString, tempVerIngbString, tempVerbSString);
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE VERB"))     {
+
+        tempTagTypeString                       = "NVE";
+        tempTagObjectList                       = negativeVerbTagObjectList;
+        tempTagNameAltStringList                = negativeVerbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeVerbTagNameFullStringList;
+
+        String tempNegativeVerb1String          = addTagGroupGUIObject.addTagGroupTagNegativeVerb1TextfieldObject   .getText();
+        String tempNegativeVerb2String          = addTagGroupGUIObject.addTagGroupTagNegativeVerb2TextfieldObject   .getText();
+        String tempNegativeVer3bString          = addTagGroupGUIObject.addTagGroupTagNegativeVerb3TextfieldObject   .getText();
+        String tempNegativeVerIngbString        = addTagGroupGUIObject.addTagGroupTagNegativeVerbIngTextfieldObject .getText();
+        String tempNegativeVerbSString          = addTagGroupGUIObject.addTagGroupTagNegativeVerbSTextfieldObject   .getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeVerb1String, tempNegativeVerb2String, tempNegativeVer3bString, tempNegativeVerIngbString, tempNegativeVerbSString);
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"))              {
+
+        tempTagTypeString                       = "NOU";
+        tempTagObjectList                       = nounTagObjectList;
+        tempTagNameAltStringList                = nounTagNameAltStringList;
+        tempTagNameFullStringList               = nounTagNameFullStringList;
+
+        String tempNounString                   = addTagGroupGUIObject.addTagGroupTagNounTextfieldObject    .getText();
+        String tempNounSString                  = addTagGroupGUIObject.addTagGroupTagNounSTextfieldObject   .getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNounString, tempNounSString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADJECTIVE"))         {
+
+        tempTagTypeString                       = "ADJ";
+        tempTagObjectList                       = adjectiveTagObjectList;
+        tempTagNameAltStringList                = adjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = adjectiveTagNameFullStringList;
+
+        String tempAdjectiveString              = addTagGroupGUIObject.addTagGroupTagAdjectiveTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdjectiveString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE")){
+
+        tempTagTypeString                       = "NDJ";
+        tempTagObjectList                       = negativeAdjectiveTagObjectList;
+        tempTagNameAltStringList                = negativeAdjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdjectiveTagNameFullStringList;
+
+        String tempNegativeAdjectiveString      = addTagGroupGUIObject.addTagGroupTagNegativeAdjectiveTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdjectiveString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADVERB"))            {
+
+        tempTagTypeString                       = "ADV";
+        tempTagObjectList                       = adverbTagObjectList;
+        tempTagNameAltStringList                = adverbTagNameAltStringList;
+        tempTagNameFullStringList               = adverbTagNameFullStringList;
+
+        String tempAdverbString                 = addTagGroupGUIObject.addTagGroupTagAdverbTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdverbString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"))   {
+
+        tempTagTypeString                       = "NDV";
+        tempTagObjectList                       = negativeAdverbTagObjectList;
+        tempTagNameAltStringList                = negativeAdverbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdverbTagNameFullStringList;
+
+        String tempNegativeAdverbString         = addTagGroupGUIObject.addTagGroupTagNegativeAdverbTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdverbString);
+
+    }
+
+    tempTagObjectList                           .add(tempTagObject);
+    tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
+    tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
+
+    if      (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("SUBJECT"))              { addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("VERB"))                 { addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE VERB"))        { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject       .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"))                 { addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADJECTIVE"))            { addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE"))   { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADVERB"))               { addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"))      { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//AddTagGroupGUIObject.pde Controller's Functions./////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//AddPlayerGroupGUIObject.pde Controller's Functions.////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*Find the starting exhibition alternate name String.*/
 void AddPlayerGroupPickExhibitionStartScrollableListObject  (int _indexInt){
@@ -1800,7 +1786,7 @@ void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
-//END//AddPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
+//END//AddPlayerGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -1812,8 +1798,8 @@ void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
 This function is to make sure that both mode is always the same.*/
 void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
 
-    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex;
-    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex;
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt                  = _intIndex;
+    editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt     = _intIndex;
 
 }
 /*A function to move the selected player into new exhibition.
@@ -1825,7 +1811,7 @@ void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt) 
         String  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
         String  receivedMuseumNameAltString     = FindMuseumObject(receivedMuseumNameFullString).nameAltString;
 
-        editPlayerGroupGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
+        editPlayerGroupGUIObject.tempSelectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
 
     }
 

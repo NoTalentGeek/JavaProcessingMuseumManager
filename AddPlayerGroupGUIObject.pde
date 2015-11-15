@@ -9,6 +9,7 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
 
     String          tempExhibitionStartNameAltString                        = "";
 
+    /*ControlP5 related graphical user interface controller variables.*/
     Group           addPlayerGroupObject                                    ;
     Textlabel       addPlayerGroupPlayerIndexTextlabelObject                ;
     Textlabel       addPlayerGroupPlayerIndexValueTextlabelObject           ;
@@ -51,7 +52,7 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setColorValue          (255)
                                             .setGroup               (addPlayerGroupObject)
-                                            .setPosition            (guiElement2CollumnFirstCollumnXInt, guiLayoutOffsetInt)
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, guiLayoutOffsetInt)
                                             .setText                ("VISITOR INDEX:");
 
 
@@ -61,7 +62,7 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setColorValue          (255)
                                             .setGroup               (addPlayerGroupObject)
-                                            .setPosition            (guiElement2CollumnSecondCollumnXInt, guiLayoutOffsetInt)
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, guiLayoutOffsetInt)
                                             .setText                ("" + playerAmountInt);
 
 
@@ -72,8 +73,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (addPlayerGroupObject)
                                             .setLabel               ("PICK STARTING EXHIBITION:")
-                                            .setPosition            (guiElement1CollumnFirstCollumnXInt, (guiLayoutOffsetInt*3))
-                                            .setSize                (guiElement1CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition            (guiElement1ColumnFirstColumnXInt, (guiLayoutOffsetInt*3))
+                                            .setSize                (guiElement1ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                (ControlP5.LIST);
 
 
@@ -83,8 +84,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (addPlayerGroupObject)
                                             .setLabel               ("VISITOR NAME:")
-                                            .setPosition            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
-                                            .setSize                (guiElement2CollumnWidth, guiElement2LineHeight);
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
 
@@ -93,8 +94,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (addPlayerGroupObject)
                                             .setLabel               ("ADD PLAYER")
-                                            .setPosition            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
-                                            .setSize                (guiElement2CollumnWidth, guiElement2LineHeight);
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
     }
 

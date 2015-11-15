@@ -16,6 +16,8 @@ import controlP5.*;
 import java.util.*; 
 import controlP5.*; 
 import java.util.*; 
+import controlP5.*; 
+import java.util.*; 
 import java.util.*; 
 import java.util.*; 
 import controlP5.*; 
@@ -98,7 +100,7 @@ List<String>            defaultStringList               ;                       
 
 /*GUI variables.*/
 AddMuseumGroupGUIObject          addMuseumGroupGUIObject              ;
-AddTagGUIObject             addTagGUIObject                 ;
+AddTagGroupGUIObject             addTagGroupGUIObject                 ;
 AddPlayerGroupGUIObject          addPlayerGroupGUIObject              ;
 RemovePlayerGUIObject       removePlayerGUIObject           ;
 EditPlayerGroupGUIObject    editPlayerGroupGUIObject             ;
@@ -115,7 +117,7 @@ int                     rowInt                          = 0;                    
 int                     textSizePanelInt                = 16;                               /*Text size of the panel.*/
 /*PENDING: Instead of using "selected" change the name of these two variables below into "hovered".*/
 ObjectMuseum            selectedMuseumObject            = null;                             /*Which museum object is hovered.*/
-ObjectPlayer            selectedPlayerObject            = null;                             /*Which player object is hovered.*/
+ObjectPlayer            tempSelectedPlayerObject            = null;                             /*Which player object is hovered.*/
 PFont                   panelCardPFont                  ;                                   /*Font setting for panel object.*/
 String                  panelFontString                 = "Monospaced.plain";               /*String name of font we used in this application.*/
 String                  panelString                     = "";                               /*String in the panel object.*/
@@ -487,15 +489,14 @@ public void setup()                                    {
         .setLabel                       ("Visitor:")
         .hide                           ();
 
-    addTagGUIObject                     = new AddTagGUIObject(
+    addTagGroupGUIObject                     = new AddTagGroupGUIObject(
 
         (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
-        382                                                                 ,
-        buttonSizeInt                                                       ,
-        dropdownObjectWidthInt                                              ,
-        dropdownObjectHeightInt
+        244                                                                 ,
+        cp5Object.get(ScrollableList.class, "ExhibitionSList")              ,
+        this
 
     );
 
@@ -506,7 +507,7 @@ public void setup()                                    {
         (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
         dropdownObjectWidthInt                                              ,
         442                                                                 ,
-        cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject")      ,
+        addTagGroupGUIObject.addTagGroupObject ,
         this
 
     );
@@ -603,14 +604,14 @@ public void draw()                                     {
         ){ panelCardChangeBoolean = true; }
 
     }
-    else if (selectedPlayerObject != null){
+    else if (tempSelectedPlayerObject != null){
 
         if(
 
-            (mouseX > xPanelCardInt + (selectedPlayerObject.panelObject.widthPanelInt /2)) ||
-            (mouseX < xPanelCardInt - (selectedPlayerObject.panelObject.widthPanelInt /2)) ||
-            (mouseY > yPanelCardInt + (selectedPlayerObject.panelObject.heightPanelInt/2)) ||
-            (mouseY < yPanelCardInt - (selectedPlayerObject.panelObject.heightPanelInt/2))
+            (mouseX > xPanelCardInt + (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
+            (mouseX < xPanelCardInt - (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
+            (mouseY > yPanelCardInt + (tempSelectedPlayerObject.panelObject.heightPanelInt/2)) ||
+            (mouseY < yPanelCardInt - (tempSelectedPlayerObject.panelObject.heightPanelInt/2))
 
         ){ panelCardChangeBoolean = true; }
 
@@ -623,7 +624,7 @@ public void draw()                                     {
         yPanelCardInt           = -1;
         rowInt                  = 0;
         selectedMuseumObject    = null;
-        selectedPlayerObject    = null;
+        tempSelectedPlayerObject    = null;
 
     }
 
@@ -646,7 +647,7 @@ public void draw()                                     {
 
     /*Update the add museum object GUI.*/
     addMuseumGroupGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
-    addTagGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
+    addTagGroupGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the add player object GUI.*/
     addPlayerGroupGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
@@ -757,7 +758,7 @@ public void CheckPlayerObjectHoverVoid(int _indexInt)  {
 
         xPanelCardInt           = playerObjectList.get(_indexInt).panelObject.xPanelInt + (playerObjectList.get(_indexInt).panelObject.widthPanelInt/2 );
         yPanelCardInt           = playerObjectList.get(_indexInt).panelObject.yPanelInt + (playerObjectList.get(_indexInt).panelObject.heightPanelInt/2);
-        selectedPlayerObject    = playerObjectList.get(_indexInt);
+        tempSelectedPlayerObject    = playerObjectList.get(_indexInt);
 
         panelCardChangeBoolean  = false;
 
@@ -836,27 +837,27 @@ public void CreatePanelCardVoid()                      {
 
             rowInt      = 9;
 
-            ObjectMuseum exhibitionCurrentObject    = selectedPlayerObject.FindObject(exhibitionObjectList  , selectedPlayerObject.exhibitionCurrentString          );
-            ObjectMuseum roomCurrentObject          = selectedPlayerObject.FindObject(roomObjectList        , exhibitionCurrentObject   .parentObject.nameAltString );
-            ObjectMuseum floorCurrentObject         = selectedPlayerObject.FindObject(floorObjectList       , roomCurrentObject         .parentObject.nameAltString );
+            ObjectMuseum exhibitionCurrentObject    = tempSelectedPlayerObject.FindObject(exhibitionObjectList  , tempSelectedPlayerObject.exhibitionCurrentString          );
+            ObjectMuseum roomCurrentObject          = tempSelectedPlayerObject.FindObject(roomObjectList        , exhibitionCurrentObject   .parentObject.nameAltString );
+            ObjectMuseum floorCurrentObject         = tempSelectedPlayerObject.FindObject(floorObjectList       , roomCurrentObject         .parentObject.nameAltString );
 
             panelString  =
 
                 "FLR_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
                 "ROM_CUR = " + roomCurrentObject.nameAltString                                                  + "\n" +
                 "EXH_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(0)                   + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(1)                   + "\n" +
-                "EXH_TAR = " + selectedPlayerObject.exhibitionTargetNameAltStringList .get(2)                   + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
-                "EXH_TAG = " + selectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
+                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(0)                   + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(1)                   + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(2)                   + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
 
             ;
 
         }
         /*String display for the museum object.*/
-        else if     (selectedPlayerObject == null){
+        else if     (tempSelectedPlayerObject == null){
 
             rowInt      = 4;
 
@@ -1495,9 +1496,9 @@ public void ExhibitionSList(int _indexInt)                                      
 public void VisitorSList                   (int _indexInt)                                 {
 
     /*Assign the selected player.*/
-    editPlayerGroupGUIObject.selectedPlayerObject = playerObjectList.get(_indexInt);
+    editPlayerGroupGUIObject.tempSelectedPlayerObject = playerObjectList.get(_indexInt);
     /*Change the radio button accordingly.*/
-    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt - 1));
+    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt - 1));
 
 }
 
@@ -1578,161 +1579,7 @@ public ObjectPlayer FindPlayerObject(int _playerIndexInt){
 
 
 
-public void AddTagGUIObjectSelectTagTypeSList(int _indexInt){
 
-    addTagGUIObject.selectedTagTypeString = cp5Object.get(ScrollableList.class, "AddTagGUIObjectSelectTagTypeSList").getItem(_indexInt).get("text").toString();
-
-}
-
-public void AddTagGUIObjectSubmitButton(int _indexInt){
-
-    String          tempTagNameAltString        = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameAltTextfield" ).getText();
-    String          tempTagNameFullString       = cp5Object.get(Textfield.class, "AddTagGUIObjectTagNameFullTextfield").getText();
-    String          tempTagTypeString           = "";
-    Tag             tempTagObject               = null;
-    List<Tag>       tempTagObjectList           = null;
-    List<String>    tempTagNameAltStringList    = null;
-    List<String>    tempTagNameFullStringList   = null;
-
-
-    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))           {
-
-        tempTagTypeString                       = "SUB";
-        tempTagObjectList                       = subjectTagObjectList;
-        tempTagNameAltStringList                = subjectTagNameAltStringList;
-        tempTagNameFullStringList               = subjectTagNameFullStringList;
-
-        String tempSubjectString                = cp5Object.get(Textfield.class, "AddTagGUIObjectSubjectTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempSubjectString);
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))              {
-
-        tempTagTypeString                       = "VER";
-        tempTagObjectList                       = verbTagObjectList;
-        tempTagNameAltStringList                = verbTagNameAltStringList;
-        tempTagNameFullStringList               = verbTagNameFullStringList;
-
-        String tempVerb1String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb1Textfield"   ).getText();
-        String tempVerb2String                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb2Textfield"   ).getText();
-        String tempVer3bString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerb3Textfield"   ).getText();
-        String tempVerIngbString                = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbIngTextfield" ).getText();
-        String tempVerbSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectVerbSTextfield"   ).getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempVerb1String, tempVerb2String, tempVer3bString, tempVerIngbString, tempVerbSString);
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))     {
-
-        tempTagTypeString                       = "NVE";
-        tempTagObjectList                       = negativeVerbTagObjectList;
-        tempTagNameAltStringList                = negativeVerbTagNameAltStringList;
-        tempTagNameFullStringList               = negativeVerbTagNameFullStringList;
-
-        String tempNegativeVerb1String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb1Textfield"   ).getText();
-        String tempNegativeVerb2String          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb2Textfield"   ).getText();
-        String tempNegativeVer3bString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerb3Textfield"   ).getText();
-        String tempNegativeVerIngbString        = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbIngTextfield" ).getText();
-        String tempNegativeVerbSString          = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeVerbSTextfield"   ).getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeVerb1String, tempNegativeVerb2String, tempNegativeVer3bString, tempNegativeVerIngbString, tempNegativeVerbSString);
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))              {
-
-        tempTagTypeString                       = "NOU";
-        tempTagObjectList                       = nounTagObjectList;
-        tempTagNameAltStringList                = nounTagNameAltStringList;
-        tempTagNameFullStringList               = nounTagNameFullStringList;
-
-        String tempNounString                   = cp5Object.get(Textfield.class, "AddTagGUIObjectNounTextfield"    ).getText();
-        String tempNounSString                  = cp5Object.get(Textfield.class, "AddTagGUIObjectNounSTextfield"   ).getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNounString, tempNounSString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))         {
-
-        tempTagTypeString                       = "ADJ";
-        tempTagObjectList                       = adjectiveTagObjectList;
-        tempTagNameAltStringList                = adjectiveTagNameAltStringList;
-        tempTagNameFullStringList               = adjectiveTagNameFullStringList;
-
-        String tempAdjectiveString              = cp5Object.get(Textfield.class, "AddTagGUIObjectAdjectiveTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdjectiveString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE")){
-
-        tempTagTypeString                       = "NDJ";
-        tempTagObjectList                       = negativeAdjectiveTagObjectList;
-        tempTagNameAltStringList                = negativeAdjectiveTagNameAltStringList;
-        tempTagNameFullStringList               = negativeAdjectiveTagNameFullStringList;
-
-        String tempNegativeAdjectiveString      = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdjectiveTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdjectiveString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))            {
-
-        tempTagTypeString                       = "ADV";
-        tempTagObjectList                       = adverbTagObjectList;
-        tempTagNameAltStringList                = adverbTagNameAltStringList;
-        tempTagNameFullStringList               = adverbTagNameFullStringList;
-
-        String tempAdverbString                 = cp5Object.get(Textfield.class, "AddTagGUIObjectAdverbTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdverbString);
-
-
-    }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))   {
-
-        tempTagTypeString                       = "NDV";
-        tempTagObjectList                       = negativeAdverbTagObjectList;
-        tempTagNameAltStringList                = negativeAdverbTagNameAltStringList;
-        tempTagNameFullStringList               = negativeAdverbTagNameFullStringList;
-
-        String tempNegativeAdverbString         = cp5Object.get(Textfield.class, "AddTagGUIObjectNegativeAdverbTextfield").getText();
-        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdverbString);
-
-    }
-
-    tempTagObjectList                           .add(tempTagObject);
-    tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
-    tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
-
-    if      (addTagGUIObject.selectedTagTypeString.equals("SUBJECT"))               { addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("VERB"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE VERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NOUN"))                  { addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADJECTIVE"))             { addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADJECTIVE"))    { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))                { addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
-    else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
-
-
-    addTagGUIObject.selectedTagTypeString = "";
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).clear();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameAltTextfield"           ).clear();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectSubjectTextfield"              ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb1Textfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb2Textfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerb3Textfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbIngTextfield"              ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectVerbSTextfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb1Textfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb2Textfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerb3Textfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbIngTextfield"      ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeVerbSTextfield"        ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounTextfield"                 ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNounSTextfield"                ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdjectiveTextfield"            ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNegativeAdjectiveTextfield"    ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectAdverbTextfield"               ).clear().hide();
-    cp5Object.get(Textfield         .class , "AddTagGUIObjectNagetiveAdverbTextfield"       ).clear().hide();
-
-}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
@@ -1805,7 +1652,148 @@ public void AddMuseumGroupAddMuseumObjectButtonObject                           
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
-//START//AddPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+//START//AddTagGroupGUIObject.pde Controller's Functions.///////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+public void AddTagGroupTagTypeNameFullScrollableListObject (int _indexInt){
+
+    addTagGroupGUIObject.tempSelectedTagTypeNameFullString = addTagGroupGUIObject.addTagGroupTagTypeNameFullScrollableListObject.getItem(_indexInt).get("text").toString();
+
+}
+public void AddTagGroupTagAddButtonObject                  (int _indexInt){
+
+    String          tempTagNameAltString        = addTagGroupGUIObject.addTagGroupTagNameAltTextfieldObject     .getText();
+    String          tempTagNameFullString       = addTagGroupGUIObject.addTagGroupTagNameFullTextfieldObject    .getText();
+    String          tempTagTypeString           = "";
+    Tag             tempTagObject               = null;
+    List<Tag>       tempTagObjectList           = null;
+    List<String>    tempTagNameAltStringList    = null;
+    List<String>    tempTagNameFullStringList   = null;
+
+
+    if      (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("SUBJECT"))           {
+
+        tempTagTypeString                       = "SUB";
+        tempTagObjectList                       = subjectTagObjectList;
+        tempTagNameAltStringList                = subjectTagNameAltStringList;
+        tempTagNameFullStringList               = subjectTagNameFullStringList;
+
+        String tempSubjectString                = addTagGroupGUIObject.addTagGroupTagSubjectTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempSubjectString);
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("VERB"))              {
+
+        tempTagTypeString                       = "VER";
+        tempTagObjectList                       = verbTagObjectList;
+        tempTagNameAltStringList                = verbTagNameAltStringList;
+        tempTagNameFullStringList               = verbTagNameFullStringList;
+
+        String tempVerb1String                  = addTagGroupGUIObject.addTagGroupTagVerb1TextfieldObject   .getText();
+        String tempVerb2String                  = addTagGroupGUIObject.addTagGroupTagVerb2TextfieldObject   .getText();
+        String tempVer3bString                  = addTagGroupGUIObject.addTagGroupTagVerb3TextfieldObject   .getText();
+        String tempVerIngbString                = addTagGroupGUIObject.addTagGroupTagVerbIngTextfieldObject .getText();
+        String tempVerbSString                  = addTagGroupGUIObject.addTagGroupTagVerbSTextfieldObject   .getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempVerb1String, tempVerb2String, tempVer3bString, tempVerIngbString, tempVerbSString);
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE VERB"))     {
+
+        tempTagTypeString                       = "NVE";
+        tempTagObjectList                       = negativeVerbTagObjectList;
+        tempTagNameAltStringList                = negativeVerbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeVerbTagNameFullStringList;
+
+        String tempNegativeVerb1String          = addTagGroupGUIObject.addTagGroupTagNegativeVerb1TextfieldObject   .getText();
+        String tempNegativeVerb2String          = addTagGroupGUIObject.addTagGroupTagNegativeVerb2TextfieldObject   .getText();
+        String tempNegativeVer3bString          = addTagGroupGUIObject.addTagGroupTagNegativeVerb3TextfieldObject   .getText();
+        String tempNegativeVerIngbString        = addTagGroupGUIObject.addTagGroupTagNegativeVerbIngTextfieldObject .getText();
+        String tempNegativeVerbSString          = addTagGroupGUIObject.addTagGroupTagNegativeVerbSTextfieldObject   .getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeVerb1String, tempNegativeVerb2String, tempNegativeVer3bString, tempNegativeVerIngbString, tempNegativeVerbSString);
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"))              {
+
+        tempTagTypeString                       = "NOU";
+        tempTagObjectList                       = nounTagObjectList;
+        tempTagNameAltStringList                = nounTagNameAltStringList;
+        tempTagNameFullStringList               = nounTagNameFullStringList;
+
+        String tempNounString                   = addTagGroupGUIObject.addTagGroupTagNounTextfieldObject    .getText();
+        String tempNounSString                  = addTagGroupGUIObject.addTagGroupTagNounSTextfieldObject   .getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNounString, tempNounSString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADJECTIVE"))         {
+
+        tempTagTypeString                       = "ADJ";
+        tempTagObjectList                       = adjectiveTagObjectList;
+        tempTagNameAltStringList                = adjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = adjectiveTagNameFullStringList;
+
+        String tempAdjectiveString              = addTagGroupGUIObject.addTagGroupTagAdjectiveTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdjectiveString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE")){
+
+        tempTagTypeString                       = "NDJ";
+        tempTagObjectList                       = negativeAdjectiveTagObjectList;
+        tempTagNameAltStringList                = negativeAdjectiveTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdjectiveTagNameFullStringList;
+
+        String tempNegativeAdjectiveString      = addTagGroupGUIObject.addTagGroupTagNegativeAdjectiveTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdjectiveString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADVERB"))            {
+
+        tempTagTypeString                       = "ADV";
+        tempTagObjectList                       = adverbTagObjectList;
+        tempTagNameAltStringList                = adverbTagNameAltStringList;
+        tempTagNameFullStringList               = adverbTagNameFullStringList;
+
+        String tempAdverbString                 = addTagGroupGUIObject.addTagGroupTagAdverbTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempAdverbString);
+
+
+    }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"))   {
+
+        tempTagTypeString                       = "NDV";
+        tempTagObjectList                       = negativeAdverbTagObjectList;
+        tempTagNameAltStringList                = negativeAdverbTagNameAltStringList;
+        tempTagNameFullStringList               = negativeAdverbTagNameFullStringList;
+
+        String tempNegativeAdverbString         = addTagGroupGUIObject.addTagGroupTagNegativeAdverbTextfieldObject.getText();
+        tempTagObject                           = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeAdverbString);
+
+    }
+
+    tempTagObjectList                           .add(tempTagObject);
+    tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
+    tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
+
+    if      (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("SUBJECT"))              { addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("VERB"))                 { addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE VERB"))        { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject       .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"))                 { addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADJECTIVE"))            { addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE"))   { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADVERB"))               { addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"))      { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//AddTagGroupGUIObject.pde Controller's Functions./////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//AddPlayerGroupGUIObject.pde Controller's Functions.////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*Find the starting exhibition alternate name String.*/
 public void AddPlayerGroupPickExhibitionStartScrollableListObject  (int _indexInt){
@@ -1833,7 +1821,7 @@ public void AddPlayerGroupPlayerAddButtonObject                    (int _indexIn
 
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
-//END//AddPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
+//END//AddPlayerGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
 
 
@@ -1845,8 +1833,8 @@ public void AddPlayerGroupPlayerAddButtonObject                    (int _indexIn
 This function is to make sure that both mode is always the same.*/
 public void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
 
-    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt           = _intIndex;
-    editPlayerGroupGUIObject.selectedPlayerObject.playerMovementModeInt  = _intIndex;
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt                  = _intIndex;
+    editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt     = _intIndex;
 
 }
 /*A function to move the selected player into new exhibition.
@@ -1858,7 +1846,7 @@ public void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _ind
         String  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
         String  receivedMuseumNameAltString     = FindMuseumObject(receivedMuseumNameFullString).nameAltString;
 
-        editPlayerGroupGUIObject.selectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
+        editPlayerGroupGUIObject.tempSelectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
 
     }
 
@@ -1936,8 +1924,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("CHOOSE TYPE:")
-                                            .setPosition                            (guiElement4CollumnFirstCollumnXInt, guiLayoutOffsetInt)
-                                            .setSize                                (guiElement4CollumnWidth, guiScrollableList4RowHeightInt)
+                                            .setPosition                            (guiElement4ColumnFirstColumnXInt, guiLayoutOffsetInt)
+                                            .setSize                                (guiElement4ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -1948,8 +1936,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("PARENT OBJECT:")
-                                            .setPosition                            (guiElement4CollumnSecondCollumnXInt, guiLayoutOffsetInt)
-                                            .setSize                                (((guiElement4CollumnWidth*3) + (guiLayoutOffsetInt*2)), guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement4ColumnSecondColumnXInt, guiLayoutOffsetInt)
+                                            .setSize                                (((guiElement4ColumnWidth*3) + (guiLayoutOffsetInt*2)), guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -1959,7 +1947,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setColorValue                          (255)
                                             .setGroup                               (addMuseumGroupObject)
-                                            .setPosition                            (guiElement1CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setPosition                            (guiElement1ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
                                             .setText                                ("*YOU CAN ADD MULTIPLE TAGS\nBUT MINIMUM ONE TAG IN EACH CATEGORY.");
 
 
@@ -1970,8 +1958,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("SUBJECT TAG:")
-                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -1982,8 +1970,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NOUN TAG:")
-                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -1994,8 +1982,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setLabel                               ("VERB TAG:")
                                             .setGroup                               (addMuseumGroupObject)
-                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2006,8 +1994,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE VERB TAG:")
-                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2018,8 +2006,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADJECTIVE TAG:")
-                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2030,8 +2018,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE ADJECTIVE TAG:")
-                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2042,8 +2030,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADVERB TAG:")
-                                            .setPosition                            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2054,8 +2042,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE ADVERB TAG:")
-                                            .setPosition                            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
-                                            .setSize                                (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2065,8 +2053,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NAME FULL")
-                                            .setPosition                            (guiElement3CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
-                                            .setSize                                (guiElement3CollumnWidth, guiElement2LineHeight);
+                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
 
@@ -2075,8 +2063,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NAME ALTERNATIVE")
-                                            .setPosition                            (guiElement3CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
-                                            .setSize                                (guiElement3CollumnWidth, guiElement2LineHeight);
+                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
 
@@ -2085,8 +2073,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADD MUSEUM OBJECT")
-                                            .setPosition                            (guiElement3CollumnThirdCollumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
-                                            .setSize                                (guiElement3CollumnWidth, guiElement2LineHeight);
+                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
 
@@ -2170,7 +2158,7 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setColorValue          (255)
                                             .setGroup               (addPlayerGroupObject)
-                                            .setPosition            (guiElement2CollumnFirstCollumnXInt, guiLayoutOffsetInt)
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, guiLayoutOffsetInt)
                                             .setText                ("VISITOR INDEX:");
 
 
@@ -2180,7 +2168,7 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setColorValue          (255)
                                             .setGroup               (addPlayerGroupObject)
-                                            .setPosition            (guiElement2CollumnSecondCollumnXInt, guiLayoutOffsetInt)
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, guiLayoutOffsetInt)
                                             .setText                ("" + playerAmountInt);
 
 
@@ -2191,8 +2179,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (addPlayerGroupObject)
                                             .setLabel               ("PICK STARTING EXHIBITION:")
-                                            .setPosition            (guiElement1CollumnFirstCollumnXInt, (guiLayoutOffsetInt*3))
-                                            .setSize                (guiElement1CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition            (guiElement1ColumnFirstColumnXInt, (guiLayoutOffsetInt*3))
+                                            .setSize                (guiElement1ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                (ControlP5.LIST);
 
 
@@ -2202,8 +2190,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (addPlayerGroupObject)
                                             .setLabel               ("VISITOR NAME:")
-                                            .setPosition            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
-                                            .setSize                (guiElement2CollumnWidth, guiElement2LineHeight);
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
 
@@ -2212,8 +2200,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (addPlayerGroupObject)
                                             .setLabel               ("ADD PLAYER")
-                                            .setPosition            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
-                                            .setSize                (guiElement2CollumnWidth, guiElement2LineHeight);
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
     }
 
@@ -2743,6 +2731,503 @@ class AddTagGUIObject{
     }
 
 }
+
+
+
+class AddTagGroupGUIObject extends GroupGUIObject{
+
+    ControlP5       addTagGroupControllerP5Object                       ;
+    ScrollableList  selectMuseumObjectScrollableListObject              ;
+
+    String          tempSelectedTagTypeNameFullString                   = "";
+
+    Group           addTagGroupObject                                   ;
+    ScrollableList  addTagGroupTagTypeNameFullScrollableListObject      ;
+    Textfield       addTagGroupTagNameAltTextfieldObject                ;
+    Textfield       addTagGroupTagNameFullTextfieldObject               ;
+    Textfield       addTagGroupTagSubjectTextfieldObject                ;
+    Textfield       addTagGroupTagVerb1TextfieldObject                  ;
+    Textfield       addTagGroupTagVerb2TextfieldObject                  ;
+    Textfield       addTagGroupTagVerb3TextfieldObject                  ;
+    Textfield       addTagGroupTagVerbIngTextfieldObject                ;
+    Textfield       addTagGroupTagVerbSTextfieldObject                  ;
+    Textfield       addTagGroupTagNegativeVerb1TextfieldObject          ;
+    Textfield       addTagGroupTagNegativeVerb2TextfieldObject          ;
+    Textfield       addTagGroupTagNegativeVerb3TextfieldObject          ;
+    Textfield       addTagGroupTagNegativeVerbIngTextfieldObject        ;
+    Textfield       addTagGroupTagNegativeVerbSTextfieldObject          ;
+    Textfield       addTagGroupTagNounTextfieldObject                   ;
+    Textfield       addTagGroupTagNounSTextfieldObject                  ;
+    Textfield       addTagGroupTagAdjectiveTextfieldObject              ;
+    Textfield       addTagGroupTagNegativeAdjectiveTextfieldObject      ;
+    Textfield       addTagGroupTagAdverbTextfieldObject                 ;
+    Textfield       addTagGroupTagNegativeAdverbTextfieldObject         ;
+    Button          addTagGroupTagAddButtonObject                       ;
+
+    AddTagGroupGUIObject(
+
+        int                 _guiXInt                                ,
+        int                 _guiYInt                                ,
+        int                 _guiWidthInt                            ,
+        int                 _guiHeightInt                           ,
+        ScrollableList      _selectMuseumObjectScrollableListObject ,
+        PApplet             _pAppletObject
+
+    ){
+
+
+        super(_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
+        addTagGroupControllerP5Object               = new ControlP5(pAppletObject);
+
+        selectMuseumObjectScrollableListObject      = _selectMuseumObjectScrollableListObject;
+
+
+
+        addTagGroupObject                                           =
+            addTagGroupControllerP5Object   .addGroup               ("AddTagGroupObject")
+                                            .close                  ()
+                                            .setBackgroundColor     (groupBackgroundColor)
+                                            .setBackgroundHeight    (guiHeightInt)
+                                            .setColor               (defaultCColor)
+                                            .setColorBackground     (groupColorBackgroundColor)
+                                            .setColorLabel          (groupColorLabelColor)
+                                            .setLabel               ("ADD TAG:")
+                                            .setPosition            (guiXInt, guiYInt)
+                                            .setWidth               (guiWidthInt);
+
+
+
+        addTagGroupTagTypeNameFullScrollableListObject              =
+            addTagGroupControllerP5Object   .addScrollableList      ("AddTagGroupTagTypeNameFullScrollableListObject")
+                                            .addItems               (Arrays.asList("SUBJECT", "VERB", "NEGATIVE VERB", "NOUN", "ADJECTIVE", "NEGATIVE ADJECTIVE", "ADVERB", "NEGATIVE ADVERB"))
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("SELECT TAG TYPE:")
+                                            .setPosition            (guiElement1ColumnFirstColumnXInt, guiLayoutOffsetInt)
+                                            .setSize                (guiElement1ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                (ControlP5.LIST);
+
+
+
+        addTagGroupTagNameFullTextfieldObject                       =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNameFullTextfieldObject")
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("TAG NAME FULL:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNameAltTextfieldObject                        =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNameAltTextfieldObject")
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("TAG NAME ALT:")
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagSubjectTextfieldObject                        =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagSubjectTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("SUBJECT:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagVerb1TextfieldObject                          =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagVerb1TextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("VERB 1:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagVerb2TextfieldObject                          =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagVerb2TextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("VERB 2:")
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagVerb3TextfieldObject                          =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagVerb3TextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("VERB 3:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*10) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagVerbIngTextfieldObject                        =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagVerbIngTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("VERB + ING:")
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*10) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagVerbSTextfieldObject                          =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagVerbSTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("VERB + S:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNegativeVerb1TextfieldObject                  =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNegativeVerb1TextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NEGATIVE VERB 1:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNegativeVerb2TextfieldObject                  =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNegativeVerb2TextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NEGATIVE VERB 2:")
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNegativeVerb3TextfieldObject                  =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNegativeVerb3TextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NEGATIVE VERB 3:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*10) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNegativeVerbIngTextfieldObject                =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNegativeVerbIngTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NEGATIVE VERB + ING:")
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*10) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNegativeVerbSTextfieldObject                  =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNegativeVerbSTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NEGATIVE VERB + S:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNounTextfieldObject                           =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNounTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NOUN:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNounSTextfieldObject                          =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNounSTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NOUN + S:")
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagAdjectiveTextfieldObject                      =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagAdjectiveTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("ADJECTIVE:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNegativeAdjectiveTextfieldObject              =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNegativeAdjectiveTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NEGATIVE ADJECTIVE:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagAdverbTextfieldObject                         =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagAdverbTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("ADVERB:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagNegativeAdverbTextfieldObject                 =
+            addTagGroupControllerP5Object   .addTextfield           ("AddTagGroupTagNegativeAdverbTextfieldObject")
+                                            .hide                   ()
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("NEGATIVE ADVERB:")
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+        addTagGroupTagAddButtonObject                               =
+            addTagGroupControllerP5Object   .addButton              ("AddTagGroupTagAddButtonObject")
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addTagGroupObject)
+                                            .setLabel               ("SUBMIT")  
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+
+    }
+
+    public void DrawVoid(float   _alphaFloat){
+
+        super.DrawVoid(_alphaFloat, addTagGroupObject);
+
+        /*Specify the position of another controller below this group controller.*/
+        if      (addTagGroupObject.isOpen() == true ){
+
+                selectMuseumObjectScrollableListObject.setPosition(
+                    addTagGroupObject.getPosition()[0],
+                    addTagGroupObject.getPosition()[1] + guiHeightInt
+                );
+
+        }
+        else if (addTagGroupObject.isOpen() == false){
+
+                selectMuseumObjectScrollableListObject.setPosition(
+                    addTagGroupObject.getPosition()[0],
+                    addTagGroupObject.getPosition()[1]
+                );
+
+        }
+
+        ControlFormVoid();
+
+    }
+
+    public void ControlFormVoid(){
+
+        if(tempSelectedTagTypeNameFullString.equals("SUBJECT"))                 {
+
+            addTagGroupTagSubjectTextfieldObject            .show();
+            addTagGroupTagVerb1TextfieldObject              .hide();
+            addTagGroupTagVerb2TextfieldObject              .hide();
+            addTagGroupTagVerb3TextfieldObject              .hide();
+            addTagGroupTagVerbIngTextfieldObject            .hide();
+            addTagGroupTagVerbSTextfieldObject              .hide();
+            addTagGroupTagNegativeVerb1TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb2TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb3TextfieldObject      .hide();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .hide();
+            addTagGroupTagNegativeVerbSTextfieldObject      .hide();
+            addTagGroupTagNounTextfieldObject               .hide();
+            addTagGroupTagNounSTextfieldObject              .hide();
+            addTagGroupTagAdjectiveTextfieldObject          .hide();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .hide();
+            addTagGroupTagAdverbTextfieldObject             .hide();
+            addTagGroupTagNegativeAdverbTextfieldObject     .hide();
+
+        }
+        else if(tempSelectedTagTypeNameFullString.equals("VERB"))               {
+
+            addTagGroupTagSubjectTextfieldObject            .hide();
+            addTagGroupTagVerb1TextfieldObject              .show();
+            addTagGroupTagVerb2TextfieldObject              .show();
+            addTagGroupTagVerb3TextfieldObject              .show();
+            addTagGroupTagVerbIngTextfieldObject            .show();
+            addTagGroupTagVerbSTextfieldObject              .show();
+            addTagGroupTagNegativeVerb1TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb2TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb3TextfieldObject      .hide();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .hide();
+            addTagGroupTagNegativeVerbSTextfieldObject      .hide();
+            addTagGroupTagNounTextfieldObject               .hide();
+            addTagGroupTagNounSTextfieldObject              .hide();
+            addTagGroupTagAdjectiveTextfieldObject          .hide();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .hide();
+            addTagGroupTagAdverbTextfieldObject             .hide();
+            addTagGroupTagNegativeAdverbTextfieldObject     .hide();
+
+        }
+        else if(tempSelectedTagTypeNameFullString.equals("NEGATIVE VERB"))      {
+
+            addTagGroupTagSubjectTextfieldObject            .hide();
+            addTagGroupTagVerb1TextfieldObject              .hide();
+            addTagGroupTagVerb2TextfieldObject              .hide();
+            addTagGroupTagVerb3TextfieldObject              .hide();
+            addTagGroupTagVerbIngTextfieldObject            .hide();
+            addTagGroupTagVerbSTextfieldObject              .hide();
+            addTagGroupTagNegativeVerb1TextfieldObject      .show();
+            addTagGroupTagNegativeVerb2TextfieldObject      .show();
+            addTagGroupTagNegativeVerb3TextfieldObject      .show();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .show();
+            addTagGroupTagNegativeVerbSTextfieldObject      .show();
+            addTagGroupTagNounTextfieldObject               .hide();
+            addTagGroupTagNounSTextfieldObject              .hide();
+            addTagGroupTagAdjectiveTextfieldObject          .hide();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .hide();
+            addTagGroupTagAdverbTextfieldObject             .hide();
+            addTagGroupTagNegativeAdverbTextfieldObject     .hide();
+
+        }
+        else if(tempSelectedTagTypeNameFullString.equals("NOUN"))               {
+
+            addTagGroupTagSubjectTextfieldObject            .hide();
+            addTagGroupTagVerb1TextfieldObject              .hide();
+            addTagGroupTagVerb2TextfieldObject              .hide();
+            addTagGroupTagVerb3TextfieldObject              .hide();
+            addTagGroupTagVerbIngTextfieldObject            .hide();
+            addTagGroupTagVerbSTextfieldObject              .hide();
+            addTagGroupTagNegativeVerb1TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb2TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb3TextfieldObject      .hide();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .hide();
+            addTagGroupTagNegativeVerbSTextfieldObject      .hide();
+            addTagGroupTagNounTextfieldObject               .show();
+            addTagGroupTagNounSTextfieldObject              .show();
+            addTagGroupTagAdjectiveTextfieldObject          .hide();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .hide();
+            addTagGroupTagAdverbTextfieldObject             .hide();
+            addTagGroupTagNegativeAdverbTextfieldObject     .hide();
+
+        }
+        else if(tempSelectedTagTypeNameFullString.equals("ADJECTIVE"))          {
+
+            addTagGroupTagSubjectTextfieldObject            .hide();
+            addTagGroupTagVerb1TextfieldObject              .hide();
+            addTagGroupTagVerb2TextfieldObject              .hide();
+            addTagGroupTagVerb3TextfieldObject              .hide();
+            addTagGroupTagVerbIngTextfieldObject            .hide();
+            addTagGroupTagVerbSTextfieldObject              .hide();
+            addTagGroupTagNegativeVerb1TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb2TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb3TextfieldObject      .hide();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .hide();
+            addTagGroupTagNegativeVerbSTextfieldObject      .hide();
+            addTagGroupTagNounTextfieldObject               .hide();
+            addTagGroupTagNounSTextfieldObject              .hide();
+            addTagGroupTagAdjectiveTextfieldObject          .show();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .hide();
+            addTagGroupTagAdverbTextfieldObject             .hide();
+            addTagGroupTagNegativeAdverbTextfieldObject     .hide();
+
+        }
+        else if(tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE")) {
+
+            addTagGroupTagSubjectTextfieldObject            .hide();
+            addTagGroupTagVerb1TextfieldObject              .hide();
+            addTagGroupTagVerb2TextfieldObject              .hide();
+            addTagGroupTagVerb3TextfieldObject              .hide();
+            addTagGroupTagVerbIngTextfieldObject            .hide();
+            addTagGroupTagVerbSTextfieldObject              .hide();
+            addTagGroupTagNegativeVerb1TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb2TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb3TextfieldObject      .hide();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .hide();
+            addTagGroupTagNegativeVerbSTextfieldObject      .hide();
+            addTagGroupTagNounTextfieldObject               .hide();
+            addTagGroupTagNounSTextfieldObject              .hide();
+            addTagGroupTagAdjectiveTextfieldObject          .hide();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .show();
+            addTagGroupTagAdverbTextfieldObject             .hide();
+            addTagGroupTagNegativeAdverbTextfieldObject     .hide();
+
+        }
+        else if(tempSelectedTagTypeNameFullString.equals("ADVERB"))             {
+
+            addTagGroupTagSubjectTextfieldObject            .hide();
+            addTagGroupTagVerb1TextfieldObject              .hide();
+            addTagGroupTagVerb2TextfieldObject              .hide();
+            addTagGroupTagVerb3TextfieldObject              .hide();
+            addTagGroupTagVerbIngTextfieldObject            .hide();
+            addTagGroupTagVerbSTextfieldObject              .hide();
+            addTagGroupTagNegativeVerb1TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb2TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb3TextfieldObject      .hide();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .hide();
+            addTagGroupTagNegativeVerbSTextfieldObject      .hide();
+            addTagGroupTagNounTextfieldObject               .hide();
+            addTagGroupTagNounSTextfieldObject              .hide();
+            addTagGroupTagAdjectiveTextfieldObject          .hide();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .hide();
+            addTagGroupTagAdverbTextfieldObject             .show();
+            addTagGroupTagNegativeAdverbTextfieldObject     .hide();
+
+        }
+        else if(tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"))    {
+
+            addTagGroupTagSubjectTextfieldObject            .hide();
+            addTagGroupTagVerb1TextfieldObject              .hide();
+            addTagGroupTagVerb2TextfieldObject              .hide();
+            addTagGroupTagVerb3TextfieldObject              .hide();
+            addTagGroupTagVerbIngTextfieldObject            .hide();
+            addTagGroupTagVerbSTextfieldObject              .hide();
+            addTagGroupTagNegativeVerb1TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb2TextfieldObject      .hide();
+            addTagGroupTagNegativeVerb3TextfieldObject      .hide();
+            addTagGroupTagNegativeVerbIngTextfieldObject    .hide();
+            addTagGroupTagNegativeVerbSTextfieldObject      .hide();
+            addTagGroupTagNounTextfieldObject               .hide();
+            addTagGroupTagNounSTextfieldObject              .hide();
+            addTagGroupTagAdjectiveTextfieldObject          .hide();
+            addTagGroupTagNegativeAdjectiveTextfieldObject  .hide();
+            addTagGroupTagAdverbTextfieldObject             .hide();
+            addTagGroupTagNegativeAdverbTextfieldObject     .show();
+
+        }
+
+    }
+
+}
 /*A class for toggle open and close button.
 This button will be used to open a panel made using
     P5 user interface.*/
@@ -2896,8 +3381,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ScrollableList  selectPlayerScrollableListObject                            ;
 
-    ObjectPlayer    selectedPlayerObject                                        ;                           /*Selected player object.*/
-
+    ObjectPlayer    tempSelectedPlayerObject                                    ;                           /*Selected player object.*/
     int             tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
     String          tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
     String          tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
@@ -2946,12 +3430,12 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
         selectPlayerScrollableListObject                            = _selectPlayerScrollableListObject;                                                            /*PENDING.*/
 
-        selectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
-        tempSelectedPlayerFinishedString                            = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
-        for(int i = 0; i < selectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
+        tempSelectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
+        tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
+        for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerSentenceString          =                                           selectedPlayerObject.sentenceStringList.get(i); }
-            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n" + selectedPlayerObject.sentenceStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerSentenceString          =                                           tempSelectedPlayerObject.sentenceStringList.get(i); }
+            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
 
@@ -2978,7 +3462,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, guiLayoutOffsetInt)
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, guiLayoutOffsetInt)
                 .setText                                            ("VISITOR INDEX:");
 
 
@@ -2989,8 +3473,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, guiLayoutOffsetInt)
-                .setText                                            ("" + selectedPlayerObject.playerIndexInt);
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, guiLayoutOffsetInt)
+                .setText                                            ("" + tempSelectedPlayerObject.playerIndexInt);
 
 
 
@@ -3000,8 +3484,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR NAME:")
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*3))
-                .setSize                                            (guiElement2CollumnWidth,  guiElement2LineHeight);
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, (guiLayoutOffsetInt*3))
+                .setSize                                            (guiElement2ColumnWidth,  guiElement2LineHeight);
 
 
 
@@ -3011,8 +3495,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("CHANGE VISITOR NAME")
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*3))
-                .setSize                                            (guiElement2CollumnWidth,  guiElement2LineHeight);
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, (guiLayoutOffsetInt*3))
+                .setSize                                            (guiElement2ColumnWidth,  guiElement2LineHeight);
 
 
 
@@ -3022,7 +3506,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*7))
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, (guiLayoutOffsetInt*7))
                 .setText                                            ("VISITOR FINISHED:");
 
 
@@ -3033,7 +3517,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                     .setColor                                       (defaultCColor)
                     .setColorValue                                  (255)
                     .setGroup                                       (editPlayerGroupObject)
-                    .setPosition                                    (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*7))
+                    .setPosition                                    (guiElement2ColumnSecondColumnXInt, (guiLayoutOffsetInt*7))
                     .setText                                        (tempSelectedPlayerFinishedString);
 
 
@@ -3044,7 +3528,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*8))
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, (guiLayoutOffsetInt*8))
                 .setText                                            ("VISITOR SCORE:");
 
 
@@ -3055,8 +3539,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*8))
-                .setText                                            ("" + selectedPlayerObject.playerScoreInt);
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, (guiLayoutOffsetInt*8))
+                .setText                                            ("" + tempSelectedPlayerObject.playerScoreInt);
 
 
 
@@ -3066,7 +3550,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, (guiLayoutOffsetInt*9))
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, (guiLayoutOffsetInt*9))
                 .setText                                            ("VISITOR CURRENT EXHIBITION:");
 
 
@@ -3077,20 +3561,20 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, (guiLayoutOffsetInt*9))
-                .setText                                            ("" + selectedPlayerObject.exhibitionCurrentNameFullString);
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, (guiLayoutOffsetInt*9))
+                .setText                                            ("" + tempSelectedPlayerObject.exhibitionCurrentNameFullString);
 
 
 
         editPlayerGroupPlayerExhibitionTargetScrollableListObject   =
             editPlayerGroupControlP5Object
                 .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionTargetScrollableListObject")
-                .addItems                                           (selectedPlayerObject.exhibitionTagCounterNameFullStringList)
+                .addItems                                           (tempSelectedPlayerObject.exhibitionTagCounterNameFullStringList)
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR TARGET EXHIBITIONS:")
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  (guiLayoutOffsetInt*11))
-                .setSize                                            (guiElement2CollumnWidth, guiScrollableList4RowHeightInt)
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt,  (guiLayoutOffsetInt*11))
+                .setSize                                            (guiElement2ColumnWidth, guiScrollableList4RowHeightInt)
                 .setType                                            (ControlP5.LIST);
 
 
@@ -3102,8 +3586,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR VISITED EXHIBITIONS:")
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  (guiLayoutOffsetInt*11))
-                .setSize                                            (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt,  (guiLayoutOffsetInt*11))
+                .setSize                                            (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                 .setType                                            (ControlP5.LIST);
 
 
@@ -3114,7 +3598,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
                 .setText                                            ("VISITOR SENTENCES:");
 
 
@@ -3124,8 +3608,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addTextarea                                        ("editPlayerGroupPlayerSentenceValueTextareaObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
-                .setSize                                            (guiElement2CollumnWidth, guiScrollableList5RowHeightInt)
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
+                .setSize                                            (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                 .setText                                            (tempSelectedPlayerSentenceString);
 
         
@@ -3136,7 +3620,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt,  ((guiLayoutOffsetInt*12) + guiScrollableList5RowHeightInt))
                 .setText                                            ("VISITOR EXPLANATIONS:");
 
 
@@ -3146,8 +3630,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addTextarea                                        ("EditPlayerGroupPlayerExaplanationValueTextareaObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
-                .setSize                                            (guiElement2CollumnWidth , guiScrollableList5RowHeightInt)
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
+                .setSize                                            (guiElement2ColumnWidth , guiScrollableList5RowHeightInt)
                 .setText                                            (tempSelectedPlayerSentenceString);
 
 
@@ -3159,8 +3643,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR COLLECTED TAGS:")
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt,  ((guiLayoutOffsetInt*14) + (guiScrollableList5RowHeightInt*2)))
-                .setSize                                            (guiElement1CollumnWidth , guiScrollableList5RowHeightInt)
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt,  ((guiLayoutOffsetInt*14) + (guiScrollableList5RowHeightInt*2)))
+                .setSize                                            (guiElement1ColumnWidth , guiScrollableList5RowHeightInt)
                 .setType                                            (ControlP5.LIST);
 
 
@@ -3171,7 +3655,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setColorValue                                      (255)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*15) + (guiScrollableList5RowHeightInt*3)))
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*15) + (guiScrollableList5RowHeightInt*3)))
                 .setText                                            ("MODES:");
 
 
@@ -3184,7 +3668,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addItem                                            ("SOFTWARE - MANUAL", 2)
                 .addItem                                            ("HARDWARE - MANUAL", 3)
                 .setGroup                                           (editPlayerGroupObject)
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*3)))
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*3)))
                 .setSize                                            (guiLayoutOffsetInt, guiLayoutOffsetInt);
 
 
@@ -3196,8 +3680,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("SELECT VISITOR NEXT EXHIBITION:")
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*15) + (guiScrollableList5RowHeightInt*3)))
-                .setSize                                            (guiElement2CollumnWidth , 64)
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*15) + (guiScrollableList5RowHeightInt*3)))
+                .setSize                                            (guiElement2ColumnWidth , 64)
                 .setType                                            (ControlP5.LIST);
 
 
@@ -3208,8 +3692,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("RESET VISITOR")
-                .setPosition                                        (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
-                .setSize                                            (guiElement2CollumnWidth, guiLayoutOffsetInt);
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement2ColumnWidth, guiLayoutOffsetInt);
 
 
 
@@ -3219,8 +3703,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("GENERATE PATTERN")
-                .setPosition                                        (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
-                .setSize                                            (guiElement2CollumnWidth, guiLayoutOffsetInt);
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement2ColumnWidth, guiLayoutOffsetInt);
 
 
 
@@ -3249,27 +3733,27 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         }
 
         /*Always assign values to the controllers.*/
-        if(selectedPlayerObject                             != null ){
+        if(tempSelectedPlayerObject                             != null ){
 
-            tempSelectedPlayerFinishedString                = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
-            for(int i = 0; i < selectedPlayerObject.sentenceStringList.size(); i ++){                                                       /*Put all selected player sentences into one paragraph of a String variable.*/
+            tempSelectedPlayerFinishedString                = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
+            for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                       /*Put all selected player sentences into one paragraph of a String variable.*/
 
-                if(i == 0)  { tempSelectedPlayerSentenceString =                                           selectedPlayerObject.sentenceStringList.get(i); }
-                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n" + selectedPlayerObject.sentenceStringList.get(i); }
+                if(i == 0)  { tempSelectedPlayerSentenceString =                                           tempSelectedPlayerObject.sentenceStringList.get(i); }
+                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
             }
 
-            editPlayerGroupPlayerIndexValueTextlabelObject              .setText (("" + selectedPlayerObject.playerIndexInt                         ));
+            editPlayerGroupPlayerIndexValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerIndexInt                         ));
             editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                            ));
-            editPlayerGroupPlayerScoreValueTextlabelObject              .setText (("" + selectedPlayerObject.playerScoreInt                         ));
-            editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  .setText ((     selectedPlayerObject.exhibitionCurrentNameFullString        ));
-            editPlayerGroupPlayerExhibitionTargetScrollableListObject   .setItems((     selectedPlayerObject.exhibitionTargetNameFullStringList     ));
-            editPlayerGroupPlayerExhibitionVisitedScrollableListObject  .setItems((     selectedPlayerObject.exhibitionVisitedNameFullStringList    ));
-            editPlayerGroupPlayerTagScrollableListObject                .setItems((     selectedPlayerObject.exhibitionTagCounterNameFullStringList ));
+            editPlayerGroupPlayerScoreValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerScoreInt                         ));
+            editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  .setText ((     tempSelectedPlayerObject.exhibitionCurrentNameFullString        ));
+            editPlayerGroupPlayerExhibitionTargetScrollableListObject   .setItems((     tempSelectedPlayerObject.exhibitionTargetNameFullStringList     ));
+            editPlayerGroupPlayerExhibitionVisitedScrollableListObject  .setItems((     tempSelectedPlayerObject.exhibitionVisitedNameFullStringList    ));
+            editPlayerGroupPlayerTagScrollableListObject                .setItems((     tempSelectedPlayerObject.exhibitionTagCounterNameFullStringList ));
             editPlayerGroupPlayerSentenceValueTextareaObject            .setText ((     tempSelectedPlayerSentenceString                            ));
             editPlayerGroupPlayerExaplanationValueTextareaObject        .setText ((     tempSelectedPlayerSentenceString                            ));
             editPlayerGroupPlayerExhibitionNextScrollableListObject     .setItems((     exhibitionNameFullStringList                                ));
-            editPlayerGroupPlayerModeValueRadioButtonObject             .activate((     (selectedPlayerObject.playerMovementModeInt - 1)            ));
+            editPlayerGroupPlayerModeValueRadioButtonObject             .activate((     (tempSelectedPlayerObject.playerMovementModeInt - 1)            ));
 
         }
 
@@ -3301,21 +3785,21 @@ class GroupGUIObject{
 
     int             guiLayoutOffsetInt                                          = 10;                       /*The offset used to space each controllers in group object.*/
 
-    int 			guiElement1CollumnFirstCollumnXInt 							;                           /*The x position of first  controller in 1 collumns row.*/
-    int             guiElement2CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 2 collumns row.*/
-    int             guiElement2CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 2 collumns row.*/
-    int             guiElement3CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 3 collumns row.*/
-    int             guiElement3CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 3 collumns row.*/
-    int             guiElement3CollumnThirdCollumnXInt                          ;                           /*The x position of third  controller in 3 collumns row.*/
-    int             guiElement4CollumnFirstCollumnXInt                          ;                           /*The x position of first  controller in 4 collumns row.*/
-    int             guiElement4CollumnSecondCollumnXInt                         ;                           /*The x position of second controller in 4 collumns row.*/
-    int             guiElement4CollumnThirdCollumnXInt                          ;                           /*The x position of third  controller in 4 collumns row.*/
-    int             guiElement4CollumnFourthCollumnXInt                         ;                           /*The x position of fourth controller in 4 collumns row.*/
+    int 			guiElement1ColumnFirstColumnXInt 							;                           /*The x position of first  controller in 1 Columns row.*/
+    int             guiElement2ColumnFirstColumnXInt                            ;                           /*The x position of first  controller in 2 Columns row.*/
+    int             guiElement2ColumnSecondColumnXInt                           ;                           /*The x position of second controller in 2 Columns row.*/
+    int             guiElement3ColumnFirstColumnXInt                            ;                           /*The x position of first  controller in 3 Columns row.*/
+    int             guiElement3ColumnSecondColumnXInt                           ;                           /*The x position of second controller in 3 Columns row.*/
+    int             guiElement3ColumnThirdColumnXInt                            ;                           /*The x position of third  controller in 3 Columns row.*/
+    int             guiElement4ColumnFirstColumnXInt                            ;                           /*The x position of first  controller in 4 Columns row.*/
+    int             guiElement4ColumnSecondColumnXInt                           ;                           /*The x position of second controller in 4 Columns row.*/
+    int             guiElement4ColumnThirdColumnXInt                            ;                           /*The x position of third  controller in 4 Columns row.*/
+    int             guiElement4ColumnFourthColumnXInt                           ;                           /*The x position of fourth controller in 4 Columns row.*/
 
-    int 			guiElement1CollumnWidth 									; 							/*The width of any controller in 1 collumn  row.*/
-    int             guiElement2CollumnWidth                                     ;                           /*The width of any controller in 2 collumns row.*/
-    int             guiElement3CollumnWidth                                     ;                           /*The width of any controller in 3 collumns row.*/
-    int             guiElement4CollumnWidth                                     ;                           /*The width of any controller in 4 collumns row.*/
+    int 			guiElement1ColumnWidth 									    ; 							/*The width of any controller in 1 Column  row.*/
+    int             guiElement2ColumnWidth                                      ;                           /*The width of any controller in 2 Columns row.*/
+    int             guiElement3ColumnWidth                                      ;                           /*The width of any controller in 3 Columns row.*/
+    int             guiElement4ColumnWidth                                      ;                           /*The width of any controller in 4 Columns row.*/
 
     int             guiElement1LineHeight                                       = 10;                       /*The height of any element that only one line height.
                                                                                                             For example, button, text label.*/
@@ -3348,20 +3832,20 @@ class GroupGUIObject{
         guiHeightInt                                    =  _guiHeightInt                    ;
         pAppletObject                                   =  _pAppletObject                   ;
 
-        guiElement1CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*2))/1)                ;
-        guiElement2CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*3))/2)                ;
-        guiElement3CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*4))/3)                ;
-        guiElement4CollumnWidth                         = ((guiWidthInt - (guiLayoutOffsetInt*5))/4)                ;
-        guiElement1CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement1CollumnWidth*0))    ;
-        guiElement2CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement2CollumnWidth*0))    ;
-        guiElement2CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement2CollumnWidth*1))    ;
-        guiElement3CollumnFirstCollumnXInt              = ((guiLayoutOffsetInt*1) + (guiElement3CollumnWidth*0))    ;
-        guiElement3CollumnSecondCollumnXInt             = ((guiLayoutOffsetInt*2) + (guiElement3CollumnWidth*1))    ;
-        guiElement3CollumnThirdCollumnXInt              = ((guiLayoutOffsetInt*3) + (guiElement3CollumnWidth*2))    ;
-        guiElement4CollumnFirstCollumnXInt				= ((guiLayoutOffsetInt*1) + (guiElement4CollumnWidth*0))    ;
-		guiElement4CollumnSecondCollumnXInt				= ((guiLayoutOffsetInt*2) + (guiElement4CollumnWidth*1))    ;
-		guiElement4CollumnThirdCollumnXInt				= ((guiLayoutOffsetInt*3) + (guiElement4CollumnWidth*2))    ;
-		guiElement4CollumnFourthCollumnXInt				= ((guiLayoutOffsetInt*4) + (guiElement4CollumnWidth*3))    ;
+        guiElement1ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*2))/1)                ;
+        guiElement2ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*3))/2)                ;
+        guiElement3ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*4))/3)                ;
+        guiElement4ColumnWidth                          = ((guiWidthInt - (guiLayoutOffsetInt*5))/4)                ;
+        guiElement1ColumnFirstColumnXInt                = ((guiLayoutOffsetInt*1) + (guiElement1ColumnWidth*0))     ;
+        guiElement2ColumnFirstColumnXInt                = ((guiLayoutOffsetInt*1) + (guiElement2ColumnWidth*0))     ;
+        guiElement2ColumnSecondColumnXInt               = ((guiLayoutOffsetInt*2) + (guiElement2ColumnWidth*1))     ;
+        guiElement3ColumnFirstColumnXInt                = ((guiLayoutOffsetInt*1) + (guiElement3ColumnWidth*0))     ;
+        guiElement3ColumnSecondColumnXInt               = ((guiLayoutOffsetInt*2) + (guiElement3ColumnWidth*1))     ;
+        guiElement3ColumnThirdColumnXInt                = ((guiLayoutOffsetInt*3) + (guiElement3ColumnWidth*2))     ;
+        guiElement4ColumnFirstColumnXInt	 			= ((guiLayoutOffsetInt*1) + (guiElement4ColumnWidth*0))     ;
+		guiElement4ColumnSecondColumnXInt	 			= ((guiLayoutOffsetInt*2) + (guiElement4ColumnWidth*1))     ;
+		guiElement4ColumnThirdColumnXInt	 			= ((guiLayoutOffsetInt*3) + (guiElement4ColumnWidth*2))     ;
+		guiElement4ColumnFourthColumnXInt	 			= ((guiLayoutOffsetInt*4) + (guiElement4ColumnWidth*3))     ;
 
         groupBackgroundColor                            = color(50 , 60 , 57 , alphaFloat)  ;
         groupColorBackgroundColor                       = color(2  , 45 , 89 , alphaFloat)  ;
