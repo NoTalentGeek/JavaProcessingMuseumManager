@@ -3,62 +3,48 @@ import controlP5.*;
 
 class AddMuseumGroupGUIObject extends GroupGUIObject{
 
-    ControlP5               addMuseumGroupControlP5Object                                               ;                           /*ControlP5 object to control all graphical user interface controller.              */
+    ControlP5       addMuseumGroupControlP5Object                                               ;                           /*ControlP5 object to control all graphical user interface controller.              */
 
-    //AddTagGroupGUIObject  addTagGroupGUIObject                                                        ;                           /*PENDING*/
-    ControlP5               addTagGroupGUIObject                                                        ;                           /*PENDING*/
+    Group           addTagGroupObject                                                           ;
 
-    String                  tempSelectedParentNameAltString                                             = "";                       /*Selected object museum parent name alt  string.                                   */
-    String                  tempSelectedParentNameFullString                                            = "";                       /*Selected object museum parent name full string.                                   */
-    String                  tempSelectedTypeObjectMuseumNameAltString                                   = "";                       /*Selected object museum type   name alt  string ("FLR"  , "ROM" , "EXH"       ).   */
-    String                  tempSelectedTypeObjectMuseumNameFullString                                  = "";                       /*Selected object museum type   name full string ("Floor", "Room", "Exhibition").   */
-    List<String>            tempSelectedTagNameFullStringList                                           = new ArrayList<String>();  /*Selected object museum tag    name full string.                                   */
+    String          tempSelectedParentNameAltString                                             = "";                       /*Selected object museum parent name alt  string.                                   */
+    String          tempSelectedParentNameFullString                                            = "";                       /*Selected object museum parent name full string.                                   */
+    String          tempSelectedTypeObjectMuseumNameAltString                                   = "";                       /*Selected object museum type   name alt  string ("FLR"  , "ROM" , "EXH"       ).   */
+    String          tempSelectedTypeObjectMuseumNameFullString                                  = "";                       /*Selected object museum type   name full string ("Floor", "Room", "Exhibition").   */
+    List<String>    tempSelectedTagNameFullStringList                                           = new ArrayList<String>();  /*Selected object museum tag    name full string.                                   */
 
     /*ControlP5 related graphical user interface controller variables.*/
-    Group                   addMuseumGroupObject                                                        ;
-    ScrollableList          addMuseumGroupSelectTypeMuseumObjectScrollableListObject                    ;
-    ScrollableList          addMuseumGroupSelectParentMuseumObjectScrollableListObject                  ;
-    Textlabel               addMuseumGroupCanAddMultipleTagTextlabelObject                              ;
-    ScrollableList          addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject              ;
-    ScrollableList          addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                 ;
-    ScrollableList          addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         ;
-    ScrollableList          addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                 ;
-    ScrollableList          addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject            ;
-    ScrollableList          addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    ;
-    ScrollableList          addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               ;
-    ScrollableList          addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       ;
-    Textfield               addMuseumGroupNameFullMuseumObjectTextfieldObject                           ;
-    Textfield               addMuseumGroupNameAltMuseumObjectTextfieldObject                            ;
-    Button                  addMuseumGroupAddMuseumObjectButtonObject                                   ;
+    Group           addMuseumGroupObject                                                        ;
+    ScrollableList  addMuseumGroupSelectTypeMuseumObjectScrollableListObject                    ;
+    ScrollableList  addMuseumGroupSelectParentMuseumObjectScrollableListObject                  ;
+    Textlabel       addMuseumGroupCanAddMultipleTagTextlabelObject                              ;
+    ScrollableList  addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject              ;
+    ScrollableList  addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                 ;
+    ScrollableList  addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         ;
+    ScrollableList  addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                 ;
+    ScrollableList  addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject            ;
+    ScrollableList  addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    ;
+    ScrollableList  addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               ;
+    ScrollableList  addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       ;
+    Textfield       addMuseumGroupNameFullMuseumObjectTextfieldObject                           ;
+    Textfield       addMuseumGroupNameAltMuseumObjectTextfieldObject                            ;
+    Button          addMuseumGroupAddMuseumObjectButtonObject                                   ;
 
-    /*PENDING.
     AddMuseumGroupGUIObject                                         (
 
-        int                                     _guiXInt                ,
-        int                                     _guiYInt                ,
-        int                                     _guiWidthInt            ,
-        int                                     _guiHeightInt           ,
-        AddTagGroupGUIObject                    _addTagGroupGUIObject   ,
-        PApplet                                 _pAppletObject
-
-    ){
-    */
-    /*PENDING.*/
-    AddMuseumGroupGUIObject                                         (
-
-        int                                     _guiXInt                ,
-        int                                     _guiYInt                ,
-        int                                     _guiWidthInt            ,
-        int                                     _guiHeightInt           ,
-        ControlP5                               _addTagGroupGUIObject   ,
-        PApplet                                 _pAppletObject
+        int         _guiXInt            ,
+        int         _guiYInt            ,
+        int         _guiWidthInt        ,
+        int         _guiHeightInt       ,
+        Group       _addTagGroupObject  ,
+        PApplet     _pAppletObject
 
     ){
 
         super                                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        addMuseumGroupControlP5Object                                               = new ControlP5(_pAppletObject);
+        addMuseumGroupControlP5Object                                               = new ControlP5(pAppletObject);
 
-        addTagGroupGUIObject                                                        = _addTagGroupGUIObject;                                               /*PENDING.*/
+        addTagGroupObject                                                           = _addTagGroupObject;                                               /*PENDING.*/
 
 
 
@@ -245,34 +231,18 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
         /*Specify the position of another controller below this group controller.*/
         if      (addMuseumGroupObject.isOpen() == true ){
 
-                /*PENDING.*/
-                addTagGroupGUIObject.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+                addTagGroupObject.setPosition(
                     addMuseumGroupObject.getPosition()[0],
                     addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
                 );
-
-                /*PENDING.
-                addTagGroupGUIObject.addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-                */
 
         }
         else if (addMuseumGroupObject.isOpen() == false){
 
-                /*PENDING.*/
-                addTagGroupGUIObject.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+                addTagGroupObject.setPosition(
                     addMuseumGroupObject.getPosition()[0],
                     addMuseumGroupObject.getPosition()[1] + guiLayoutOffsetInt
                 );
-
-                /*PENDING.
-                addTagGroupGUIObject.addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-                */
 
         }
 

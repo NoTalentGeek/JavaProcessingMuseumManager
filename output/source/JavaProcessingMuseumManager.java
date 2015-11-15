@@ -99,7 +99,7 @@ List<String>            defaultStringList               ;                       
 /*GUI variables.*/
 AddMuseumGroupGUIObject          addMuseumGroupGUIObject              ;
 AddTagGUIObject             addTagGUIObject                 ;
-AddPlayerGUIObject          addPlayerGUIObject              ;
+AddPlayerGroupGUIObject          addPlayerGroupGUIObject              ;
 RemovePlayerGUIObject       removePlayerGUIObject           ;
 EditPlayerGroupGUIObject    editPlayerGroupGUIObject             ;
 
@@ -454,69 +454,6 @@ public void setup()                                    {
     int dropdownObjectHeightInt         = (height - (guiOffsetInt*2) - ((buttonSizeInt/2)*2));
     int itemHeightInt                   = (dropdownObjectHeightInt/20);
 
-    /*Add the museum object GUI.*/
-    addMuseumGroupGUIObject                  = new AddMuseumGroupGUIObject(
-
-        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
-        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
-        dropdownObjectWidthInt                                              ,
-        442                                                                 ,
-        cp5Object                                                           ,
-        this
-
-    );
-
-    addTagGUIObject                     = new AddTagGUIObject(
-
-        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
-        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
-        dropdownObjectWidthInt                                              ,
-        382                                                                 ,
-        buttonSizeInt                                                       ,
-        dropdownObjectWidthInt                                              ,
-        dropdownObjectHeightInt
-
-    );
-
-    /*Add the add player GUI.*/
-    addPlayerGUIObject                  = new AddPlayerGUIObject(
-
-        (guiOffsetInt + (buttonSizeInt/2))          ,
-        (guiOffsetInt + (buttonSizeInt/2))          ,
-        dropdownObjectWidthInt                      ,
-        162                                         ,
-        buttonSizeInt                               ,
-        dropdownObjectWidthInt                      ,
-        dropdownObjectHeightInt
-
-
-    );
-
-    /*Add the remove player GUI.*/
-    removePlayerGUIObject                  = new RemovePlayerGUIObject(
-
-        (guiOffsetInt + (buttonSizeInt/2))          ,
-        (guiOffsetInt + (buttonSizeInt/2))          ,
-        dropdownObjectWidthInt                      ,
-        104                                         ,
-        buttonSizeInt                               ,
-        dropdownObjectWidthInt                      ,
-        dropdownObjectHeightInt
-
-
-    );
-
-    /*Add the edit player GUI.*/
-    editPlayerGroupGUIObject            = new EditPlayerGroupGUIObject(
-
-        (guiOffsetInt + (buttonSizeInt/2))  ,
-        (guiOffsetInt + (buttonSizeInt/2))  ,
-        dropdownObjectWidthInt              ,
-        427                                 ,
-        cp5Object                           ,
-        this
-
-    );
 
     /*Create museum object dropdown menu.*/
     cp5Object
@@ -549,6 +486,71 @@ public void setup()                                    {
         .setType                        (ControlP5.LIST)
         .setLabel                       ("Visitor:")
         .hide                           ();
+
+    addTagGUIObject                     = new AddTagGUIObject(
+
+        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
+        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
+        dropdownObjectWidthInt                                              ,
+        382                                                                 ,
+        buttonSizeInt                                                       ,
+        dropdownObjectWidthInt                                              ,
+        dropdownObjectHeightInt
+
+    );
+
+    /*Add the museum object GUI.*/
+    addMuseumGroupGUIObject                  = new AddMuseumGroupGUIObject(
+
+        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
+        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
+        dropdownObjectWidthInt                                              ,
+        442                                                                 ,
+        cp5Object.get(Group.class, "AddTagGUIObjectAddTagGroupObject")      ,
+        this
+
+    );
+
+
+    /*Add the remove player GUI.*/
+    removePlayerGUIObject                  = new RemovePlayerGUIObject(
+
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        (guiOffsetInt + (buttonSizeInt/2))          ,
+        dropdownObjectWidthInt                      ,
+        104                                         ,
+        buttonSizeInt                               ,
+        dropdownObjectWidthInt                      ,
+        dropdownObjectHeightInt
+
+
+    );
+
+    /*Add the add player GUI.*/
+    addPlayerGroupGUIObject                  = new AddPlayerGroupGUIObject(
+
+        (guiOffsetInt + (buttonSizeInt/2))                                          ,
+        (guiOffsetInt + (buttonSizeInt/2))                                          ,
+        dropdownObjectWidthInt                                                      ,
+        144                                                                         ,
+        cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject")  ,
+        this
+
+
+    );
+
+    /*Add the edit player GUI.*/
+    editPlayerGroupGUIObject            = new EditPlayerGroupGUIObject(
+
+        (guiOffsetInt + (buttonSizeInt/2))                  ,
+        (guiOffsetInt + (buttonSizeInt/2))                  ,
+        dropdownObjectWidthInt                              ,
+        427                                                 ,
+        cp5Object.get(ScrollableList.class, "VisitorSList") ,
+        this
+
+    );
+
 
     museumNameAltStringList             = new ArrayList<String>(floorNameAltStringList);                                                                       /*Set the initial item for this scrollable list.*/
     museumNameFullStringList            = new ArrayList<String>(floorNameFullStringList);
@@ -640,12 +642,13 @@ public void draw()                                     {
     /*Update the value for animation of both button open close.*/
     dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
-    
+
+
     /*Update the add museum object GUI.*/
     addMuseumGroupGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
     addTagGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
     /*Update the add player object GUI.*/
-    addPlayerGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
+    addPlayerGroupGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
     /*Update the remove player object GUI.*/
     removePlayerGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat, editPlayerGroupGUIObject);
     /*Update the edit player object GUI.*/
@@ -661,7 +664,7 @@ public void draw()                                     {
     /*PENDING: Create a function to return next biggest player index int.*/
     biggestPlayerIndexInt = GetBiggestPlayerIndexInt();
     int nextBiggestPlayerIndexInt = biggestPlayerIndexInt + 1; 
-    cp5Object.get(Textlabel.class, "AddPlayerGUIObjectPlayerIndexValueTextlabel").setText("" + nextBiggestPlayerIndexInt);
+    addPlayerGroupGUIObject.addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
 
 }
 
@@ -1506,32 +1509,6 @@ public void VisitorSList                   (int _indexInt)                      
 
 
 
-
-
-/*Function to handle AddPlayerGUIObject.pde.*/
-public void AddPlayerGUIObjectPickStartingExhibitionSList(int _indexInt){
-
-    String tempStartingExhibitionNameFullString = cp5Object.get(ScrollableList.class, "AddPlayerGUIObjectPickStartingExhibitionSList").getItem(_indexInt).get("text").toString();
-    String tempStartingExhibitionNameAltString = "";
-    ObjectMuseum tempStartingExhibitionObject = null;
-
-    tempStartingExhibitionObject = FindMuseumObject(tempStartingExhibitionNameFullString);
-    tempStartingExhibitionNameAltString = tempStartingExhibitionObject.nameAltString;
-    addPlayerGUIObject.startingExhibitionNameAltString = tempStartingExhibitionNameAltString;
-
-}
-public void AddPlayerGUIObjectSubmitButton(int _index){
-
-    int temporaryBiggestPlayerIndexInt = biggestPlayerIndexInt + 1;
-    String tempStartingExhibitionNameAltString = addPlayerGUIObject.startingExhibitionNameAltString; addPlayerGUIObject.startingExhibitionNameAltString = "";
-    String tempPlayerNameString = cp5Object.get(Textfield.class, "AddPlayerGUIObjectVisitorNameTextfield" ).getText();
-    ObjectPlayer tempPlayerObject = new ObjectPlayer(temporaryBiggestPlayerIndexInt, tempPlayerNameString, tempStartingExhibitionNameAltString);
-    playerStringList.add("" + tempPlayerObject.playerIndexInt);
-    cp5Object.get(ScrollableList.class, "VisitorSList").setItems(playerStringList );
-    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer").setItems(playerStringList );
-
-}
-
 public int GetBiggestPlayerIndexInt(){
 
     int tempBiggestIndexInt = 0;
@@ -1543,6 +1520,10 @@ public int GetBiggestPlayerIndexInt(){
     return tempBiggestIndexInt;
 
 }
+
+
+
+
 
 
 
@@ -1729,7 +1710,6 @@ public void AddTagGUIObjectSubmitButton(int _indexInt){
     else if (addTagGUIObject.selectedTagTypeString.equals("ADVERB"))                { addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
     else if (addTagGUIObject.selectedTagTypeString.equals("NEGATIVE ADVERB"))       { addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
 
-    println("\n\n\n\n\nTEST\n\n\n\n\n");
 
     addTagGUIObject.selectedTagTypeString = "";
     cp5Object.get(Textfield         .class , "AddTagGUIObjectTagNameFullTextfield"          ).clear();
@@ -1825,6 +1805,40 @@ public void AddMuseumGroupAddMuseumObjectButtonObject                           
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//AddPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*Find the starting exhibition alternate name String.*/
+public void AddPlayerGroupPickExhibitionStartScrollableListObject  (int _indexInt){
+
+    String          tempStartingExhibitionNameAltString         = "";
+    String          tempStartingExhibitionNameFullString        = addPlayerGroupGUIObject.addPlayerGroupPickExhibitionStartScrollableListObject.getItem(_indexInt).get("text").toString();
+    ObjectMuseum    tempStartingExhibitionObject                = null;
+
+    tempStartingExhibitionObject                                = FindMuseumObject(tempStartingExhibitionNameFullString);
+    tempStartingExhibitionNameAltString                         = tempStartingExhibitionObject.nameAltString;
+    addPlayerGroupGUIObject.tempExhibitionStartNameAltString    = tempStartingExhibitionNameAltString;
+
+}
+public void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
+
+    int             temporaryBiggestPlayerIndexInt      = biggestPlayerIndexInt + 1;
+    String          tempStartingExhibitionNameAltString = addPlayerGroupGUIObject.tempExhibitionStartNameAltString;
+    String          tempPlayerNameString                = addPlayerGroupGUIObject.addPlayerGroupPlayerNameTextfieldObject.getText();
+    ObjectPlayer    tempPlayerObject                    = new ObjectPlayer(temporaryBiggestPlayerIndexInt, tempPlayerNameString, tempStartingExhibitionNameAltString);
+
+    playerStringList.add("" + tempPlayerObject.playerIndexInt);
+
+    cp5Object.get(ScrollableList.class, "VisitorSList")                     .setItems(playerStringList );
+    cp5Object.get(ScrollableList.class, "RemovePlayerGUIObjectPickPlayer")  .setItems(playerStringList );
+
+}
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//AddPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
 //START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*Set the movement mode for both player object and the graphical user interface object.
@@ -1857,62 +1871,48 @@ public void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _ind
 
 class AddMuseumGroupGUIObject extends GroupGUIObject{
 
-    ControlP5               addMuseumGroupControlP5Object                                               ;                           /*ControlP5 object to control all graphical user interface controller.              */
+    ControlP5       addMuseumGroupControlP5Object                                               ;                           /*ControlP5 object to control all graphical user interface controller.              */
 
-    //AddTagGroupGUIObject  addTagGroupGUIObject                                                        ;                           /*PENDING*/
-    ControlP5               addTagGroupGUIObject                                                        ;                           /*PENDING*/
+    Group           addTagGroupObject                                                           ;
 
-    String                  tempSelectedParentNameAltString                                             = "";                       /*Selected object museum parent name alt  string.                                   */
-    String                  tempSelectedParentNameFullString                                            = "";                       /*Selected object museum parent name full string.                                   */
-    String                  tempSelectedTypeObjectMuseumNameAltString                                   = "";                       /*Selected object museum type   name alt  string ("FLR"  , "ROM" , "EXH"       ).   */
-    String                  tempSelectedTypeObjectMuseumNameFullString                                  = "";                       /*Selected object museum type   name full string ("Floor", "Room", "Exhibition").   */
-    List<String>            tempSelectedTagNameFullStringList                                           = new ArrayList<String>();  /*Selected object museum tag    name full string.                                   */
+    String          tempSelectedParentNameAltString                                             = "";                       /*Selected object museum parent name alt  string.                                   */
+    String          tempSelectedParentNameFullString                                            = "";                       /*Selected object museum parent name full string.                                   */
+    String          tempSelectedTypeObjectMuseumNameAltString                                   = "";                       /*Selected object museum type   name alt  string ("FLR"  , "ROM" , "EXH"       ).   */
+    String          tempSelectedTypeObjectMuseumNameFullString                                  = "";                       /*Selected object museum type   name full string ("Floor", "Room", "Exhibition").   */
+    List<String>    tempSelectedTagNameFullStringList                                           = new ArrayList<String>();  /*Selected object museum tag    name full string.                                   */
 
     /*ControlP5 related graphical user interface controller variables.*/
-    Group                   addMuseumGroupObject                                                        ;
-    ScrollableList          addMuseumGroupSelectTypeMuseumObjectScrollableListObject                    ;
-    ScrollableList          addMuseumGroupSelectParentMuseumObjectScrollableListObject                  ;
-    Textlabel               addMuseumGroupCanAddMultipleTagTextlabelObject                              ;
-    ScrollableList          addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject              ;
-    ScrollableList          addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                 ;
-    ScrollableList          addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         ;
-    ScrollableList          addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                 ;
-    ScrollableList          addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject            ;
-    ScrollableList          addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    ;
-    ScrollableList          addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               ;
-    ScrollableList          addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       ;
-    Textfield               addMuseumGroupNameFullMuseumObjectTextfieldObject                           ;
-    Textfield               addMuseumGroupNameAltMuseumObjectTextfieldObject                            ;
-    Button                  addMuseumGroupAddMuseumObjectButtonObject                                   ;
+    Group           addMuseumGroupObject                                                        ;
+    ScrollableList  addMuseumGroupSelectTypeMuseumObjectScrollableListObject                    ;
+    ScrollableList  addMuseumGroupSelectParentMuseumObjectScrollableListObject                  ;
+    Textlabel       addMuseumGroupCanAddMultipleTagTextlabelObject                              ;
+    ScrollableList  addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject              ;
+    ScrollableList  addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject                 ;
+    ScrollableList  addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject         ;
+    ScrollableList  addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                 ;
+    ScrollableList  addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject            ;
+    ScrollableList  addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    ;
+    ScrollableList  addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               ;
+    ScrollableList  addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       ;
+    Textfield       addMuseumGroupNameFullMuseumObjectTextfieldObject                           ;
+    Textfield       addMuseumGroupNameAltMuseumObjectTextfieldObject                            ;
+    Button          addMuseumGroupAddMuseumObjectButtonObject                                   ;
 
-    /*PENDING.
     AddMuseumGroupGUIObject                                         (
 
-        int                                     _guiXInt                ,
-        int                                     _guiYInt                ,
-        int                                     _guiWidthInt            ,
-        int                                     _guiHeightInt           ,
-        AddTagGroupGUIObject                    _addTagGroupGUIObject   ,
-        PApplet                                 _pAppletObject
-
-    ){
-    */
-    /*PENDING.*/
-    AddMuseumGroupGUIObject                                         (
-
-        int                                     _guiXInt                ,
-        int                                     _guiYInt                ,
-        int                                     _guiWidthInt            ,
-        int                                     _guiHeightInt           ,
-        ControlP5                               _addTagGroupGUIObject   ,
-        PApplet                                 _pAppletObject
+        int         _guiXInt            ,
+        int         _guiYInt            ,
+        int         _guiWidthInt        ,
+        int         _guiHeightInt       ,
+        Group       _addTagGroupObject  ,
+        PApplet     _pAppletObject
 
     ){
 
         super                                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        addMuseumGroupControlP5Object                                               = new ControlP5(_pAppletObject);
+        addMuseumGroupControlP5Object                                               = new ControlP5(pAppletObject);
 
-        addTagGroupGUIObject                                                        = _addTagGroupGUIObject;                                               /*PENDING.*/
+        addTagGroupObject                                                           = _addTagGroupObject;                                               /*PENDING.*/
 
 
 
@@ -2099,34 +2099,18 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
         /*Specify the position of another controller below this group controller.*/
         if      (addMuseumGroupObject.isOpen() == true ){
 
-                /*PENDING.*/
-                addTagGroupGUIObject.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+                addTagGroupObject.setPosition(
                     addMuseumGroupObject.getPosition()[0],
                     addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
                 );
-
-                /*PENDING.
-                addTagGroupGUIObject.addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-                */
 
         }
         else if (addMuseumGroupObject.isOpen() == false){
 
-                /*PENDING.*/
-                addTagGroupGUIObject.get(Group.class, "AddTagGUIObjectAddTagGroupObject").setPosition(
+                addTagGroupObject.setPosition(
                     addMuseumGroupObject.getPosition()[0],
                     addMuseumGroupObject.getPosition()[1] + guiLayoutOffsetInt
                 );
-
-                /*PENDING.
-                addTagGroupGUIObject.addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-                */
 
         }
 
@@ -2136,165 +2120,126 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
 
 
 
-class AddPlayerGUIObject{
+class AddPlayerGroupGUIObject extends GroupGUIObject{
 
-	/*Add three color for the background color.*/
-	int 		groupBackgroundColor			;					/*The color of group panel group background.*/
-    int 		groupColorBackgroundColor 		;					/*The title background color of panel group.*/
-    int 		groupColorLabelColor 			; 					/*The title font colot of the panel group.*/
-    /*Add transparency variable.*/
-    float		alphaFloat 						= 255;				/*The opacity for this object.*/
-	int			groupXInt						;					/*The x position of this graphical user interface.*/
-    int			groupYInt						;					/*The x position of this graphical user interface.*/
-    int			groupLayoutOffsetInt			= 10;				/*This object offset.*/
-    int			groupWidthInt					;					/*This object width.*/
-	int			groupHeightInt					;					/*This object height.*/
-    int			parentButtonSizeInt				;					/*A variable for layout taken from the main class.*/
-    int			parentDropdownObjectWidthInt	;					/*A variable for layout taken from the main class.*/
-    int			parentDropdownObjectHeightInt	;					/*A variable for layout taken from the main class.*/
-    int			scrollableWidthInt				;
-	int			scrollableHeightInt				= 62;
-	CColor 		otherCColor						= new CColor();		/*The color for other component than the scrollableChecklist.*/
-	String 		startingExhibitionNameAltString = "";
+    ControlP5       addPlayerGroupControlP5Object                           ;
 
-	AddPlayerGUIObject(
+    Group           removePlayerGroupObject                                 ;
 
-		int     _groupXInt                      ,
-        int     _groupYInt                      ,
-        int     _groupWidthInt               	,
-        int     _groupHeightInt              	,
-        int     _parentButtonSizeInt            ,
-        int     _parentDropdownObjectWidthInt   ,
-        int     _parentDropdownObjwctHeightInt
+    String          tempExhibitionStartNameAltString                        = "";
 
-	){
+    Group           addPlayerGroupObject                                    ;
+    Textlabel       addPlayerGroupPlayerIndexTextlabelObject                ;
+    Textlabel       addPlayerGroupPlayerIndexValueTextlabelObject           ;
+    ScrollableList  addPlayerGroupPickExhibitionStartScrollableListObject   ;
+    Textfield       addPlayerGroupPlayerNameTextfieldObject                 ;
+    Button          addPlayerGroupPlayerAddButtonObject                     ;
 
-		groupXInt 						= _groupXInt;
-		groupYInt 						= _groupYInt + groupLayoutOffsetInt;
-		groupWidthInt 					= _groupWidthInt;
-		groupHeightInt 					= _groupHeightInt;
-		parentButtonSizeInt 			= _parentButtonSizeInt;
-		parentDropdownObjectWidthInt 	= _parentDropdownObjectWidthInt;
-		parentDropdownObjectHeightInt 	= _parentDropdownObjwctHeightInt;
+    AddPlayerGroupGUIObject                                         (
 
-		scrollableWidthInt				= (groupWidthInt - (groupLayoutOffsetInt*2));      		/*Create the scrollable list width to accomodate three scrollable list in a row.*/
+        int         _guiXInt                    ,
+        int         _guiYInt                    ,
+        int         _guiWidthInt                ,
+        int         _guiHeightInt               ,
+        Group       _removePlayerGroupObject    ,
+        PApplet     _pAppletObject
 
-		/*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
-        groupBackgroundColor			= color(50  , 60    , 57    , alphaFloat);
-        groupColorBackgroundColor		= color(2   , 45    , 89    , alphaFloat);
-        groupColorLabelColor			= color(255 , 255   , 255   , alphaFloat);
-		otherCColor						.setActive          (color(0    , 170   , 255   , alphaFloat))
-                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
+    ){
 
-		Group   AddPlayerGroupObject				=
-                cp5Object	.addGroup               ("AddPlayerGUIObjectAddPlayerGroupObject")
-                			.close 					()
-							.setPosition            (groupXInt, groupYInt)
-                            .setWidth               (groupWidthInt)
-                            .setBackgroundHeight    (groupHeightInt)
-                            .setBackgroundColor     (groupBackgroundColor)
-                            .setColor               (otherCColor)
-                            .setColorBackground     (groupColorBackgroundColor)
-                            .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("ADD VISITOR:");
+        super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
+        addPlayerGroupControlP5Object                               = new ControlP5(pAppletObject);
 
-	            cp5Object	.addTextlabel           ("AddPlayerGUIObjectPlayerIndexTextlabel")
-							.setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
-							.setGroup               (AddPlayerGroupObject)
-							.setColor               (otherCColor)
-							.setColorValue          (255)
-							.setText                ("VISITOR INDEX:");
+        removePlayerGroupObject                                     = _removePlayerGroupObject;
 
-                cp5Object	.addTextlabel           ("AddPlayerGUIObjectPlayerIndexValueTextlabel")
-							.setPosition            (((groupWidthInt/2) + (groupLayoutOffsetInt/2)), groupLayoutOffsetInt)
-							.setGroup               (AddPlayerGroupObject)
-							.setColor               (otherCColor)
-							.setColorValue          (255)
-							.setText                ("" + playerAmountInt);
+        addPlayerGroupObject                                        =
+            addPlayerGroupControlP5Object   .addGroup               ("AddPlayerGroupObject")
+                                            .close                  ()
+                                            .setBackgroundColor     (groupBackgroundColor)
+                                            .setBackgroundHeight    (guiHeightInt)
+                                            .setColor               (defaultCColor)
+                                            .setColorBackground     (groupColorBackgroundColor)
+                                            .setColorLabel          (groupColorLabelColor)
+                                            .setLabel               ("ADD VISITOR:")
+                                            .setPosition            (guiXInt, guiYInt)
+                                            .setWidth               (guiWidthInt);
 
-				cp5Object	.addScrollableList      ("AddPlayerGUIObjectPickStartingExhibitionSList")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*3))
-                            .setSize                (scrollableWidthInt, scrollableHeightInt)
-                            .setGroup               (AddPlayerGroupObject)
-                            .addItems               (exhibitionNameFullStringList)
-                            .setType                (ControlP5.LIST)
-                            .setColor               (otherCColor)
-                            .setLabel               ("PICK STARTING EXHIBITION:");
 
-                cp5Object	.addTextfield           ("AddPlayerGUIObjectVisitorNameTextfield")
-                            .setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*4) + scrollableHeightInt))
-                            .setSize                (scrollableWidthInt  ,  (groupLayoutOffsetInt*2))
-                            .setGroup               (AddPlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setLabel               ("VISITOR NAME:");
 
-	            cp5Object	.addButton              ("AddPlayerGUIObjectSubmitButton")
-							.setPosition            (groupLayoutOffsetInt, ((groupLayoutOffsetInt*8) + scrollableHeightInt))
-							.setSize                (scrollableWidthInt, groupLayoutOffsetInt)
-							.setGroup               (AddPlayerGroupObject)
-							.setColor               (otherCColor)
-							.setLabel               ("SUBMIT");
+        addPlayerGroupPlayerIndexTextlabelObject                    =
+            addPlayerGroupControlP5Object   .addTextlabel           ("AddPlayerGroupPlayerIndexTextlabelObject")
+                                            .setColor               (defaultCColor)
+                                            .setColorValue          (255)
+                                            .setGroup               (addPlayerGroupObject)
+                                            .setPosition            (guiElement2CollumnFirstCollumnXInt, guiLayoutOffsetInt)
+                                            .setText                ("VISITOR INDEX:");
 
-	}
 
-	public void DrawVoid(float   _alphaFloat){
 
-        alphaFloat                  	= _alphaFloat;
+        addPlayerGroupPlayerIndexValueTextlabelObject               =
+            addPlayerGroupControlP5Object   .addTextlabel           ("AdPlayerGroupPlayerIndexValueTextlabelObject")
+                                            .setColor               (defaultCColor)
+                                            .setColorValue          (255)
+                                            .setGroup               (addPlayerGroupObject)
+                                            .setPosition            (guiElement2CollumnSecondCollumnXInt, guiLayoutOffsetInt)
+                                            .setText                ("" + playerAmountInt);
 
-        /*Show/hide controller based on the alpha value received from the main class.*/
-        if                          	(alphaFloat >  (255f/45f)){ cp5Object.get(Group   .class  , "AddPlayerGUIObjectAddPlayerGroupObject"            ).show(); }
-        else if                     	(alphaFloat <= (255f/45f)){ cp5Object.get(Group   .class  , "AddPlayerGUIObjectAddPlayerGroupObject"            ).hide(); }
-        groupBackgroundColor        	= color             (50         , 60    , 57    , alphaFloat    + (255f/45f));
-        groupColorBackgroundColor   	= color             (2          , 45    , 89    , alphaFloat    + (255f/45f));
-        groupColorLabelColor        	= color             (255        , 255   , 255   , alphaFloat    + (255f/45f));
-        otherCColor                 	.setActive          (color(0    , 170   , 255   , alphaFloat))
-                                    	.setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                    	.setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                    	.setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                    	.setValueLabel      (color(255  , 255   , 255   , alphaFloat));
 
-        /*Especially for group controller you need to adjust four methods instead of just one methods.*/
-        cp5Object.get(Group             .class , "AddPlayerGUIObjectAddPlayerGroupObject"			).setBackgroundColor    (groupBackgroundColor);
-        cp5Object.get(Group             .class , "AddPlayerGUIObjectAddPlayerGroupObject"			).setColor              (otherCColor);
-        cp5Object.get(Group             .class , "AddPlayerGUIObjectAddPlayerGroupObject"			).setColorBackground    (groupColorBackgroundColor);
-        cp5Object.get(Group             .class , "AddPlayerGUIObjectAddPlayerGroupObject"			).setColorLabel         (groupColorLabelColor);
 
-        /*The rest of the controller you only need to adjust for one method, which is setColor().*/
-        cp5Object.get(Textlabel         .class , "AddPlayerGUIObjectPlayerIndexTextlabel"			).setColor(otherCColor);
-        cp5Object.get(Textlabel         .class , "AddPlayerGUIObjectPlayerIndexValueTextlabel"		).setColor(otherCColor);
-        cp5Object.get(ScrollableList	.class , "AddPlayerGUIObjectPickStartingExhibitionSList"	).setColor(otherCColor);
-        cp5Object.get(Textfield         .class , "AddPlayerGUIObjectVisitorNameTextfield"			).setColor(otherCColor);
-        cp5Object.get(Button    		.class , "AddPlayerGUIObjectSubmitButton"             		).setColor(otherCColor);
+        addPlayerGroupPickExhibitionStartScrollableListObject       =
+            addPlayerGroupControlP5Object   .addScrollableList      ("AddPlayerGroupPickExhibitionStartScrollableListObject")
+                                            .addItems               (exhibitionNameFullStringList)
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addPlayerGroupObject)
+                                            .setLabel               ("PICK STARTING EXHIBITION:")
+                                            .setPosition            (guiElement1CollumnFirstCollumnXInt, (guiLayoutOffsetInt*3))
+                                            .setSize                (guiElement1CollumnWidth, guiScrollableList5RowHeightInt)
+                                            .setType                (ControlP5.LIST);
 
-        /*This code below is for controlling controllers outside of this class.
-        These two if statements is for controlling the position of the other object in the same open close button.*/
-        if      (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").isOpen() == true ){
 
-                /*Change the position when the group object is open.*/
-                 cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").setPosition(
 
-                    (guiOffsetInt + (parentButtonSizeInt/2)),
-                    (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupHeightInt)
+        addPlayerGroupPlayerNameTextfieldObject                     =
+            addPlayerGroupControlP5Object   .addTextfield           ("AddPlayerGroupPlayerNameTextfieldObject")
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addPlayerGroupObject)
+                                            .setLabel               ("VISITOR NAME:")
+                                            .setPosition            (guiElement2CollumnFirstCollumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2CollumnWidth, guiElement2LineHeight);
 
+
+
+        addPlayerGroupPlayerAddButtonObject                         =
+            addPlayerGroupControlP5Object   .addButton              ("AddPlayerGroupPlayerAddButtonObject")
+                                            .setColor               (defaultCColor)
+                                            .setGroup               (addPlayerGroupObject)
+                                            .setLabel               ("ADD PLAYER")
+                                            .setPosition            (guiElement2CollumnSecondCollumnXInt, ((guiLayoutOffsetInt*4) + guiScrollableList5RowHeightInt))
+                                            .setSize                (guiElement2CollumnWidth, guiElement2LineHeight);
+
+    }
+
+    public void DrawVoid                                                   (float   _alphaFloat){
+
+        super.DrawVoid(_alphaFloat, addPlayerGroupObject);
+
+        /*Specify the position of another controller below this group controller.*/
+        if      (addPlayerGroupObject.isOpen() == true ){
+
+                removePlayerGroupObject.setPosition(
+                    addPlayerGroupObject.getPosition()[0],
+                    addPlayerGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
                 );
-                
+
         }
-        else if (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").isOpen() == false){
+        else if (addPlayerGroupObject.isOpen() == false){
 
-                /*Change the position when the group object is close.*/
-                 cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").setPosition(
-
-                    (guiOffsetInt + (parentButtonSizeInt/2)),
-                    (cp5Object.get(Group.class, "AddPlayerGUIObjectAddPlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt)
-
+                removePlayerGroupObject.setPosition(
+                    addPlayerGroupObject.getPosition()[0],
+                    addPlayerGroupObject.getPosition()[1] + guiLayoutOffsetInt
                 );
 
         }
 
-	}
+    }
 
 }
 
@@ -2947,73 +2892,59 @@ class ButtonOpenClose{
 
 class EditPlayerGroupGUIObject extends GroupGUIObject{
 
-    ControlP5                               editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
+    ControlP5       editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
-    //SelectPlayerScrollableListGUIObject   selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Object is not yet created.                                                               */
-    ControlP5                               selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Change later with variable of ObjectGUI.                                                 */
+    ScrollableList  selectPlayerScrollableListObject                            ;
 
-    ObjectPlayer                            selectedPlayerObject                                        ;                           /*Selected player object.*/
+    ObjectPlayer    selectedPlayerObject                                        ;                           /*Selected player object.*/
 
-    int                                     tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
-    String                                  tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
-    String                                  tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
-    List<String>                            tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
-    List<String>                            tempSelectedPlayerExhibitionVisitedNameFullStringList       = new ArrayList<String>();  /*Temporary variable that contains selected player object visited  exhibition list full name String.*/
-    List<String>                            tempSelectedPlayerTagNameFullStringList                     = new ArrayList<String>();  /*Temporary variable that contains selected player object tag                 list full name String.*/
+    int             tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
+    String          tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
+    String          tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
+    List<String>    tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
+    List<String>    tempSelectedPlayerExhibitionVisitedNameFullStringList       = new ArrayList<String>();  /*Temporary variable that contains selected player object visited  exhibition list full name String.*/
+    List<String>    tempSelectedPlayerTagNameFullStringList                     = new ArrayList<String>();  /*Temporary variable that contains selected player object tag                 list full name String.*/
 
     /*ControlP5 related graphical user interface controller variables.*/
-    Group                                   editPlayerGroupObject                                       ;
-    Textlabel                               editPlayerGroupPlayerIndexTextlabelObject                   ;
-    Textlabel                               editPlayerGroupPlayerIndexValueTextlabelObject              ;
-    Textfield                               editPlayerGroupPlayerNameTextfieldObject                    ;
-    Button                                  editPlayerGroupPlayerNameChangeButtonObject                 ;
-    Textlabel                               editPlayerGroupPlayerFinishedTextlabelObject                ;
-    Textlabel                               editPlayerGroupPlayerFinishedValueTextlabelObject           ;
-    Textlabel                               editPlayerGroupPlayerScoreTextlabelObject                   ;
-    Textlabel                               editPlayerGroupPlayerScoreValueTextlabelObject              ;
-    Textlabel                               editPlayerGroupPlayerExhibitionCurrentTextlabelObject       ;
-    Textlabel                               editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  ;
-    ScrollableList                          editPlayerGroupPlayerExhibitionTargetScrollableListObject   ;
-    ScrollableList                          editPlayerGroupPlayerExhibitionVisitedScrollableListObject  ;
-    Textlabel                               editPlayerGroupPlayerSentenceTextlabelObject                ;
-    Textarea                                editPlayerGroupPlayerSentenceValueTextareaObject            ;
-    Textlabel                               editPlayerGroupPlayerExplanationTextlabelObject             ;
-    Textarea                                editPlayerGroupPlayerExaplanationValueTextareaObject        ;
-    ScrollableList                          editPlayerGroupPlayerTagScrollableListObject                ;
-    Textlabel                               editPlayerGroupPlayerModeTextlabelObject                    ;
-    RadioButton                             editPlayerGroupPlayerModeValueRadioButtonObject             ;
-    ScrollableList                          editPlayerGroupPlayerExhibitionNextScrollableListObject     ;
-    Button                                  editPlayerGroupPlayerResetButtonObject                      ;
-    Button                                  editPlayerGroupPlayerGeneratePatternButtonObject            ;
+    Group           editPlayerGroupObject                                       ;
+    Textlabel       editPlayerGroupPlayerIndexTextlabelObject                   ;
+    Textlabel       editPlayerGroupPlayerIndexValueTextlabelObject              ;
+    Textfield       editPlayerGroupPlayerNameTextfieldObject                    ;
+    Button          editPlayerGroupPlayerNameChangeButtonObject                 ;
+    Textlabel       editPlayerGroupPlayerFinishedTextlabelObject                ;
+    Textlabel       editPlayerGroupPlayerFinishedValueTextlabelObject           ;
+    Textlabel       editPlayerGroupPlayerScoreTextlabelObject                   ;
+    Textlabel       editPlayerGroupPlayerScoreValueTextlabelObject              ;
+    Textlabel       editPlayerGroupPlayerExhibitionCurrentTextlabelObject       ;
+    Textlabel       editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  ;
+    ScrollableList  editPlayerGroupPlayerExhibitionTargetScrollableListObject   ;
+    ScrollableList  editPlayerGroupPlayerExhibitionVisitedScrollableListObject  ;
+    Textlabel       editPlayerGroupPlayerSentenceTextlabelObject                ;
+    Textarea        editPlayerGroupPlayerSentenceValueTextareaObject            ;
+    Textlabel       editPlayerGroupPlayerExplanationTextlabelObject             ;
+    Textarea        editPlayerGroupPlayerExaplanationValueTextareaObject        ;
+    ScrollableList  editPlayerGroupPlayerTagScrollableListObject                ;
+    Textlabel       editPlayerGroupPlayerModeTextlabelObject                    ;
+    RadioButton     editPlayerGroupPlayerModeValueRadioButtonObject             ;
+    ScrollableList  editPlayerGroupPlayerExhibitionNextScrollableListObject     ;
+    Button          editPlayerGroupPlayerResetButtonObject                      ;
+    Button          editPlayerGroupPlayerGeneratePatternButtonObject            ;
 
-    /*PENDING.
-    EditPlayerGUIObject                                             (
-
-        int                                     _guiXInt                                ,
-        int                                     _guiYInt                                ,
-        int                                     _guiWidthInt                            ,
-        int                                     _guiHeightInt                           ,
-        SelectPlayerScrollableListGUIObject     _selectPlayerScrollableListGUIObject    ,
-        PApplet                                 _pAppletObject
-
-    ){
-    */
-    /*PENDING.*/
     EditPlayerGroupGUIObject                                        (
 
-        int                                     _guiXInt                                ,
-        int                                     _guiYInt                                ,
-        int                                     _guiWidthInt                            ,
-        int                                     _guiHeightInt                           ,
-        ControlP5                               _selectPlayerScrollableListGUIObject    ,
-        PApplet                                 _pAppletObject
+        int             _guiXInt                            ,
+        int             _guiYInt                            ,
+        int             _guiWidthInt                        ,
+        int             _guiHeightInt                       ,
+        ScrollableList  _selectPlayerScrollableListObject   ,
+        PApplet         _pAppletObject
 
     ){
 
         super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        editPlayerGroupControlP5Object                              = new ControlP5(_pAppletObject);
+        editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);
 
-        selectPlayerScrollableListGUIObject                         = _selectPlayerScrollableListGUIObject;                                                            /*PENDING.*/
+        selectPlayerScrollableListObject                            = _selectPlayerScrollableListObject;                                                            /*PENDING.*/
 
         selectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
@@ -3302,34 +3233,18 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         /*Specify the position of another controller below this group controller.*/
         if      (editPlayerGroupObject.isOpen() == true ){
 
-                /*PENDING.*/
-                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListObject.setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
-
-                /*PENDING.
-                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
-                    editPlayerGroupObject.getPosition()[0],
-                    editPlayerGroupObject.getPosition()[1] + guiHeightInt
-                );
-                */
 
         }
         else if (editPlayerGroupObject.isOpen() == false){
 
-                /*PENDING.*/
-                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListObject.setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
-
-                /*PENDING.
-                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
-                    editPlayerGroupObject.getPosition()[0],
-                    editPlayerGroupObject.getPosition()[1]
-                );
-                */
 
         }
 

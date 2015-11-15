@@ -3,73 +3,59 @@ import controlP5.*;
 
 class EditPlayerGroupGUIObject extends GroupGUIObject{
 
-    ControlP5                               editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
+    ControlP5       editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
-    //SelectPlayerScrollableListGUIObject   selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Object is not yet created.                                                               */
-    ControlP5                               selectPlayerScrollableListGUIObject                         ;                           /*PENDING: Change later with variable of ObjectGUI.                                                 */
+    ScrollableList  selectPlayerScrollableListObject                            ;
 
-    ObjectPlayer                            selectedPlayerObject                                        ;                           /*Selected player object.*/
+    ObjectPlayer    selectedPlayerObject                                        ;                           /*Selected player object.*/
 
-    int                                     tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
-    String                                  tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
-    String                                  tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
-    List<String>                            tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
-    List<String>                            tempSelectedPlayerExhibitionVisitedNameFullStringList       = new ArrayList<String>();  /*Temporary variable that contains selected player object visited  exhibition list full name String.*/
-    List<String>                            tempSelectedPlayerTagNameFullStringList                     = new ArrayList<String>();  /*Temporary variable that contains selected player object tag                 list full name String.*/
+    int             tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
+    String          tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
+    String          tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
+    List<String>    tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
+    List<String>    tempSelectedPlayerExhibitionVisitedNameFullStringList       = new ArrayList<String>();  /*Temporary variable that contains selected player object visited  exhibition list full name String.*/
+    List<String>    tempSelectedPlayerTagNameFullStringList                     = new ArrayList<String>();  /*Temporary variable that contains selected player object tag                 list full name String.*/
 
     /*ControlP5 related graphical user interface controller variables.*/
-    Group                                   editPlayerGroupObject                                       ;
-    Textlabel                               editPlayerGroupPlayerIndexTextlabelObject                   ;
-    Textlabel                               editPlayerGroupPlayerIndexValueTextlabelObject              ;
-    Textfield                               editPlayerGroupPlayerNameTextfieldObject                    ;
-    Button                                  editPlayerGroupPlayerNameChangeButtonObject                 ;
-    Textlabel                               editPlayerGroupPlayerFinishedTextlabelObject                ;
-    Textlabel                               editPlayerGroupPlayerFinishedValueTextlabelObject           ;
-    Textlabel                               editPlayerGroupPlayerScoreTextlabelObject                   ;
-    Textlabel                               editPlayerGroupPlayerScoreValueTextlabelObject              ;
-    Textlabel                               editPlayerGroupPlayerExhibitionCurrentTextlabelObject       ;
-    Textlabel                               editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  ;
-    ScrollableList                          editPlayerGroupPlayerExhibitionTargetScrollableListObject   ;
-    ScrollableList                          editPlayerGroupPlayerExhibitionVisitedScrollableListObject  ;
-    Textlabel                               editPlayerGroupPlayerSentenceTextlabelObject                ;
-    Textarea                                editPlayerGroupPlayerSentenceValueTextareaObject            ;
-    Textlabel                               editPlayerGroupPlayerExplanationTextlabelObject             ;
-    Textarea                                editPlayerGroupPlayerExaplanationValueTextareaObject        ;
-    ScrollableList                          editPlayerGroupPlayerTagScrollableListObject                ;
-    Textlabel                               editPlayerGroupPlayerModeTextlabelObject                    ;
-    RadioButton                             editPlayerGroupPlayerModeValueRadioButtonObject             ;
-    ScrollableList                          editPlayerGroupPlayerExhibitionNextScrollableListObject     ;
-    Button                                  editPlayerGroupPlayerResetButtonObject                      ;
-    Button                                  editPlayerGroupPlayerGeneratePatternButtonObject            ;
+    Group           editPlayerGroupObject                                       ;
+    Textlabel       editPlayerGroupPlayerIndexTextlabelObject                   ;
+    Textlabel       editPlayerGroupPlayerIndexValueTextlabelObject              ;
+    Textfield       editPlayerGroupPlayerNameTextfieldObject                    ;
+    Button          editPlayerGroupPlayerNameChangeButtonObject                 ;
+    Textlabel       editPlayerGroupPlayerFinishedTextlabelObject                ;
+    Textlabel       editPlayerGroupPlayerFinishedValueTextlabelObject           ;
+    Textlabel       editPlayerGroupPlayerScoreTextlabelObject                   ;
+    Textlabel       editPlayerGroupPlayerScoreValueTextlabelObject              ;
+    Textlabel       editPlayerGroupPlayerExhibitionCurrentTextlabelObject       ;
+    Textlabel       editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  ;
+    ScrollableList  editPlayerGroupPlayerExhibitionTargetScrollableListObject   ;
+    ScrollableList  editPlayerGroupPlayerExhibitionVisitedScrollableListObject  ;
+    Textlabel       editPlayerGroupPlayerSentenceTextlabelObject                ;
+    Textarea        editPlayerGroupPlayerSentenceValueTextareaObject            ;
+    Textlabel       editPlayerGroupPlayerExplanationTextlabelObject             ;
+    Textarea        editPlayerGroupPlayerExaplanationValueTextareaObject        ;
+    ScrollableList  editPlayerGroupPlayerTagScrollableListObject                ;
+    Textlabel       editPlayerGroupPlayerModeTextlabelObject                    ;
+    RadioButton     editPlayerGroupPlayerModeValueRadioButtonObject             ;
+    ScrollableList  editPlayerGroupPlayerExhibitionNextScrollableListObject     ;
+    Button          editPlayerGroupPlayerResetButtonObject                      ;
+    Button          editPlayerGroupPlayerGeneratePatternButtonObject            ;
 
-    /*PENDING.
-    EditPlayerGUIObject                                             (
-
-        int                                     _guiXInt                                ,
-        int                                     _guiYInt                                ,
-        int                                     _guiWidthInt                            ,
-        int                                     _guiHeightInt                           ,
-        SelectPlayerScrollableListGUIObject     _selectPlayerScrollableListGUIObject    ,
-        PApplet                                 _pAppletObject
-
-    ){
-    */
-    /*PENDING.*/
     EditPlayerGroupGUIObject                                        (
 
-        int                                     _guiXInt                                ,
-        int                                     _guiYInt                                ,
-        int                                     _guiWidthInt                            ,
-        int                                     _guiHeightInt                           ,
-        ControlP5                               _selectPlayerScrollableListGUIObject    ,
-        PApplet                                 _pAppletObject
+        int             _guiXInt                            ,
+        int             _guiYInt                            ,
+        int             _guiWidthInt                        ,
+        int             _guiHeightInt                       ,
+        ScrollableList  _selectPlayerScrollableListObject   ,
+        PApplet         _pAppletObject
 
     ){
 
         super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        editPlayerGroupControlP5Object                              = new ControlP5(_pAppletObject);
+        editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);
 
-        selectPlayerScrollableListGUIObject                         = _selectPlayerScrollableListGUIObject;                                                            /*PENDING.*/
+        selectPlayerScrollableListObject                            = _selectPlayerScrollableListObject;                                                            /*PENDING.*/
 
         selectedPlayerObject                                        =  playerObjectList     .get(0);                                                                /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (selectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
@@ -358,34 +344,18 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         /*Specify the position of another controller below this group controller.*/
         if      (editPlayerGroupObject.isOpen() == true ){
 
-                /*PENDING.*/
-                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListObject.setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1] + guiHeightInt
                 );
-
-                /*PENDING.
-                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
-                    editPlayerGroupObject.getPosition()[0],
-                    editPlayerGroupObject.getPosition()[1] + guiHeightInt
-                );
-                */
 
         }
         else if (editPlayerGroupObject.isOpen() == false){
 
-                /*PENDING.*/
-                selectPlayerScrollableListGUIObject.get(ScrollableList.class, "VisitorSList").setPosition(
+                selectPlayerScrollableListObject.setPosition(
                     editPlayerGroupObject.getPosition()[0],
                     editPlayerGroupObject.getPosition()[1]
                 );
-
-                /*PENDING.
-                selectPlayerScrollableListGUIObject.selectPlayerScrollableListObject.setPosition(
-                    editPlayerGroupObject.getPosition()[0],
-                    editPlayerGroupObject.getPosition()[1]
-                );
-                */
 
         }
 
