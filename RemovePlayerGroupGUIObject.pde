@@ -74,24 +74,6 @@ class RemovePlayerGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, removePlayerGroupObject);
 
-        /*Specify the position of another controller below this group controller.*/
-        if      (removePlayerGroupObject.isOpen() == true ){
-
-            editPlayerScrollableListObject.setPosition(
-                removePlayerGroupObject.getPosition()[0],
-                removePlayerGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-            );
-
-        }
-        else if (removePlayerGroupObject.isOpen() == false){
-
-            editPlayerScrollableListObject.setPosition(
-                removePlayerGroupObject.getPosition()[0],
-                removePlayerGroupObject.getPosition()[1] + guiLayoutOffsetInt
-            );
-
-        }
-
     }
 
 }

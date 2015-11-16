@@ -361,7 +361,7 @@ class ObjectPlayer{
                         widthPanelInt           = exhibitionCurrentObject.widthPanelInt;
                         heightPanelInt          = exhibitionCurrentObject.heightPanelInt;
                         xPanelInt               = exhibitionCurrentObject.xPanelInt;
-                        yPanelInt               = exhibitionCurrentObject.yPanelInt + ((playerSiblingIndexInt + 1)*heightPanelInt) + ((playerSiblingIndexInt + 1)*layoutOffsetInt);
+                        yPanelInt               = exhibitionCurrentObject.yPanelInt + ((playerSiblingIndexInt + 1)*heightPanelInt) + ((playerSiblingIndexInt + 1)*panelLayoutOffsetInt);
 
         if      (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
         else if (heightPanelInt <= 10){ heightPanelInt = 10; }

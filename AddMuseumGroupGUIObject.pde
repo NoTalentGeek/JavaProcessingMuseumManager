@@ -228,24 +228,6 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, addMuseumGroupObject);
 
-        /*Specify the position of another controller below this group controller.*/
-        if      (addMuseumGroupObject.isOpen() == true ){
-
-                addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-
-        }
-        else if (addMuseumGroupObject.isOpen() == false){
-
-                addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiLayoutOffsetInt
-                );
-
-        }
-
     }
 
 }

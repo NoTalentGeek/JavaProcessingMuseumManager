@@ -289,7 +289,7 @@ class AddTagGroupGUIObject extends GroupGUIObject{
             addTagGroupControllerP5Object   .addButton              ("AddTagGroupTagAddButtonObject")
                                             .setColor               (defaultCColor)
                                             .setGroup               (addTagGroupObject)
-                                            .setLabel               ("SUBMIT")  
+                                            .setLabel               ("ADD TAG")  
                                             .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList5RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
@@ -300,24 +300,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
     void DrawVoid(float   _alphaFloat){
 
         super.DrawVoid(_alphaFloat, addTagGroupObject);
-
-        /*Specify the position of another controller below this group controller.*/
-        if      (addTagGroupObject.isOpen() == true ){
-
-                selectMuseumObjectScrollableListObject.setPosition(
-                    addTagGroupObject.getPosition()[0],
-                    addTagGroupObject.getPosition()[1] + guiHeightInt
-                );
-
-        }
-        else if (addTagGroupObject.isOpen() == false){
-
-                selectMuseumObjectScrollableListObject.setPosition(
-                    addTagGroupObject.getPosition()[0],
-                    addTagGroupObject.getPosition()[1]
-                );
-
-        }
 
         ControlFormVoid();
 

@@ -103,24 +103,6 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, addPlayerGroupObject);
 
-        /*Specify the position of another controller below this group controller.*/
-        if      (addPlayerGroupObject.isOpen() == true ){
-
-                removePlayerGroupObject.setPosition(
-                    addPlayerGroupObject.getPosition()[0],
-                    addPlayerGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-
-        }
-        else if (addPlayerGroupObject.isOpen() == false){
-
-                removePlayerGroupObject.setPosition(
-                    addPlayerGroupObject.getPosition()[0],
-                    addPlayerGroupObject.getPosition()[1] + guiLayoutOffsetInt
-                );
-
-        }
-
     }
 
 }

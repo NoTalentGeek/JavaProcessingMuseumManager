@@ -60,8 +60,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerSentenceString          =                                           tempSelectedPlayerObject.sentenceStringList.get(i); }
-            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
 
@@ -364,8 +364,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
             tempSelectedPlayerFinishedString                = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
             for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                       /*Put all selected player sentences into one paragraph of a String variable.*/
 
-                if(i == 0)  { tempSelectedPlayerSentenceString =                                           tempSelectedPlayerObject.sentenceStringList.get(i); }
-                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+                if(i == 0)  { tempSelectedPlayerSentenceString =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
             }
 

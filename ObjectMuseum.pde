@@ -134,11 +134,10 @@ class   ObjectMuseum                                                            
         /*Panel layout calculations.*/
         if          (typeString.equals("FLR")){
 
-            //widthPanelInt = (width - (layoutOffsetSideInt*2));
-            widthPanelInt   = (width - (layoutOffsetSideInt*2) - (layoutOffsetInt*floorObjectList.size()))/floorObjectList.size();
-            heightPanelInt  = (height - ((layoutOffsetInt*layoutTotalRowInt) + layoutOffsetInt))/layoutTotalRowInt;
-            xPanelInt       = layoutOffsetSideInt + (indexGlobalInt*widthPanelInt) + (indexGlobalInt*layoutOffsetInt);
-            yPanelInt       = layoutOffsetInt;
+            widthPanelInt   = (width - (panelLayoutOffsetSideInt*2) - (panelLayoutOffsetInt*floorObjectList.size()))/floorObjectList.size();
+            heightPanelInt  = (height - ((panelLayoutOffsetInt*panelLayoutTotalRowInt) + panelLayoutOffsetInt))/panelLayoutTotalRowInt;
+            xPanelInt       = panelLayoutOffsetSideInt + (indexGlobalInt*widthPanelInt) + (indexGlobalInt*panelLayoutOffsetInt);
+            yPanelInt       = panelLayoutOffsetInt;
 
             if      (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
             else if (heightPanelInt <= 10){ heightPanelInt = 10; }
@@ -150,10 +149,10 @@ class   ObjectMuseum                                                            
 
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
 
-            widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*layoutOffsetInt))/parentObject.childObjectList.size());
+            widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*panelLayoutOffsetInt))/parentObject.childObjectList.size());
             heightPanelInt  = parentObject.heightPanelInt;
-            xPanelInt       = parentObject.xPanelInt + (indexLocalInt*widthPanelInt) + (indexLocalInt*layoutOffsetInt);
-            yPanelInt       = parentObject.yPanelInt + parentObject.heightPanelInt + layoutOffsetInt;
+            xPanelInt       = parentObject.xPanelInt + (indexLocalInt*widthPanelInt) + (indexLocalInt*panelLayoutOffsetInt);
+            yPanelInt       = parentObject.yPanelInt + parentObject.heightPanelInt + panelLayoutOffsetInt;
 
             if      (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
             else if (heightPanelInt <= 10){ heightPanelInt = 10; }
@@ -165,8 +164,8 @@ class   ObjectMuseum                                                            
     /*A function to set the threshold to determine whether this museum object is full or not.*/
     boolean SetFullBoolean()                                                            {
 
-        if      (fullThresholdInt   <= visitorCurrentInt)  { fullBoolean = true;  }
-        else if (fullThresholdInt   >  visitorCurrentInt)  { fullBoolean = false; }
+        if      (museumObjectFullThresholdInt   <= visitorCurrentInt)  { fullBoolean = true;  }
+        else if (museumObjectFullThresholdInt   >  visitorCurrentInt)  { fullBoolean = false; }
 
         return                      fullBoolean;
         

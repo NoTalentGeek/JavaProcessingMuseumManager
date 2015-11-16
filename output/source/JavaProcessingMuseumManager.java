@@ -19,8 +19,6 @@ import java.util.*;
 import java.util.*; 
 import java.util.*; 
 import controlP5.*; 
-import java.util.*; 
-import controlP5.*; 
 
 import java.util.HashMap; 
 import java.util.ArrayList; 
@@ -36,126 +34,101 @@ public class JavaProcessingMuseumManager extends PApplet {
 
 
 
-boolean                 buttonOpenCloseBoolean          = false ;
-ControlP5               cp5Object                       ;
-ButtonOpenClose         buttonOpenCloseMuseumObject     ;
-ButtonOpenClose         buttonOpenClosePlayerObject     ;
-
-/*Determine global variables.*/
-int                     playerAmountInt                 = 30;                               /*The number of players in this simulation.*/
-//List<Tag>             tagObjectList                   = new ArrayList<Tag>();             /*Array List of tag.*/
-
-List<Tag>               subjectTagObjectList            = new ArrayList<Tag>();
-List<Tag>               verbTagObjectList               = new ArrayList<Tag>();
-List<Tag>               negativeVerbTagObjectList       = new ArrayList<Tag>();
-List<Tag>               nounTagObjectList               = new ArrayList<Tag>();
-List<Tag>               adjectiveTagObjectList          = new ArrayList<Tag>();
-List<Tag>               negativeAdjectiveTagObjectList  = new ArrayList<Tag>();
-List<Tag>               adverbTagObjectList             = new ArrayList<Tag>();
-List<Tag>               negativeAdverbTagObjectList     = new ArrayList<Tag>();
-
-List<ObjectMuseum>      floorObjectList                 = new ArrayList<ObjectMuseum>();    /*Array List of museom object floor.*/
-List<ObjectMuseum>      roomObjectList                  = new ArrayList<ObjectMuseum>();    /*Array List of museum object room*/
-List<ObjectMuseum>      exhibitionObjectList            = new ArrayList<ObjectMuseum>();    /*Array List of museum object exhibition*/
-List<ObjectPlayer>      playerObjectList                = new ArrayList<ObjectPlayer>();    /*Array List of player object.*/
-
-/*The graphical user interface framework, the ControlP5 work by assigning a List of String to its controller.
-Hence these String List below is bascially a convert of the actual object array nameAltString.
-I have not done anything with the player, however the String list will be taken from the index number of the player.
-PENDING: Make another Lists to support the nameFullString and nameAltString.*/
-boolean                 useNameAltBoolean               = false;
-List<String>            museumNameAltStringList         = new ArrayList<String>();
-List<String>            floorNameAltStringList          = new ArrayList<String>();
-List<String>            roomNameAltStringList           = new ArrayList<String>();
-List<String>            exhibitionNameAltStringList     = new ArrayList<String>();
-List<String>            museumNameFullStringList        = new ArrayList<String>();
-List<String>            floorNameFullStringList         = new ArrayList<String>();
-List<String>            roomNameFullStringList          = new ArrayList<String>();
-List<String>            exhibitionNameFullStringList    = new ArrayList<String>();
-
-List<String>            playerStringList                = new ArrayList<String>();
-
-/*PROTOTYPE: For testing.
-PENDING: In the future I want so that when a player visited an exhibition it received three different kind of tags.
-PENDING: And then when player visit different exhibition I want that the tags collected transformed into a neat japanese style poem called haiku.*/
-List<String>            subjectTagNameAltStringList             = new ArrayList<String>();
-List<String>            verbTagNameAltStringList                = new ArrayList<String>();
-List<String>            negativeVerbTagNameAltStringList        = new ArrayList<String>();
-List<String>            nounTagNameAltStringList                = new ArrayList<String>();
-List<String>            adjectiveTagNameAltStringList           = new ArrayList<String>();
-List<String>            negativeAdjectiveTagNameAltStringList   = new ArrayList<String>();
-List<String>            adverbTagNameAltStringList              = new ArrayList<String>();
-List<String>            negativeAdverbTagNameAltStringList      = new ArrayList<String>();
-
-List<String>            subjectTagNameFullStringList            = new ArrayList<String>();
-List<String>            verbTagNameFullStringList               = new ArrayList<String>();
-List<String>            negativeVerbTagNameFullStringList       = new ArrayList<String>();
-List<String>            nounTagNameFullStringList               = new ArrayList<String>();
-List<String>            adjectiveTagNameFullStringList          = new ArrayList<String>();
-List<String>            negativeAdjectiveTagNameFullStringList  = new ArrayList<String>();
-List<String>            adverbTagNameFullStringList             = new ArrayList<String>();
-List<String>            negativeAdverbTagNameFullStringList     = new ArrayList<String>();
-
-List<String>            defaultStringList               ;                                   /*When the object that you want to add has no parent, we need to show empty List of String.*/
-
-/*GUI variables.*/
-AddMuseumGroupGUIObject          addMuseumGroupGUIObject              ;
-AddTagGroupGUIObject             addTagGroupGUIObject                 ;
-AddPlayerGroupGUIObject          addPlayerGroupGUIObject              ;
-RemovePlayerGroupGUIObject       removePlayerGroupGUIObject           ;
-EditPlayerGroupGUIObject    editPlayerGroupGUIObject             ;
-
-/*Variable to display information card when mouse pointer is hovered over either museum or player object.*/
-boolean                 panelCardChangeBoolean          = true;                             /*Whether panel need to be re - created or not.*/
-int                   panelCardColor                  = color(63, 63, 116);               /*Color of the panel card.*/
-int                     xPanelCardInt                   = -1;                               /*X position of the panel card.*/
-int                     yPanelCardInt                   = -1;                               /*Y position of the panel card.*/
-int                     widthPanelCardInt               = 200;                              /*Width position of the panel card.*/
-int                     heightPanelCardInt              = 280;                              /*Height position of the panel card.*/
-int                     panelLineSpacingInt             = 5;                                /*Number of additional pixel within line break.*/
-int                     rowInt                          = 0;                                /*How many maximum row is necessary for each panel (updated every tick).*/
-int                     textSizePanelInt                = 16;                               /*Text size of the panel.*/
-/*PENDING: Instead of using "selected" change the name of these two variables below into "hovered".*/
-ObjectMuseum            selectedMuseumObject            = null;                             /*Which museum object is hovered.*/
-ObjectPlayer            tempSelectedPlayerObject            = null;                             /*Which player object is hovered.*/
-PFont                   panelCardPFont                  ;                                   /*Font setting for panel object.*/
-String                  panelFontString                 = "Monospaced.plain";               /*String name of font we used in this application.*/
-String                  panelString                     = "";                               /*String in the panel object.*/
-
-/*Variable for String fixing.
-In order for the text to be in alignment this application need to have one line of 10 characters.
-These Strings is to make sure every line has always be 10 characters long.*/
-String                  tempVisitorCurrentString        ;
-String                  tempVisitorTotalString          ;
-String                  tempFullString                  ;
-
-/*Simple calculation from the amount of player and exhibition to determine whethe the exhibition is full of people or not.*/
-int                     fullThresholdInt                = 0;
-
-/*General layout variable.*/
-int                     layoutOffsetInt                 = 5;
-int                     layoutOffsetSideInt             = 50;
-int                     layoutTotalRowInt               = 10;
-
-/*This is the time step necessary for fade in and fade out animation.
-The 255f is the floating number of the maximum opacity.
-While the 45f is the tick necessary to finish the rotating animation of
-    button open close.*/
-float                   animationStepFloat              = (255f/45f);
-
-float                   dropdownMObjectAlphaFloat       = 0;
-float                   dropdownPlayerAlphaFloat        = 0;                                /*The opacity number for dropdown player P5 component.*/
-int                     guiOffsetInt                    = 20;                               /*Offset for layouting the graphical user interface.*/
-
-
-
-int buttonSizeInt                   = 0;  /*Button size temporary variable.*/
-
-
-int biggestPlayerIndexInt = 0;
-
-
-
+/*Database of all important objects in this applications.*/
+List<Tag>                   subjectTagObjectList                    = new ArrayList<Tag>            ();
+List<Tag>                   verbTagObjectList                       = new ArrayList<Tag>            ();
+List<Tag>                   negativeVerbTagObjectList               = new ArrayList<Tag>            ();
+List<Tag>                   nounTagObjectList                       = new ArrayList<Tag>            ();
+List<Tag>                   adjectiveTagObjectList                  = new ArrayList<Tag>            ();
+List<Tag>                   negativeAdjectiveTagObjectList          = new ArrayList<Tag>            ();
+List<Tag>                   adverbTagObjectList                     = new ArrayList<Tag>            ();
+List<Tag>                   negativeAdverbTagObjectList             = new ArrayList<Tag>            ();
+List<String>                subjectTagNameAltStringList             = new ArrayList<String>         ();
+List<String>                verbTagNameAltStringList                = new ArrayList<String>         ();
+List<String>                negativeVerbTagNameAltStringList        = new ArrayList<String>         ();
+List<String>                nounTagNameAltStringList                = new ArrayList<String>         ();
+List<String>                adjectiveTagNameAltStringList           = new ArrayList<String>         ();
+List<String>                negativeAdjectiveTagNameAltStringList   = new ArrayList<String>         ();
+List<String>                adverbTagNameAltStringList              = new ArrayList<String>         ();
+List<String>                negativeAdverbTagNameAltStringList      = new ArrayList<String>         ();
+List<String>                subjectTagNameFullStringList            = new ArrayList<String>         ();
+List<String>                verbTagNameFullStringList               = new ArrayList<String>         ();
+List<String>                negativeVerbTagNameFullStringList       = new ArrayList<String>         ();
+List<String>                nounTagNameFullStringList               = new ArrayList<String>         ();
+List<String>                adjectiveTagNameFullStringList          = new ArrayList<String>         ();
+List<String>                negativeAdjectiveTagNameFullStringList  = new ArrayList<String>         ();
+List<String>                adverbTagNameFullStringList             = new ArrayList<String>         ();
+List<String>                negativeAdverbTagNameFullStringList     = new ArrayList<String>         ();
+List<ObjectMuseum>          floorObjectList                         = new ArrayList<ObjectMuseum>   ();
+List<ObjectMuseum>          roomObjectList                          = new ArrayList<ObjectMuseum>   ();
+List<ObjectMuseum>          exhibitionObjectList                    = new ArrayList<ObjectMuseum>   ();
+List<ObjectPlayer>          playerObjectList                        = new ArrayList<ObjectPlayer>   ();
+List<String>                museumNameAltStringList                 = new ArrayList<String>         ();
+List<String>                floorNameAltStringList                  = new ArrayList<String>         ();
+List<String>                roomNameAltStringList                   = new ArrayList<String>         ();
+List<String>                exhibitionNameAltStringList             = new ArrayList<String>         ();
+List<String>                floorNameFullStringList                 = new ArrayList<String>         ();
+List<String>                roomNameFullStringList                  = new ArrayList<String>         ();
+List<String>                exhibitionNameFullStringList            = new ArrayList<String>         ();
+List<String>                playerStringList                        = new ArrayList<String>         ();
+List<String>                museumNameFullStringList                = new ArrayList<String>         ();
+List<String>                defaultStringList                       ;
+/*Panel card variables.*/
+boolean                     panelCardChangeBoolean                  = true                          ;
+int                       panelCardColor                          = color(63, 63, 116)            ;
+int                         panelLineSpacingInt                     = 5                             ;
+int                         rowInt                                  = 0                             ;
+int                         textSizePanelInt                        = 16                            ;
+int                         xPanelCardInt                           = -1                            ;
+int                         yPanelCardInt                           = -1                            ;
+int                         heightPanelCardInt                      = 280                           ;
+int                         widthPanelCardInt                       = 200                           ;
+ObjectMuseum                tempSelectedMuseumObject                = null                          ;
+ObjectPlayer                tempSelectedPlayerObject                = null                          ;
+PFont                       panelCardPFont                          ;
+String                      panelFontString                         = "Monospaced.plain"            ;
+String                      panelString                             = ""                            ;   
+String                      tempFullString                          ;
+String                      tempVisitorCurrentString                ;
+String                      tempVisitorTotalString                  ;
+/*Animation and universal GUI variables.*/
+float                       animationStepFloat                      = (255f/45f)                    ;   /*Animation time step.*/
+float                       dropdownMObjectAlphaFloat               = 0                             ;
+float                       dropdownPlayerAlphaFloat                = 0                             ;
+int                         guiLayoutOffsetInt                      = 20                            ;
+int                         panelLayoutOffsetInt                    = 5                             ;
+int                         panelLayoutOffsetSideInt                = 50                            ;
+int                         panelLayoutTotalRowInt                  ;
+/*Controller variables.*/
+int                         buttonSizeInt                           ;
+int                         menuWidthInt                            ;
+int                         menuHeightInt                           ;
+int                         leftMenuXInt                            ;
+int                         rightMenuXInt                           ;
+int                         menuYInt                                ;
+int                         addTagGroupHeightInt                    = 244;
+int                         addMuseumGroupHeightInt                 = 442;
+int                         editPlayerGroupHeightInt                = 427;
+int                         removePlayerGroupHeightInt              = 104;
+int                         addPlayerGroupHeightInt                 = 144;
+ControlP5                   cp5Object                               ;
+Accordion                   leftMenuAccordionObject                 ;
+Accordion                   rightMenuAccordionObject                ;
+ScrollableList              selectMuseumObjectScrollableListObject  ;
+ScrollableList              selectPlayerScrollableListObject        ;
+ButtonOpenClose             buttonOpenCloseMuseumObject             ;
+ButtonOpenClose             buttonOpenClosePlayerObject             ;
+AddMuseumGroupGUIObject     addMuseumGroupGUIObject                 ;
+AddTagGroupGUIObject        addTagGroupGUIObject                    ;
+AddPlayerGroupGUIObject     addPlayerGroupGUIObject                 ;
+RemovePlayerGroupGUIObject  removePlayerGroupGUIObject              ;
+EditPlayerGroupGUIObject    editPlayerGroupGUIObject                ;
+/*Misc variables.*/
+boolean                     buttonOpenCloseBoolean                  = false                         ;
+int                         biggestPlayerIndexInt                   = 0                             ;
+int                         nextBiggestPlayerIndexInt               = 0                             ;
+int                         museumObjectFullThresholdInt            = 0                             ;
+int                         playerAmountInt                         = 30                            ;
 
 /*Name class to manage an object name.*/
 class Name                                      {
@@ -255,50 +228,8 @@ class Tag                                       {
 
 public void setup()                                    {
 
-    /*Setting up application.*/
     size                                (1024, 576, P2D);
     noStroke                            ();
-
-    /*
-    <<Create the tag list.>>
-    tagObjectList           = Arrays.asList(
-
-        <<
-        new Tag(new Name("TAG_AGR", "Agreeable"     )),
-        new Tag(new Name("TAG_BRA", "Brave"         )),
-        new Tag(new Name("TAG_CAL", "Calm"          )),
-        new Tag(new Name("TAG_DEL", "Delightful"    )),
-        new Tag(new Name("TAG_EAG", "Eager"         )),
-        new Tag(new Name("TAG_FAI", "Faithful"      )),
-        new Tag(new Name("TAG_GEN", "Gentle"        )),
-        new Tag(new Name("TAG_HAP", "Happy"         )),
-        new Tag(new Name("TAG_JOL", "Jolly"         )),
-        new Tag(new Name("TAG_KIN", "Kind"          )),
-        new Tag(new Name("TAG_LIV", "Lively"        )),
-        new Tag(new Name("TAG_NIC", "Nice"          )),
-        new Tag(new Name("TAG_OBE", "Obedient"      )),
-        new Tag(new Name("TAG_PRO", "Proud"         )),
-        new Tag(new Name("TAG_REL", "Relieved"      )),
-        new Tag(new Name("TAG_SIL", "Silly"         )),
-        new Tag(new Name("TAG_THA", "Thankful"      )),
-        new Tag(new Name("TAG_VIC", "Victorious"    )),
-        new Tag(new Name("TAG_WIT", "Witty"         )),
-        new Tag(new Name("TAG_ZEA", "Zealous"       ))
-        >>
-
-        new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
-        new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington"),
-        new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
-        new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running"),
-        new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
-        new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns"),
-        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good", true),
-        new Tag(new Name("ADJ_BAD", "Adjective Bad"         ), "ADJ", "bad", false),
-        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly", true),
-        new Tag(new Name("ADV_SLO", "Adverb Slowly"         ), "ADV", "slowly", false)
-    
-    );
-    */
 
     subjectTagObjectList            = Arrays.asList(
 
@@ -356,13 +287,13 @@ public void setup()                                    {
 
     );
 
-    /*Set up the museum objects.*/
     floorObjectList         = Arrays.asList(
 
         new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
         new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
 
     );
+
     roomObjectList          = Arrays.asList(
 
         new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
@@ -392,6 +323,19 @@ public void setup()                                    {
 
     );
 
+    /*Initiate all players.*/
+    for(int i = 0; i < playerAmountInt; i ++)                   {
+
+        ObjectPlayer objectPlayer = new ObjectPlayer(
+
+            (i + 1),
+            "Dummy",
+            exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString  /*Generate random starting exhibition for the player.*/
+
+        );
+
+    }
+
     /*Copy the List to itself so it changed from static List into dynamic List.*/
     subjectTagObjectList    = new ArrayList<Tag>            (subjectTagObjectList   );
     verbTagObjectList       = new ArrayList<Tag>            (verbTagObjectList      );
@@ -403,202 +347,57 @@ public void setup()                                    {
     exhibitionObjectList    = new ArrayList<ObjectMuseum>   (exhibitionObjectList   );
 
     /*Initiate object parents and children for all object museum.*/
-    for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList.get(i).SetChildObjectList  (roomObjectList); }
-    for(int i = 0; i < roomObjectList.size()            ; i ++) {
-
-        roomObjectList      .get(i).SetInitialParentObject  (floorObjectList);
-        roomObjectList      .get(i).SetChildObjectList      (exhibitionObjectList);
-
-    }
-    for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList.get(i)   .SetInitialParentObject(roomObjectList); }
-
+    for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList       .get(i).SetChildObjectList      (roomObjectList ); }
+    for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList        .get(i).SetInitialParentObject  (floorObjectList); roomObjectList.get(i).SetChildObjectList(exhibitionObjectList); }
+    for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList  .get(i).SetInitialParentObject  (roomObjectList ); }
     /*Determine index for all museum object.*/
     for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList.get(i)        .SetIndexInsideVoid(); }
     for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList.get(i)         .SetIndexInsideVoid(); }
     for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList.get(i)   .SetIndexInsideVoid(); }
-
-    /*Initiate all players.*/
-    for(int i = 0; i < playerAmountInt; i ++)                   {
-
-        ObjectPlayer objectPlayer = new ObjectPlayer(
-
-            (i + 1),
-            "Mikael",
-            exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString      /*Generate random starting exhibition for the player.*/
-
-        );
-
-    }
-
     /*Populate String list.*/
-    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(subjectTagObjectList   .get(i).nameAltString); subjectTagNameFullStringList            .add(subjectTagObjectList   .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(verbTagObjectList      .get(i).nameAltString); verbTagNameFullStringList               .add(verbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(verbTagObjectList      .get(i).nameAltString); negativeVerbTagNameFullStringList       .add(verbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(nounTagObjectList      .get(i).nameAltString); nounTagNameFullStringList               .add(nounTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(adjectiveTagObjectList .get(i).nameAltString); adjectiveTagNameFullStringList          .add(adjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(adjectiveTagObjectList .get(i).nameAltString); negativeAdjectiveTagNameFullStringList  .add(adjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(adverbTagObjectList    .get(i).nameAltString); adverbTagNameFullStringList             .add(adverbTagObjectList    .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(adverbTagObjectList    .get(i).nameAltString); negativeAdverbTagNameFullStringList     .add(adverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < floorObjectList          .size(); i ++){ floorNameAltStringList                  .add(     floorObjectList           .get(i).nameAltString ); floorNameFullStringList                .add(floorObjectList        .get(i).nameFullString); }
+    for(int i = 0; i < roomObjectList           .size(); i ++){ roomNameAltStringList                   .add(     roomObjectList            .get(i).nameAltString ); roomNameFullStringList                 .add(roomObjectList         .get(i).nameFullString); }
+    for(int i = 0; i < exhibitionObjectList     .size(); i ++){ exhibitionNameAltStringList             .add(     exhibitionObjectList      .get(i).nameAltString ); exhibitionNameFullStringList           .add(exhibitionObjectList   .get(i).nameFullString); }
+    for(int i = 0; i < playerObjectList         .size(); i ++){ playerStringList                        .add("" + playerObjectList          .get(i).playerIndexInt); }
+    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(     subjectTagObjectList      .get(i).nameAltString ); subjectTagNameFullStringList           .add(subjectTagObjectList   .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(     verbTagObjectList         .get(i).nameAltString ); verbTagNameFullStringList              .add(verbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(     verbTagObjectList         .get(i).nameAltString ); negativeVerbTagNameFullStringList      .add(verbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(     nounTagObjectList         .get(i).nameAltString ); nounTagNameFullStringList              .add(nounTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(     adjectiveTagObjectList    .get(i).nameAltString ); adjectiveTagNameFullStringList         .add(adjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(     adjectiveTagObjectList    .get(i).nameAltString ); negativeAdjectiveTagNameFullStringList .add(adjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(     adverbTagObjectList       .get(i).nameAltString ); adverbTagNameFullStringList            .add(adverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(     adverbTagObjectList       .get(i).nameAltString ); negativeAdverbTagNameFullStringList    .add(adverbTagObjectList    .get(i).nameFullString); }
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
-    defaultStringList       = Arrays.asList();
-    for(int i = 0; i < floorObjectList.size()       ; i ++){ floorNameAltStringList         .add(     floorObjectList       .get(i).nameAltString ); floorNameFullStringList        .add(floorObjectList       .get(i).nameFullString); }
-    for(int i = 0; i < roomObjectList.size()        ; i ++){ roomNameAltStringList          .add(     roomObjectList        .get(i).nameAltString ); roomNameFullStringList         .add(roomObjectList        .get(i).nameFullString); }
-    for(int i = 0; i < exhibitionObjectList.size()  ; i ++){ exhibitionNameAltStringList    .add(     exhibitionObjectList  .get(i).nameAltString ); exhibitionNameFullStringList   .add(exhibitionObjectList  .get(i).nameFullString); }
-    for(int i = 0; i < playerObjectList.size()      ; i ++){ playerStringList               .add("" + playerObjectList      .get(i).playerIndexInt); }
+    defaultStringList   = Arrays.asList();
 
-    cp5Object                           = new ControlP5(this);
-
-    buttonSizeInt                   = (width > height) ? ((width*15)/512) : ((height*15)/512);  /*Button size temporary variable.*/
-    buttonOpenCloseMuseumObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
-    buttonOpenClosePlayerObject         = new ButtonOpenClose(buttonSizeInt);                       /*Initiates button open close with size depends on the screen size.*/
-
-    int dropdownObjectWidthInt          = (width/3);
-    int dropdownObjectHeightInt         = (height - (guiOffsetInt*2) - ((buttonSizeInt/2)*2));
-    int itemHeightInt                   = (dropdownObjectHeightInt/20);
-
-
-    /*Create museum object dropdown menu.*/
-    cp5Object
-        .addScrollableList              ("ExhibitionSList")
-        .setPosition                    (
-
-            (width -  guiOffsetInt      - (buttonSizeInt/2) - dropdownObjectWidthInt                ),
-            (         guiOffsetInt      + (buttonSizeInt/2)                                         )
-
-        )
-        .setSize                        (dropdownObjectWidthInt, dropdownObjectHeightInt)
-        .setBarHeight                   (itemHeightInt)
-        .setItemHeight                  (itemHeightInt)
-        .setType                        (ControlP5.LIST)
-        .setLabel                       ("Exhibition:")
-        .hide                           ();
-
-    /*Create player dropdown menu.*/
-    cp5Object
-        .addScrollableList              ("VisitorSList")
-        .setPosition                    (
-
-            (guiOffsetInt + (buttonSizeInt/2)),
-            (guiOffsetInt + (buttonSizeInt/2))
-
-        )
-        .setSize                        (dropdownObjectWidthInt, (dropdownObjectHeightInt - 21))
-        .setBarHeight                   (itemHeightInt)
-        .setItemHeight                  (itemHeightInt)
-        .setType                        (ControlP5.LIST)
-        .setLabel                       ("Visitor:")
-        .hide                           ();
-
-    addTagGroupGUIObject                     = new AddTagGroupGUIObject(
-
-        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
-        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
-        dropdownObjectWidthInt                                              ,
-        244                                                                 ,
-        cp5Object.get(ScrollableList.class, "ExhibitionSList")              ,
-        this
-
-    );
-
-    /*Add the museum object GUI.*/
-    addMuseumGroupGUIObject                  = new AddMuseumGroupGUIObject(
-
-        (width - guiOffsetInt - (buttonSizeInt/2) - dropdownObjectWidthInt) ,
-        (        guiOffsetInt + (buttonSizeInt/2)                         ) ,
-        dropdownObjectWidthInt                                              ,
-        442                                                                 ,
-        addTagGroupGUIObject.addTagGroupObject ,
-        this
-
-    );
-
-
-
-    /*Add the edit player GUI.*/
-    editPlayerGroupGUIObject            = new EditPlayerGroupGUIObject(
-
-        (guiOffsetInt + (buttonSizeInt/2))                  ,
-        (guiOffsetInt + (buttonSizeInt/2))                  ,
-        dropdownObjectWidthInt                              ,
-        427                                                 ,
-        cp5Object.get(ScrollableList.class, "VisitorSList") ,
-        this
-
-    );
-    /*Add the remove player GUI.*/
-    removePlayerGroupGUIObject                  = new RemovePlayerGroupGUIObject(
-
-        (guiOffsetInt + (buttonSizeInt/2))          ,
-        (guiOffsetInt + (buttonSizeInt/2))          ,
-        dropdownObjectWidthInt                      ,
-        104                                         ,
-        editPlayerGroupGUIObject.editPlayerGroupObject ,
-        this
-
-
-    );
-
-    /*Add the add player GUI.*/
-    addPlayerGroupGUIObject                  = new AddPlayerGroupGUIObject(
-
-        (guiOffsetInt + (buttonSizeInt/2))                                          ,
-        (guiOffsetInt + (buttonSizeInt/2))                                          ,
-        dropdownObjectWidthInt                                                      ,
-        144                                                                         ,
-        removePlayerGroupGUIObject.removePlayerGroupObject ,
-        this
-
-
-    );
-
-
-    museumNameAltStringList             = new ArrayList<String>(floorNameAltStringList);                                                                       /*Set the initial item for this scrollable list.*/
-    museumNameFullStringList            = new ArrayList<String>(floorNameFullStringList);
-    if      (useNameAltBoolean == true ){ cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumNameAltStringList ); }  /*Set the initial display using alternative name.*/
-    else if (useNameAltBoolean == false){ cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumNameFullStringList); }  /*Set the initial display using full name.*/
-    
-
-    /*Set the items for the scrollabnle list of the visitors.
-    PENDING - DONE: The next thing I need to do is to make the a panel of which gather the informations of the player.
-    PENDING - DONE: For the current working milestone I think I will take these informations to the display group panel.
-    PENDING - DONE: List of informations.
-        1. Player Index.
-        2. Player Current Exhibition.
-        3. Player Three Target Exhibitions.
-        3. Player Three Most Visited Tags.
-        4. Player Movement Modes.
-        5. If Software Manual Control is toggled on there is another scrollable list to pick which exhibition to visit next.
-    PENDING - DONE: The player movement mode is a radio list of how can certain player be controlled.
-    PENDING - DONE: At this moment I can think of three ways to control player/visitor in this application.
-    PENDING - DONE: Player movement mode.
-        1. AI Mode, player move within the museum simulator with AIAutoVoid() method.
-        2. Software Manual Control, player move within the museum simulator with dictation from a human using the museum manager application.
-        3. Hardware Manual Control, player is move in synchronize with movement from Arduino device.
-    PENDING - DONE: Create prototype of player panel.
-    PENDING - DONE: Before working on the player edit panel please turn off the card display first.*/
-    cp5Object                           .get(ScrollableList.class, "VisitorSList")
-                                        .setItems(playerStringList);
+    SetupGUIVoid        ();
 
 }
 
 public void draw()                                     {
 
     /*Set the background color for this application.*/
-    background              (34, 32, 52);
-
+    background                      (34, 32, 52);
     /*Always update the full threshold and layout total row int.*/
-    fullThresholdInt        = 2 + (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
-    layoutTotalRowInt       = (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
+    museumObjectFullThresholdInt    = 2 + (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
+    panelLayoutTotalRowInt          = (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
+
+    /*Update function for all museum objects and player objects.
+    Also within these four for loops we need to get which object is hovered.*/
+    for(int i = 0; i < floorObjectList      .size(); i ++){ floorObjectList         .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, floorObjectList       ); }
+    for(int i = 0; i < roomObjectList       .size(); i ++){ roomObjectList          .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, roomObjectList        ); }
+    for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, exhibitionObjectList  ); }
+    for(int i = 0; i < playerObjectList     .size(); i ++){ playerObjectList        .get(i).DrawVoid(); CheckPlayerObjectHoverVoid(i                        ); }
 
     /*This one is to check wether we need to replace the current showed card with a new one.*/
-    if      (selectedMuseumObject != null){
+    if      (tempSelectedMuseumObject != null){
 
         if(
 
-            (mouseX > xPanelCardInt + (selectedMuseumObject.panelObject.widthPanelInt /2)) ||
-            (mouseX < xPanelCardInt - (selectedMuseumObject.panelObject.widthPanelInt /2)) ||
-            (mouseY > yPanelCardInt + (selectedMuseumObject.panelObject.heightPanelInt/2)) ||
-            (mouseY < yPanelCardInt - (selectedMuseumObject.panelObject.heightPanelInt/2))
+            (mouseX > xPanelCardInt + (tempSelectedMuseumObject.panelObject.widthPanelInt /2)) ||
+            (mouseX < xPanelCardInt - (tempSelectedMuseumObject.panelObject.widthPanelInt /2)) ||
+            (mouseY > yPanelCardInt + (tempSelectedMuseumObject.panelObject.heightPanelInt/2)) ||
+            (mouseY < yPanelCardInt - (tempSelectedMuseumObject.panelObject.heightPanelInt/2))
 
         ){ panelCardChangeBoolean = true; }
 
@@ -615,56 +414,27 @@ public void draw()                                     {
         ){ panelCardChangeBoolean = true; }
 
     }
-
-    /*IN case we need a new card then we reset all card properties.*/
+    /*In case we need a new card then we reset all card properties.*/
     if(panelCardChangeBoolean   == true){
 
-        xPanelCardInt           = -1;
-        yPanelCardInt           = -1;
-        rowInt                  = 0;
-        selectedMuseumObject    = null;
-        tempSelectedPlayerObject    = null;
+        xPanelCardInt               = -1    ;
+        yPanelCardInt               = -1    ;
+        rowInt                      = 0     ;
+        tempSelectedMuseumObject    = null  ;
+        tempSelectedPlayerObject    = null  ;
 
     }
-
-    /*Update function for all museum objects and player objects.
-    Also within these four for loops we need to get which object is hovered.*/
-    for(int i = 0; i < floorObjectList      .size(); i ++){ floorObjectList         .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, floorObjectList       ); }
-    for(int i = 0; i < roomObjectList       .size(); i ++){ roomObjectList          .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, roomObjectList        ); }
-    for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, exhibitionObjectList  ); }
-    for(int i = 0; i < playerObjectList     .size(); i ++){ playerObjectList        .get(i).DrawVoid(); CheckPlayerObjectHoverVoid(i                        ); }
-
-    /*
-    playerObjectList        .get(playerLoopCounterInt).AIAutoVoid();
-    playerLoopCounterInt    = (playerLoopCounterInt >= (playerObjectList.size() - 1)) ? 0 : (playerLoopCounterInt + 1);
-    */
-
-    /*Update the value for animation of both button open close.*/
-    dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat   , (width - guiOffsetInt)   , guiOffsetInt     , buttonOpenCloseMuseumObject   , "ExhibitionSList" );
-    dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat    , guiOffsetInt             , guiOffsetInt     , buttonOpenClosePlayerObject   , "VisitorSList"    );
-
-
-    /*Update the add museum object GUI.*/
-    addMuseumGroupGUIObject                      .DrawVoid(dropdownMObjectAlphaFloat);
-    addTagGroupGUIObject                         .DrawVoid(dropdownMObjectAlphaFloat);
-    /*Update the add player object GUI.*/
-    addPlayerGroupGUIObject                      .DrawVoid(dropdownPlayerAlphaFloat);
-    /*Update the remove player object GUI.*/
-    removePlayerGroupGUIObject                   .DrawVoid(dropdownPlayerAlphaFloat);
-    /*Update the edit player object GUI.*/
-    editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat);
-    
-    /*Update buttonOpenCloseBoolean.*/
-    SetButtonOpenCloseBoolean               ();    
     /*Create the card.*/
     if(buttonOpenCloseBoolean == false)     { CreatePanelCardVoid(); }
 
+    SetButtonOpenCloseBoolean   (); /*Update buttonOpenCloseBoolean.*/
 
+    /*Set the biggest player index so everytime new player added it will be the highest index.*/
+    biggestPlayerIndexInt       = GetBiggestPlayerIndexInt();
+    nextBiggestPlayerIndexInt   = biggestPlayerIndexInt + 1; 
+    addPlayerGroupGUIObject     .addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
 
-    /*PENDING: Create a function to return next biggest player index int.*/
-    biggestPlayerIndexInt = GetBiggestPlayerIndexInt();
-    int nextBiggestPlayerIndexInt = biggestPlayerIndexInt + 1; 
-    addPlayerGroupGUIObject.addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
+    DrawGUIVoid                 ();
 
 }
 
@@ -741,7 +511,7 @@ public void CheckMuseumObjectHoverVoid(
 
         xPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.xPanelInt + (_targetObjectList.get(_indexInt).panelObject.widthPanelInt /2 );
         yPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.yPanelInt + (_targetObjectList.get(_indexInt).panelObject.heightPanelInt/2);
-        selectedMuseumObject    = _targetObjectList.get(_indexInt);
+        tempSelectedMuseumObject    = _targetObjectList.get(_indexInt);
 
         panelCardChangeBoolean  = false;
 
@@ -768,41 +538,25 @@ public void CheckPlayerObjectHoverVoid(int _indexInt)  {
 /*A function to control color for each possible type of museum object buttons.*/
 public void ColorControlVoid(
 
-    String  _captionString          ,
-    CColor  _floorCColorObject      ,
-    CColor  _roomCColorObject       ,
-    CColor  _exhibitionCColorObject
+    CColor          _floorCColorObject      ,
+    CColor          _roomCColorObject       ,
+    CColor          _exhibitionCColorObject ,
+    ScrollableList  _scrollableList
 
 ){
 
-    if(_captionString.equals("ExhibitionSList") && (useNameAltBoolean == true)){
+    if(_scrollableList.getName().toString().equals("SelectMuseumObjectScrollableListObject")){
 
         for(int i = 0; i < museumNameAltStringList.size(); i ++){
 
-            String  itemScrollableString        = cp5Object.get(ScrollableList.class, _captionString).getItem(i).get("text").toString();
+            String  itemScrollableString        = _scrollableList.getItem(i).get("text").toString();
             String  tempTypeString              = "";
             if      (FindObjectMuseumIndexInt   (itemScrollableString, floorObjectList)        != -1){ tempTypeString = "FLR";    }
             else if (FindObjectMuseumIndexInt   (itemScrollableString, roomObjectList)         != -1){ tempTypeString = "ROM";    }
             else if (FindObjectMuseumIndexInt   (itemScrollableString, exhibitionObjectList)   != -1){ tempTypeString = "EXH";    }
-            if      (tempTypeString             .equals("FLR")){ cp5Object.get(ScrollableList.class, _captionString).getItem(i).put("color", _floorCColorObject);        }
-            else if (tempTypeString             .equals("ROM")){ cp5Object.get(ScrollableList.class, _captionString).getItem(i).put("color", _roomCColorObject);         }
-            else if (tempTypeString             .equals("EXH")){ cp5Object.get(ScrollableList.class, _captionString).getItem(i).put("color", _exhibitionCColorObject);   }
-
-        }
-
-    }
-    else if(_captionString.equals("ExhibitionSList") && (useNameAltBoolean == false)){
-
-        for(int i = 0; i < museumNameFullStringList.size(); i ++){
-
-            String  itemScrollableString        = cp5Object.get(ScrollableList.class, _captionString).getItem(i).get("text").toString();
-            String  tempTypeString              = "";
-            if      (FindObjectMuseumIndexInt   (itemScrollableString, floorObjectList)        != -1){ tempTypeString = "FLR";    }
-            else if (FindObjectMuseumIndexInt   (itemScrollableString, roomObjectList)         != -1){ tempTypeString = "ROM";    }
-            else if (FindObjectMuseumIndexInt   (itemScrollableString, exhibitionObjectList)   != -1){ tempTypeString = "EXH";    }
-            if      (tempTypeString             .equals("FLR")){ cp5Object.get(ScrollableList.class, _captionString).getItem(i).put("color", _floorCColorObject);        }
-            else if (tempTypeString             .equals("ROM")){ cp5Object.get(ScrollableList.class, _captionString).getItem(i).put("color", _roomCColorObject);         }
-            else if (tempTypeString             .equals("EXH")){ cp5Object.get(ScrollableList.class, _captionString).getItem(i).put("color", _exhibitionCColorObject);   }
+            if      (tempTypeString             .equals("FLR")){ _scrollableList.getItem(i).put("color", _floorCColorObject);        }
+            else if (tempTypeString             .equals("ROM")){ _scrollableList.getItem(i).put("color", _roomCColorObject);         }
+            else if (tempTypeString             .equals("EXH")){ _scrollableList.getItem(i).put("color", _exhibitionCColorObject);   }
 
         }
 
@@ -811,7 +565,7 @@ public void ColorControlVoid(
 }
 
 /*A function to create panel card.*/
-public void CreatePanelCardVoid()                      {
+public void CreatePanelCardVoid(){
 
     if(panelCardChangeBoolean == false){
 
@@ -832,7 +586,7 @@ public void CreatePanelCardVoid()                      {
         textFont            (panelCardPFont);
 
         /*String display for the player object.*/
-        if          (selectedMuseumObject == null){
+        if          (tempSelectedMuseumObject == null){
 
             rowInt      = 9;
 
@@ -842,15 +596,15 @@ public void CreatePanelCardVoid()                      {
 
             panelString  =
 
-                "FLR_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
-                "ROM_CUR = " + roomCurrentObject.nameAltString                                                  + "\n" +
-                "EXH_CUR = " + exhibitionCurrentObject.nameAltString                                            + "\n" +
-                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(0)                   + "\n" +
-                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(1)                   + "\n" +
-                "EXH_TAR = " + tempSelectedPlayerObject.exhibitionTargetNameAltStringList .get(2)                   + "\n" +
-                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(0).GetTagNameAltString()    + "\n" +
-                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(1).GetTagNameAltString()    + "\n" +
-                "EXH_TAG = " + tempSelectedPlayerObject.exhibitionTagCounterList   .get(2).GetTagNameAltString()
+                "FLR_CUR = " + exhibitionCurrentObject  .nameAltString                                                  + "\n" +
+                "ROM_CUR = " + roomCurrentObject        .nameAltString                                                  + "\n" +
+                "EXH_CUR = " + exhibitionCurrentObject  .nameAltString                                                  + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(0)                      + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(1)                      + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(2)                      + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(0).GetTagNameAltString()       + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(1).GetTagNameAltString()       + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(2).GetTagNameAltString()
 
             ;
 
@@ -860,22 +614,22 @@ public void CreatePanelCardVoid()                      {
 
             rowInt      = 4;
 
-            if      (selectedMuseumObject.visitorCurrentInt < 10   ){ tempVisitorCurrentString = "______"   + selectedMuseumObject.visitorCurrentInt; }
-            else if (selectedMuseumObject.visitorCurrentInt < 100  ){ tempVisitorCurrentString = "_____"    + selectedMuseumObject.visitorCurrentInt; }
-            else if (selectedMuseumObject.visitorCurrentInt < 1000 ){ tempVisitorCurrentString = "____"     + selectedMuseumObject.visitorCurrentInt; }
-            else if (selectedMuseumObject.visitorCurrentInt < 10000){ tempVisitorCurrentString = "___"      + selectedMuseumObject.visitorCurrentInt; }
+            if      (tempSelectedMuseumObject.visitorCurrentInt < 10   ){ tempVisitorCurrentString = "______"   + tempSelectedMuseumObject.visitorCurrentInt; }
+            else if (tempSelectedMuseumObject.visitorCurrentInt < 100  ){ tempVisitorCurrentString = "_____"    + tempSelectedMuseumObject.visitorCurrentInt; }
+            else if (tempSelectedMuseumObject.visitorCurrentInt < 1000 ){ tempVisitorCurrentString = "____"     + tempSelectedMuseumObject.visitorCurrentInt; }
+            else if (tempSelectedMuseumObject.visitorCurrentInt < 10000){ tempVisitorCurrentString = "___"      + tempSelectedMuseumObject.visitorCurrentInt; }
 
-            if      (selectedMuseumObject.visitorTotalInt   < 10   ){ tempVisitorTotalString = "______"     + selectedMuseumObject.visitorTotalInt; }
-            else if (selectedMuseumObject.visitorTotalInt   < 100  ){ tempVisitorTotalString = "_____"      + selectedMuseumObject.visitorTotalInt; }
-            else if (selectedMuseumObject.visitorTotalInt   < 1000 ){ tempVisitorTotalString = "____"       + selectedMuseumObject.visitorTotalInt; }
-            else if (selectedMuseumObject.visitorTotalInt   < 10000){ tempVisitorTotalString = "___"        + selectedMuseumObject.visitorTotalInt; }
+            if      (tempSelectedMuseumObject.visitorTotalInt   < 10   ){ tempVisitorTotalString = "______"     + tempSelectedMuseumObject.visitorTotalInt; }
+            else if (tempSelectedMuseumObject.visitorTotalInt   < 100  ){ tempVisitorTotalString = "_____"      + tempSelectedMuseumObject.visitorTotalInt; }
+            else if (tempSelectedMuseumObject.visitorTotalInt   < 1000 ){ tempVisitorTotalString = "____"       + tempSelectedMuseumObject.visitorTotalInt; }
+            else if (tempSelectedMuseumObject.visitorTotalInt   < 10000){ tempVisitorTotalString = "___"        + tempSelectedMuseumObject.visitorTotalInt; }
 
-            if      (selectedMuseumObject.fullBoolean == true ){ tempFullString = "____TRU"; }
-            else if (selectedMuseumObject.fullBoolean == false){ tempFullString = "____FAL"; }
+            if      (tempSelectedMuseumObject.fullBoolean == true ){ tempFullString = "____TRU"; }
+            else if (tempSelectedMuseumObject.fullBoolean == false){ tempFullString = "____FAL"; }
 
             panelString = 
 
-                "NAM_ALT = " + selectedMuseumObject.nameAltString   + "\n" + 
+                "NAM_ALT = " + tempSelectedMuseumObject.nameAltString   + "\n" + 
                 "VIS_CUR = " + tempVisitorCurrentString             + "\n" + 
                 "VIS_TOT = " + tempVisitorTotalString               + "\n" + 
                 "_IS_FUL = " + tempFullString
@@ -893,7 +647,7 @@ public void CreatePanelCardVoid()                      {
 }
 
 /*A function to set if there is at least one button in open state.*/
-public boolean SetButtonOpenCloseBoolean()             {
+public boolean SetButtonOpenCloseBoolean(){
 
     if(buttonOpenCloseMuseumObject.isButtonOpenBoolean == true || buttonOpenClosePlayerObject.isButtonOpenBoolean == true)  { buttonOpenCloseBoolean = true ; }
     else                                                                                                                    { buttonOpenCloseBoolean = false; }
@@ -903,14 +657,14 @@ public boolean SetButtonOpenCloseBoolean()             {
 
 public float ButtonOpenCloseAnimatingFloat(
 
-    boolean _buttonOpenCloseBoolean ,
-    boolean _isAnimatingBoolean     ,
-    String  _captionString          ,
-    CColor  _defaultCColorObject    ,
-    CColor  _floorCColorObject      ,
-    CColor  _roomCColorObject       ,
-    CColor  _exhibitionCColorObject ,
-    float   _alphaFloat
+    boolean         _buttonOpenCloseBoolean ,
+    boolean         _isAnimatingBoolean     ,
+    float           _alphaFloat             ,
+    CColor          _defaultCColorObject    ,
+    CColor          _floorCColorObject      ,
+    CColor          _roomCColorObject       ,
+    CColor          _exhibitionCColorObject ,
+    ScrollableList  _scrollableList
 
 ){
 
@@ -920,61 +674,51 @@ public float ButtonOpenCloseAnimatingFloat(
     So when the buttonOpenCloseObject.isButtonOpenBoolean is true the button is actually closed.
     And when the buttonOpenCloseObject.isButtonOpenBoolean is false the button is actually open.*/
     /*When the button is animating (fade in - fade out).*/
-    if                          (_isAnimatingBoolean == true ){
+    if(_isAnimatingBoolean == true ){
 
         /*For closing animation.*/
-        if                      (_buttonOpenCloseBoolean == true ){
+        if(_buttonOpenCloseBoolean == true ){
             
             /*Set the color according to the caption title.*/
-            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
+            ColorControlVoid(_floorCColorObject, _roomCColorObject, _exhibitionCColorObject, _scrollableList);
             /*Show the scrollable list.*/
-            cp5Object        
-                .get            (ScrollableList.class, _captionString)
-                .setColor       (_defaultCColorObject)
-                .show           ();
+            _scrollableList.setColor(_defaultCColorObject).show();
             /*Decrease the opacity value over time.*/
             _alphaFloat -= (255f/45f);
 
         }
         /*For opening animation.*/
-        else if                 (_buttonOpenCloseBoolean == false){
+        else if(_buttonOpenCloseBoolean == false){
             
             /*Set the color according to the caption title.*/
-            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
+            ColorControlVoid(_floorCColorObject, _roomCColorObject, _exhibitionCColorObject, _scrollableList);
             /*Show the scrollable list.*/
-            cp5Object        
-                .get            (ScrollableList.class, _captionString)
-                .setColor       (_defaultCColorObject)
-                .show           ();
+            _scrollableList.setColor(_defaultCColorObject).show();
             /*Increase the opacity value over time.*/
-            _alphaFloat         += (255f/45f);
+            _alphaFloat += (255f/45f);
 
         }
 
     }
     /*When the button is not animating.*/
-    else if     (_isAnimatingBoolean == false){
+    else if(_isAnimatingBoolean == false){
 
         /*When the button is not animating and the button is close.*/
-        if      (_buttonOpenCloseBoolean == true ){
+        if(_buttonOpenCloseBoolean == true ){
 
             /*Set the color according to the caption title.*/
-            ColorControlVoid(_captionString, _floorCColorObject, _roomCColorObject, _exhibitionCColorObject);
+            ColorControlVoid(_floorCColorObject, _roomCColorObject, _exhibitionCColorObject, _scrollableList);
             /*Show the scrollable list.*/
-            cp5Object        
-                .get            (ScrollableList.class, _captionString)
-                .show           ();
+            _scrollableList     .show();
             /*Set the alpha value of this scrollable list to one tick before it goes full opacity.*/
             _alphaFloat         = (255f - (255f/45f));
 
         }
         /*When the button is not animating and the button is open.*/
-        else if (_buttonOpenCloseBoolean == false){
+        else if(_buttonOpenCloseBoolean == false){
 
             /*Hide the scrollable list.*/
-            cp5Object        
-                .get            (ScrollableList.class, _captionString)
-                .hide           ();
+            _scrollableList     .hide();
             /*Set the alpha value of this scrollable list to one tick before it goes invisible.*/
             _alphaFloat         = (255f/45f);
 
@@ -992,7 +736,7 @@ public float ScrollableDrawFloat(
     int             _xInt                   ,
     int             _yInt                   ,
     ButtonOpenClose _buttonOpenCloseObject  ,
-    String          _captionString
+    ScrollableList  _scrollableList
 
 ){
 
@@ -1003,7 +747,7 @@ public float ScrollableDrawFloat(
     CColor  roomCColorObject                = new CColor();                     /*Color for room buttons scrollable list.*/
     CColor  exhibitionCColorObject          = new CColor();                     /*Color for exhibition buttons scrollable list.*/
             defaultCColorObject
-                .setActive                  (color(0    , 45    , 90    , _alphaFloat))
+                .setActive                  (color(0    , 116   , 217   , _alphaFloat))
                 .setBackground              (color(0    , 45    , 90    , _alphaFloat))
                 .setCaptionLabel            (color(255  , 255   , 255   , _alphaFloat))
                 .setForeground              (color(0    , 116   , 217   , _alphaFloat))
@@ -1028,35 +772,35 @@ public float ScrollableDrawFloat(
         the corresponding open close button.
     The thing to mention here is that the animation need to finished first before another event executed.
     If statment while the animation is still going.*/
-    if                              (_buttonOpenCloseObject.isAnimatingBoolean == true ){
+    if(_buttonOpenCloseObject.isAnimatingBoolean == true ){
 
         _alphaFloat = ButtonOpenCloseAnimatingFloat(
 
             _buttonOpenCloseObject.isButtonOpenBoolean  ,
             _buttonOpenCloseObject.isAnimatingBoolean   ,
-            _captionString                              ,
+            _alphaFloat                                 ,
             defaultCColorObject                         ,
             floorCColorObject                           ,
             roomCColorObject                            ,
             exhibitionCColorObject                      ,
-            _alphaFloat
+            _scrollableList
 
         );
 
     }
     /*If statement when the animation is stopped playing.*/
-    else if                         (_buttonOpenCloseObject.isAnimatingBoolean == false){
+    else if(_buttonOpenCloseObject.isAnimatingBoolean == false){
 
         _alphaFloat = ButtonOpenCloseAnimatingFloat(
 
             _buttonOpenCloseObject.isButtonOpenBoolean  ,
             _buttonOpenCloseObject.isAnimatingBoolean   ,
-            _captionString                              ,
+            _alphaFloat                                 ,
             defaultCColorObject                         ,
             floorCColorObject                           ,
             roomCColorObject                            ,
-            exhibitionCColorObject                     ,
-            _alphaFloat
+            exhibitionCColorObject                      ,
+            _scrollableList
 
         );
 
@@ -1067,7 +811,7 @@ public float ScrollableDrawFloat(
 }
 
 /*Neat function to calculate text height.
-PENDING: Please remove this function.*/
+PENDING: This function has no use anymore.*/
 public int CalculateTextHeightInt(
 
     String  _contentString      ,
@@ -1115,8 +859,19 @@ public int FindObjectMuseumIndexInt(
 
 }
 
-/*Create a function to add museum object.
-PENDING: Later I need to add additional arguments so that the tags will also be added.*/
+public int GetBiggestPlayerIndexInt(){
+
+    int tempBiggestIndexInt = 0;
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        if(playerObjectList.get(i).playerIndexInt > tempBiggestIndexInt){ tempBiggestIndexInt = playerObjectList.get(i).playerIndexInt; }
+
+    }
+    return tempBiggestIndexInt;
+
+}
+
+/*Create a function to add museum object.*/
 public ObjectMuseum AddMuseumObject(
 
     String  _nameAltString       ,
@@ -1130,36 +885,36 @@ public ObjectMuseum AddMuseumObject(
     /*Create temporary list for object that we want to make, its list, and its parent list.*/
     List<ObjectMuseum>  museumObjectList            = new ArrayList<ObjectMuseum>();
     List<ObjectMuseum>  parentMuseumObjectList      = new ArrayList<ObjectMuseum>();
-    List<String>        temporaryMuseumStringList   = new ArrayList<String>();
     ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, _tagObjectArray);
 
     /*If statement to determine which List we should put in.*/
     if      (_typeString.equals("FLR")){
 
-        museumObjectList            = floorObjectList;
-        temporaryMuseumStringList   = (useNameAltBoolean == true) ? floorNameAltStringList : floorNameFullStringList;
+        museumObjectList                = floorObjectList;
+        floorNameAltStringList          .add(museumObject.nameAltString );
+        floorNameFullStringList         .add(museumObject.nameFullString);
 
     }
     else if (_typeString.equals("ROM")){
 
-        museumObjectList            = roomObjectList;
-        parentMuseumObjectList      = floorObjectList;
-        temporaryMuseumStringList   = (useNameAltBoolean == true) ? roomNameAltStringList : roomNameFullStringList;
+        museumObjectList                = roomObjectList;
+        parentMuseumObjectList          = floorObjectList;
+        roomNameAltStringList           .add(museumObject.nameAltString );
+        roomNameFullStringList          .add(museumObject.nameFullString);
 
     }
     else if (_typeString.equals("EXH")){
 
-        museumObjectList            = exhibitionObjectList;
-        parentMuseumObjectList      = roomObjectList;
-        temporaryMuseumStringList   = (useNameAltBoolean == true) ? exhibitionNameAltStringList : exhibitionNameFullStringList;
+        museumObjectList                = exhibitionObjectList;
+        parentMuseumObjectList          = roomObjectList;
+        exhibitionNameAltStringList     .add(museumObject.nameAltString );
+        exhibitionNameFullStringList    .add(museumObject.nameFullString);
 
     }
 
 
     /*Assign the object into the object List and the String List.*/
     museumObjectList                    .add(museumObject);
-    if      (useNameAltBoolean == true ){ temporaryMuseumStringList.add(museumObject.nameAltString ); }
-    else if (useNameAltBoolean == false){ temporaryMuseumStringList.add(museumObject.nameFullString); }
     
     /*If other than floor object we also need to determine the parent object.*/
     if      (!_typeString.equals("FLR")){
@@ -1171,19 +926,16 @@ public ObjectMuseum AddMuseumObject(
 
     /*Re - adjust all the index of this object that we just created.*/
     museumObject                .SetIndexInsideVoid();
-
     /*Reset the display of the exhibition scrollable list.*/
     museumNameAltStringList     = new ArrayList<String>(floorNameAltStringList );
     museumNameFullStringList    = new ArrayList<String>(floorNameFullStringList);
-
-    if      (useNameAltBoolean == true ){ cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumNameAltStringList ); }
-    else if (useNameAltBoolean == false){ cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumNameFullStringList); }
+    selectMuseumObjectScrollableListObject.setItems(museumNameFullStringList);
 
     return                      museumObject;
 
 }
 
-public ObjectMuseum FindMuseumObject(String _objectNameString)                              {
+public ObjectMuseum FindMuseumObject(String _objectNameString){
 
     ObjectMuseum tempMuseumObject = null;
 
@@ -1207,6 +959,19 @@ public ObjectMuseum FindMuseumObject(String _objectNameString)                  
     }
 
     return tempMuseumObject;
+
+}
+
+public ObjectPlayer FindPlayerObject(int _playerIndexInt){
+
+    ObjectPlayer tempPlayerObject = null;
+    for(int i = 0; i < playerObjectList.size(); i ++){
+
+        if(playerObjectList.get(i).playerIndexInt == _playerIndexInt){ tempPlayerObject = playerObjectList.get(i); }
+
+    }
+
+    return tempPlayerObject;
 
 }
     
@@ -1250,7 +1015,7 @@ public Tag FindTagObject(String _tagName){
 
 /*
 <<A function to return an array of object tag to be put in the museum object, randomly.>>
-Tag[] AssignRandomTagArray(List<Tag> _tagObjectList)                                 {
+Tag[] AssignRandomTagArray(List<Tag> _tagObjectList){
 
     <<Temporary tag object list to be returned later on this function.>>
     List<Tag> assignTagObjectList                   = new ArrayList<Tag>();
@@ -1337,26 +1102,117 @@ public Tag[] AssignRandomTagArray(
 
 }
 
-/*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
-public void ExhibitionSList(int _indexInt)                                                 {
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//START//Controller's Related Functions.////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    List<ObjectMuseum>                  selectedMuseumObjectList            = new ArrayList<ObjectMuseum>();                                                                    /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.*/
+
+
+public void SetupGUIVoid(){
+
+    cp5Object       = new ControlP5(this);
+    buttonSizeInt   = ((width > height) ? ((width*15)/512) : ((height*15)/512)                  );
+    menuWidthInt    = ((width/3)                                                                );
+    menuHeightInt   = ( height  - (guiLayoutOffsetInt*2) - ((buttonSizeInt/2)*2)                      );
+    leftMenuXInt    = (            guiLayoutOffsetInt    +  (buttonSizeInt/2)                         );
+    rightMenuXInt   = ( width   -  guiLayoutOffsetInt    -  (buttonSizeInt/2)        - menuWidthInt   );
+    menuYInt        = (            guiLayoutOffsetInt    +  (buttonSizeInt/2)                         );
+
+    museumNameAltStringList                     = new ArrayList<String>(floorNameAltStringList );                                                           /*PENDING: This variable is actually has no use anymore, delete this and everything related when you have time.*/
+    museumNameFullStringList                    = new ArrayList<String>(floorNameFullStringList);                                                           /*Set the initial items for scrollable list of museum object.                                                  */
+
+    selectMuseumObjectScrollableListObject      =
+        cp5Object   .addScrollableList          ("SelectMuseumObjectScrollableListObject")
+                    .hide                       ()
+                    .setLabel                   ("SELECT MUSEUM OBJECT:")
+                    .setItems                   (museumNameFullStringList)
+                    .setPosition                (rightMenuXInt, menuYInt)
+                    .setSize                    (menuWidthInt, menuHeightInt)
+                    .setType                    (ControlP5.LIST);
+
+    selectPlayerScrollableListObject            = 
+        cp5Object   .addScrollableList          ("SelectPlayerScrollableListObject")
+                    .hide                       ()
+                    .setLabel                   ("SELECT VISITOR:")
+                    .setItems                   (playerStringList)
+                    .setPosition                (leftMenuXInt, menuYInt)
+                    .setSize                    (menuWidthInt, menuHeightInt)
+                    .setType                    (ControlP5.LIST);
+
+    addTagGroupGUIObject                        = new AddTagGroupGUIObject          (rightMenuXInt, menuYInt, menuWidthInt, addTagGroupHeightInt        , selectMuseumObjectScrollableListObject                , this);
+    addMuseumGroupGUIObject                     = new AddMuseumGroupGUIObject       (rightMenuXInt, menuYInt, menuWidthInt, addMuseumGroupHeightInt     , addTagGroupGUIObject       .addTagGroupObject         , this);
+    editPlayerGroupGUIObject                    = new EditPlayerGroupGUIObject      (leftMenuXInt , menuYInt, menuWidthInt, editPlayerGroupHeightInt    , selectPlayerScrollableListObject                      , this);
+    removePlayerGroupGUIObject                  = new RemovePlayerGroupGUIObject    (leftMenuXInt , menuYInt, menuWidthInt, removePlayerGroupHeightInt  , editPlayerGroupGUIObject   .editPlayerGroupObject     , this);
+    addPlayerGroupGUIObject                     = new AddPlayerGroupGUIObject       (leftMenuXInt , menuYInt, menuWidthInt, addPlayerGroupHeightInt     , removePlayerGroupGUIObject .removePlayerGroupObject   , this);
+    
+    rightMenuAccordionObject                    =
+        cp5Object   .addAccordion               ("RightMenuAccordionObject")
+                    .addItem                    (addMuseumGroupGUIObject.addMuseumGroupObject)
+                    .addItem                    (addTagGroupGUIObject.addTagGroupObject)
+                    .setCollapseMode            (Accordion.SINGLE)
+                    .setPosition                (rightMenuXInt, menuYInt)
+                    .setWidth                   (menuWidthInt);
+    leftMenuAccordionObject                     =
+        cp5Object   .addAccordion               ("LeftMenuAccordionObject")
+                    .addItem                    (addPlayerGroupGUIObject.addPlayerGroupObject)
+                    .addItem                    (editPlayerGroupGUIObject.editPlayerGroupObject)
+                    .addItem                    (removePlayerGroupGUIObject.removePlayerGroupObject)
+                    .setCollapseMode            (Accordion.SINGLE)
+                    .setPosition                (leftMenuXInt, menuYInt)
+                    .setWidth                   (menuWidthInt);
+
+    buttonOpenCloseMuseumObject                 = new ButtonOpenClose(buttonSizeInt);                                                                       /*Initiates button open close with size depends on the screen size.                                            */
+    buttonOpenClosePlayerObject                 = new ButtonOpenClose(buttonSizeInt);                                                                       /*Initiates button open close with size depends on the screen size.                                            */
+
+}
+
+public void DrawGUIVoid(){
+
+    dropdownMObjectAlphaFloat               = ScrollableDrawFloat(dropdownMObjectAlphaFloat , (width - guiLayoutOffsetInt), guiLayoutOffsetInt, buttonOpenCloseMuseumObject, selectMuseumObjectScrollableListObject );
+    dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat  , guiLayoutOffsetInt          , guiLayoutOffsetInt, buttonOpenClosePlayerObject, selectPlayerScrollableListObject       );
+    addMuseumGroupGUIObject                 .DrawVoid(dropdownMObjectAlphaFloat);
+    addTagGroupGUIObject                    .DrawVoid(dropdownMObjectAlphaFloat);
+    addPlayerGroupGUIObject                 .DrawVoid(dropdownPlayerAlphaFloat) ;
+    removePlayerGroupGUIObject              .DrawVoid(dropdownPlayerAlphaFloat) ;
+    editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat) ;
+
+    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 461); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 461); println(width - ((buttonSizeInt/2)*2) - 1 - 461); }
+    else if (addTagGroupGUIObject           .addTagGroupObject      .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 263); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 263); println(width - ((buttonSizeInt/2)*2) - 1 - 263); }
+    else                                                                                { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 19 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 19 ); println(width - ((buttonSizeInt/2)*2) - 1 - 19 ); }
+
+    if      (addPlayerGroupGUIObject        .addPlayerGroupObject   .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 173); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 173); println(width - ((buttonSizeInt/2)*2) - 1 - 173); }
+    else if (editPlayerGroupGUIObject       .editPlayerGroupObject  .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 456); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 456); println(width - ((buttonSizeInt/2)*2) - 1 - 456); }
+    else if (removePlayerGroupGUIObject     .removePlayerGroupObject.isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 133); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 133); println(width - ((buttonSizeInt/2)*2) - 1 - 133); }
+    else                                                                                { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 29 ); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 29 ); println(width - ((buttonSizeInt/2)*2) - 1 - 29 ); }
+    
+    
+
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//SelectMuseumObject Controller's Functions./////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+/*This function is to control what will happen when mouse pointer clicked above the active element of scrollable button.*/
+public void SelectMuseumObjectScrollableListObject (int _indexInt){
+
+    List<ObjectMuseum>                  tempSelectedMuseumObjectList        = new ArrayList<ObjectMuseum>();                                                                    /*This is a list to hold the selected object list. For example FLR_001 is selected, then this variable will be filled with floorObjectList.                         */
     List<String>                        museumStringList                    = new ArrayList<String>();
-    ObjectMuseum                        selectedMuseumObject                = null;                                                                                             /*This is the selected museum object. From here this application will try to modify the selected museum objects values.*/
-    String                              itemScrollableString                = cp5Object.get(ScrollableList.class, "ExhibitionSList").getItem(_indexInt).get("text").toString(); /*This String is for holding the name of the selected button.*/
-    String                              tempTypeString                      = "";                                                                                               /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String.*/
+    ObjectMuseum                        tempSelectedMuseumObject            = null;                                                                                             /*This is the selected museum object. From here this application will try to modify the selected museum objects values.                                             */
+    String                              itemScrollableString                = selectMuseumObjectScrollableListObject.getItem(_indexInt).get("text").toString();                       /*This String is for holding the name of the selected button.                                                                                                       */
+    String                              tempTypeString                      = "";                                                                                               /*Take the first three characters so that this application can know which can of object is selected. Alternatively you can search over selected object type String. */
     if                                  (FindObjectMuseumIndexInt           (itemScrollableString, floorObjectList)        != -1){ tempTypeString = "FLR";    }
     else if                             (FindObjectMuseumIndexInt           (itemScrollableString, roomObjectList)         != -1){ tempTypeString = "ROM";    }
     else if                             (FindObjectMuseumIndexInt           (itemScrollableString, exhibitionObjectList)   != -1){ tempTypeString = "EXH";    }
     int                                 selectedMuseumIndexInt              = -1;                                                                                               /*The selected index of the selected object in its object list.*/
 
-    if      (useNameAltBoolean == true )    { museumStringList = museumNameAltStringList;  }
-    else if (useNameAltBoolean == false)    { museumStringList = museumNameFullStringList; }
+    museumStringList                    = museumNameFullStringList;
 
     /*We assign the selected museum object list according to the temporary type String.*/
-    if     (tempTypeString.equals("FLR")){ selectedMuseumObjectList         = floorObjectList;          }
-    else if(tempTypeString.equals("ROM")){ selectedMuseumObjectList         = roomObjectList;           }
-    else if(tempTypeString.equals("EXH")){ selectedMuseumObjectList         = exhibitionObjectList;     }
+    if     (tempTypeString.equals("FLR")){ tempSelectedMuseumObjectList         = floorObjectList;          }
+    else if(tempTypeString.equals("ROM")){ tempSelectedMuseumObjectList         = roomObjectList;           }
+    else if(tempTypeString.equals("EXH")){ tempSelectedMuseumObjectList         = exhibitionObjectList;     }
 
     /*The for loop below is for assigning which museum object is actually selected*/
     for(int i = 0; i < museumStringList.size(); i ++){
@@ -1365,12 +1221,11 @@ public void ExhibitionSList(int _indexInt)                                      
         if(museumStringList.get(i)                                          == itemScrollableString){
 
             /*If the String match we will take the index of name of the object inside the museum String list.*/
-            for(int j = 0; j < selectedMuseumObjectList.size(); j ++)       {
+            for(int j = 0; j < tempSelectedMuseumObjectList.size(); j ++)       {
 
                 /*Iterate once more to to find the named object inside its object list.
                 After this done, we get access to the object local and public variables and functions.*/
-                if(selectedMuseumObjectList.get(j).nameAltString            == museumStringList.get(i)){ selectedMuseumObject = selectedMuseumObjectList.get(j); }
-                if(selectedMuseumObjectList.get(j).nameFullString           == museumStringList.get(i)){ selectedMuseumObject = selectedMuseumObjectList.get(j); }
+                if(tempSelectedMuseumObjectList.get(j).nameFullString           == museumStringList.get(i)){ tempSelectedMuseumObject = tempSelectedMuseumObjectList.get(j); }
 
             }
 
@@ -1384,50 +1239,49 @@ public void ExhibitionSList(int _indexInt)                                      
     /*After we get the "selected object" object.
     We will revert its active boolean variable.
     We will keep reverting this for everytime the selected object is clicked.*/
-    selectedMuseumObject.activeBoolean                                      = !selectedMuseumObject.activeBoolean;
+    tempSelectedMuseumObject.activeBoolean                                      = !tempSelectedMuseumObject.activeBoolean;
 
     /*If the selected museum object active boolean is true then add all of its children (if any) to the scrollable drop list.*/
-    if     (selectedMuseumObject.activeBoolean == true){
+    if     (tempSelectedMuseumObject.activeBoolean == true){
 
         /*Iterate all children objects and add all of it to the museum String list.
-        We need to set (delete the previous ones and initiate the new ones) the children to the museum String list according to the index position of the parent in the museum String list.*/
+        We need to set (delete the previous ones and initiate the new ones) the children to the museum String list according to the index
+            position of the parent in the museum String list.*/
         for(
 
-           int i    = selectedMuseumObject.childObjectList.size() - 1;
+           int i    = tempSelectedMuseumObject.childObjectList.size() - 1;
            i        >= 0;
            i        --
 
         ){
 
-            museumNameAltStringList .add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameAltString );
-            museumNameFullStringList.add(selectedMuseumIndexInt, selectedMuseumObject.childObjectList.get(i).nameFullString);
+            museumNameAltStringList .add(selectedMuseumIndexInt, tempSelectedMuseumObject.childObjectList.get(i).nameAltString );
+            museumNameFullStringList.add(selectedMuseumIndexInt, tempSelectedMuseumObject.childObjectList.get(i).nameFullString);
 
         }
         /*Set the items into the scrollable list.*/
-        cp5Object.get(ScrollableList.class, "ExhibitionSList").setItems(museumStringList);
+        selectMuseumObjectScrollableListObject.setItems(museumStringList);
 
     }
     /*If the selected museum object active boolean is false then remove all of its children from the museum String List and the scrollable list.*/
-    else if(selectedMuseumObject.activeBoolean == false){
+    else if(tempSelectedMuseumObject.activeBoolean == false){
 
         /*If close the floor we must carefully close the inner most button, in this case it is the exhibition buttons.
         We need to close the room buttons and then loop again to close the exhibition buttons.*/
         if(tempTypeString.equals("FLR")){
 
-            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
+            for(int i = 0; i < tempSelectedMuseumObject.childObjectList.size(); i ++){
 
-                for(int j = 0; j < selectedMuseumObject.childObjectList.get(i).childObjectList.size(); j ++){
+                for(int j = 0; j < tempSelectedMuseumObject.childObjectList.get(i).childObjectList.size(); j ++){
 
                     for(int k = 0; k < museumStringList.size(); k ++){
 
-                        boolean tempBoolean         =  true;  
-                        if      (useNameAltBoolean  == true )    { tempBoolean = museumStringList.get(k).equals(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString ); }
-                        else if (useNameAltBoolean  == false)    { tempBoolean = museumStringList.get(k).equals(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameFullString); }
+                        boolean tempBoolean = true;
+                                tempBoolean = museumStringList.get(k).equals(tempSelectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameFullString);
                         if(tempBoolean){
 
-                            selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).activeBoolean = false;
-                            if      (useNameAltBoolean == true )    { cp5Object.get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameAltString ); }
-                            else if (useNameAltBoolean == false)    { cp5Object.get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameFullString); }
+                            tempSelectedMuseumObject.childObjectList.get(i).childObjectList.get(j).activeBoolean = false;
+                            selectMuseumObjectScrollableListObject.removeItem(tempSelectedMuseumObject.childObjectList.get(i).childObjectList.get(j).nameFullString);
                             museumNameAltStringList .remove(k);
                             museumNameFullStringList.remove(k);
                             k --;
@@ -1440,14 +1294,12 @@ public void ExhibitionSList(int _indexInt)                                      
 
                 for(int j = 0; j < museumStringList.size(); j ++){
 
-                    boolean tempBoolean         =  true;  
-                    if      (useNameAltBoolean  == true )    { tempBoolean = museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString ); }
-                    else if (useNameAltBoolean  == false)    { tempBoolean = museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameFullString); }
+                    boolean tempBoolean = true;  
+                            tempBoolean = museumStringList.get(j).equals(tempSelectedMuseumObject.childObjectList.get(i).nameFullString);
                     if(tempBoolean){
 
-                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        if      (useNameAltBoolean == true )    { cp5Object.get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString );  }
-                        else if (useNameAltBoolean == false)    { cp5Object.get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameFullString);  }
+                        tempSelectedMuseumObject.childObjectList.get(i).activeBoolean = false;
+                        selectMuseumObjectScrollableListObject.removeItem(tempSelectedMuseumObject.childObjectList.get(i).nameFullString);
                         museumNameAltStringList .remove(j);
                         museumNameFullStringList.remove(j);
                         j --;
@@ -1462,18 +1314,16 @@ public void ExhibitionSList(int _indexInt)                                      
         /*If the button is not a floor button then we do not need to iterate deeper.*/
         else{
 
-            for(int i = 0; i < selectedMuseumObject.childObjectList.size(); i ++){
+            for(int i = 0; i < tempSelectedMuseumObject.childObjectList.size(); i ++){
 
                 for(int j = 0; j < museumStringList.size(); j ++){
 
-                    boolean tempBoolean         =  true;  
-                    if      (useNameAltBoolean  == true )    { museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameAltString ); }
-                    else if (useNameAltBoolean  == false)    { museumStringList.get(j).equals(selectedMuseumObject.childObjectList.get(i).nameFullString); }
+                    boolean tempBoolean = true;  
+                            tempBoolean = museumStringList.get(j).equals(tempSelectedMuseumObject.childObjectList.get(i).nameFullString);
                     if(tempBoolean){
 
-                        selectedMuseumObject.childObjectList.get(i).activeBoolean = false;
-                        if      (useNameAltBoolean == true )    { cp5Object.get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);  }
-                        else if (useNameAltBoolean == false)    { cp5Object.get(ScrollableList.class, "ExhibitionSList").removeItem(selectedMuseumObject.childObjectList.get(i).nameAltString);  }
+                        tempSelectedMuseumObject.childObjectList.get(i).activeBoolean = false;
+                        selectMuseumObjectScrollableListObject.removeItem(tempSelectedMuseumObject.childObjectList.get(i).nameFullString);
                         museumNameAltStringList .remove(j);
                         museumNameFullStringList.remove(j);
                         j --;
@@ -1491,75 +1341,29 @@ public void ExhibitionSList(int _indexInt)                                      
     }
 
 }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//END//SelectMuseumObject Controller's Functions.///////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//START//SelectPlayerScrollableList Controller's Functions./////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 /*This function is to control player scrollable list.*/
-public void VisitorSList                   (int _indexInt)                                 {
+public void SelectPlayerScrollableListObject       (int _indexInt){
 
-    /*Assign the selected player.*/
-    editPlayerGroupGUIObject.tempSelectedPlayerObject = playerObjectList.get(_indexInt);
-    /*Change the radio button accordingly.*/
-    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject.activate((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt - 1));
+    editPlayerGroupGUIObject.tempSelectedPlayerObject                           = playerObjectList.get(_indexInt);                                                          /*Assign the selected player.                               */
+    editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject    .activate((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt - 1));   /*Assign the mode of selected player into the radio button. */
 
 }
+//////////////////////////////////////////////////////////////////////////////////////////////////// 
+//END//SelectPlayerScrollableList Controller's Functions.///////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-
-
-
-
-
-
-public int GetBiggestPlayerIndexInt(){
-
-    int tempBiggestIndexInt = 0;
-    for(int i = 0; i < playerObjectList.size(); i ++){
-
-        if(playerObjectList.get(i).playerIndexInt > tempBiggestIndexInt){ tempBiggestIndexInt = playerObjectList.get(i).playerIndexInt; }
-
-    }
-    return tempBiggestIndexInt;
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-public ObjectPlayer FindPlayerObject(int _playerIndexInt){
-
-    ObjectPlayer tempPlayerObject = null;
-    for(int i = 0; i < playerObjectList.size(); i ++){
-
-        if(playerObjectList.get(i).playerIndexInt == _playerIndexInt){ tempPlayerObject = playerObjectList.get(i); }
-
-    }
-
-    return tempPlayerObject;
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//START//Controller's Functions.////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////// 
 //START//AddMuseumGroupGUIObject.pde Controller's Functions.////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1794,8 +1598,8 @@ public void AddPlayerGroupPlayerAddButtonObject                    (int _indexIn
 
     playerStringList.add("" + tempPlayerObject.playerIndexInt);
 
-    cp5Object.get(ScrollableList.class, "VisitorSList")                     .setItems(playerStringList );
-    cp5Object.get(ScrollableList.class, "RemovePlayerGroupGUIObjectPickPlayer")  .setItems(playerStringList );
+    selectPlayerScrollableListObject                                                        .setItems(playerStringList);
+    removePlayerGroupGUIObject.removePlayerGroupSelectPlayerToRemoveScrollableListObject    .setItems(playerStringList);
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1822,8 +1626,9 @@ public void RemovePlayerGroupRemoveButtonObject                        (int _ind
         /*Remove the player from both player object list and the player string object list.*/
         playerObjectList                .remove(     removePlayerGroupGUIObject.tempPlayerToRemoveObject                );
         playerStringList                .remove("" + removePlayerGroupGUIObject.tempPlayerToRemoveObject.playerIndexInt );
-        removePlayerGroupGUIObject.removePlayerGroupSelectPlayerToRemoveScrollableListObject.setItems(playerStringList  );
-        cp5Object.get(ScrollableList.class, "VisitorSList")                                 .setItems(playerStringList  );
+
+        selectPlayerScrollableListObject                                                        .setItems(playerStringList);
+        removePlayerGroupGUIObject.removePlayerGroupSelectPlayerToRemoveScrollableListObject    .setItems(playerStringList);
 
         /*When the user remove the player do not forget to set every player sibling object list.*/
         for(int i = 0; i < playerObjectList.size(); i ++){ playerObjectList.get(i).SetSiblingObjectList(); }
@@ -2100,24 +1905,6 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, addMuseumGroupObject);
 
-        /*Specify the position of another controller below this group controller.*/
-        if      (addMuseumGroupObject.isOpen() == true ){
-
-                addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-
-        }
-        else if (addMuseumGroupObject.isOpen() == false){
-
-                addTagGroupObject.setPosition(
-                    addMuseumGroupObject.getPosition()[0],
-                    addMuseumGroupObject.getPosition()[1] + guiLayoutOffsetInt
-                );
-
-        }
-
     }
 
 }
@@ -2225,24 +2012,6 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
     public void DrawVoid                                                   (float   _alphaFloat){
 
         super.DrawVoid(_alphaFloat, addPlayerGroupObject);
-
-        /*Specify the position of another controller below this group controller.*/
-        if      (addPlayerGroupObject.isOpen() == true ){
-
-                removePlayerGroupObject.setPosition(
-                    addPlayerGroupObject.getPosition()[0],
-                    addPlayerGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-                );
-
-        }
-        else if (addPlayerGroupObject.isOpen() == false){
-
-                removePlayerGroupObject.setPosition(
-                    addPlayerGroupObject.getPosition()[0],
-                    addPlayerGroupObject.getPosition()[1] + guiLayoutOffsetInt
-                );
-
-        }
 
     }
 
@@ -2538,7 +2307,7 @@ class AddTagGroupGUIObject extends GroupGUIObject{
             addTagGroupControllerP5Object   .addButton              ("AddTagGroupTagAddButtonObject")
                                             .setColor               (defaultCColor)
                                             .setGroup               (addTagGroupObject)
-                                            .setLabel               ("SUBMIT")  
+                                            .setLabel               ("ADD TAG")  
                                             .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList5RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
@@ -2549,24 +2318,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
     public void DrawVoid(float   _alphaFloat){
 
         super.DrawVoid(_alphaFloat, addTagGroupObject);
-
-        /*Specify the position of another controller below this group controller.*/
-        if      (addTagGroupObject.isOpen() == true ){
-
-                selectMuseumObjectScrollableListObject.setPosition(
-                    addTagGroupObject.getPosition()[0],
-                    addTagGroupObject.getPosition()[1] + guiHeightInt
-                );
-
-        }
-        else if (addTagGroupObject.isOpen() == false){
-
-                selectMuseumObjectScrollableListObject.setPosition(
-                    addTagGroupObject.getPosition()[0],
-                    addTagGroupObject.getPosition()[1]
-                );
-
-        }
 
         ControlFormVoid();
 
@@ -2953,8 +2704,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerSentenceString          =                                           tempSelectedPlayerObject.sentenceStringList.get(i); }
-            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
 
@@ -3257,8 +3008,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
             tempSelectedPlayerFinishedString                = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
             for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                       /*Put all selected player sentences into one paragraph of a String variable.*/
 
-                if(i == 0)  { tempSelectedPlayerSentenceString =                                           tempSelectedPlayerObject.sentenceStringList.get(i); }
-                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+                if(i == 0)  { tempSelectedPlayerSentenceString =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
             }
 
@@ -3636,11 +3387,10 @@ class   ObjectMuseum                                                            
         /*Panel layout calculations.*/
         if          (typeString.equals("FLR")){
 
-            //widthPanelInt = (width - (layoutOffsetSideInt*2));
-            widthPanelInt   = (width - (layoutOffsetSideInt*2) - (layoutOffsetInt*floorObjectList.size()))/floorObjectList.size();
-            heightPanelInt  = (height - ((layoutOffsetInt*layoutTotalRowInt) + layoutOffsetInt))/layoutTotalRowInt;
-            xPanelInt       = layoutOffsetSideInt + (indexGlobalInt*widthPanelInt) + (indexGlobalInt*layoutOffsetInt);
-            yPanelInt       = layoutOffsetInt;
+            widthPanelInt   = (width - (panelLayoutOffsetSideInt*2) - (panelLayoutOffsetInt*floorObjectList.size()))/floorObjectList.size();
+            heightPanelInt  = (height - ((panelLayoutOffsetInt*panelLayoutTotalRowInt) + panelLayoutOffsetInt))/panelLayoutTotalRowInt;
+            xPanelInt       = panelLayoutOffsetSideInt + (indexGlobalInt*widthPanelInt) + (indexGlobalInt*panelLayoutOffsetInt);
+            yPanelInt       = panelLayoutOffsetInt;
 
             if      (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
             else if (heightPanelInt <= 10){ heightPanelInt = 10; }
@@ -3652,10 +3402,10 @@ class   ObjectMuseum                                                            
 
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
 
-            widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*layoutOffsetInt))/parentObject.childObjectList.size());
+            widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*panelLayoutOffsetInt))/parentObject.childObjectList.size());
             heightPanelInt  = parentObject.heightPanelInt;
-            xPanelInt       = parentObject.xPanelInt + (indexLocalInt*widthPanelInt) + (indexLocalInt*layoutOffsetInt);
-            yPanelInt       = parentObject.yPanelInt + parentObject.heightPanelInt + layoutOffsetInt;
+            xPanelInt       = parentObject.xPanelInt + (indexLocalInt*widthPanelInt) + (indexLocalInt*panelLayoutOffsetInt);
+            yPanelInt       = parentObject.yPanelInt + parentObject.heightPanelInt + panelLayoutOffsetInt;
 
             if      (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
             else if (heightPanelInt <= 10){ heightPanelInt = 10; }
@@ -3667,8 +3417,8 @@ class   ObjectMuseum                                                            
     /*A function to set the threshold to determine whether this museum object is full or not.*/
     public boolean SetFullBoolean()                                                            {
 
-        if      (fullThresholdInt   <= visitorCurrentInt)  { fullBoolean = true;  }
-        else if (fullThresholdInt   >  visitorCurrentInt)  { fullBoolean = false; }
+        if      (museumObjectFullThresholdInt   <= visitorCurrentInt)  { fullBoolean = true;  }
+        else if (museumObjectFullThresholdInt   >  visitorCurrentInt)  { fullBoolean = false; }
 
         return                      fullBoolean;
         
@@ -4192,7 +3942,7 @@ class ObjectPlayer{
                         widthPanelInt           = exhibitionCurrentObject.widthPanelInt;
                         heightPanelInt          = exhibitionCurrentObject.heightPanelInt;
                         xPanelInt               = exhibitionCurrentObject.xPanelInt;
-                        yPanelInt               = exhibitionCurrentObject.yPanelInt + ((playerSiblingIndexInt + 1)*heightPanelInt) + ((playerSiblingIndexInt + 1)*layoutOffsetInt);
+                        yPanelInt               = exhibitionCurrentObject.yPanelInt + ((playerSiblingIndexInt + 1)*heightPanelInt) + ((playerSiblingIndexInt + 1)*panelLayoutOffsetInt);
 
         if      (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
         else if (heightPanelInt <= 10){ heightPanelInt = 10; }
@@ -4808,147 +4558,6 @@ class Panel                                         {
 
 
 
-class RemovePlayerGUIObject{
-
-    /*Add three color for the background color.*/
-    int       groupBackgroundColor                ;                   /*The color of group panel group background.*/
-    int       groupColorBackgroundColor           ;                   /*The title background color of panel group.*/
-    int       groupColorLabelColor                ;                   /*The title font colot of the panel group.*/
-    /*Add transparency variable.*/
-    float       alphaFloat                          = 255;              /*The opacity for this object.*/
-    int         groupXInt                           ;                   /*The x position of this graphical user interface.*/
-    int         groupYInt                           ;                   /*The x position of this graphical user interface.*/
-    int         groupLayoutOffsetInt                = 10;               /*This object offset.*/
-    int         groupWidthInt                       ;                   /*This object width.*/
-    int         groupHeightInt                      ;                   /*This object height.*/
-    int         parentButtonSizeInt                 ;                   /*A variable for layout taken from the main class.*/
-    int         parentDropdownObjectWidthInt        ;                   /*A variable for layout taken from the main class.*/
-    int         parentDropdownObjectHeightInt       ;                   /*A variable for layout taken from the main class.*/
-    int         scrollableWidthInt                  ;
-    int         scrollableHeightInt                 = 62;
-    CColor      otherCColor                         = new CColor();     /*The color for other component than the scrollableChecklist.*/
-
-    ObjectPlayer playerToRemoveObject               = null;
-
-    RemovePlayerGUIObject(
-
-        int     _groupXInt                      ,
-        int     _groupYInt                      ,
-        int     _groupWidthInt                  ,
-        int     _groupHeightInt                 ,
-        int     _parentButtonSizeInt            ,
-        int     _parentDropdownObjectWidthInt   ,
-        int     _parentDropdownObjwctHeightInt
-
-    ){
-
-        groupXInt                       = _groupXInt;
-        groupYInt                       = _groupYInt + groupLayoutOffsetInt;
-        groupWidthInt                   = _groupWidthInt;
-        groupHeightInt                  = _groupHeightInt;
-        parentButtonSizeInt             = _parentButtonSizeInt;
-        parentDropdownObjectWidthInt    = _parentDropdownObjectWidthInt;
-        parentDropdownObjectHeightInt   = _parentDropdownObjwctHeightInt;
-
-        scrollableWidthInt              = (groupWidthInt - (groupLayoutOffsetInt*2));           /*Create the scrollable list width to accomodate three scrollable list in a row.*/
-
-        /*Set the colors, however most of controller's color will be updated every tick in the DrawVoid() function.*/
-        groupBackgroundColor            = color(50  , 60    , 57    , alphaFloat);
-        groupColorBackgroundColor       = color(2   , 45    , 89    , alphaFloat);
-        groupColorLabelColor            = color(255 , 255   , 255   , alphaFloat);
-        otherCColor                     .setActive          (color(0    , 170   , 255   , alphaFloat))
-                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-
-        Group   RemovePlayerGroupObject             =
-                cp5Object   .addGroup               ("RemovePlayerGUIObjectRemovePlayerGroupObject")
-                            .close                  ()
-                            .setPosition            (groupXInt, groupYInt)
-                            .setWidth               (groupWidthInt)
-                            .setBackgroundHeight    (groupHeightInt)
-                            .setBackgroundColor     (groupBackgroundColor)
-                            .setColor               (otherCColor)
-                            .setColorBackground     (groupColorBackgroundColor)
-                            .setColorLabel          (groupColorLabelColor)
-                            .setLabel               ("REMOVE VISITOR:");
-
-                cp5Object   .addScrollableList      ("RemovePlayerGUIObjectPickPlayer")
-                            .setPosition            (groupLayoutOffsetInt, groupLayoutOffsetInt)
-                            .setSize                (scrollableWidthInt, scrollableHeightInt)
-                            .setGroup               (RemovePlayerGroupObject)
-                            .addItems               (playerStringList)
-                            .setType                (ControlP5.LIST)
-                            .setColor               (otherCColor)
-                            .setLabel               ("PICK VISITOR YOU WANT TO REMOVE:");
-
-                cp5Object   .addButton              ("RemovePlayerGUIObjectRemoveButton")
-                            .setPosition            (groupLayoutOffsetInt, (groupLayoutOffsetInt*2) + scrollableHeightInt)
-                            .setSize                (scrollableWidthInt, groupLayoutOffsetInt)
-                            .setGroup               (RemovePlayerGroupObject)
-                            .setColor               (otherCColor)
-                            .setLabel               ("REMOVE");
-
-    }
-
-    public void DrawVoid(float   _alphaFloat, EditPlayerGroupGUIObject _editPlayerGUIObject){
-
-        alphaFloat                      = _alphaFloat;
-
-        /*Show/hide controller based on the alpha value received from the main class.*/
-        if                              (alphaFloat >  (255f/45f)){ cp5Object.get(Group   .class  , "RemovePlayerGUIObjectRemovePlayerGroupObject"            ).show(); }
-        else if                         (alphaFloat <= (255f/45f)){ cp5Object.get(Group   .class  , "RemovePlayerGUIObjectRemovePlayerGroupObject"            ).hide(); }
-        groupBackgroundColor            = color             (50         , 60    , 57    , alphaFloat    + (255f/45f));
-        groupColorBackgroundColor       = color             (2          , 45    , 89    , alphaFloat    + (255f/45f));
-        groupColorLabelColor            = color             (255        , 255   , 255   , alphaFloat    + (255f/45f));
-        otherCColor                     .setActive          (color(0    , 170   , 255   , alphaFloat))
-                                        .setBackground      (color(0    , 45    , 90    , alphaFloat))
-                                        .setCaptionLabel    (color(255  , 255   , 255   , alphaFloat))
-                                        .setForeground      (color(0    , 116   , 217   , alphaFloat))
-                                        .setValueLabel      (color(255  , 255   , 255   , alphaFloat));
-
-        /*Especially for group controller you need to adjust four methods instead of just one methods.*/
-        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setBackgroundColor    (groupBackgroundColor);
-        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setColor              (otherCColor);
-        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setColorBackground    (groupColorBackgroundColor);
-        cp5Object.get(Group             .class , "RemovePlayerGUIObjectRemovePlayerGroupObject"             ).setColorLabel         (groupColorLabelColor);
-
-        /*The rest of the controller you only need to adjust for one method, which is setColor().*/
-        cp5Object.get(ScrollableList    .class , "RemovePlayerGUIObjectPickPlayer"                          ).setColor(otherCColor);
-        cp5Object.get(Button            .class , "RemovePlayerGUIObjectRemoveButton"                        ).setColor(otherCColor);
-
-        /*This code below is for controlling controllers outside of this class.
-        These two if statements is for controlling the position of the other object in the same open close button.*/
-        if      (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == true ){
-
-                /*Change the position when the group object is open.*/
-                _editPlayerGUIObject.editPlayerGroupObject.setPosition(
-
-                    (guiOffsetInt + (parentButtonSizeInt/2)),
-                    (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt + groupHeightInt)
-
-                );
-                
-        }
-        else if (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").isOpen() == false){
-
-                /*Change the position when the group object is close.*/
-                _editPlayerGUIObject.editPlayerGroupObject.setPosition(
-
-                    (guiOffsetInt + (parentButtonSizeInt/2)),
-                    (cp5Object.get(Group.class, "RemovePlayerGUIObjectRemovePlayerGroupObject").getPosition()[1] + groupLayoutOffsetInt)
-
-                );
-
-        }
-
-    }
-
-}
-
-
-
 class RemovePlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5       removePlayerGroupControlP5Object                            ;
@@ -5021,24 +4630,6 @@ class RemovePlayerGroupGUIObject extends GroupGUIObject{
     public void DrawVoid(float _alphaFloat){
 
         super.DrawVoid(_alphaFloat, removePlayerGroupObject);
-
-        /*Specify the position of another controller below this group controller.*/
-        if      (removePlayerGroupObject.isOpen() == true ){
-
-            editPlayerScrollableListObject.setPosition(
-                removePlayerGroupObject.getPosition()[0],
-                removePlayerGroupObject.getPosition()[1] + guiHeightInt + guiLayoutOffsetInt
-            );
-
-        }
-        else if (removePlayerGroupObject.isOpen() == false){
-
-            editPlayerScrollableListObject.setPosition(
-                removePlayerGroupObject.getPosition()[0],
-                removePlayerGroupObject.getPosition()[1] + guiLayoutOffsetInt
-            );
-
-        }
 
     }
 
