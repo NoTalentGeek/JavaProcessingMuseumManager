@@ -263,7 +263,6 @@ public void setup()                                    {
         new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington")
 
     );
-
     verbTagObjectList               = Arrays.asList(
 
         new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
@@ -420,6 +419,8 @@ public void setup()                                    {
         negativeAdverbTagObjectList.add(tempTagObject);
 
     }
+
+    floorObjectList = new ArrayList<ObjectMuseum>();
     JSONArray floorLoadJSONArrayObject = loadJSONArray("data/floor.json");
     for(int i = 0; i < floorLoadJSONArrayObject.size(); i ++){
 
@@ -465,15 +466,9 @@ public void setup()                                    {
         int tempVisitorTotalInt = floorLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
 
         floorObjectList.add(tempMuseumObject);
+        println(tempMuseumObject.nameAltString);
 
     }
-
-    floorObjectList         = Arrays.asList(
-
-        new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
-
-    );
 
     roomObjectList          = Arrays.asList(
 
@@ -504,14 +499,16 @@ public void setup()                                    {
 
     );
 
-    floorNameAltStringList                  = new ArrayList<String>         (floorNameAltStringList         );
-    roomNameAltStringList                   = new ArrayList<String>         (roomNameAltStringList          );
-    exhibitionNameAltStringList             = new ArrayList<String>         (exhibitionNameAltStringList    );
-    floorNameFullStringList                 = new ArrayList<String>         (floorNameFullStringList        );
-    roomNameFullStringList                  = new ArrayList<String>         (roomNameFullStringList         );
-    exhibitionNameFullStringList            = new ArrayList<String>         (exhibitionNameFullStringList   );
-    playerStringList                        = new ArrayList<String>         (playerStringList               );
-    museumNameFullStringList                = new ArrayList<String>         (museumNameFullStringList       );
+    subjectTagObjectList                    = new ArrayList<Tag>            (subjectTagObjectList           );
+    verbTagObjectList                       = new ArrayList<Tag>            (verbTagObjectList              );
+    negativeVerbTagObjectList               = new ArrayList<Tag>            (negativeVerbTagObjectList      );
+    nounTagObjectList                       = new ArrayList<Tag>            (nounTagObjectList              );
+    adjectiveTagObjectList                  = new ArrayList<Tag>            (adjectiveTagObjectList         );
+    negativeAdjectiveTagObjectList          = new ArrayList<Tag>            (negativeAdjectiveTagObjectList );
+    adverbTagObjectList                     = new ArrayList<Tag>            (adverbTagObjectList            );
+    negativeAdverbTagObjectList             = new ArrayList<Tag>            (negativeAdverbTagObjectList    );
+    roomObjectList                          = new ArrayList<ObjectMuseum>   (roomObjectList                 );
+    exhibitionObjectList                    = new ArrayList<ObjectMuseum>   (exhibitionObjectList           );
 
     /*Initiate all players.*/
     for(int i = 0; i < playerAmountInt; i ++)                   {
@@ -535,18 +532,18 @@ public void setup()                                    {
     for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList.get(i)         .SetIndexInsideVoid(); }
     for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList.get(i)   .SetIndexInsideVoid(); }
     /*Populate String list.*/
-    for(int i = 0; i < floorObjectList          .size(); i ++){ floorNameAltStringList                  .add(     floorObjectList           .get(i).nameAltString ); floorNameFullStringList                .add(floorObjectList        .get(i).nameFullString); }
-    for(int i = 0; i < roomObjectList           .size(); i ++){ roomNameAltStringList                   .add(     roomObjectList            .get(i).nameAltString ); roomNameFullStringList                 .add(roomObjectList         .get(i).nameFullString); }
-    for(int i = 0; i < exhibitionObjectList     .size(); i ++){ exhibitionNameAltStringList             .add(     exhibitionObjectList      .get(i).nameAltString ); exhibitionNameFullStringList           .add(exhibitionObjectList   .get(i).nameFullString); }
-    for(int i = 0; i < playerObjectList         .size(); i ++){ playerStringList                        .add("" + playerObjectList          .get(i).playerIndexInt); }
-    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(     subjectTagObjectList      .get(i).nameAltString ); subjectTagNameFullStringList           .add(subjectTagObjectList   .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(     verbTagObjectList         .get(i).nameAltString ); verbTagNameFullStringList              .add(verbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(     verbTagObjectList         .get(i).nameAltString ); negativeVerbTagNameFullStringList      .add(verbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(     nounTagObjectList         .get(i).nameAltString ); nounTagNameFullStringList              .add(nounTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(     adjectiveTagObjectList    .get(i).nameAltString ); adjectiveTagNameFullStringList         .add(adjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(     adjectiveTagObjectList    .get(i).nameAltString ); negativeAdjectiveTagNameFullStringList .add(adjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(     adverbTagObjectList       .get(i).nameAltString ); adverbTagNameFullStringList            .add(adverbTagObjectList    .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(     adverbTagObjectList       .get(i).nameAltString ); negativeAdverbTagNameFullStringList    .add(adverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < floorObjectList          .size(); i ++){ floorNameAltStringList                  .add(     floorObjectList                   .get(i).nameAltString ); floorNameFullStringList                .add(floorObjectList                .get(i).nameFullString); }
+    for(int i = 0; i < roomObjectList           .size(); i ++){ roomNameAltStringList                   .add(     roomObjectList                    .get(i).nameAltString ); roomNameFullStringList                 .add(roomObjectList                 .get(i).nameFullString); }
+    for(int i = 0; i < exhibitionObjectList     .size(); i ++){ exhibitionNameAltStringList             .add(     exhibitionObjectList              .get(i).nameAltString ); exhibitionNameFullStringList           .add(exhibitionObjectList           .get(i).nameFullString); }
+    for(int i = 0; i < playerObjectList         .size(); i ++){ playerStringList                        .add("" + playerObjectList                  .get(i).playerIndexInt); }
+    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(     subjectTagObjectList              .get(i).nameAltString ); subjectTagNameFullStringList           .add(subjectTagObjectList           .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(     verbTagObjectList                 .get(i).nameAltString ); verbTagNameFullStringList              .add(verbTagObjectList              .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(     negativeVerbTagObjectList         .get(i).nameAltString ); negativeVerbTagNameFullStringList      .add(negativeVerbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(     nounTagObjectList                 .get(i).nameAltString ); nounTagNameFullStringList              .add(nounTagObjectList              .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(     adjectiveTagObjectList            .get(i).nameAltString ); adjectiveTagNameFullStringList         .add(adjectiveTagObjectList         .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(     negativeAdjectiveTagObjectList    .get(i).nameAltString ); negativeAdjectiveTagNameFullStringList .add(negativeAdjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(     adverbTagObjectList               .get(i).nameAltString ); adverbTagNameFullStringList            .add(adverbTagObjectList            .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(     negativeAdverbTagObjectList       .get(i).nameAltString ); negativeAdverbTagNameFullStringList    .add(negativeAdverbTagObjectList    .get(i).nameFullString); }
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
     defaultStringList   = Arrays.asList();
 
@@ -1278,10 +1275,9 @@ public ObjectMuseum AddMuseumObject(
 
     }
 
-
     /*Assign the object into the object List and the String List.*/
     museumObjectList                    .add(museumObject);
-    
+
     /*If other than floor object we also need to determine the parent object.*/
     if      (!_typeString.equals("FLR")){
 
@@ -1789,12 +1785,12 @@ public void AddMuseumGroupSelectParentMuseumObjectScrollableListObject          
 /*Add new museum object with all collected property values.*/
 public void AddMuseumGroupAddMuseumObjectButtonObject                                  (int _indexInt) {
 
-    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject .getText();                          /*Get the alternate  name for the new museum object that the user will add.     */
-    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject.getText();                          /*Get the full       name for the new museum object that the user will add.     */
-    String          tempParentNameAltString             = addMuseumGroupGUIObject.tempSelectedParentNameAltString;                                                      /*Parent  alr        name for the new museum object that the user will add.     */
-    String          tempTypeObjectMuseumNameAltString   = addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString;                                            /*Type    alternate  name for the new museum object that the user will add.     */
-    List<String>    tempSelectedTagNameFullStringList   = addMuseumGroupGUIObject.tempSelectedTagNameFullStringList;                                                    /*Tags    full       name for the new museum object that the user will add.     */
-    Tag[]           tempSelectedTagObjectArray          = new Tag[tempSelectedTagNameFullStringList.size()];                                                            /*Converted full name String List of Tag full name into an array of Tag object. */
+    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject .getText();                          /*Get the   alternate  name for the new museum object that the user will add.     */
+    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject.getText();                          /*Get the   full       name for the new museum object that the user will add.     */
+    String          tempParentNameAltString             = addMuseumGroupGUIObject.tempSelectedParentNameAltString;                                                      /*Parent    alt        name for the new museum object that the user will add.     */
+    String          tempTypeObjectMuseumNameAltString   = addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString;                                            /*Type      alternate  name for the new museum object that the user will add.     */
+    List<String>    tempSelectedTagNameFullStringList   = addMuseumGroupGUIObject.tempSelectedTagNameFullStringList;                                                    /*Tags      full       name for the new museum object that the user will add.     */
+    Tag[]           tempSelectedTagObjectArray          = new Tag[tempSelectedTagNameFullStringList.size()];                                                            /*Converted full name String List of Tag full name into an array of Tag object.   */
     
     for(int i = 0; i < tempSelectedTagNameFullStringList.size(); i ++){ tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagNameFullStringList.get(i)); }      /*Convert   full name String List of Tag full name into an array of Tag object. */
     if( tempTypeObjectMuseumNameAltString.equals("FLR")){ tempParentNameAltString = "XXX_XXX"; }                                                                        /*If the object that will be added is a floor object, then set the  alternate parent name into XXX_XXX.*/
@@ -3786,6 +3782,7 @@ class   ObjectMuseum                                                            
 
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
 
+            println(parentObject.childObjectList.size());
             widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*panelLayoutOffsetInt))/parentObject.childObjectList.size());
             heightPanelInt  = parentObject.heightPanelInt;
             xPanelInt       = parentObject.xPanelInt + (indexLocalInt*widthPanelInt) + (indexLocalInt*panelLayoutOffsetInt);
@@ -3885,7 +3882,7 @@ class   ObjectMuseum                                                            
 
         for(int i = 0;          i < _targetObjectList.size(); i ++){                                                                /*Itarete through all the object list to find whether or not there is a museum object that refers this object as its parent.*/
 
-            if(nameAltString    == _targetObjectList.get(i).parentNameAltString){ childObjectList.add(_targetObjectList.get(i)); }  /*If the parent object from the _targetObjectList is the same with this object name then add the object into this object child object list.*/
+            if(nameAltString    .equals(_targetObjectList.get(i).parentNameAltString)){ childObjectList.add(_targetObjectList.get(i)); }  /*If the parent object from the _targetObjectList is the same with this object name then add the object into this object child object list.*/
 
         }
 
@@ -3919,7 +3916,7 @@ class   ObjectMuseum                                                            
         /*Iterate through all parent object list to find this object parent object.*/
         for(int i = 0; i < _targetObjectList.size(); i ++){
 
-            if(parentNameAltString == _targetObjectList.get(i).nameAltString){ parentObject = _targetObjectList.get(i); break; }
+            if(parentNameAltString.equals(_targetObjectList.get(i).nameAltString)){ parentObject = _targetObjectList.get(i); }
 
         }
 

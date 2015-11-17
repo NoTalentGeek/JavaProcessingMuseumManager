@@ -149,6 +149,7 @@ class   ObjectMuseum                                                            
 
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
 
+            println(parentObject.childObjectList.size());
             widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*panelLayoutOffsetInt))/parentObject.childObjectList.size());
             heightPanelInt  = parentObject.heightPanelInt;
             xPanelInt       = parentObject.xPanelInt + (indexLocalInt*widthPanelInt) + (indexLocalInt*panelLayoutOffsetInt);
@@ -248,7 +249,7 @@ class   ObjectMuseum                                                            
 
         for(int i = 0;          i < _targetObjectList.size(); i ++){                                                                /*Itarete through all the object list to find whether or not there is a museum object that refers this object as its parent.*/
 
-            if(nameAltString    == _targetObjectList.get(i).parentNameAltString){ childObjectList.add(_targetObjectList.get(i)); }  /*If the parent object from the _targetObjectList is the same with this object name then add the object into this object child object list.*/
+            if(nameAltString    .equals(_targetObjectList.get(i).parentNameAltString)){ childObjectList.add(_targetObjectList.get(i)); }  /*If the parent object from the _targetObjectList is the same with this object name then add the object into this object child object list.*/
 
         }
 
@@ -282,7 +283,7 @@ class   ObjectMuseum                                                            
         /*Iterate through all parent object list to find this object parent object.*/
         for(int i = 0; i < _targetObjectList.size(); i ++){
 
-            if(parentNameAltString == _targetObjectList.get(i).nameAltString){ parentObject = _targetObjectList.get(i); break; }
+            if(parentNameAltString.equals(_targetObjectList.get(i).nameAltString)){ parentObject = _targetObjectList.get(i); }
 
         }
 
