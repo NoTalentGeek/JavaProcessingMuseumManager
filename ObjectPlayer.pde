@@ -80,7 +80,7 @@ class ObjectPlayer{
     List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
     int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.*/
 
-    int                 playerMovementModeInt                           = 2;                                /*The mode that runs this player.
+    int                 playerMovementModeInt                       = 2;                                /*The mode that runs this player.
                                                                                                             editPlayerMode =    1, this player controlled by AIAutoVoid.
                                                                                                             editPlayerMode =    2, this player controlled manually using this application.
                                                                                                             editPlayerMode =    3, this player controlled manually using Arduino.*/

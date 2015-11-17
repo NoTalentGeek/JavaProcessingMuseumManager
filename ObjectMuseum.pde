@@ -224,7 +224,7 @@ class   ObjectMuseum                                                            
     int SetIndexLocalInt()                                                              {
 
         if(!typeString.equals("FLR")){ indexLocalInt = SetIndexInt(parentObject.childObjectList); }
-        return          indexLocalInt;
+        return indexLocalInt;
 
     }
 
