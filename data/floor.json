@@ -1,6 +1,6 @@
 [
   {
-    "visitorCurrentInt": 252,
+    "visitorCurrentInt": 120,
     "tagMuseumNameAltStringList5": "NOU_BAL",
     "tagMuseumNameAltStringList6": "NOU_GUN",
     "tagMuseumNameAltStringList7": "ADJ_GOD",
@@ -16,7 +16,7 @@
     "tagMuseumNameAltStringList10": "ADV_QUI",
     "tagMuseumNameAltStringList13": "NDV_SLO",
     "tagMuseumNameAltStringList0": "SUB_NAP",
-    "visitorTotalInt": 252,
+    "visitorTotalInt": 120,
     "tagMuseumNameAltStringList12": "NDV_DES",
     "childObjectList0": "ROM_AFK",
     "indexGlobalInt": 0,
@@ -27,7 +27,7 @@
     "parentNameAltString": "XXX_XXX"
   },
   {
-    "visitorCurrentInt": 258,
+    "visitorCurrentInt": 120,
     "tagMuseumNameAltStringList5": "NVE_KIL",
     "tagMuseumNameAltStringList6": "NOU_BAL",
     "tagMuseumNameAltStringList7": "NOU_GUN",
@@ -43,7 +43,7 @@
     "tagMuseumNameAltStringList10": "NDJ_BAD",
     "tagMuseumNameAltStringList13": "ADV_PER",
     "tagMuseumNameAltStringList0": "SUB_NAP",
-    "visitorTotalInt": 258,
+    "visitorTotalInt": 120,
     "tagMuseumNameAltStringList12": "ADV_QUI",
     "tagMuseumNameAltStringList14": "NDV_DES",
     "childObjectList0": "ROM_ASI",

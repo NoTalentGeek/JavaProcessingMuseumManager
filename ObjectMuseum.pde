@@ -149,7 +149,6 @@ class   ObjectMuseum                                                            
 
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
 
-            println(parentObject.childObjectList.size());
             widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*panelLayoutOffsetInt))/parentObject.childObjectList.size());
             heightPanelInt  = parentObject.heightPanelInt;
             xPanelInt       = parentObject.xPanelInt + (indexLocalInt*widthPanelInt) + (indexLocalInt*panelLayoutOffsetInt);

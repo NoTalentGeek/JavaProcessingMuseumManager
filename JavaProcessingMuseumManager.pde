@@ -223,62 +223,6 @@ void setup()                                    {
     size                                (1024, 576, P2D);
     noStroke                            ();
 
-    /*
-    subjectTagObjectList            = Arrays.asList(
-
-        new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
-        new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington")
-
-    );
-    verbTagObjectList               = Arrays.asList(
-
-        new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
-        new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running")
-
-    );
-
-    negativeVerbTagObjectList       = Arrays.asList(
-
-        new Tag(new Name("NVE_DIE", "Verb Die"              ), "NVE", "die", "died", "died", "dies", "dying"),
-        new Tag(new Name("NVE_KIL", "Verb Kill"             ), "NVE", "kill", "killed", "killed", "kills", "killing")
-
-    );
-
-    nounTagObjectList               = Arrays.asList(
-
-        new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
-        new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns")
-
-    );
-
-    adjectiveTagObjectList          = Arrays.asList(
-
-        new Tag(new Name("ADJ_BAD", "Adjective Excellent"   ), "ADJ", "excellent"),
-        new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good")
-
-    );
-
-    negativeAdjectiveTagObjectList  = Arrays.asList(
-
-        new Tag(new Name("NDJ_AWF", "Adjective Awful"       ), "NDJ", "awful"),
-        new Tag(new Name("NDJ_BAD", "Adjective Bad"         ), "NDJ", "bad")
-
-    );
-
-    adverbTagObjectList             = Arrays.asList(
-
-        new Tag(new Name("ADV_PER", "Adverb Perfectly"      ), "ADV", "perfectly"),
-        new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly")
-
-    );
-
-    negativeAdverbTagObjectList     = Arrays.asList(
-
-        new Tag(new Name("NDV_DES", "Adverb Desperately"    ), "NDV", "desperately"),
-        new Tag(new Name("NDV_SLO", "Adverb Slowly"         ), "NDV", "slowly")
-
-    );
-    */
     JSONArray subjectTagLoadJSONArrayObject = loadJSONArray("data/subjectTag.json");
     for(int i = 0; i < subjectTagLoadJSONArrayObject.size(); i ++){
 
@@ -291,7 +235,6 @@ void setup()                                    {
         subjectTagObjectList.add(tempTagObject);
 
     }
-
     JSONArray verbTagLoadJSONArrayObject = loadJSONArray("data/verbTag.json");
     for(int i = 0; i < verbTagLoadJSONArrayObject.size(); i ++){
 
@@ -308,7 +251,6 @@ void setup()                                    {
         verbTagObjectList.add(tempTagObject);
 
     }
-
     JSONArray negativeVerbTagLoadJSONArrayObject = loadJSONArray("data/negativeVerbTag.json");
     for(int i = 0; i < negativeVerbTagLoadJSONArrayObject.size(); i ++){
 
@@ -386,7 +328,6 @@ void setup()                                    {
         negativeAdverbTagObjectList.add(tempTagObject);
 
     }
-
     floorObjectList = new ArrayList<ObjectMuseum>();
     JSONArray floorLoadJSONArrayObject = loadJSONArray("data/floor.json");
     for(int i = 0; i < floorLoadJSONArrayObject.size(); i ++){
@@ -433,38 +374,101 @@ void setup()                                    {
         int tempVisitorTotalInt = floorLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
 
         floorObjectList.add(tempMuseumObject);
-        println(tempMuseumObject.nameAltString);
-
     }
+    roomObjectList = new ArrayList<ObjectMuseum>();
+    JSONArray roomLoadJSONArrayObject = loadJSONArray("data/room.json");
+    for(int i = 0; i < roomLoadJSONArrayObject.size(); i ++){
 
-    roomObjectList          = Arrays.asList(
+        JSONObject roomLoadJSONObject = roomLoadJSONArrayObject.getJSONObject(i);
 
-        new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        String tempNameAltString = roomLoadJSONObject.getString("nameAltString");
+        String tempNameFullString = roomLoadJSONObject.getString("nameFullString");
+        String tempParentNameAltString = roomLoadJSONObject.getString("parentNameAltString");
+        String tempTypeString = roomLoadJSONObject.getString("typeString");
+        int indexCounterInt = 0;
+        List<Tag> tempTagObjectList = new ArrayList<Tag>();
+        while(roomLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
 
-    );
-    exhibitionObjectList    = Arrays.asList(
+            String tempTagNameAltString = roomLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
+            Tag tempTagObject = FindTagObject(tempTagNameAltString);
+            tempTagObjectList.add(tempTagObject);
+            indexCounterInt ++;
 
-        new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-        new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        }
+        Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
+        tempTagObjectList.toArray(tempTagObjectArray);
+        ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
 
-    );
+        indexCounterInt = 0;
+        while(roomLoadJSONObject.hasKey("childObjectList" + indexCounterInt)){
+            String tempChildObjectNameAltString = roomLoadJSONObject.getString("childObjectList" + indexCounterInt);
+            ObjectMuseum tempChildObject = FindMuseumObject(tempChildObjectNameAltString);
+            tempMuseumObject.childObjectList.add(tempChildObject);
+            indexCounterInt ++;
+        }
+        indexCounterInt = 0;
+        while(roomLoadJSONObject.hasKey("childPlayerObjectList" + indexCounterInt)){
+            int tempChildPlayerObjectPlayerIndexInt = roomLoadJSONObject.getInt("childPlayerObjectList" + indexCounterInt);
+            ObjectPlayer tempChildPlayerObjectPlayerIndexObject = FindPlayerObject(tempChildPlayerObjectPlayerIndexInt);
+            tempMuseumObject.childPlayerObjectList.add(tempChildPlayerObjectPlayerIndexObject);
+            indexCounterInt ++;
+        }
+        indexCounterInt = 0;
+        boolean tempFullBoolean = roomLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
+        int tempIndexGlobalInt = roomLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
+        int tempIndexLocalInt = roomLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
+        int tempVisitorCurrentInt = roomLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
+        int tempVisitorTotalInt = roomLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
+
+        roomObjectList.add(tempMuseumObject);
+    }
+    exhibitionObjectList = new ArrayList<ObjectMuseum>();
+    JSONArray exhibitionLoadJSONArrayObject = loadJSONArray("data/exhibition.json");
+    for(int i = 0; i < exhibitionLoadJSONArrayObject.size(); i ++){
+
+        JSONObject exhibitionLoadJSONObject = exhibitionLoadJSONArrayObject.getJSONObject(i);
+
+        String tempNameAltString = exhibitionLoadJSONObject.getString("nameAltString");
+        String tempNameFullString = exhibitionLoadJSONObject.getString("nameFullString");
+        String tempParentNameAltString = exhibitionLoadJSONObject.getString("parentNameAltString");
+        String tempTypeString = exhibitionLoadJSONObject.getString("typeString");
+        int indexCounterInt = 0;
+        List<Tag> tempTagObjectList = new ArrayList<Tag>();
+        while(exhibitionLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
+
+            String tempTagNameAltString = exhibitionLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
+            Tag tempTagObject = FindTagObject(tempTagNameAltString);
+            tempTagObjectList.add(tempTagObject);
+            indexCounterInt ++;
+
+        }
+        Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
+        tempTagObjectList.toArray(tempTagObjectArray);
+        ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
+
+        indexCounterInt = 0;
+        while(exhibitionLoadJSONObject.hasKey("childObjectList" + indexCounterInt)){
+            String tempChildObjectNameAltString = exhibitionLoadJSONObject.getString("childObjectList" + indexCounterInt);
+            ObjectMuseum tempChildObject = FindMuseumObject(tempChildObjectNameAltString);
+            tempMuseumObject.childObjectList.add(tempChildObject);
+            indexCounterInt ++;
+        }
+        indexCounterInt = 0;
+        while(exhibitionLoadJSONObject.hasKey("childPlayerObjectList" + indexCounterInt)){
+            int tempChildPlayerObjectPlayerIndexInt = exhibitionLoadJSONObject.getInt("childPlayerObjectList" + indexCounterInt);
+            ObjectPlayer tempChildPlayerObjectPlayerIndexObject = FindPlayerObject(tempChildPlayerObjectPlayerIndexInt);
+            tempMuseumObject.childPlayerObjectList.add(tempChildPlayerObjectPlayerIndexObject);
+            indexCounterInt ++;
+        }
+        indexCounterInt = 0;
+        boolean tempFullBoolean = exhibitionLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
+        int tempIndexGlobalInt = exhibitionLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
+        int tempIndexLocalInt = exhibitionLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
+        int tempVisitorCurrentInt = exhibitionLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
+        int tempVisitorTotalInt = exhibitionLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
+
+        exhibitionObjectList.add(tempMuseumObject);
+    }
 
     subjectTagObjectList                    = new ArrayList<Tag>            (subjectTagObjectList           );
     verbTagObjectList                       = new ArrayList<Tag>            (verbTagObjectList              );
@@ -946,6 +950,9 @@ void SaveVoid(){
         for(int j = 0; j < playerObjectList.get(i).playerSiblingObjectList.size(); j ++){ playerSaveJSONObject.setInt("playerSiblingObjectList" + j, playerObjectList.get(i).playerSiblingObjectList.get(j).playerIndexInt); }
         for(int j = 0; j < playerObjectList.get(i).sentenceStringList.size(); j ++){ playerSaveJSONObject.setString("sentenceStringList" + j, playerObjectList.get(i).sentenceStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).subjectCurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("subjectCurrentPrevTagStringList" + j, playerObjectList.get(i).subjectCurrentPrevTagStringList.get(j)); }
+        for(int j = 0; j < playerObjectList.get(i).exhibitionTagCounterList.size(); j ++){ playerSaveJSONObject.setString("exhibitionTagCounterListNamAltString" + j, playerObjectList.get(i).exhibitionTagCounterList.get(j).tagNameAltString); }
+        for(int j = 0; j < playerObjectList.get(i).exhibitionTagCounterList.size(); j ++){ playerSaveJSONObject.setString("exhibitionTagCounterListNameFullString" + j, playerObjectList.get(i).exhibitionTagCounterList.get(j).tagNameFullString); }
+        for(int j = 0; j < playerObjectList.get(i).exhibitionTagCounterList.size(); j ++){ playerSaveJSONObject.setInt("exhibitionTagCounterListTagCounterInt" + j, playerObjectList.get(i).exhibitionTagCounterList.get(j).tagCounterInt); }
         for(int j = 0; j < playerObjectList.get(i).verb1CurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("verb1CurrentPrevTagStringList" + j, playerObjectList.get(i).verb1CurrentPrevTagStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).verb2CurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("verb2CurrentPrevTagStringList" + j, playerObjectList.get(i).verb2CurrentPrevTagStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).verb3CurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("verb3CurrentPrevTagStringList" + j, playerObjectList.get(i).verb3CurrentPrevTagStringList.get(j)); }
