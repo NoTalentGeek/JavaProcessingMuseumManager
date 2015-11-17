@@ -385,21 +385,6 @@ public void setup()                                    {
         tempTagObjectList.toArray(tempTagObjectArray);
         ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
 
-        indexCounterInt = 0;
-        while(floorLoadJSONObject.hasKey("childObjectList" + indexCounterInt)){
-            String tempChildObjectNameAltString = floorLoadJSONObject.getString("childObjectList" + indexCounterInt);
-            ObjectMuseum tempChildObject = FindMuseumObject(tempChildObjectNameAltString);
-            tempMuseumObject.childObjectList.add(tempChildObject);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(floorLoadJSONObject.hasKey("childPlayerObjectList" + indexCounterInt)){
-            int tempChildPlayerObjectPlayerIndexInt = floorLoadJSONObject.getInt("childPlayerObjectList" + indexCounterInt);
-            ObjectPlayer tempChildPlayerObjectPlayerIndexObject = FindPlayerObject(tempChildPlayerObjectPlayerIndexInt);
-            tempMuseumObject.childPlayerObjectList.add(tempChildPlayerObjectPlayerIndexObject);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
         boolean tempFullBoolean = floorLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
         int tempIndexGlobalInt = floorLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
         int tempIndexLocalInt = floorLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
@@ -432,21 +417,6 @@ public void setup()                                    {
         tempTagObjectList.toArray(tempTagObjectArray);
         ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
 
-        indexCounterInt = 0;
-        while(roomLoadJSONObject.hasKey("childObjectList" + indexCounterInt)){
-            String tempChildObjectNameAltString = roomLoadJSONObject.getString("childObjectList" + indexCounterInt);
-            ObjectMuseum tempChildObject = FindMuseumObject(tempChildObjectNameAltString);
-            tempMuseumObject.childObjectList.add(tempChildObject);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(roomLoadJSONObject.hasKey("childPlayerObjectList" + indexCounterInt)){
-            int tempChildPlayerObjectPlayerIndexInt = roomLoadJSONObject.getInt("childPlayerObjectList" + indexCounterInt);
-            ObjectPlayer tempChildPlayerObjectPlayerIndexObject = FindPlayerObject(tempChildPlayerObjectPlayerIndexInt);
-            tempMuseumObject.childPlayerObjectList.add(tempChildPlayerObjectPlayerIndexObject);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
         boolean tempFullBoolean = roomLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
         int tempIndexGlobalInt = roomLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
         int tempIndexLocalInt = roomLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
@@ -479,21 +449,6 @@ public void setup()                                    {
         tempTagObjectList.toArray(tempTagObjectArray);
         ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
 
-        indexCounterInt = 0;
-        while(exhibitionLoadJSONObject.hasKey("childObjectList" + indexCounterInt)){
-            String tempChildObjectNameAltString = exhibitionLoadJSONObject.getString("childObjectList" + indexCounterInt);
-            ObjectMuseum tempChildObject = FindMuseumObject(tempChildObjectNameAltString);
-            tempMuseumObject.childObjectList.add(tempChildObject);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(exhibitionLoadJSONObject.hasKey("childPlayerObjectList" + indexCounterInt)){
-            int tempChildPlayerObjectPlayerIndexInt = exhibitionLoadJSONObject.getInt("childPlayerObjectList" + indexCounterInt);
-            ObjectPlayer tempChildPlayerObjectPlayerIndexObject = FindPlayerObject(tempChildPlayerObjectPlayerIndexInt);
-            tempMuseumObject.childPlayerObjectList.add(tempChildPlayerObjectPlayerIndexObject);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
         boolean tempFullBoolean = exhibitionLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
         int tempIndexGlobalInt = exhibitionLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
         int tempIndexLocalInt = exhibitionLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
@@ -928,15 +883,11 @@ public void SaveVoid(){
         floorSaveJSONObject.setString("nameFullString", floorObjectList.get(i).nameFullString);
         floorSaveJSONObject.setString("parentNameAltString", floorObjectList.get(i).parentNameAltString);
         floorSaveJSONObject.setString("typeString", floorObjectList.get(i).typeString);
-        for(int j = 0; j < floorObjectList.get(i).childObjectList.size(); j ++){ floorSaveJSONObject.setString("childObjectList" + j, floorObjectList.get(i).childObjectList.get(j).nameAltString); }
-        for(int j = 0; j < floorObjectList.get(i).childPlayerObjectList.size(); j ++){ floorSaveJSONObject.setInt("childPlayerObjectList" + j, floorObjectList.get(i).childPlayerObjectList.get(j).playerIndexInt); }
         for(int j = 0; j < floorObjectList.get(i).tagMuseumNameAltStringList.size(); j ++){ floorSaveJSONObject.setString("tagMuseumNameAltStringList" + j, floorObjectList.get(i).tagMuseumNameAltStringList.get(j)); }
         floorSaveJSONArrayObject.setJSONObject(i, floorSaveJSONObject);
     }
     for(int i = 0; i < roomObjectList.size(); i ++){
         roomSaveJSONObject = new JSONObject();
-        for(int j = 0; j < roomObjectList.get(i).childObjectList.size(); j ++){ roomSaveJSONObject.setString("childObjectList" + j, roomObjectList.get(i).childObjectList.get(j).nameAltString); }
-        for(int j = 0; j < roomObjectList.get(i).childPlayerObjectList.size(); j ++){ roomSaveJSONObject.setInt("childPlayerObjectList" + j, roomObjectList.get(i).childPlayerObjectList.get(j).playerIndexInt); }
         for(int j = 0; j < roomObjectList.get(i).tagMuseumNameAltStringList.size(); j ++){ roomSaveJSONObject.setString("tagMuseumNameAltStringList" + j, roomObjectList.get(i).tagMuseumNameAltStringList.get(j)); }
         roomSaveJSONObject.setBoolean("fullBoolean", roomObjectList.get(i).fullBoolean);
         roomSaveJSONObject.setInt("indexGlobalInt", roomObjectList.get(i).indexGlobalInt);
@@ -960,8 +911,6 @@ public void SaveVoid(){
         exhibitionSaveJSONObject.setString("nameFullString", exhibitionObjectList.get(i).nameFullString);
         exhibitionSaveJSONObject.setString("parentNameAltString", exhibitionObjectList.get(i).parentNameAltString);
         exhibitionSaveJSONObject.setString("typeString", exhibitionObjectList.get(i).typeString);
-        for(int j = 0; j < exhibitionObjectList.get(i).childObjectList.size(); j ++){ exhibitionSaveJSONObject.setString("childObjectList" + j, exhibitionObjectList.get(i).childObjectList.get(j).nameAltString); }
-        for(int j = 0; j < exhibitionObjectList.get(i).childPlayerObjectList.size(); j ++){ exhibitionSaveJSONObject.setInt("childPlayerObjectList" + j, exhibitionObjectList.get(i).childPlayerObjectList.get(j).playerIndexInt); }
         for(int j = 0; j < exhibitionObjectList.get(i).tagMuseumNameAltStringList.size(); j ++){ exhibitionSaveJSONObject.setString("tagMuseumNameAltStringList" + j, exhibitionObjectList.get(i).tagMuseumNameAltStringList.get(j)); }
         exhibitionSaveJSONArrayObject.setJSONObject(i, exhibitionSaveJSONObject);
     }
