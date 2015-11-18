@@ -156,7 +156,7 @@ JSONObject                  subjectTagSaveJSONObject                = new JSONOb
 JSONObject                  verbTagSaveJSONObject                   = new JSONObject();
 
 /*Name class to manage an object name.*/
-class Name                                      {
+class Name{
 
     String          nameAltString   = "";
     String          nameFullString  = "";
@@ -177,7 +177,7 @@ class Name                                      {
 /*A tag class to manage tag object.
 This is not quite necessary because you can use the Name class instead.
 I guess I will put it here for the time being :).*/
-class Tag                                       {
+class Tag{
 
     Name            tagName                     = null;
     String          nameAltString               = "";
@@ -251,10 +251,329 @@ class Tag                                       {
 
 }
 
-public void setup()                                    {
+public void setup(){
 
-    size                                (1024, 576, P2D);
-    noStroke                            ();
+    size                            (1024, 576, P2D);
+    noStroke                        ();
+
+    OnExit                          ();
+    LoadVoid                        ();
+
+    subjectTagObjectList            = new ArrayList<Tag>            (subjectTagObjectList           );
+    verbTagObjectList               = new ArrayList<Tag>            (verbTagObjectList              );
+    negativeVerbTagObjectList       = new ArrayList<Tag>            (negativeVerbTagObjectList      );
+    nounTagObjectList               = new ArrayList<Tag>            (nounTagObjectList              );
+    adjectiveTagObjectList          = new ArrayList<Tag>            (adjectiveTagObjectList         );
+    negativeAdjectiveTagObjectList  = new ArrayList<Tag>            (negativeAdjectiveTagObjectList );
+    adverbTagObjectList             = new ArrayList<Tag>            (adverbTagObjectList            );
+    negativeAdverbTagObjectList     = new ArrayList<Tag>            (negativeAdverbTagObjectList    );
+    roomObjectList                  = new ArrayList<ObjectMuseum>   (roomObjectList                 );
+    exhibitionObjectList            = new ArrayList<ObjectMuseum>   (exhibitionObjectList           );
+    playerObjectList                = new ArrayList<ObjectPlayer>   (playerObjectList               );
+
+    /*Initiate object parents and children for all object museum.*/
+    for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList       .get(i).SetChildObjectList      (roomObjectList ); }
+    for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList        .get(i).SetInitialParentObject  (floorObjectList); roomObjectList.get(i).SetChildObjectList(exhibitionObjectList); }
+    for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList  .get(i).SetInitialParentObject  (roomObjectList ); }
+    /*Determine index for all museum object.*/
+    for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList.get(i)        .SetIndexInsideVoid(); }
+    for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList.get(i)         .SetIndexInsideVoid(); }
+    for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList.get(i)   .SetIndexInsideVoid(); }
+    /*Populate String list.*/
+    for(int i = 0; i < floorObjectList          .size(); i ++){ floorNameAltStringList                  .add(     floorObjectList                   .get(i).nameAltString ); floorNameFullStringList                .add(floorObjectList                .get(i).nameFullString); }
+    for(int i = 0; i < roomObjectList           .size(); i ++){ roomNameAltStringList                   .add(     roomObjectList                    .get(i).nameAltString ); roomNameFullStringList                 .add(roomObjectList                 .get(i).nameFullString); }
+    for(int i = 0; i < exhibitionObjectList     .size(); i ++){ exhibitionNameAltStringList             .add(     exhibitionObjectList              .get(i).nameAltString ); exhibitionNameFullStringList           .add(exhibitionObjectList           .get(i).nameFullString); }
+    for(int i = 0; i < playerObjectList         .size(); i ++){ playerStringList                        .add("" + playerObjectList                  .get(i).playerIndexInt); }
+    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(     subjectTagObjectList              .get(i).nameAltString ); subjectTagNameFullStringList           .add(subjectTagObjectList           .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(     verbTagObjectList                 .get(i).nameAltString ); verbTagNameFullStringList              .add(verbTagObjectList              .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(     negativeVerbTagObjectList         .get(i).nameAltString ); negativeVerbTagNameFullStringList      .add(negativeVerbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(     nounTagObjectList                 .get(i).nameAltString ); nounTagNameFullStringList              .add(nounTagObjectList              .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(     adjectiveTagObjectList            .get(i).nameAltString ); adjectiveTagNameFullStringList         .add(adjectiveTagObjectList         .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(     negativeAdjectiveTagObjectList    .get(i).nameAltString ); negativeAdjectiveTagNameFullStringList .add(negativeAdjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(     adverbTagObjectList               .get(i).nameAltString ); adverbTagNameFullStringList            .add(adverbTagObjectList            .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(     negativeAdverbTagObjectList       .get(i).nameAltString ); negativeAdverbTagNameFullStringList    .add(negativeAdverbTagObjectList    .get(i).nameFullString); }
+    /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
+    defaultStringList   = Arrays.asList();
+
+    SetupGUIVoid        ();
+
+}
+
+public void draw(){
+
+    /*Set the background color for this application.*/
+    background                      (34, 32, 52);
+    /*Always update the full threshold and layout total row int.*/
+    museumObjectFullThresholdInt    = 2 + (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
+    panelLayoutTotalRowInt          = (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
+
+    /*Update function for all museum objects and player objects.
+    Also within these four for loops we need to get which object is hovered.*/
+    for(int i = 0; i < floorObjectList      .size(); i ++){ floorObjectList         .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, floorObjectList       ); }
+    for(int i = 0; i < roomObjectList       .size(); i ++){ roomObjectList          .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, roomObjectList        ); }
+    for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, exhibitionObjectList  ); }
+    for(int i = 0; i < playerObjectList     .size(); i ++){ playerObjectList        .get(i).DrawVoid(); CheckPlayerObjectHoverVoid(i                        ); }
+
+    /*This one is to check wether we need to replace the current showed card with a new one.*/
+    if      (tempSelectedMuseumObject != null){
+
+        if(
+
+            (mouseX > xPanelCardInt + (tempSelectedMuseumObject.panelObject.widthPanelInt /2)) ||
+            (mouseX < xPanelCardInt - (tempSelectedMuseumObject.panelObject.widthPanelInt /2)) ||
+            (mouseY > yPanelCardInt + (tempSelectedMuseumObject.panelObject.heightPanelInt/2)) ||
+            (mouseY < yPanelCardInt - (tempSelectedMuseumObject.panelObject.heightPanelInt/2))
+
+        ){ panelCardChangeBoolean = true; }
+
+    }
+    else if (tempSelectedPlayerObject != null){
+
+        if(
+
+            (mouseX > xPanelCardInt + (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
+            (mouseX < xPanelCardInt - (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
+            (mouseY > yPanelCardInt + (tempSelectedPlayerObject.panelObject.heightPanelInt/2)) ||
+            (mouseY < yPanelCardInt - (tempSelectedPlayerObject.panelObject.heightPanelInt/2))
+
+        ){ panelCardChangeBoolean = true; }
+
+    }
+    /*In case we need a new card then we reset all card properties.*/
+    if(panelCardChangeBoolean   == true){
+
+        xPanelCardInt               = -1    ;
+        yPanelCardInt               = -1    ;
+        rowInt                      = 0     ;
+        tempSelectedMuseumObject    = null  ;
+        tempSelectedPlayerObject    = null  ;
+
+    }
+    /*Create the card.*/
+    if(buttonOpenCloseBoolean == false)     { CreatePanelCardVoid(); }
+
+    SetButtonOpenCloseBoolean   (); /*Update buttonOpenCloseBoolean.*/
+
+    /*Set the biggest player index so everytime new player added it will be the highest index.*/
+    biggestPlayerIndexInt       = GetBiggestPlayerIndexInt();
+    nextBiggestPlayerIndexInt   = biggestPlayerIndexInt + 1; 
+    addPlayerGroupGUIObject     .addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
+
+    DrawGUIVoid                 ();
+
+}
+
+/*The mouse pressed override function is for the open and close button.*/
+public void mousePressed(){
+
+    if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimatingBoolean = true; }
+    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimatingBoolean = true; }
+
+}
+
+/*Function to assign specific tag into the whole tag of object player.*/
+public void AssignRandomTagLoopVoid(
+
+    List<Tag>   _sourceTagObjectList,
+    List<Tag>   _targetTagObjectList
+
+){
+
+    /*Counter on how many tag is already in the museum object.*/
+    int     counterInt                              = 0;
+
+    /*This function need to be atleast gives three tags to a museum object.
+    After three tags is inside the List then we can randomly add another tag with a chance.
+    The thing is that every tag added the chance of another tag will be added/pushed
+        is lower.*/
+    float   randomCounterFloat                      = 1f;
+    while(
+
+        (counterInt             <= (_sourceTagObjectList.size()/2)) ||
+        (Math.random()          <  randomCounterFloat)
+
+    ){
+
+        /*Need to make sure the inputted random tag is not something that is already in the museum object
+        Create a temporary tag object to hold.*/
+        boolean insideBoolean   = false;
+        int     randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+        Tag     tagObject       = _sourceTagObjectList.get(randomIndexInt);
+        
+        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
+        for(int i = 0; i        < _targetTagObjectList.size(); i ++){
+
+            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
+
+                insideBoolean   = true;
+                randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
+                tagObject       = _sourceTagObjectList.get(randomIndexInt);
+                
+            }
+
+        }
+        
+        /*If the assignTagObjectList has three or more elements then we need to start reducing the chance.*/
+        if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
+        counterInt                                                          ++;
+        /*Add/push a tag object into the temporary list.*/
+        if(insideBoolean == false)                                          { _targetTagObjectList.add(tagObject); }
+
+    }
+
+}
+
+/*A function to check whether an object of museum is hovered by mouse pointer.*/
+public void CheckMuseumObjectHoverVoid(
+
+    int _indexInt                           , 
+    List<ObjectMuseum> _targetObjectList
+
+){
+
+    /*This is to check which museum/player object is hovered, then create panel based on that object position.*/
+    if(_targetObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true && buttonOpenCloseBoolean == false){
+
+        xPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.xPanelInt + (_targetObjectList.get(_indexInt).panelObject.widthPanelInt /2 );
+        yPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.yPanelInt + (_targetObjectList.get(_indexInt).panelObject.heightPanelInt/2);
+        tempSelectedMuseumObject    = _targetObjectList.get(_indexInt);
+
+        panelCardChangeBoolean  = false;
+
+    }
+
+}
+
+/*A function to check whether an object of player is hovered by mouse pointer.*/
+public void CheckPlayerObjectHoverVoid(int _indexInt){
+
+    /*This is to check which museum/player object is hovered, then create panel based on that object position.*/
+    if(playerObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true && buttonOpenCloseBoolean == false){
+
+        xPanelCardInt           = playerObjectList.get(_indexInt).panelObject.xPanelInt + (playerObjectList.get(_indexInt).panelObject.widthPanelInt/2 );
+        yPanelCardInt           = playerObjectList.get(_indexInt).panelObject.yPanelInt + (playerObjectList.get(_indexInt).panelObject.heightPanelInt/2);
+        tempSelectedPlayerObject    = playerObjectList.get(_indexInt);
+
+        panelCardChangeBoolean  = false;
+
+    }
+
+}
+
+/*A function to control color for each possible type of museum object buttons.*/
+public void ColorControlVoid(
+
+    CColor          _floorCColorObject      ,
+    CColor          _roomCColorObject       ,
+    CColor          _exhibitionCColorObject ,
+    ScrollableList  _scrollableList
+
+){
+
+    if(_scrollableList.getName().toString().equals("SelectMuseumObjectScrollableListObject")){
+
+        for(int i = 0; i < museumNameAltStringList.size(); i ++){
+
+            String  itemScrollableString        = _scrollableList.getItem(i).get("text").toString();
+            String  tempTypeString              = "";
+            if      (FindObjectMuseumIndexInt   (itemScrollableString, floorObjectList)        != -1){ tempTypeString = "FLR";    }
+            else if (FindObjectMuseumIndexInt   (itemScrollableString, roomObjectList)         != -1){ tempTypeString = "ROM";    }
+            else if (FindObjectMuseumIndexInt   (itemScrollableString, exhibitionObjectList)   != -1){ tempTypeString = "EXH";    }
+            if      (tempTypeString             .equals("FLR")){ _scrollableList.getItem(i).put("color", _floorCColorObject);        }
+            else if (tempTypeString             .equals("ROM")){ _scrollableList.getItem(i).put("color", _roomCColorObject);         }
+            else if (tempTypeString             .equals("EXH")){ _scrollableList.getItem(i).put("color", _exhibitionCColorObject);   }
+
+        }
+
+    }
+
+}
+
+/*A function to create panel card.*/
+public void CreatePanelCardVoid(){
+
+    if(panelCardChangeBoolean == false){
+
+        fill                (panelCardColor);
+        noStroke            ();
+
+        int tempXPanelInt = xPanelCardInt;
+        int tempYPanelInt = yPanelCardInt;
+        if((xPanelCardInt + widthPanelCardInt)  > width ){ tempXPanelInt = xPanelCardInt - widthPanelCardInt;  }
+        if((yPanelCardInt + heightPanelCardInt) > height){ tempYPanelInt = yPanelCardInt - heightPanelCardInt; }
+
+        rect                (tempXPanelInt, tempYPanelInt, widthPanelCardInt, heightPanelCardInt, 10);
+        noFill              ();
+
+        fill                (255);
+        textAlign           (CENTER);
+        panelCardPFont      = createFont(panelFontString, textSizePanelInt);
+        textFont            (panelCardPFont);
+
+        /*String display for the player object.*/
+        if          (tempSelectedMuseumObject == null){
+
+            rowInt      = 9;
+
+            ObjectMuseum exhibitionCurrentObject    = tempSelectedPlayerObject.FindObject(exhibitionObjectList  , tempSelectedPlayerObject.exhibitionCurrentString          );
+            ObjectMuseum roomCurrentObject          = tempSelectedPlayerObject.FindObject(roomObjectList        , exhibitionCurrentObject   .parentObject.nameAltString );
+            ObjectMuseum floorCurrentObject         = tempSelectedPlayerObject.FindObject(floorObjectList       , roomCurrentObject         .parentObject.nameAltString );
+
+            panelString  =
+
+                "FLR_CUR = " + exhibitionCurrentObject  .nameAltString                                                  + "\n" +
+                "ROM_CUR = " + roomCurrentObject        .nameAltString                                                  + "\n" +
+                "EXH_CUR = " + exhibitionCurrentObject  .nameAltString                                                  + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(0)                      + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(1)                      + "\n" +
+                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(2)                      + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(0).GetTagNameAltString()       + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(1).GetTagNameAltString()       + "\n" +
+                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(2).GetTagNameAltString()
+
+            ;
+
+        }
+        /*String display for the museum object.*/
+        else if     (tempSelectedPlayerObject == null){
+
+            rowInt      = 4;
+
+            if      (tempSelectedMuseumObject.visitorCurrentInt < 10   ){ tempVisitorCurrentString = "______"   + tempSelectedMuseumObject.visitorCurrentInt; }
+            else if (tempSelectedMuseumObject.visitorCurrentInt < 100  ){ tempVisitorCurrentString = "_____"    + tempSelectedMuseumObject.visitorCurrentInt; }
+            else if (tempSelectedMuseumObject.visitorCurrentInt < 1000 ){ tempVisitorCurrentString = "____"     + tempSelectedMuseumObject.visitorCurrentInt; }
+            else if (tempSelectedMuseumObject.visitorCurrentInt < 10000){ tempVisitorCurrentString = "___"      + tempSelectedMuseumObject.visitorCurrentInt; }
+
+            if      (tempSelectedMuseumObject.visitorTotalInt   < 10   ){ tempVisitorTotalString = "______"     + tempSelectedMuseumObject.visitorTotalInt; }
+            else if (tempSelectedMuseumObject.visitorTotalInt   < 100  ){ tempVisitorTotalString = "_____"      + tempSelectedMuseumObject.visitorTotalInt; }
+            else if (tempSelectedMuseumObject.visitorTotalInt   < 1000 ){ tempVisitorTotalString = "____"       + tempSelectedMuseumObject.visitorTotalInt; }
+            else if (tempSelectedMuseumObject.visitorTotalInt   < 10000){ tempVisitorTotalString = "___"        + tempSelectedMuseumObject.visitorTotalInt; }
+
+            if      (tempSelectedMuseumObject.fullBoolean == true ){ tempFullString = "____TRU"; }
+            else if (tempSelectedMuseumObject.fullBoolean == false){ tempFullString = "____FAL"; }
+
+            panelString = 
+
+                "NAM_ALT = " + tempSelectedMuseumObject.nameAltString   + "\n" + 
+                "VIS_CUR = " + tempVisitorCurrentString             + "\n" + 
+                "VIS_TOT = " + tempVisitorTotalString               + "\n" + 
+                "_IS_FUL = " + tempFullString
+
+            ;
+
+        }
+
+        text                (panelString, tempXPanelInt + (widthPanelCardInt/2), tempYPanelInt + (textSizePanelInt));
+        textAlign           (LEFT);
+        noFill              ();
+
+    }
+
+}
+
+public void OnExit(){ Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){ public void run(){ SaveVoid(); } })); }
+
+public void LoadVoid(){
 
     JSONArray subjectTagLoadJSONArrayObject = loadJSONArray("data/subjectTag.json");
     for(int i = 0; i < subjectTagLoadJSONArrayObject.size(); i ++){
@@ -459,7 +778,6 @@ public void setup()                                    {
     }
 
     JSONArray playerLoadJSONArrayObject = loadJSONArray("data/player.json");
-    println(playerLoadJSONArrayObject.size());
     for(int i = 0; i < playerLoadJSONArrayObject.size(); i ++){
         JSONObject playerLoadJSONObject = playerLoadJSONArrayObject.getJSONObject(i);
 
@@ -614,319 +932,6 @@ public void setup()                                    {
         int tempPlayerMovementModeInt = playerLoadJSONObject.getInt("playerMovementModeInt"); tempPlayerObject.playerMovementModeInt = tempPlayerMovementModeInt;
         int tempPlayerScoreInt = playerLoadJSONObject.getInt("playerScoreInt"); tempPlayerObject.playerScoreInt = tempPlayerScoreInt;
         int tempPlayerSiblingIndexInt = playerLoadJSONObject.getInt("playerSiblingIndexInt"); tempPlayerObject.playerSiblingIndexInt = tempPlayerSiblingIndexInt;
-    }
-
-    subjectTagObjectList                    = new ArrayList<Tag>            (subjectTagObjectList           );
-    verbTagObjectList                       = new ArrayList<Tag>            (verbTagObjectList              );
-    negativeVerbTagObjectList               = new ArrayList<Tag>            (negativeVerbTagObjectList      );
-    nounTagObjectList                       = new ArrayList<Tag>            (nounTagObjectList              );
-    adjectiveTagObjectList                  = new ArrayList<Tag>            (adjectiveTagObjectList         );
-    negativeAdjectiveTagObjectList          = new ArrayList<Tag>            (negativeAdjectiveTagObjectList );
-    adverbTagObjectList                     = new ArrayList<Tag>            (adverbTagObjectList            );
-    negativeAdverbTagObjectList             = new ArrayList<Tag>            (negativeAdverbTagObjectList    );
-    roomObjectList                          = new ArrayList<ObjectMuseum>   (roomObjectList                 );
-    exhibitionObjectList                    = new ArrayList<ObjectMuseum>   (exhibitionObjectList           );
-    playerObjectList                        = new ArrayList<ObjectPlayer>   (playerObjectList               );
-
-    /*Initiate object parents and children for all object museum.*/
-    for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList       .get(i).SetChildObjectList      (roomObjectList ); }
-    for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList        .get(i).SetInitialParentObject  (floorObjectList); roomObjectList.get(i).SetChildObjectList(exhibitionObjectList); }
-    for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList  .get(i).SetInitialParentObject  (roomObjectList ); }
-    /*Determine index for all museum object.*/
-    for(int i = 0; i < floorObjectList.size()           ; i ++) { floorObjectList.get(i)        .SetIndexInsideVoid(); }
-    for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList.get(i)         .SetIndexInsideVoid(); }
-    for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList.get(i)   .SetIndexInsideVoid(); }
-    /*Populate String list.*/
-    for(int i = 0; i < floorObjectList          .size(); i ++){ floorNameAltStringList                  .add(     floorObjectList                   .get(i).nameAltString ); floorNameFullStringList                .add(floorObjectList                .get(i).nameFullString); }
-    for(int i = 0; i < roomObjectList           .size(); i ++){ roomNameAltStringList                   .add(     roomObjectList                    .get(i).nameAltString ); roomNameFullStringList                 .add(roomObjectList                 .get(i).nameFullString); }
-    for(int i = 0; i < exhibitionObjectList     .size(); i ++){ exhibitionNameAltStringList             .add(     exhibitionObjectList              .get(i).nameAltString ); exhibitionNameFullStringList           .add(exhibitionObjectList           .get(i).nameFullString); }
-    for(int i = 0; i < playerObjectList         .size(); i ++){ playerStringList                        .add("" + playerObjectList                  .get(i).playerIndexInt); }
-    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(     subjectTagObjectList              .get(i).nameAltString ); subjectTagNameFullStringList           .add(subjectTagObjectList           .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(     verbTagObjectList                 .get(i).nameAltString ); verbTagNameFullStringList              .add(verbTagObjectList              .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(     negativeVerbTagObjectList         .get(i).nameAltString ); negativeVerbTagNameFullStringList      .add(negativeVerbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(     nounTagObjectList                 .get(i).nameAltString ); nounTagNameFullStringList              .add(nounTagObjectList              .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(     adjectiveTagObjectList            .get(i).nameAltString ); adjectiveTagNameFullStringList         .add(adjectiveTagObjectList         .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(     negativeAdjectiveTagObjectList    .get(i).nameAltString ); negativeAdjectiveTagNameFullStringList .add(negativeAdjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(     adverbTagObjectList               .get(i).nameAltString ); adverbTagNameFullStringList            .add(adverbTagObjectList            .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(     negativeAdverbTagObjectList       .get(i).nameAltString ); negativeAdverbTagNameFullStringList    .add(negativeAdverbTagObjectList    .get(i).nameFullString); }
-    /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
-    defaultStringList   = Arrays.asList();
-
-    SaveVoid            ();
-    SetupGUIVoid        ();
-
-}
-
-public void draw()                                     {
-
-    /*Set the background color for this application.*/
-    background                      (34, 32, 52);
-    /*Always update the full threshold and layout total row int.*/
-    museumObjectFullThresholdInt    = 2 + (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
-    panelLayoutTotalRowInt          = (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
-
-    /*Update function for all museum objects and player objects.
-    Also within these four for loops we need to get which object is hovered.*/
-    for(int i = 0; i < floorObjectList      .size(); i ++){ floorObjectList         .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, floorObjectList       ); }
-    for(int i = 0; i < roomObjectList       .size(); i ++){ roomObjectList          .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, roomObjectList        ); }
-    for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, exhibitionObjectList  ); }
-    for(int i = 0; i < playerObjectList     .size(); i ++){ playerObjectList        .get(i).DrawVoid(); CheckPlayerObjectHoverVoid(i                        ); }
-
-    /*This one is to check wether we need to replace the current showed card with a new one.*/
-    if      (tempSelectedMuseumObject != null){
-
-        if(
-
-            (mouseX > xPanelCardInt + (tempSelectedMuseumObject.panelObject.widthPanelInt /2)) ||
-            (mouseX < xPanelCardInt - (tempSelectedMuseumObject.panelObject.widthPanelInt /2)) ||
-            (mouseY > yPanelCardInt + (tempSelectedMuseumObject.panelObject.heightPanelInt/2)) ||
-            (mouseY < yPanelCardInt - (tempSelectedMuseumObject.panelObject.heightPanelInt/2))
-
-        ){ panelCardChangeBoolean = true; }
-
-    }
-    else if (tempSelectedPlayerObject != null){
-
-        if(
-
-            (mouseX > xPanelCardInt + (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
-            (mouseX < xPanelCardInt - (tempSelectedPlayerObject.panelObject.widthPanelInt /2)) ||
-            (mouseY > yPanelCardInt + (tempSelectedPlayerObject.panelObject.heightPanelInt/2)) ||
-            (mouseY < yPanelCardInt - (tempSelectedPlayerObject.panelObject.heightPanelInt/2))
-
-        ){ panelCardChangeBoolean = true; }
-
-    }
-    /*In case we need a new card then we reset all card properties.*/
-    if(panelCardChangeBoolean   == true){
-
-        xPanelCardInt               = -1    ;
-        yPanelCardInt               = -1    ;
-        rowInt                      = 0     ;
-        tempSelectedMuseumObject    = null  ;
-        tempSelectedPlayerObject    = null  ;
-
-    }
-    /*Create the card.*/
-    if(buttonOpenCloseBoolean == false)     { CreatePanelCardVoid(); }
-
-    SetButtonOpenCloseBoolean   (); /*Update buttonOpenCloseBoolean.*/
-
-    /*Set the biggest player index so everytime new player added it will be the highest index.*/
-    biggestPlayerIndexInt       = GetBiggestPlayerIndexInt();
-    nextBiggestPlayerIndexInt   = biggestPlayerIndexInt + 1; 
-    addPlayerGroupGUIObject     .addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
-
-    DrawGUIVoid                 ();
-
-}
-
-/*The mouse pressed override function is for the open and close button.*/
-public void mousePressed()                             {
-
-    if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimatingBoolean = true; }
-    if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimatingBoolean = true; }
-
-}
-
-public void exit()                                     { println("EXIT"); }
-
-/*Function to assign specific tag into the whole tag of object player.*/
-public void AssignRandomTagLoopVoid(
-
-    List<Tag>   _sourceTagObjectList,
-    List<Tag>   _targetTagObjectList
-
-){
-
-    /*Counter on how many tag is already in the museum object.*/
-    int     counterInt                              = 0;
-
-    /*This function need to be atleast gives three tags to a museum object.
-    After three tags is inside the List then we can randomly add another tag with a chance.
-    The thing is that every tag added the chance of another tag will be added/pushed
-        is lower.*/
-    float   randomCounterFloat                      = 1f;
-    while(
-
-        (counterInt             <= (_sourceTagObjectList.size()/2)) ||
-        (Math.random()          <  randomCounterFloat)
-
-    ){
-
-        /*Need to make sure the inputted random tag is not something that is already in the museum object
-        Create a temporary tag object to hold.*/
-        boolean insideBoolean   = false;
-        int     randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
-        Tag     tagObject       = _sourceTagObjectList.get(randomIndexInt);
-        
-        /*Keep looping over and over until the random index is not a tag that is already in the list.*/
-        for(int i = 0; i        < _targetTagObjectList.size(); i ++){
-
-            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
-
-                insideBoolean   = true;
-                randomIndexInt  = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
-                tagObject       = _sourceTagObjectList.get(randomIndexInt);
-                
-            }
-
-        }
-        
-        /*If the assignTagObjectList has three or more elements then we need to start reducing the chance.*/
-        if(_targetTagObjectList .size() >= (_sourceTagObjectList.size()/2)) { randomCounterFloat -= 0.2f; }
-        counterInt                                                          ++;
-        /*Add/push a tag object into the temporary list.*/
-        if(insideBoolean == false)                                          { _targetTagObjectList.add(tagObject); }
-
-    }
-
-}
-
-/*A function to check whether an object of museum is hovered by mouse pointer.*/
-public void CheckMuseumObjectHoverVoid(
-
-    int _indexInt                           , 
-    List<ObjectMuseum> _targetObjectList
-
-){
-
-    /*This is to check which museum/player object is hovered, then create panel based on that object position.*/
-    if(_targetObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true && buttonOpenCloseBoolean == false){
-
-        xPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.xPanelInt + (_targetObjectList.get(_indexInt).panelObject.widthPanelInt /2 );
-        yPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.yPanelInt + (_targetObjectList.get(_indexInt).panelObject.heightPanelInt/2);
-        tempSelectedMuseumObject    = _targetObjectList.get(_indexInt);
-
-        panelCardChangeBoolean  = false;
-
-    }
-
-}
-
-/*A function to check whether an object of player is hovered by mouse pointer.*/
-public void CheckPlayerObjectHoverVoid(int _indexInt)  {
-
-    /*This is to check which museum/player object is hovered, then create panel based on that object position.*/
-    if(playerObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true && buttonOpenCloseBoolean == false){
-
-        xPanelCardInt           = playerObjectList.get(_indexInt).panelObject.xPanelInt + (playerObjectList.get(_indexInt).panelObject.widthPanelInt/2 );
-        yPanelCardInt           = playerObjectList.get(_indexInt).panelObject.yPanelInt + (playerObjectList.get(_indexInt).panelObject.heightPanelInt/2);
-        tempSelectedPlayerObject    = playerObjectList.get(_indexInt);
-
-        panelCardChangeBoolean  = false;
-
-    }
-
-}
-
-/*A function to control color for each possible type of museum object buttons.*/
-public void ColorControlVoid(
-
-    CColor          _floorCColorObject      ,
-    CColor          _roomCColorObject       ,
-    CColor          _exhibitionCColorObject ,
-    ScrollableList  _scrollableList
-
-){
-
-    if(_scrollableList.getName().toString().equals("SelectMuseumObjectScrollableListObject")){
-
-        for(int i = 0; i < museumNameAltStringList.size(); i ++){
-
-            String  itemScrollableString        = _scrollableList.getItem(i).get("text").toString();
-            String  tempTypeString              = "";
-            if      (FindObjectMuseumIndexInt   (itemScrollableString, floorObjectList)        != -1){ tempTypeString = "FLR";    }
-            else if (FindObjectMuseumIndexInt   (itemScrollableString, roomObjectList)         != -1){ tempTypeString = "ROM";    }
-            else if (FindObjectMuseumIndexInt   (itemScrollableString, exhibitionObjectList)   != -1){ tempTypeString = "EXH";    }
-            if      (tempTypeString             .equals("FLR")){ _scrollableList.getItem(i).put("color", _floorCColorObject);        }
-            else if (tempTypeString             .equals("ROM")){ _scrollableList.getItem(i).put("color", _roomCColorObject);         }
-            else if (tempTypeString             .equals("EXH")){ _scrollableList.getItem(i).put("color", _exhibitionCColorObject);   }
-
-        }
-
-    }
-
-}
-
-/*A function to create panel card.*/
-public void CreatePanelCardVoid(){
-
-    if(panelCardChangeBoolean == false){
-
-        fill                (panelCardColor);
-        noStroke            ();
-
-        int tempXPanelInt = xPanelCardInt;
-        int tempYPanelInt = yPanelCardInt;
-        if((xPanelCardInt + widthPanelCardInt)  > width ){ tempXPanelInt = xPanelCardInt - widthPanelCardInt;  }
-        if((yPanelCardInt + heightPanelCardInt) > height){ tempYPanelInt = yPanelCardInt - heightPanelCardInt; }
-
-        rect                (tempXPanelInt, tempYPanelInt, widthPanelCardInt, heightPanelCardInt, 10);
-        noFill              ();
-
-        fill                (255);
-        textAlign           (CENTER);
-        panelCardPFont      = createFont(panelFontString, textSizePanelInt);
-        textFont            (panelCardPFont);
-
-        /*String display for the player object.*/
-        if          (tempSelectedMuseumObject == null){
-
-            rowInt      = 9;
-
-            ObjectMuseum exhibitionCurrentObject    = tempSelectedPlayerObject.FindObject(exhibitionObjectList  , tempSelectedPlayerObject.exhibitionCurrentString          );
-            ObjectMuseum roomCurrentObject          = tempSelectedPlayerObject.FindObject(roomObjectList        , exhibitionCurrentObject   .parentObject.nameAltString );
-            ObjectMuseum floorCurrentObject         = tempSelectedPlayerObject.FindObject(floorObjectList       , roomCurrentObject         .parentObject.nameAltString );
-
-            panelString  =
-
-                "FLR_CUR = " + exhibitionCurrentObject  .nameAltString                                                  + "\n" +
-                "ROM_CUR = " + roomCurrentObject        .nameAltString                                                  + "\n" +
-                "EXH_CUR = " + exhibitionCurrentObject  .nameAltString                                                  + "\n" +
-                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(0)                      + "\n" +
-                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(1)                      + "\n" +
-                "EXH_TAR = " + tempSelectedPlayerObject .exhibitionTargetNameAltStringList .get(2)                      + "\n" +
-                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(0).GetTagNameAltString()       + "\n" +
-                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(1).GetTagNameAltString()       + "\n" +
-                "EXH_TAG = " + tempSelectedPlayerObject .exhibitionTagCounterList   .get(2).GetTagNameAltString()
-
-            ;
-
-        }
-        /*String display for the museum object.*/
-        else if     (tempSelectedPlayerObject == null){
-
-            rowInt      = 4;
-
-            if      (tempSelectedMuseumObject.visitorCurrentInt < 10   ){ tempVisitorCurrentString = "______"   + tempSelectedMuseumObject.visitorCurrentInt; }
-            else if (tempSelectedMuseumObject.visitorCurrentInt < 100  ){ tempVisitorCurrentString = "_____"    + tempSelectedMuseumObject.visitorCurrentInt; }
-            else if (tempSelectedMuseumObject.visitorCurrentInt < 1000 ){ tempVisitorCurrentString = "____"     + tempSelectedMuseumObject.visitorCurrentInt; }
-            else if (tempSelectedMuseumObject.visitorCurrentInt < 10000){ tempVisitorCurrentString = "___"      + tempSelectedMuseumObject.visitorCurrentInt; }
-
-            if      (tempSelectedMuseumObject.visitorTotalInt   < 10   ){ tempVisitorTotalString = "______"     + tempSelectedMuseumObject.visitorTotalInt; }
-            else if (tempSelectedMuseumObject.visitorTotalInt   < 100  ){ tempVisitorTotalString = "_____"      + tempSelectedMuseumObject.visitorTotalInt; }
-            else if (tempSelectedMuseumObject.visitorTotalInt   < 1000 ){ tempVisitorTotalString = "____"       + tempSelectedMuseumObject.visitorTotalInt; }
-            else if (tempSelectedMuseumObject.visitorTotalInt   < 10000){ tempVisitorTotalString = "___"        + tempSelectedMuseumObject.visitorTotalInt; }
-
-            if      (tempSelectedMuseumObject.fullBoolean == true ){ tempFullString = "____TRU"; }
-            else if (tempSelectedMuseumObject.fullBoolean == false){ tempFullString = "____FAL"; }
-
-            panelString = 
-
-                "NAM_ALT = " + tempSelectedMuseumObject.nameAltString   + "\n" + 
-                "VIS_CUR = " + tempVisitorCurrentString             + "\n" + 
-                "VIS_TOT = " + tempVisitorTotalString               + "\n" + 
-                "_IS_FUL = " + tempFullString
-
-            ;
-
-        }
-
-        text                (panelString, tempXPanelInt + (widthPanelCardInt/2), tempYPanelInt + (textSizePanelInt));
-        textAlign           (LEFT);
-        noFill              ();
-
     }
 
 }
