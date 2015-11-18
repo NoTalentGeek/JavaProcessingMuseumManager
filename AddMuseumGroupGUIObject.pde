@@ -26,6 +26,10 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
     ScrollableList  addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    ;
     ScrollableList  addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               ;
     ScrollableList  addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       ;
+    Textfield       addMuseumGroupExplanation1TextfieldObject                                   ;
+    Textfield       addMuseumGroupExplanation2TextfieldObject                                   ;
+    Textfield       addMuseumGroupExplanation3TextfieldObject                                   ;
+    Textfield       addMuseumGroupExplanation4TextfieldObject                                   ;
     Textfield       addMuseumGroupNameFullMuseumObjectTextfieldObject                           ;
     Textfield       addMuseumGroupNameAltMuseumObjectTextfieldObject                            ;
     Button          addMuseumGroupAddMuseumObjectButtonObject                                   ;
@@ -102,8 +106,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("SUBJECT TAG:")
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -114,8 +118,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NOUN TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -126,8 +130,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setLabel                               ("VERB TAG:")
                                             .setGroup                               (addMuseumGroupObject)
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -138,8 +142,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE VERB TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -150,8 +154,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADJECTIVE TAG:")
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -162,8 +166,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE ADJECTIVE TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -174,7 +178,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADVERB TAG:")
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
                                             .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
@@ -186,10 +190,49 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE ADVERB TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
                                             .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
+
+
+        addMuseumGroupExplanation1TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation1TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 1:")
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+                                            
+        addMuseumGroupExplanation2TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation2TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 2:")
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+                                            
+        addMuseumGroupExplanation3TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation3TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 3:")
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*12) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+                                            
+        addMuseumGroupExplanation4TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation4TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 4:")
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*12) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
         addMuseumGroupNameFullMuseumObjectTextfieldObject                           =
@@ -197,7 +240,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NAME FULL")
-                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
                                             .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -207,7 +250,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NAME ALTERNATIVE")
-                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
                                             .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -217,7 +260,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADD MUSEUM OBJECT")
-                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
                                             .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 

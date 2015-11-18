@@ -78,12 +78,12 @@ class   ObjectMuseum                                                            
         tagMuseumObjectList                         = Arrays.asList(_tagObjectArray);
         for(int i = 0; i < tagMuseumObjectList.size(); i ++){
 
-            tagMuseumNameAltStringList.add(tagMuseumObjectList.get(i).nameAltString);
-            tagMuseumNameFullStringList.add(tagMuseumObjectList.get(i).nameFullString);
+            tagMuseumNameAltStringList  .add(tagMuseumObjectList.get(i).nameAltString );
+            tagMuseumNameFullStringList .add(tagMuseumObjectList.get(i).nameFullString);
 
         }
 
-        for(int i = 0; i < 4; i ++){ explanationStringArray[i] = nameFullString + _explanationStringArray[i]; }
+        for(int i = 0; i < 4; i ++){ explanationStringArray[i] = nameFullString + " " + _explanationStringArray[i]; }
 
         /*Create panel.*/
         panelObject                                 = new Panel();

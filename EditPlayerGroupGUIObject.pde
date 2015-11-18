@@ -9,6 +9,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ObjectPlayer    tempSelectedPlayerObject                                    ;                           /*Selected player object.*/
     int             tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
+    String          tempSelectedPlayerExplanationString                         = "";
     String          tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
     String          tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
     List<String>    tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
@@ -32,7 +33,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
     Textlabel       editPlayerGroupPlayerSentenceTextlabelObject                ;
     Textarea        editPlayerGroupPlayerSentenceValueTextareaObject            ;
     Textlabel       editPlayerGroupPlayerExplanationTextlabelObject             ;
-    Textarea        editPlayerGroupPlayerExaplanationValueTextareaObject        ;
+    Textarea        editPlayerGroupPlayerExplanationValueTextareaObject         ;
     ScrollableList  editPlayerGroupPlayerTagScrollableListObject                ;
     Textlabel       editPlayerGroupPlayerModeTextlabelObject                    ;
     RadioButton     editPlayerGroupPlayerModeValueRadioButtonObject             ;
@@ -58,13 +59,19 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
         tempSelectedPlayerObject                                    =  playerObjectList     .get(0);                                                                    /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
+        
+        for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
+
+            if(i == 0)  { tempSelectedPlayerExplanationString          =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+            else        { tempSelectedPlayerExplanationString          = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+
+        }
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
             if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
             else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
-
 
 
         editPlayerGroupObject                                       =
@@ -251,14 +258,14 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
 
 
-        editPlayerGroupPlayerExaplanationValueTextareaObject        =
+        editPlayerGroupPlayerExplanationValueTextareaObject         =
             editPlayerGroupControlP5Object
                 .addTextarea                                        ("EditPlayerGroupPlayerExaplanationValueTextareaObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2ColumnSecondColumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
                 .setSize                                            (guiElement2ColumnWidth , guiScrollableList5RowHeightInt)
-                .setText                                            (tempSelectedPlayerSentenceString);
+                .setText                                            (tempSelectedPlayerExplanationString);
 
 
 
@@ -362,23 +369,29 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         if(tempSelectedPlayerObject                             != null ){
 
             tempSelectedPlayerFinishedString                = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
-            for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                       /*Put all selected player sentences into one paragraph of a String variable.*/
+            for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
 
-                if(i == 0)  { tempSelectedPlayerSentenceString =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
-                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+                if(i == 0)  { tempSelectedPlayerExplanationString          =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+                else        { tempSelectedPlayerExplanationString          = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+
+            }
+            for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
+
+                if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+                else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
             }
 
             editPlayerGroupPlayerIndexValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerIndexInt                         ));
-            editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                            ));
+            editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                                ));
             editPlayerGroupPlayerScoreValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerScoreInt                         ));
             editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  .setText ((     tempSelectedPlayerObject.exhibitionCurrentNameFullString        ));
             editPlayerGroupPlayerExhibitionTargetScrollableListObject   .setItems((     tempSelectedPlayerObject.exhibitionTargetNameFullStringList     ));
             editPlayerGroupPlayerExhibitionVisitedScrollableListObject  .setItems((     tempSelectedPlayerObject.exhibitionVisitedNameFullStringList    ));
             editPlayerGroupPlayerTagScrollableListObject                .setItems((     tempSelectedPlayerObject.exhibitionTagCounterNameFullStringList ));
-            editPlayerGroupPlayerSentenceValueTextareaObject            .setText ((     tempSelectedPlayerSentenceString                            ));
-            editPlayerGroupPlayerExaplanationValueTextareaObject        .setText ((     tempSelectedPlayerSentenceString                            ));
-            editPlayerGroupPlayerExhibitionNextScrollableListObject     .setItems((     exhibitionNameFullStringList                                ));
+            editPlayerGroupPlayerSentenceValueTextareaObject            .setText ((     tempSelectedPlayerSentenceString                                ));
+            editPlayerGroupPlayerExplanationValueTextareaObject         .setText ((     tempSelectedPlayerExplanationString                             ));
+            editPlayerGroupPlayerExhibitionNextScrollableListObject     .setItems((     exhibitionNameFullStringList                                    ));
             editPlayerGroupPlayerModeValueRadioButtonObject             .activate((     (tempSelectedPlayerObject.playerMovementModeInt - 1)            ));
 
         }

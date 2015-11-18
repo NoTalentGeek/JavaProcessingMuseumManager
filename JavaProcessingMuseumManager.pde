@@ -74,7 +74,7 @@ int                         leftMenuXInt                            ;
 int                         rightMenuXInt                           ;
 int                         menuYInt                                ;
 int                         addTagGroupHeightInt                    = 244;
-int                         addMuseumGroupHeightInt                 = 442;
+int                         addMuseumGroupHeightInt                 = 450;
 int                         editPlayerGroupHeightInt                = 427;
 int                         removePlayerGroupHeightInt              = 104;
 int                         addPlayerGroupHeightInt                 = 144;
@@ -234,6 +234,7 @@ void setup(){
     negativeAdjectiveTagObjectList  = new ArrayList<Tag>            (negativeAdjectiveTagObjectList );
     adverbTagObjectList             = new ArrayList<Tag>            (adverbTagObjectList            );
     negativeAdverbTagObjectList     = new ArrayList<Tag>            (negativeAdverbTagObjectList    );
+    floorObjectList                 = new ArrayList<ObjectMuseum>   (floorObjectList                );
     roomObjectList                  = new ArrayList<ObjectMuseum>   (roomObjectList                 );
     exhibitionObjectList            = new ArrayList<ObjectMuseum>   (exhibitionObjectList           );
     playerObjectList                = new ArrayList<ObjectPlayer>   (playerObjectList               );
@@ -1432,27 +1433,19 @@ int GetBiggestPlayerIndexInt(){
 /*Create a function to add museum object.*/
 ObjectMuseum AddMuseumObject(
 
-    String  _nameAltString       ,
-    String  _nameFullString      ,
-    String  _parentNameAltString ,
-    String  _typeString         ,
-    Tag[]   _tagObjectArray
+    String      _nameAltString              ,
+    String      _nameFullString             ,
+    String      _parentNameAltString        ,
+    String      _typeString                 ,
+    String[]    _explanationStringArray     ,
+    Tag[]       _tagObjectArray
 
 ){
-
-    String[] exampleExplanationStringArray = {
-
-        "Explanation 1",
-        "Explanation 2",
-        "Explanation 3",
-        "Explanation 4"
-
-    };
 
     /*Create temporary list for object that we want to make, its list, and its parent list.*/
     List<ObjectMuseum>  museumObjectList            = new ArrayList<ObjectMuseum>();
     List<ObjectMuseum>  parentMuseumObjectList      = new ArrayList<ObjectMuseum>();
-    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, exampleExplanationStringArray, _tagObjectArray);
+    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, _explanationStringArray, _tagObjectArray);
 
     /*If statement to determine which List we should put in.*/
     if      (_typeString.equals("FLR")){
@@ -1495,7 +1488,9 @@ ObjectMuseum AddMuseumObject(
     /*Reset the display of the exhibition scrollable list.*/
     museumNameAltStringList     = new ArrayList<String>(floorNameAltStringList );
     museumNameFullStringList    = new ArrayList<String>(floorNameFullStringList);
-    selectMuseumObjectScrollableListObject.setItems(museumNameFullStringList);
+
+    addPlayerGroupGUIObject.addPlayerGroupPickExhibitionStartScrollableListObject   .setItems(museumNameFullStringList);
+    selectMuseumObjectScrollableListObject                                          .setItems(museumNameFullStringList);
 
     return                      museumObject;
 
@@ -1760,7 +1755,7 @@ void DrawGUIVoid(){
     removePlayerGroupGUIObject              .DrawVoid(dropdownPlayerAlphaFloat) ;
     editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat) ;
 
-    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 461); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 461); }
+    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 469); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 469); }
     else if (addTagGroupGUIObject           .addTagGroupObject      .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 263); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 263); }
     else                                                                                { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 19 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 19 ); }
 
@@ -1989,17 +1984,55 @@ void AddMuseumGroupSelectParentMuseumObjectScrollableListObject                 
 /*Add new museum object with all collected property values.*/
 void AddMuseumGroupAddMuseumObjectButtonObject                                  (int _indexInt) {
 
-    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject .getText();                          /*Get the   alternate  name for the new museum object that the user will add.     */
-    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject.getText();                          /*Get the   full       name for the new museum object that the user will add.     */
+    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject  .getText();                         /*Get the   alternate  name for the new museum object that the user will add.     */
+    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject .getText();                         /*Get the   full       name for the new museum object that the user will add.     */
     String          tempParentNameAltString             = addMuseumGroupGUIObject.tempSelectedParentNameAltString;                                                      /*Parent    alt        name for the new museum object that the user will add.     */
     String          tempTypeObjectMuseumNameAltString   = addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString;                                            /*Type      alternate  name for the new museum object that the user will add.     */
+    String          tempExplanation1String              = addMuseumGroupGUIObject.addMuseumGroupExplanation1TextfieldObject         .getText();
+    String          tempExplanation2String              = addMuseumGroupGUIObject.addMuseumGroupExplanation2TextfieldObject         .getText();
+    String          tempExplanation3String              = addMuseumGroupGUIObject.addMuseumGroupExplanation3TextfieldObject         .getText();
+    String          tempExplanation4String              = addMuseumGroupGUIObject.addMuseumGroupExplanation4TextfieldObject         .getText();
+    String[]        tempExplanationStringArray          = {
+
+        tempExplanation1String,
+        tempExplanation2String,
+        tempExplanation3String,
+        tempExplanation4String
+        
+    };
     List<String>    tempSelectedTagNameFullStringList   = addMuseumGroupGUIObject.tempSelectedTagNameFullStringList;                                                    /*Tags      full       name for the new museum object that the user will add.     */
     Tag[]           tempSelectedTagObjectArray          = new Tag[tempSelectedTagNameFullStringList.size()];                                                            /*Converted full name String List of Tag full name into an array of Tag object.   */
     
-    for(int i = 0; i < tempSelectedTagNameFullStringList.size(); i ++){ tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagNameFullStringList.get(i)); }      /*Convert   full name String List of Tag full name into an array of Tag object. */
-    if( tempTypeObjectMuseumNameAltString.equals("FLR")){ tempParentNameAltString = "XXX_XXX"; }                                                                        /*If the object that will be added is a floor object, then set the  alternate parent name into XXX_XXX.*/
+    /*Need to make sure that everything that is inputted into the new museum object is correct.*/
+    if(
 
-    AddMuseumObject(tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeObjectMuseumNameAltString, tempSelectedTagObjectArray);
+        (tempNameAltString                          != null || tempNameAltString                    != "") ||
+        (tempNameFullString                         != null || tempNameFullString                   != "") ||
+        (tempParentNameAltString                    != null || tempParentNameAltString              != "") ||
+        (tempTypeObjectMuseumNameAltString          != null || tempTypeObjectMuseumNameAltString    != "") ||
+        (tempExplanation1String                     != null || tempExplanation1String               != "") ||
+        (tempExplanation2String                     != null || tempExplanation2String               != "") ||
+        (tempExplanation3String                     != null || tempExplanation3String               != "") ||
+        (tempExplanation4String                     != null || tempExplanation4String               != "") ||
+        (tempSelectedTagNameFullStringList.size()   >  0)
+
+    ){
+
+        for(int i = 0; i < tempSelectedTagNameFullStringList.size(); i ++)  { tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagNameFullStringList.get(i)); }            /*Convert   full name String List of Tag full name into an array of Tag object. */
+        if (tempTypeObjectMuseumNameAltString.equals("FLR"))                { tempParentNameAltString = "XXX_XXX";                                                     }            /*If the object that will be added is a floor object, then set the  alternate parent name into XXX_XXX.*/
+
+        /*
+        println(tempNameAltString                   );
+        println(tempNameFullString                  );
+        println(tempParentNameAltString             );
+        println(tempTypeObjectMuseumNameAltString   );
+        println(tempExplanationStringArray          );
+        println(tempSelectedTagObjectArray          );
+        */
+
+        AddMuseumObject(tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeObjectMuseumNameAltString, tempExplanationStringArray, tempSelectedTagObjectArray);
+
+    }
     
     /*After getting all processing done and the museum object is added, reset all value.
     PENDING: The display were not actually set back off.
@@ -2183,8 +2216,8 @@ void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
     /*If one or more field in this group form is not completed, then prevent the user from adding new player into the mian scene.*/
     if(
 
-        (tempNextBiggestPlayerIndexInt          >  0                                                    ) &&                                /*Make sure the index is larger than zero.                                                             */
-        (tempPlayerNameString                   != "" || tempPlayerNameString                   != null ) &&                                /*Make sure the player has a name.                                                                     */
+        (tempNextBiggestPlayerIndexInt          >  0                                                    ) ||                                /*Make sure the index is larger than zero.                                                             */
+        (tempPlayerNameString                   != "" || tempPlayerNameString                   != null ) ||                                /*Make sure the player has a name.                                                                     */
         (tempStartingExhibitionNameAltString    != "" || tempStartingExhibitionNameAltString    != null )                                   /*Make sure the newly created player has a starting exhibition String from this group scrollable list. */
 
     ){

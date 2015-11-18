@@ -107,7 +107,7 @@ int                         leftMenuXInt                            ;
 int                         rightMenuXInt                           ;
 int                         menuYInt                                ;
 int                         addTagGroupHeightInt                    = 244;
-int                         addMuseumGroupHeightInt                 = 442;
+int                         addMuseumGroupHeightInt                 = 450;
 int                         editPlayerGroupHeightInt                = 427;
 int                         removePlayerGroupHeightInt              = 104;
 int                         addPlayerGroupHeightInt                 = 144;
@@ -267,6 +267,7 @@ public void setup(){
     negativeAdjectiveTagObjectList  = new ArrayList<Tag>            (negativeAdjectiveTagObjectList );
     adverbTagObjectList             = new ArrayList<Tag>            (adverbTagObjectList            );
     negativeAdverbTagObjectList     = new ArrayList<Tag>            (negativeAdverbTagObjectList    );
+    floorObjectList                 = new ArrayList<ObjectMuseum>   (floorObjectList                );
     roomObjectList                  = new ArrayList<ObjectMuseum>   (roomObjectList                 );
     exhibitionObjectList            = new ArrayList<ObjectMuseum>   (exhibitionObjectList           );
     playerObjectList                = new ArrayList<ObjectPlayer>   (playerObjectList               );
@@ -1465,27 +1466,19 @@ public int GetBiggestPlayerIndexInt(){
 /*Create a function to add museum object.*/
 public ObjectMuseum AddMuseumObject(
 
-    String  _nameAltString       ,
-    String  _nameFullString      ,
-    String  _parentNameAltString ,
-    String  _typeString         ,
-    Tag[]   _tagObjectArray
+    String      _nameAltString              ,
+    String      _nameFullString             ,
+    String      _parentNameAltString        ,
+    String      _typeString                 ,
+    String[]    _explanationStringArray     ,
+    Tag[]       _tagObjectArray
 
 ){
-
-    String[] exampleExplanationStringArray = {
-
-        "Explanation 1",
-        "Explanation 2",
-        "Explanation 3",
-        "Explanation 4"
-
-    };
 
     /*Create temporary list for object that we want to make, its list, and its parent list.*/
     List<ObjectMuseum>  museumObjectList            = new ArrayList<ObjectMuseum>();
     List<ObjectMuseum>  parentMuseumObjectList      = new ArrayList<ObjectMuseum>();
-    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, exampleExplanationStringArray, _tagObjectArray);
+    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, _explanationStringArray, _tagObjectArray);
 
     /*If statement to determine which List we should put in.*/
     if      (_typeString.equals("FLR")){
@@ -1528,7 +1521,9 @@ public ObjectMuseum AddMuseumObject(
     /*Reset the display of the exhibition scrollable list.*/
     museumNameAltStringList     = new ArrayList<String>(floorNameAltStringList );
     museumNameFullStringList    = new ArrayList<String>(floorNameFullStringList);
-    selectMuseumObjectScrollableListObject.setItems(museumNameFullStringList);
+
+    addPlayerGroupGUIObject.addPlayerGroupPickExhibitionStartScrollableListObject   .setItems(museumNameFullStringList);
+    selectMuseumObjectScrollableListObject                                          .setItems(museumNameFullStringList);
 
     return                      museumObject;
 
@@ -1793,7 +1788,7 @@ public void DrawGUIVoid(){
     removePlayerGroupGUIObject              .DrawVoid(dropdownPlayerAlphaFloat) ;
     editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat) ;
 
-    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 461); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 461); }
+    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 469); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 469); }
     else if (addTagGroupGUIObject           .addTagGroupObject      .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 263); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 263); }
     else                                                                                { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 19 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 19 ); }
 
@@ -2022,17 +2017,55 @@ public void AddMuseumGroupSelectParentMuseumObjectScrollableListObject          
 /*Add new museum object with all collected property values.*/
 public void AddMuseumGroupAddMuseumObjectButtonObject                                  (int _indexInt) {
 
-    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject .getText();                          /*Get the   alternate  name for the new museum object that the user will add.     */
-    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject.getText();                          /*Get the   full       name for the new museum object that the user will add.     */
+    String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject  .getText();                         /*Get the   alternate  name for the new museum object that the user will add.     */
+    String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject .getText();                         /*Get the   full       name for the new museum object that the user will add.     */
     String          tempParentNameAltString             = addMuseumGroupGUIObject.tempSelectedParentNameAltString;                                                      /*Parent    alt        name for the new museum object that the user will add.     */
     String          tempTypeObjectMuseumNameAltString   = addMuseumGroupGUIObject.tempSelectedTypeObjectMuseumNameAltString;                                            /*Type      alternate  name for the new museum object that the user will add.     */
+    String          tempExplanation1String              = addMuseumGroupGUIObject.addMuseumGroupExplanation1TextfieldObject         .getText();
+    String          tempExplanation2String              = addMuseumGroupGUIObject.addMuseumGroupExplanation2TextfieldObject         .getText();
+    String          tempExplanation3String              = addMuseumGroupGUIObject.addMuseumGroupExplanation3TextfieldObject         .getText();
+    String          tempExplanation4String              = addMuseumGroupGUIObject.addMuseumGroupExplanation4TextfieldObject         .getText();
+    String[]        tempExplanationStringArray          = {
+
+        tempExplanation1String,
+        tempExplanation2String,
+        tempExplanation3String,
+        tempExplanation4String
+        
+    };
     List<String>    tempSelectedTagNameFullStringList   = addMuseumGroupGUIObject.tempSelectedTagNameFullStringList;                                                    /*Tags      full       name for the new museum object that the user will add.     */
     Tag[]           tempSelectedTagObjectArray          = new Tag[tempSelectedTagNameFullStringList.size()];                                                            /*Converted full name String List of Tag full name into an array of Tag object.   */
     
-    for(int i = 0; i < tempSelectedTagNameFullStringList.size(); i ++){ tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagNameFullStringList.get(i)); }      /*Convert   full name String List of Tag full name into an array of Tag object. */
-    if( tempTypeObjectMuseumNameAltString.equals("FLR")){ tempParentNameAltString = "XXX_XXX"; }                                                                        /*If the object that will be added is a floor object, then set the  alternate parent name into XXX_XXX.*/
+    /*Need to make sure that everything that is inputted into the new museum object is correct.*/
+    if(
 
-    AddMuseumObject(tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeObjectMuseumNameAltString, tempSelectedTagObjectArray);
+        (tempNameAltString                          != null || tempNameAltString                    != "") ||
+        (tempNameFullString                         != null || tempNameFullString                   != "") ||
+        (tempParentNameAltString                    != null || tempParentNameAltString              != "") ||
+        (tempTypeObjectMuseumNameAltString          != null || tempTypeObjectMuseumNameAltString    != "") ||
+        (tempExplanation1String                     != null || tempExplanation1String               != "") ||
+        (tempExplanation2String                     != null || tempExplanation2String               != "") ||
+        (tempExplanation3String                     != null || tempExplanation3String               != "") ||
+        (tempExplanation4String                     != null || tempExplanation4String               != "") ||
+        (tempSelectedTagNameFullStringList.size()   >  0)
+
+    ){
+
+        for(int i = 0; i < tempSelectedTagNameFullStringList.size(); i ++)  { tempSelectedTagObjectArray[i] = FindTagObject(tempSelectedTagNameFullStringList.get(i)); }            /*Convert   full name String List of Tag full name into an array of Tag object. */
+        if (tempTypeObjectMuseumNameAltString.equals("FLR"))                { tempParentNameAltString = "XXX_XXX";                                                     }            /*If the object that will be added is a floor object, then set the  alternate parent name into XXX_XXX.*/
+
+        /*
+        println(tempNameAltString                   );
+        println(tempNameFullString                  );
+        println(tempParentNameAltString             );
+        println(tempTypeObjectMuseumNameAltString   );
+        println(tempExplanationStringArray          );
+        println(tempSelectedTagObjectArray          );
+        */
+
+        AddMuseumObject(tempNameAltString, tempNameFullString, tempParentNameAltString, tempTypeObjectMuseumNameAltString, tempExplanationStringArray, tempSelectedTagObjectArray);
+
+    }
     
     /*After getting all processing done and the museum object is added, reset all value.
     PENDING: The display were not actually set back off.
@@ -2216,8 +2249,8 @@ public void AddPlayerGroupPlayerAddButtonObject                    (int _indexIn
     /*If one or more field in this group form is not completed, then prevent the user from adding new player into the mian scene.*/
     if(
 
-        (tempNextBiggestPlayerIndexInt          >  0                                                    ) &&                                /*Make sure the index is larger than zero.                                                             */
-        (tempPlayerNameString                   != "" || tempPlayerNameString                   != null ) &&                                /*Make sure the player has a name.                                                                     */
+        (tempNextBiggestPlayerIndexInt          >  0                                                    ) ||                                /*Make sure the index is larger than zero.                                                             */
+        (tempPlayerNameString                   != "" || tempPlayerNameString                   != null ) ||                                /*Make sure the player has a name.                                                                     */
         (tempStartingExhibitionNameAltString    != "" || tempStartingExhibitionNameAltString    != null )                                   /*Make sure the newly created player has a starting exhibition String from this group scrollable list. */
 
     ){
@@ -2337,6 +2370,10 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
     ScrollableList  addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject    ;
     ScrollableList  addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject               ;
     ScrollableList  addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject       ;
+    Textfield       addMuseumGroupExplanation1TextfieldObject                                   ;
+    Textfield       addMuseumGroupExplanation2TextfieldObject                                   ;
+    Textfield       addMuseumGroupExplanation3TextfieldObject                                   ;
+    Textfield       addMuseumGroupExplanation4TextfieldObject                                   ;
     Textfield       addMuseumGroupNameFullMuseumObjectTextfieldObject                           ;
     Textfield       addMuseumGroupNameAltMuseumObjectTextfieldObject                            ;
     Button          addMuseumGroupAddMuseumObjectButtonObject                                   ;
@@ -2413,8 +2450,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("SUBJECT TAG:")
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2425,8 +2462,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NOUN TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2437,8 +2474,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setLabel                               ("VERB TAG:")
                                             .setGroup                               (addMuseumGroupObject)
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2449,8 +2486,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE VERB TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2461,8 +2498,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADJECTIVE TAG:")
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2473,8 +2510,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE ADJECTIVE TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
+                                            .setSize                                (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
 
@@ -2485,7 +2522,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADVERB TAG:")
-                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
                                             .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
@@ -2497,10 +2534,49 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (falseCheckListCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NEGATIVE ADVERB TAG:")
-                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
                                             .setSize                                (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
                                             .setType                                (ControlP5.LIST);
 
+
+
+        addMuseumGroupExplanation1TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation1TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 1:")
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+                                            
+        addMuseumGroupExplanation2TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation2TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 2:")
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+                                            
+        addMuseumGroupExplanation3TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation3TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 3:")
+                                            .setPosition                            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*12) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
+
+
+                                            
+        addMuseumGroupExplanation4TextfieldObject                                   =
+            addMuseumGroupControlP5Object   .addTextfield                           ("AddMuseumGroupExplanation4TextfieldObject")
+                                            .setColor                               (defaultCColor)
+                                            .setGroup                               (addMuseumGroupObject)
+                                            .setLabel                               ("EXPLANATION 4:")
+                                            .setPosition                            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*12) + (guiScrollableList5RowHeightInt*4)))
+                                            .setSize                                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
         addMuseumGroupNameFullMuseumObjectTextfieldObject                           =
@@ -2508,7 +2584,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NAME FULL")
-                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                            (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
                                             .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -2518,7 +2594,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("NAME ALTERNATIVE")
-                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                            (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
                                             .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -2528,7 +2604,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                               (defaultCColor)
                                             .setGroup                               (addMuseumGroupObject)
                                             .setLabel                               ("ADD MUSEUM OBJECT")
-                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                            (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
                                             .setSize                                (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -3287,6 +3363,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ObjectPlayer    tempSelectedPlayerObject                                    ;                           /*Selected player object.*/
     int             tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
+    String          tempSelectedPlayerExplanationString                         = "";
     String          tempSelectedPlayerSentenceString                            = "";                       /*Temporary variable that contains selected player object sentence                           String.*/
     String          tempSelectedPlayerFinishedString                            = "";                       /*Temporary variable that contains selected player object finished                           String.*/
     List<String>    tempSelectedPlayerExhibitionTargetNameFullStringList        = new ArrayList<String>();  /*Temporary variable that contains selected player object target   exhibition list full name String.*/
@@ -3310,7 +3387,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
     Textlabel       editPlayerGroupPlayerSentenceTextlabelObject                ;
     Textarea        editPlayerGroupPlayerSentenceValueTextareaObject            ;
     Textlabel       editPlayerGroupPlayerExplanationTextlabelObject             ;
-    Textarea        editPlayerGroupPlayerExaplanationValueTextareaObject        ;
+    Textarea        editPlayerGroupPlayerExplanationValueTextareaObject         ;
     ScrollableList  editPlayerGroupPlayerTagScrollableListObject                ;
     Textlabel       editPlayerGroupPlayerModeTextlabelObject                    ;
     RadioButton     editPlayerGroupPlayerModeValueRadioButtonObject             ;
@@ -3336,13 +3413,19 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
         tempSelectedPlayerObject                                    =  playerObjectList     .get(0);                                                                    /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
+        
+        for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
+
+            if(i == 0)  { tempSelectedPlayerExplanationString          =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+            else        { tempSelectedPlayerExplanationString          = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+
+        }
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
             if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
             else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
-
 
 
         editPlayerGroupObject                                       =
@@ -3529,14 +3612,14 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
 
 
-        editPlayerGroupPlayerExaplanationValueTextareaObject        =
+        editPlayerGroupPlayerExplanationValueTextareaObject         =
             editPlayerGroupControlP5Object
                 .addTextarea                                        ("EditPlayerGroupPlayerExaplanationValueTextareaObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setPosition                                        (guiElement2ColumnSecondColumnXInt,  ((guiLayoutOffsetInt*13) + guiScrollableList5RowHeightInt))
                 .setSize                                            (guiElement2ColumnWidth , guiScrollableList5RowHeightInt)
-                .setText                                            (tempSelectedPlayerSentenceString);
+                .setText                                            (tempSelectedPlayerExplanationString);
 
 
 
@@ -3640,23 +3723,29 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         if(tempSelectedPlayerObject                             != null ){
 
             tempSelectedPlayerFinishedString                = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
-            for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                       /*Put all selected player sentences into one paragraph of a String variable.*/
+            for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
 
-                if(i == 0)  { tempSelectedPlayerSentenceString =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
-                else        { tempSelectedPlayerSentenceString = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+                if(i == 0)  { tempSelectedPlayerExplanationString          =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+                else        { tempSelectedPlayerExplanationString          = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+
+            }
+            for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
+
+                if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+                else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
             }
 
             editPlayerGroupPlayerIndexValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerIndexInt                         ));
-            editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                            ));
+            editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                                ));
             editPlayerGroupPlayerScoreValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerScoreInt                         ));
             editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  .setText ((     tempSelectedPlayerObject.exhibitionCurrentNameFullString        ));
             editPlayerGroupPlayerExhibitionTargetScrollableListObject   .setItems((     tempSelectedPlayerObject.exhibitionTargetNameFullStringList     ));
             editPlayerGroupPlayerExhibitionVisitedScrollableListObject  .setItems((     tempSelectedPlayerObject.exhibitionVisitedNameFullStringList    ));
             editPlayerGroupPlayerTagScrollableListObject                .setItems((     tempSelectedPlayerObject.exhibitionTagCounterNameFullStringList ));
-            editPlayerGroupPlayerSentenceValueTextareaObject            .setText ((     tempSelectedPlayerSentenceString                            ));
-            editPlayerGroupPlayerExaplanationValueTextareaObject        .setText ((     tempSelectedPlayerSentenceString                            ));
-            editPlayerGroupPlayerExhibitionNextScrollableListObject     .setItems((     exhibitionNameFullStringList                                ));
+            editPlayerGroupPlayerSentenceValueTextareaObject            .setText ((     tempSelectedPlayerSentenceString                                ));
+            editPlayerGroupPlayerExplanationValueTextareaObject         .setText ((     tempSelectedPlayerExplanationString                             ));
+            editPlayerGroupPlayerExhibitionNextScrollableListObject     .setItems((     exhibitionNameFullStringList                                    ));
             editPlayerGroupPlayerModeValueRadioButtonObject             .activate((     (tempSelectedPlayerObject.playerMovementModeInt - 1)            ));
 
         }
@@ -3965,12 +4054,12 @@ class   ObjectMuseum                                                            
         tagMuseumObjectList                         = Arrays.asList(_tagObjectArray);
         for(int i = 0; i < tagMuseumObjectList.size(); i ++){
 
-            tagMuseumNameAltStringList.add(tagMuseumObjectList.get(i).nameAltString);
-            tagMuseumNameFullStringList.add(tagMuseumObjectList.get(i).nameFullString);
+            tagMuseumNameAltStringList  .add(tagMuseumObjectList.get(i).nameAltString );
+            tagMuseumNameFullStringList .add(tagMuseumObjectList.get(i).nameFullString);
 
         }
 
-        for(int i = 0; i < 4; i ++){ explanationStringArray[i] = nameFullString + _explanationStringArray[i]; }
+        for(int i = 0; i < 4; i ++){ explanationStringArray[i] = nameFullString + " " + _explanationStringArray[i]; }
 
         /*Create panel.*/
         panelObject                                 = new Panel();
