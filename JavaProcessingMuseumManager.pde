@@ -542,363 +542,480 @@ void OnExit(){ Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){ p
 
 void LoadVoid(){
 
-    JSONArray subjectTagLoadJSONArrayObject = loadJSONArray("data/subjectTag.json");
-    for(int i = 0; i < subjectTagLoadJSONArrayObject.size(); i ++){
+    boolean initBool    =  true;
 
-        JSONObject subjectTagLoadJSONObject = subjectTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = subjectTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = subjectTagLoadJSONObject.getString("nameFullString");
-        String tempTagSubjectString = subjectTagLoadJSONObject.getString("tagSubjectString");
-        String tempTagTypeString = subjectTagLoadJSONObject.getString("tagTypeString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagSubjectString);
-        subjectTagObjectList.add(tempTagObject);
+    if      (initBool   == true ){
+
+        subjectTagObjectList            = Arrays.asList(
+            new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
+            new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington")
+        );
+        verbTagObjectList               = Arrays.asList(
+            new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
+            new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running")
+        );
+        negativeVerbTagObjectList       = Arrays.asList(
+            new Tag(new Name("NVE_DIE", "Verb Die"              ), "NVE", "die", "died", "died", "dies", "dying"),
+            new Tag(new Name("NVE_KIL", "Verb Kill"             ), "NVE", "kill", "killed", "killed", "kills", "killing")
+        );
+        nounTagObjectList               = Arrays.asList(
+            new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
+            new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns")
+        );
+        adjectiveTagObjectList          = Arrays.asList(
+            new Tag(new Name("ADJ_BAD", "Adjective Excellent"   ), "ADJ", "excellent"),
+            new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good")
+        );
+        negativeAdjectiveTagObjectList  = Arrays.asList(
+            new Tag(new Name("NDJ_AWF", "Adjective Awful"       ), "NDJ", "awful"),
+            new Tag(new Name("NDJ_BAD", "Adjective Bad"         ), "NDJ", "bad")
+        );
+        adverbTagObjectList             = Arrays.asList(
+            new Tag(new Name("ADV_PER", "Adverb Perfectly"      ), "ADV", "perfectly"),
+            new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly")
+        );
+        negativeAdverbTagObjectList     = Arrays.asList(
+            new Tag(new Name("NDV_DES", "Adverb Desperately"    ), "NDV", "desperately"),
+            new Tag(new Name("NDV_SLO", "Adverb Slowly"         ), "NDV", "slowly")
+        );
+
+        String[] exampleExplanationStringArray = {
+
+            "Explanation 1",
+            "Explanation 2",
+            "Explanation 3",
+            "Explanation 4"
+
+        };
+
+        floorObjectList         = Arrays.asList(
+            new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        );
+        roomObjectList          = Arrays.asList(
+            new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        );
+        exhibitionObjectList    = Arrays.asList(
+            new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        );
+        for(int i = 0; i < playerAmountInt; i ++)                   {
+            ObjectPlayer objectPlayer = new ObjectPlayer(
+                (i + 1),
+                "DUMMY NAME",
+                exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString      /*Generate random starting exhibition for the player.*/
+            );
+        }
 
     }
-    JSONArray verbTagLoadJSONArrayObject = loadJSONArray("data/verbTag.json");
-    for(int i = 0; i < verbTagLoadJSONArrayObject.size(); i ++){
+    else if (initBool   == false){
+        JSONArray subjectTagLoadJSONArrayObject = loadJSONArray("data/subjectTag.json");
+        for(int i = 0; i < subjectTagLoadJSONArrayObject.size(); i ++){
 
-        JSONObject verbTagLoadJSONObject = verbTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = verbTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = verbTagLoadJSONObject.getString("nameFullString");
-        String tempTagTypeString = verbTagLoadJSONObject.getString("tagTypeString");
-        String tempTagVerb1String = verbTagLoadJSONObject.getString("tagVerb1String");
-        String tempTagVerb2String = verbTagLoadJSONObject.getString("tagVerb2String");
-        String tempTagVerb3String = verbTagLoadJSONObject.getString("tagVerb3String");
-        String tempTagVerbIngString = verbTagLoadJSONObject.getString("tagVerbIngString");
-        String tempTagVerbSString = verbTagLoadJSONObject.getString("tagVerbSString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagVerb1String, tempTagVerb2String, tempTagVerb3String, tempTagVerbIngString, tempTagVerbSString);
-        verbTagObjectList.add(tempTagObject);
-
-    }
-    JSONArray negativeVerbTagLoadJSONArrayObject = loadJSONArray("data/negativeVerbTag.json");
-    for(int i = 0; i < negativeVerbTagLoadJSONArrayObject.size(); i ++){
-
-        JSONObject negativeVerbTagLoadJSONObject = negativeVerbTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = negativeVerbTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = negativeVerbTagLoadJSONObject.getString("nameFullString");
-        String tempTagNegativeVerb1String = negativeVerbTagLoadJSONObject.getString("tagNegativeVerb1String");
-        String tempTagNegativeVerb2String = negativeVerbTagLoadJSONObject.getString("tagNegativeVerb2String");
-        String tempTagNegativeVerb3String = negativeVerbTagLoadJSONObject.getString("tagNegativeVerb3String");
-        String tempTagNegativeVerbIngString = negativeVerbTagLoadJSONObject.getString("tagNegativeVerbIngString");
-        String tempTagNegativeVerbSString = negativeVerbTagLoadJSONObject.getString("tagNegativeVerbSString");
-        String tempTagTypeString = negativeVerbTagLoadJSONObject.getString("tagTypeString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNegativeVerb1String, tempTagNegativeVerb2String, tempTagNegativeVerb3String, tempTagNegativeVerbIngString, tempTagNegativeVerbSString);
-        negativeVerbTagObjectList.add(tempTagObject);
-
-    }
-    JSONArray nounTagLoadJSONArrayObject = loadJSONArray("data/nounTag.json");
-    for(int i = 0; i < nounTagLoadJSONArrayObject.size(); i ++){
-
-        JSONObject nounTagLoadJSONObject = nounTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = nounTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = nounTagLoadJSONObject.getString("nameFullString");
-        String tempTagNounSString = nounTagLoadJSONObject.getString("tagNounSString");
-        String tempTagNounString = nounTagLoadJSONObject.getString("tagNounString");
-        String tempTagTypeString = nounTagLoadJSONObject.getString("tagTypeString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNounString, tempTagNounSString);
-        nounTagObjectList.add(tempTagObject);
-
-    }
-    JSONArray adjectiveTagLoadJSONArrayObject = loadJSONArray("data/adjectiveTag.json");
-    for(int i = 0; i < adjectiveTagLoadJSONArrayObject.size(); i ++){
-
-        JSONObject adjectiveTagLoadJSONObject = adjectiveTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = adjectiveTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = adjectiveTagLoadJSONObject.getString("nameFullString");
-        String tempTagAdjectiveString = adjectiveTagLoadJSONObject.getString("tagAdjectiveString");
-        String tempTagTypeString = adjectiveTagLoadJSONObject.getString("tagTypeString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagAdjectiveString);
-        adjectiveTagObjectList.add(tempTagObject);
-
-    }
-    JSONArray negativeAdjectiveTagLoadJSONArrayObject = loadJSONArray("data/negativeAdjectiveTag.json");
-    for(int i = 0; i < negativeAdjectiveTagLoadJSONArrayObject.size(); i ++){
-
-        JSONObject negativeAdjectiveTagLoadJSONObject = negativeAdjectiveTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = negativeAdjectiveTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = negativeAdjectiveTagLoadJSONObject.getString("nameFullString");
-        String tempTagNegativeAdjectiveString = negativeAdjectiveTagLoadJSONObject.getString("tagNegativeAdjectiveString");
-        String tempTagTypeString = negativeAdjectiveTagLoadJSONObject.getString("tagTypeString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNegativeAdjectiveString);
-        negativeAdjectiveTagObjectList.add(tempTagObject);
-
-    }
-    JSONArray adverbTagLoadJSONArrayObject = loadJSONArray("data/adverbTag.json");
-    for(int i = 0; i < adverbTagLoadJSONArrayObject.size(); i ++){
-
-        JSONObject adverbTagLoadJSONObject = adverbTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = adverbTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = adverbTagLoadJSONObject.getString("nameFullString");
-        String tempTagAdverbString = adverbTagLoadJSONObject.getString("tagAdverbString");
-        String tempTagTypeString = adverbTagLoadJSONObject.getString("tagTypeString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagAdverbString);
-        adverbTagObjectList.add(tempTagObject);
-
-    }
-    JSONArray negativeAdverbTagLoadJSONArrayObject = loadJSONArray("data/negativeAdverbTag.json");
-    for(int i = 0; i < negativeAdverbTagLoadJSONArrayObject.size(); i ++){
-
-        JSONObject negativeAdverbTagLoadJSONObject = negativeAdverbTagLoadJSONArrayObject.getJSONObject(i);
-        String tempNameAltString = negativeAdverbTagLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = negativeAdverbTagLoadJSONObject.getString("nameFullString");
-        String tempTagNegativeAdverbString = negativeAdverbTagLoadJSONObject.getString("tagNegativeAdverbString");
-        String tempTagTypeString = negativeAdverbTagLoadJSONObject.getString("tagTypeString");
-        Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNegativeAdverbString);
-        negativeAdverbTagObjectList.add(tempTagObject);
-
-    }
-    floorObjectList = new ArrayList<ObjectMuseum>();
-    JSONArray floorLoadJSONArrayObject = loadJSONArray("data/floor.json");
-    for(int i = 0; i < floorLoadJSONArrayObject.size(); i ++){
-
-        JSONObject floorLoadJSONObject = floorLoadJSONArrayObject.getJSONObject(i);
-
-        String tempNameAltString = floorLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = floorLoadJSONObject.getString("nameFullString");
-        String tempParentNameAltString = floorLoadJSONObject.getString("parentNameAltString");
-        String tempTypeString = floorLoadJSONObject.getString("typeString");
-        int indexCounterInt = 0;
-        List<Tag> tempTagObjectList = new ArrayList<Tag>();
-        while(floorLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
-
-            String tempTagNameAltString = floorLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
-            Tag tempTagObject = FindTagObject(tempTagNameAltString);
-            tempTagObjectList.add(tempTagObject);
-            indexCounterInt ++;
+            JSONObject subjectTagLoadJSONObject = subjectTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = subjectTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = subjectTagLoadJSONObject.getString("nameFullString");
+            String tempTagSubjectString = subjectTagLoadJSONObject.getString("tagSubjectString");
+            String tempTagTypeString = subjectTagLoadJSONObject.getString("tagTypeString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagSubjectString);
+            subjectTagObjectList.add(tempTagObject);
 
         }
-        Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
-        tempTagObjectList.toArray(tempTagObjectArray);
-        ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
+        JSONArray verbTagLoadJSONArrayObject = loadJSONArray("data/verbTag.json");
+        for(int i = 0; i < verbTagLoadJSONArrayObject.size(); i ++){
 
-        boolean tempFullBoolean = floorLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
-        int tempIndexGlobalInt = floorLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
-        int tempIndexLocalInt = floorLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
-        int tempVisitorCurrentInt = floorLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
-        int tempVisitorTotalInt = floorLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
-
-        floorObjectList.add(tempMuseumObject);
-    }
-    roomObjectList = new ArrayList<ObjectMuseum>();
-    JSONArray roomLoadJSONArrayObject = loadJSONArray("data/room.json");
-    for(int i = 0; i < roomLoadJSONArrayObject.size(); i ++){
-
-        JSONObject roomLoadJSONObject = roomLoadJSONArrayObject.getJSONObject(i);
-
-        String tempNameAltString = roomLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = roomLoadJSONObject.getString("nameFullString");
-        String tempParentNameAltString = roomLoadJSONObject.getString("parentNameAltString");
-        String tempTypeString = roomLoadJSONObject.getString("typeString");
-        int indexCounterInt = 0;
-        List<Tag> tempTagObjectList = new ArrayList<Tag>();
-        while(roomLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
-
-            String tempTagNameAltString = roomLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
-            Tag tempTagObject = FindTagObject(tempTagNameAltString);
-            tempTagObjectList.add(tempTagObject);
-            indexCounterInt ++;
+            JSONObject verbTagLoadJSONObject = verbTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = verbTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = verbTagLoadJSONObject.getString("nameFullString");
+            String tempTagTypeString = verbTagLoadJSONObject.getString("tagTypeString");
+            String tempTagVerb1String = verbTagLoadJSONObject.getString("tagVerb1String");
+            String tempTagVerb2String = verbTagLoadJSONObject.getString("tagVerb2String");
+            String tempTagVerb3String = verbTagLoadJSONObject.getString("tagVerb3String");
+            String tempTagVerbIngString = verbTagLoadJSONObject.getString("tagVerbIngString");
+            String tempTagVerbSString = verbTagLoadJSONObject.getString("tagVerbSString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagVerb1String, tempTagVerb2String, tempTagVerb3String, tempTagVerbIngString, tempTagVerbSString);
+            verbTagObjectList.add(tempTagObject);
 
         }
-        Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
-        tempTagObjectList.toArray(tempTagObjectArray);
-        ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
+        JSONArray negativeVerbTagLoadJSONArrayObject = loadJSONArray("data/negativeVerbTag.json");
+        for(int i = 0; i < negativeVerbTagLoadJSONArrayObject.size(); i ++){
 
-        boolean tempFullBoolean = roomLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
-        int tempIndexGlobalInt = roomLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
-        int tempIndexLocalInt = roomLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
-        int tempVisitorCurrentInt = roomLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
-        int tempVisitorTotalInt = roomLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
-
-        roomObjectList.add(tempMuseumObject);
-    }
-    exhibitionObjectList = new ArrayList<ObjectMuseum>();
-    JSONArray exhibitionLoadJSONArrayObject = loadJSONArray("data/exhibition.json");
-    for(int i = 0; i < exhibitionLoadJSONArrayObject.size(); i ++){
-
-        JSONObject exhibitionLoadJSONObject = exhibitionLoadJSONArrayObject.getJSONObject(i);
-
-        String tempNameAltString = exhibitionLoadJSONObject.getString("nameAltString");
-        String tempNameFullString = exhibitionLoadJSONObject.getString("nameFullString");
-        String tempParentNameAltString = exhibitionLoadJSONObject.getString("parentNameAltString");
-        String tempTypeString = exhibitionLoadJSONObject.getString("typeString");
-        int indexCounterInt = 0;
-        List<Tag> tempTagObjectList = new ArrayList<Tag>();
-        while(exhibitionLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
-
-            String tempTagNameAltString = exhibitionLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
-            Tag tempTagObject = FindTagObject(tempTagNameAltString);
-            tempTagObjectList.add(tempTagObject);
-            indexCounterInt ++;
+            JSONObject negativeVerbTagLoadJSONObject = negativeVerbTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = negativeVerbTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = negativeVerbTagLoadJSONObject.getString("nameFullString");
+            String tempTagNegativeVerb1String = negativeVerbTagLoadJSONObject.getString("tagNegativeVerb1String");
+            String tempTagNegativeVerb2String = negativeVerbTagLoadJSONObject.getString("tagNegativeVerb2String");
+            String tempTagNegativeVerb3String = negativeVerbTagLoadJSONObject.getString("tagNegativeVerb3String");
+            String tempTagNegativeVerbIngString = negativeVerbTagLoadJSONObject.getString("tagNegativeVerbIngString");
+            String tempTagNegativeVerbSString = negativeVerbTagLoadJSONObject.getString("tagNegativeVerbSString");
+            String tempTagTypeString = negativeVerbTagLoadJSONObject.getString("tagTypeString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNegativeVerb1String, tempTagNegativeVerb2String, tempTagNegativeVerb3String, tempTagNegativeVerbIngString, tempTagNegativeVerbSString);
+            negativeVerbTagObjectList.add(tempTagObject);
 
         }
-        Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
-        tempTagObjectList.toArray(tempTagObjectArray);
-        ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempTagObjectArray);
+        JSONArray nounTagLoadJSONArrayObject = loadJSONArray("data/nounTag.json");
+        for(int i = 0; i < nounTagLoadJSONArrayObject.size(); i ++){
 
-        boolean tempFullBoolean = exhibitionLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
-        int tempIndexGlobalInt = exhibitionLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
-        int tempIndexLocalInt = exhibitionLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
-        int tempVisitorCurrentInt = exhibitionLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
-        int tempVisitorTotalInt = exhibitionLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
+            JSONObject nounTagLoadJSONObject = nounTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = nounTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = nounTagLoadJSONObject.getString("nameFullString");
+            String tempTagNounSString = nounTagLoadJSONObject.getString("tagNounSString");
+            String tempTagNounString = nounTagLoadJSONObject.getString("tagNounString");
+            String tempTagTypeString = nounTagLoadJSONObject.getString("tagTypeString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNounString, tempTagNounSString);
+            nounTagObjectList.add(tempTagObject);
 
-        exhibitionObjectList.add(tempMuseumObject);
-    }
+        }
+        JSONArray adjectiveTagLoadJSONArrayObject = loadJSONArray("data/adjectiveTag.json");
+        for(int i = 0; i < adjectiveTagLoadJSONArrayObject.size(); i ++){
 
-    JSONArray playerLoadJSONArrayObject = loadJSONArray("data/player.json");
-    for(int i = 0; i < playerLoadJSONArrayObject.size(); i ++){
-        JSONObject playerLoadJSONObject = playerLoadJSONArrayObject.getJSONObject(i);
+            JSONObject adjectiveTagLoadJSONObject = adjectiveTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = adjectiveTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = adjectiveTagLoadJSONObject.getString("nameFullString");
+            String tempTagAdjectiveString = adjectiveTagLoadJSONObject.getString("tagAdjectiveString");
+            String tempTagTypeString = adjectiveTagLoadJSONObject.getString("tagTypeString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagAdjectiveString);
+            adjectiveTagObjectList.add(tempTagObject);
 
-        int tempPlayerIndexInt = playerLoadJSONObject.getInt("playerIndexInt");
-        String tempPlayerNameString = playerLoadJSONObject.getString("playerNameString");
-        String tempExhibitionStartString = playerLoadJSONObject.getString("exhibitionCurrentString");
-        ObjectPlayer tempPlayerObject = new ObjectPlayer(tempPlayerIndexInt, tempPlayerNameString, tempExhibitionStartString);
+        }
+        JSONArray negativeAdjectiveTagLoadJSONArrayObject = loadJSONArray("data/negativeAdjectiveTag.json");
+        for(int i = 0; i < negativeAdjectiveTagLoadJSONArrayObject.size(); i ++){
 
-        int indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("adjectiveCurrentPrevTagStringList" + indexCounterInt)){
-            String tempAdjectiveCurrentPrevTagString = playerLoadJSONObject.getString("adjectiveCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.adjectiveCurrentPrevTagStringList.add(tempAdjectiveCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("adverbCurrentPrevTagStringList" + indexCounterInt)){
-            String tempAdverbCurrentPrevTagString = playerLoadJSONObject.getString("adverbCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.adverbCurrentPrevTagStringList.add(tempAdverbCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("exhibitionTargetNameAltStringList" + indexCounterInt)){
-            String tempExhibitionTargetNameAltString = playerLoadJSONObject.getString("exhibitionTargetNameAltStringList" + indexCounterInt);
-            tempPlayerObject.exhibitionTargetNameAltStringList.add(tempExhibitionTargetNameAltString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("exhibitionVisitedNameAltStringList" + indexCounterInt)){
-            String tempExhibitionVisitedNameAltString = playerLoadJSONObject.getString("exhibitionVisitedNameAltStringList" + indexCounterInt);
-            tempPlayerObject.exhibitionVisitedNameAltStringList.add(tempExhibitionVisitedNameAltString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt)){
-            String tempNegativeAdjectiveCurrentPrevTagString = playerLoadJSONObject.getString("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.negativeAdjectiveCurrentPrevTagStringList.add(tempNegativeAdjectiveCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("negativeAdverbCurrentPrevTagStringList" + indexCounterInt)){
-            String tempNegativeAdverbCurrentPrevTagString = playerLoadJSONObject.getString("negativeAdverbCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.negativeAdverbCurrentPrevTagStringList.add(tempNegativeAdverbCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("negativeVerb1CurrentPrevTagStringList" + indexCounterInt)){
-            String tempNegativeVerb1CurrentPrevTagString = playerLoadJSONObject.getString("negativeVerb1CurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.negativeVerb1CurrentPrevTagStringList.add(tempNegativeVerb1CurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("negativeVerb2CurrentPrevTagStringList" + indexCounterInt)){
-            String tempNegativeVerb2CurrentPrevTagString = playerLoadJSONObject.getString("negativeVerb2CurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.negativeVerb2CurrentPrevTagStringList.add(tempNegativeVerb2CurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("negativeVerb3CurrentPrevTagStringList" + indexCounterInt)){
-            String tempNegativeVerb3CurrentPrevTagString = playerLoadJSONObject.getString("negativeVerb3CurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.negativeVerb3CurrentPrevTagStringList.add(tempNegativeVerb3CurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("negativeVerbIngCurrentPrevTagStringList" + indexCounterInt)){
-            String tempNegativeVerbIngCurrentPrevTagString = playerLoadJSONObject.getString("negativeVerbIngCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.negativeVerbIngCurrentPrevTagStringList.add(tempNegativeVerbIngCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("negativeVerbSCurrentPrevTagStringList" + indexCounterInt)){
-            String tempNegativeVerbSCurrentPrevTagString = playerLoadJSONObject.getString("negativeVerbSCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.negativeVerbSCurrentPrevTagStringList.add(tempNegativeVerbSCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("nounCurrentPrevTagStringList" + indexCounterInt)){
-            String tempNounCurrentPrevTagString = playerLoadJSONObject.getString("nounCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.nounCurrentPrevTagStringList.add(tempNounCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("nounSCurrentPrevTagStringList" + indexCounterInt)){
-            String tempNounSCurrentPrevTagString = playerLoadJSONObject.getString("nounSCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.nounSCurrentPrevTagStringList.add(tempNounSCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("playerSiblingObjectList" + indexCounterInt)){
-            int tempPlayerSiblingObjectInt = playerLoadJSONObject.getInt("playerSiblingObjectList" + indexCounterInt);
-            ObjectPlayer tempObjectPlayer = FindPlayerObject(tempPlayerSiblingObjectInt);
-            tempPlayerObject.playerSiblingObjectList.add(tempObjectPlayer);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("sentenceStringList" + indexCounterInt)){
-            String tempSentenceString = playerLoadJSONObject.getString("sentenceStringList" + indexCounterInt);
-            tempPlayerObject.sentenceStringList.add(tempSentenceString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("subjectCurrentPrevTagStringList" + indexCounterInt)){
-            String tempSubjectCurrentPrevTagString = playerLoadJSONObject.getString("subjectCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.subjectCurrentPrevTagStringList.add(tempSubjectCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("exhibitionTagCounterListNamAltString" + indexCounterInt)){
-            TagCounter tempTagCounter = new TagCounter();
-            String tempExhibitionTagCounterListNamAltString = playerLoadJSONObject.getString("exhibitionTagCounterListNamAltString" + indexCounterInt);
-            String tempExhibitionTagCounterListNameFullString = playerLoadJSONObject.getString("exhibitionTagCounterListNameFullString" + indexCounterInt);
-            int tempExhibitionTagCounterListTagCounterInt = playerLoadJSONObject.getInt("exhibitionTagCounterListTagCounterInt" + indexCounterInt);
-            tempTagCounter.SetTagNameAltString(tempExhibitionTagCounterListNamAltString);
-            tempTagCounter.SetTagNameFullString(tempExhibitionTagCounterListNameFullString);
-            tempTagCounter.SetTagCounterIntVoid(tempExhibitionTagCounterListTagCounterInt);
-            tempPlayerObject.exhibitionTagCounterList.add(tempTagCounter);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("verb1CurrentPrevTagStringList" + indexCounterInt)){
-            String tempVerb1CurrentPrevTagString = playerLoadJSONObject.getString("verb1CurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.verb1CurrentPrevTagStringList.add(tempVerb1CurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("verb2CurrentPrevTagStringList" + indexCounterInt)){
-            String tempVerb2CurrentPrevTagString = playerLoadJSONObject.getString("verb2CurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.verb2CurrentPrevTagStringList.add(tempVerb2CurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("verb3CurrentPrevTagStringList" + indexCounterInt)){
-            String tempVerb3CurrentPrevTagString = playerLoadJSONObject.getString("verb3CurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.verb3CurrentPrevTagStringList.add(tempVerb3CurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("verbIngCurrentPrevTagStringList" + indexCounterInt)){
-            String tempVerbSCurrentPrevTagStringList = playerLoadJSONObject.getString("verbIngCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.verbIngCurrentPrevTagStringList.add(tempVerbSCurrentPrevTagStringList);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
-        while(playerLoadJSONObject.hasKey("verbSCurrentPrevTagStringList" + indexCounterInt)){
-            String tempVerbSCurrentPrevTagString = playerLoadJSONObject.getString("verbSCurrentPrevTagStringList" + indexCounterInt);
-            tempPlayerObject.verbSCurrentPrevTagStringList.add(tempVerbSCurrentPrevTagString);
-            indexCounterInt ++;
-        }
-        indexCounterInt = 0;
+            JSONObject negativeAdjectiveTagLoadJSONObject = negativeAdjectiveTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = negativeAdjectiveTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = negativeAdjectiveTagLoadJSONObject.getString("nameFullString");
+            String tempTagNegativeAdjectiveString = negativeAdjectiveTagLoadJSONObject.getString("tagNegativeAdjectiveString");
+            String tempTagTypeString = negativeAdjectiveTagLoadJSONObject.getString("tagTypeString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNegativeAdjectiveString);
+            negativeAdjectiveTagObjectList.add(tempTagObject);
 
-        boolean tempPlayerFinishedBoolean = playerLoadJSONObject.getBoolean("playerFinishedBoolean"); tempPlayerObject.playerFinishedBoolean = tempPlayerFinishedBoolean;
-        boolean tempPlayerVisitCorrectExhibitionBoolean = playerLoadJSONObject.getBoolean("playerVisitCorrectExhibitionBoolean"); tempPlayerObject.playerVisitCorrectExhibitionBoolean = tempPlayerVisitCorrectExhibitionBoolean;
-        int tempPlayerMovementModeInt = playerLoadJSONObject.getInt("playerMovementModeInt"); tempPlayerObject.playerMovementModeInt = tempPlayerMovementModeInt;
-        int tempPlayerScoreInt = playerLoadJSONObject.getInt("playerScoreInt"); tempPlayerObject.playerScoreInt = tempPlayerScoreInt;
-        int tempPlayerSiblingIndexInt = playerLoadJSONObject.getInt("playerSiblingIndexInt"); tempPlayerObject.playerSiblingIndexInt = tempPlayerSiblingIndexInt;
+        }
+        JSONArray adverbTagLoadJSONArrayObject = loadJSONArray("data/adverbTag.json");
+        for(int i = 0; i < adverbTagLoadJSONArrayObject.size(); i ++){
+
+            JSONObject adverbTagLoadJSONObject = adverbTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = adverbTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = adverbTagLoadJSONObject.getString("nameFullString");
+            String tempTagAdverbString = adverbTagLoadJSONObject.getString("tagAdverbString");
+            String tempTagTypeString = adverbTagLoadJSONObject.getString("tagTypeString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagAdverbString);
+            adverbTagObjectList.add(tempTagObject);
+
+        }
+        JSONArray negativeAdverbTagLoadJSONArrayObject = loadJSONArray("data/negativeAdverbTag.json");
+        for(int i = 0; i < negativeAdverbTagLoadJSONArrayObject.size(); i ++){
+
+            JSONObject negativeAdverbTagLoadJSONObject = negativeAdverbTagLoadJSONArrayObject.getJSONObject(i);
+            String tempNameAltString = negativeAdverbTagLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = negativeAdverbTagLoadJSONObject.getString("nameFullString");
+            String tempTagNegativeAdverbString = negativeAdverbTagLoadJSONObject.getString("tagNegativeAdverbString");
+            String tempTagTypeString = negativeAdverbTagLoadJSONObject.getString("tagTypeString");
+            Tag tempTagObject = new Tag(new Name(tempNameAltString, tempNameFullString), tempTagTypeString, tempTagNegativeAdverbString);
+            negativeAdverbTagObjectList.add(tempTagObject);
+
+        }
+        floorObjectList = new ArrayList<ObjectMuseum>();
+        JSONArray floorLoadJSONArrayObject = loadJSONArray("data/floor.json");
+        for(int i = 0; i < floorLoadJSONArrayObject.size(); i ++){
+
+            JSONObject floorLoadJSONObject = floorLoadJSONArrayObject.getJSONObject(i);
+
+            String tempNameAltString = floorLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = floorLoadJSONObject.getString("nameFullString");
+            String tempParentNameAltString = floorLoadJSONObject.getString("parentNameAltString");
+            String tempTypeString = floorLoadJSONObject.getString("typeString");
+            int indexCounterInt = 0;
+            List<Tag> tempTagObjectList = new ArrayList<Tag>();
+            while(floorLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
+
+                String tempTagNameAltString = floorLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
+                Tag tempTagObject = FindTagObject(tempTagNameAltString);
+                tempTagObjectList.add(tempTagObject);
+                indexCounterInt ++;
+
+            }
+            indexCounterInt = 0;
+            String[] tempExplanationStringArray = new String[4];
+            while(floorLoadJSONObject.hasKey("explanationStringArray" + indexCounterInt)){
+
+                tempExplanationStringArray[indexCounterInt] = floorLoadJSONObject.getString("explanationStringArray" + indexCounterInt);
+                indexCounterInt ++;
+
+            }
+            indexCounterInt = 0;
+            Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
+            tempTagObjectList.toArray(tempTagObjectArray);
+            ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempExplanationStringArray, tempTagObjectArray);
+
+            boolean tempFullBoolean = floorLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
+            int tempIndexGlobalInt = floorLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
+            int tempIndexLocalInt = floorLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
+            int tempVisitorCurrentInt = floorLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
+            int tempVisitorTotalInt = floorLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
+
+            floorObjectList.add(tempMuseumObject);
+        }
+        roomObjectList = new ArrayList<ObjectMuseum>();
+        JSONArray roomLoadJSONArrayObject = loadJSONArray("data/room.json");
+        for(int i = 0; i < roomLoadJSONArrayObject.size(); i ++){
+
+            JSONObject roomLoadJSONObject = roomLoadJSONArrayObject.getJSONObject(i);
+
+            String tempNameAltString = roomLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = roomLoadJSONObject.getString("nameFullString");
+            String tempParentNameAltString = roomLoadJSONObject.getString("parentNameAltString");
+            String tempTypeString = roomLoadJSONObject.getString("typeString");
+            int indexCounterInt = 0;
+            List<Tag> tempTagObjectList = new ArrayList<Tag>();
+            while(roomLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
+
+                String tempTagNameAltString = roomLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
+                Tag tempTagObject = FindTagObject(tempTagNameAltString);
+                tempTagObjectList.add(tempTagObject);
+                indexCounterInt ++;
+
+            }
+            indexCounterInt = 0;
+            String[] tempExplanationStringArray = new String[4];
+            while(roomLoadJSONObject.hasKey("explanationStringArray" + indexCounterInt)){
+
+                tempExplanationStringArray[indexCounterInt] = roomLoadJSONObject.getString("explanationStringArray" + indexCounterInt);
+                indexCounterInt ++;
+
+            }
+            indexCounterInt = 0;
+            Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
+            tempTagObjectList.toArray(tempTagObjectArray);
+            ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempExplanationStringArray, tempTagObjectArray);
+
+            boolean tempFullBoolean = roomLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
+            int tempIndexGlobalInt = roomLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
+            int tempIndexLocalInt = roomLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
+            int tempVisitorCurrentInt = roomLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
+            int tempVisitorTotalInt = roomLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
+
+            roomObjectList.add(tempMuseumObject);
+        }
+        exhibitionObjectList = new ArrayList<ObjectMuseum>();
+        JSONArray exhibitionLoadJSONArrayObject = loadJSONArray("data/exhibition.json");
+        for(int i = 0; i < exhibitionLoadJSONArrayObject.size(); i ++){
+
+            JSONObject exhibitionLoadJSONObject = exhibitionLoadJSONArrayObject.getJSONObject(i);
+
+            String tempNameAltString = exhibitionLoadJSONObject.getString("nameAltString");
+            String tempNameFullString = exhibitionLoadJSONObject.getString("nameFullString");
+            String tempParentNameAltString = exhibitionLoadJSONObject.getString("parentNameAltString");
+            String tempTypeString = exhibitionLoadJSONObject.getString("typeString");
+            int indexCounterInt = 0;
+            List<Tag> tempTagObjectList = new ArrayList<Tag>();
+            while(exhibitionLoadJSONObject.hasKey("tagMuseumNameAltStringList" + indexCounterInt)){
+
+                String tempTagNameAltString = exhibitionLoadJSONObject.getString("tagMuseumNameAltStringList" + indexCounterInt);
+                Tag tempTagObject = FindTagObject(tempTagNameAltString);
+                tempTagObjectList.add(tempTagObject);
+                indexCounterInt ++;
+
+            }
+            indexCounterInt = 0;
+            String[] tempExplanationStringArray = new String[4];
+            while(exhibitionLoadJSONObject.hasKey("explanationStringArray" + indexCounterInt)){
+
+                tempExplanationStringArray[indexCounterInt] = exhibitionLoadJSONObject.getString("explanationStringArray" + indexCounterInt);
+                indexCounterInt ++;
+
+            }
+            indexCounterInt = 0;
+            Tag[] tempTagObjectArray = new Tag[tempTagObjectList.size()];
+            tempTagObjectList.toArray(tempTagObjectArray);
+            ObjectMuseum tempMuseumObject = new ObjectMuseum(new Name(tempNameAltString, tempNameFullString), tempParentNameAltString, tempTypeString, tempExplanationStringArray, tempTagObjectArray);
+
+            boolean tempFullBoolean = exhibitionLoadJSONObject.getBoolean("fullBoolean"); tempMuseumObject.fullBoolean = tempFullBoolean;
+            int tempIndexGlobalInt = exhibitionLoadJSONObject.getInt("indexGlobalInt"); tempMuseumObject.indexGlobalInt = tempIndexGlobalInt;
+            int tempIndexLocalInt = exhibitionLoadJSONObject.getInt("indexLocalInt"); tempMuseumObject.indexLocalInt = tempIndexLocalInt;
+            int tempVisitorCurrentInt = exhibitionLoadJSONObject.getInt("visitorCurrentInt"); tempMuseumObject.visitorCurrentInt = tempVisitorCurrentInt;
+            int tempVisitorTotalInt = exhibitionLoadJSONObject.getInt("visitorTotalInt"); tempMuseumObject.visitorTotalInt = tempVisitorTotalInt;
+
+            exhibitionObjectList.add(tempMuseumObject);
+        }
+        JSONArray playerLoadJSONArrayObject = loadJSONArray("data/player.json");
+        for(int i = 0; i < playerLoadJSONArrayObject.size(); i ++){
+            JSONObject playerLoadJSONObject = playerLoadJSONArrayObject.getJSONObject(i);
+
+            int tempPlayerIndexInt = playerLoadJSONObject.getInt("playerIndexInt");
+            String tempPlayerNameString = playerLoadJSONObject.getString("playerNameString");
+            String tempExhibitionStartString = playerLoadJSONObject.getString("exhibitionCurrentString");
+            ObjectPlayer tempPlayerObject = new ObjectPlayer(tempPlayerIndexInt, tempPlayerNameString, tempExhibitionStartString);
+
+            int indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("adjectiveCurrentPrevTagStringList" + indexCounterInt)){
+                String tempAdjectiveCurrentPrevTagString = playerLoadJSONObject.getString("adjectiveCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.adjectiveCurrentPrevTagStringList.add(tempAdjectiveCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("adverbCurrentPrevTagStringList" + indexCounterInt)){
+                String tempAdverbCurrentPrevTagString = playerLoadJSONObject.getString("adverbCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.adverbCurrentPrevTagStringList.add(tempAdverbCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("exhibitionTargetNameAltStringList" + indexCounterInt)){
+                String tempExhibitionTargetNameAltString = playerLoadJSONObject.getString("exhibitionTargetNameAltStringList" + indexCounterInt);
+                tempPlayerObject.exhibitionTargetNameAltStringList.add(tempExhibitionTargetNameAltString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("exhibitionVisitedNameAltStringList" + indexCounterInt)){
+                String tempExhibitionVisitedNameAltString = playerLoadJSONObject.getString("exhibitionVisitedNameAltStringList" + indexCounterInt);
+                tempPlayerObject.exhibitionVisitedNameAltStringList.add(tempExhibitionVisitedNameAltString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("exhibitionTagCounterListNamAltString" + indexCounterInt)){
+                TagCounter tempTagCounter = new TagCounter();
+                String tempExhibitionTagCounterListNamAltString = playerLoadJSONObject.getString("exhibitionTagCounterListNamAltString" + indexCounterInt);
+                String tempExhibitionTagCounterListNameFullString = playerLoadJSONObject.getString("exhibitionTagCounterListNameFullString" + indexCounterInt);
+                int tempExhibitionTagCounterListTagCounterInt = playerLoadJSONObject.getInt("exhibitionTagCounterListTagCounterInt" + indexCounterInt);
+                tempTagCounter.SetTagNameAltString(tempExhibitionTagCounterListNamAltString);
+                tempTagCounter.SetTagNameFullString(tempExhibitionTagCounterListNameFullString);
+                tempTagCounter.SetTagCounterIntVoid(tempExhibitionTagCounterListTagCounterInt);
+                tempPlayerObject.exhibitionTagCounterList.add(tempTagCounter);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("explanationStringList" + indexCounterInt)){
+                String tempExplanationStringList = playerLoadJSONObject.getString("explanationStringList" + indexCounterInt);
+                tempPlayerObject.explanationStringList.add(tempExplanationStringList);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt)){
+                String tempNegativeAdjectiveCurrentPrevTagString = playerLoadJSONObject.getString("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.negativeAdjectiveCurrentPrevTagStringList.add(tempNegativeAdjectiveCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("negativeAdverbCurrentPrevTagStringList" + indexCounterInt)){
+                String tempNegativeAdverbCurrentPrevTagString = playerLoadJSONObject.getString("negativeAdverbCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.negativeAdverbCurrentPrevTagStringList.add(tempNegativeAdverbCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("negativeVerb1CurrentPrevTagStringList" + indexCounterInt)){
+                String tempNegativeVerb1CurrentPrevTagString = playerLoadJSONObject.getString("negativeVerb1CurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.negativeVerb1CurrentPrevTagStringList.add(tempNegativeVerb1CurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("negativeVerb2CurrentPrevTagStringList" + indexCounterInt)){
+                String tempNegativeVerb2CurrentPrevTagString = playerLoadJSONObject.getString("negativeVerb2CurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.negativeVerb2CurrentPrevTagStringList.add(tempNegativeVerb2CurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("negativeVerb3CurrentPrevTagStringList" + indexCounterInt)){
+                String tempNegativeVerb3CurrentPrevTagString = playerLoadJSONObject.getString("negativeVerb3CurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.negativeVerb3CurrentPrevTagStringList.add(tempNegativeVerb3CurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("negativeVerbIngCurrentPrevTagStringList" + indexCounterInt)){
+                String tempNegativeVerbIngCurrentPrevTagString = playerLoadJSONObject.getString("negativeVerbIngCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.negativeVerbIngCurrentPrevTagStringList.add(tempNegativeVerbIngCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("negativeVerbSCurrentPrevTagStringList" + indexCounterInt)){
+                String tempNegativeVerbSCurrentPrevTagString = playerLoadJSONObject.getString("negativeVerbSCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.negativeVerbSCurrentPrevTagStringList.add(tempNegativeVerbSCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("nounCurrentPrevTagStringList" + indexCounterInt)){
+                String tempNounCurrentPrevTagString = playerLoadJSONObject.getString("nounCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.nounCurrentPrevTagStringList.add(tempNounCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("nounSCurrentPrevTagStringList" + indexCounterInt)){
+                String tempNounSCurrentPrevTagString = playerLoadJSONObject.getString("nounSCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.nounSCurrentPrevTagStringList.add(tempNounSCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("playerSiblingObjectList" + indexCounterInt)){
+                int tempPlayerSiblingObjectInt = playerLoadJSONObject.getInt("playerSiblingObjectList" + indexCounterInt);
+                ObjectPlayer tempObjectPlayer = FindPlayerObject(tempPlayerSiblingObjectInt);
+                tempPlayerObject.playerSiblingObjectList.add(tempObjectPlayer);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("sentenceStringList" + indexCounterInt)){
+                String tempSentenceString = playerLoadJSONObject.getString("sentenceStringList" + indexCounterInt);
+                tempPlayerObject.sentenceStringList.add(tempSentenceString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("subjectCurrentPrevTagStringList" + indexCounterInt)){
+                String tempSubjectCurrentPrevTagString = playerLoadJSONObject.getString("subjectCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.subjectCurrentPrevTagStringList.add(tempSubjectCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("verb1CurrentPrevTagStringList" + indexCounterInt)){
+                String tempVerb1CurrentPrevTagString = playerLoadJSONObject.getString("verb1CurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.verb1CurrentPrevTagStringList.add(tempVerb1CurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("verb2CurrentPrevTagStringList" + indexCounterInt)){
+                String tempVerb2CurrentPrevTagString = playerLoadJSONObject.getString("verb2CurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.verb2CurrentPrevTagStringList.add(tempVerb2CurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("verb3CurrentPrevTagStringList" + indexCounterInt)){
+                String tempVerb3CurrentPrevTagString = playerLoadJSONObject.getString("verb3CurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.verb3CurrentPrevTagStringList.add(tempVerb3CurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("verbIngCurrentPrevTagStringList" + indexCounterInt)){
+                String tempVerbSCurrentPrevTagStringList = playerLoadJSONObject.getString("verbIngCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.verbIngCurrentPrevTagStringList.add(tempVerbSCurrentPrevTagStringList);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+            while(playerLoadJSONObject.hasKey("verbSCurrentPrevTagStringList" + indexCounterInt)){
+                String tempVerbSCurrentPrevTagString = playerLoadJSONObject.getString("verbSCurrentPrevTagStringList" + indexCounterInt);
+                tempPlayerObject.verbSCurrentPrevTagStringList.add(tempVerbSCurrentPrevTagString);
+                indexCounterInt ++;
+            }
+            indexCounterInt = 0;
+
+            boolean tempPlayerFinishedBoolean = playerLoadJSONObject.getBoolean("playerFinishedBoolean"); tempPlayerObject.playerFinishedBoolean = tempPlayerFinishedBoolean;
+            boolean tempPlayerVisitCorrectExhibitionBoolean = playerLoadJSONObject.getBoolean("playerVisitCorrectExhibitionBoolean"); tempPlayerObject.playerVisitCorrectExhibitionBoolean = tempPlayerVisitCorrectExhibitionBoolean;
+            int tempPlayerMovementModeInt = playerLoadJSONObject.getInt("playerMovementModeInt"); tempPlayerObject.playerMovementModeInt = tempPlayerMovementModeInt;
+            int tempPlayerScoreInt = playerLoadJSONObject.getInt("playerScoreInt"); tempPlayerObject.playerScoreInt = tempPlayerScoreInt;
+            int tempPlayerSiblingIndexInt = playerLoadJSONObject.getInt("playerSiblingIndexInt"); tempPlayerObject.playerSiblingIndexInt = tempPlayerSiblingIndexInt;
+        }
     }
 
 }
@@ -1001,11 +1118,13 @@ void SaveVoid(){
         floorSaveJSONObject.setString("nameFullString", floorObjectList.get(i).nameFullString);
         floorSaveJSONObject.setString("parentNameAltString", floorObjectList.get(i).parentNameAltString);
         floorSaveJSONObject.setString("typeString", floorObjectList.get(i).typeString);
+        for(int j = 0; j < floorObjectList.get(i).explanationStringArray.length; j ++){ playerSaveJSONObject.setString("explanationStringArray" + j, floorObjectList.get(i).explanationStringArray[j]); }
         for(int j = 0; j < floorObjectList.get(i).tagMuseumNameAltStringList.size(); j ++){ floorSaveJSONObject.setString("tagMuseumNameAltStringList" + j, floorObjectList.get(i).tagMuseumNameAltStringList.get(j)); }
         floorSaveJSONArrayObject.setJSONObject(i, floorSaveJSONObject);
     }
     for(int i = 0; i < roomObjectList.size(); i ++){
         roomSaveJSONObject = new JSONObject();
+        for(int j = 0; j < roomObjectList.get(i).explanationStringArray.length; j ++){ playerSaveJSONObject.setString("explanationStringArray" + j, roomObjectList.get(i).explanationStringArray[j]); }
         for(int j = 0; j < roomObjectList.get(i).tagMuseumNameAltStringList.size(); j ++){ roomSaveJSONObject.setString("tagMuseumNameAltStringList" + j, roomObjectList.get(i).tagMuseumNameAltStringList.get(j)); }
         roomSaveJSONObject.setBoolean("fullBoolean", roomObjectList.get(i).fullBoolean);
         roomSaveJSONObject.setInt("indexGlobalInt", roomObjectList.get(i).indexGlobalInt);
@@ -1029,6 +1148,7 @@ void SaveVoid(){
         exhibitionSaveJSONObject.setString("nameFullString", exhibitionObjectList.get(i).nameFullString);
         exhibitionSaveJSONObject.setString("parentNameAltString", exhibitionObjectList.get(i).parentNameAltString);
         exhibitionSaveJSONObject.setString("typeString", exhibitionObjectList.get(i).typeString);
+        for(int j = 0; j < exhibitionObjectList.get(i).explanationStringArray.length; j ++){ playerSaveJSONObject.setString("explanationStringArray" + j, exhibitionObjectList.get(i).explanationStringArray[j]); }
         for(int j = 0; j < exhibitionObjectList.get(i).tagMuseumNameAltStringList.size(); j ++){ exhibitionSaveJSONObject.setString("tagMuseumNameAltStringList" + j, exhibitionObjectList.get(i).tagMuseumNameAltStringList.get(j)); }
         exhibitionSaveJSONArrayObject.setJSONObject(i, exhibitionSaveJSONObject);
     }
@@ -1038,6 +1158,7 @@ void SaveVoid(){
         for(int j = 0; j < playerObjectList.get(i).adverbCurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("adverbCurrentPrevTagStringList" + j, playerObjectList.get(i).adverbCurrentPrevTagStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).exhibitionTargetNameAltStringList.size(); j ++){ playerSaveJSONObject.setString("exhibitionTargetNameAltStringList" + j, playerObjectList.get(i).exhibitionTargetNameAltStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).exhibitionVisitedNameAltStringList.size(); j ++){ playerSaveJSONObject.setString("exhibitionVisitedNameAltStringList" + j, playerObjectList.get(i).exhibitionVisitedNameAltStringList.get(j)); }
+        for(int j = 0; j < playerObjectList.get(i).explanationStringList.size(); j ++){ playerSaveJSONObject.setString("explanationStringList" + j, playerObjectList.get(i).explanationStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).negativeAdjectiveCurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("negativeAdjectiveCurrentPrevTagStringList" + j, playerObjectList.get(i).negativeAdjectiveCurrentPrevTagStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).negativeAdverbCurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("negativeAdverbCurrentPrevTagStringList" + j, playerObjectList.get(i).negativeAdverbCurrentPrevTagStringList.get(j)); }
         for(int j = 0; j < playerObjectList.get(i).negativeVerb1CurrentPrevTagStringList.size(); j ++){ playerSaveJSONObject.setString("negativeVerb1CurrentPrevTagStringList" + j, playerObjectList.get(i).negativeVerb1CurrentPrevTagStringList.get(j)); }
@@ -1319,10 +1440,19 @@ ObjectMuseum AddMuseumObject(
 
 ){
 
+    String[] exampleExplanationStringArray = {
+
+        "Explanation 1",
+        "Explanation 2",
+        "Explanation 3",
+        "Explanation 4"
+
+    };
+
     /*Create temporary list for object that we want to make, its list, and its parent list.*/
     List<ObjectMuseum>  museumObjectList            = new ArrayList<ObjectMuseum>();
     List<ObjectMuseum>  parentMuseumObjectList      = new ArrayList<ObjectMuseum>();
-    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, _tagObjectArray);
+    ObjectMuseum        museumObject                = new ObjectMuseum(new Name(_nameAltString, _nameFullString), _parentNameAltString, _typeString, exampleExplanationStringArray, _tagObjectArray);
 
     /*If statement to determine which List we should put in.*/
     if      (_typeString.equals("FLR")){
@@ -2046,15 +2176,15 @@ void AddPlayerGroupPickExhibitionStartScrollableListObject  (int _indexInt){
 /*A function to control what happen when user click Add Player button.*/
 void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
 
-    int             tempNextBiggestPlayerIndexInt       = tempNextBiggestPlayerIndexInt;                                                    /*Take the next biggest player index. This index will be the index number for the newly created player.*/
+    int             tempNextBiggestPlayerIndexInt       = nextBiggestPlayerIndexInt;                                                        /*Take the next biggest player index. This index will be the index number for the newly created player.*/
     String          tempPlayerNameString                = addPlayerGroupGUIObject.addPlayerGroupPlayerNameTextfieldObject.getText();        /*This will be the name of the newly player.                                                           */
     String          tempStartingExhibitionNameAltString = addPlayerGroupGUIObject.tempExhibitionStartNameAltString;                         /*This variable is for detrmining the starting exhibition of the newly created player.                 */
 
     /*If one or more field in this group form is not completed, then prevent the user from adding new player into the mian scene.*/
     if(
 
-        (tempBiggestPlayerIndexInt              >  0                                                    ) &&                                /*Make sure the index is larger than zero.                                                             */
-        (tempPlayerNameAltString                != "" || tempPlayerNameAltString                != null ) &&                                /*Make sure the player has a name.                                                                     */
+        (tempNextBiggestPlayerIndexInt          >  0                                                    ) &&                                /*Make sure the index is larger than zero.                                                             */
+        (tempPlayerNameString                   != "" || tempPlayerNameString                   != null ) &&                                /*Make sure the player has a name.                                                                     */
         (tempStartingExhibitionNameAltString    != "" || tempStartingExhibitionNameAltString    != null )                                   /*Make sure the newly created player has a starting exhibition String from this group scrollable list. */
 
     ){

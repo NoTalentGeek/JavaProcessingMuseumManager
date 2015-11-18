@@ -55,6 +55,10 @@ class ObjectPlayer{
     List<String>        exhibitionTagCounterNameFullStringList      = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
     
     List<String>        sentenceStringList                          = new ArrayList<String>();
+    List<String>        explanationStringList                       = new ArrayList<String>();
+
+
+
     List<String>        subjectCurrentPrevTagStringList             = new ArrayList<String>();
     List<String>        verb1CurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        verb2CurrentPrevTagStringList               = new ArrayList<String>();
@@ -357,14 +361,14 @@ class ObjectPlayer{
     void SetPanelVariableInsideVoid()                                                   {
 
         /*Panel layout calculations.*/
-        ObjectMuseum    exhibitionCurrentObject = FindObject(exhibitionObjectList, exhibitionCurrentString);
-                        widthPanelInt           = exhibitionCurrentObject.widthPanelInt;
-                        heightPanelInt          = exhibitionCurrentObject.heightPanelInt;
-                        xPanelInt               = exhibitionCurrentObject.xPanelInt;
-                        yPanelInt               = exhibitionCurrentObject.yPanelInt + ((playerSiblingIndexInt + 1)*heightPanelInt) + ((playerSiblingIndexInt + 1)*panelLayoutOffsetInt);
-
-        if      (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
-        else if (heightPanelInt <= 10){ heightPanelInt = 10; }
+        ObjectMuseum    exhibitionCurrentObject =  FindObject(exhibitionObjectList, exhibitionCurrentString);
+        if(             exhibitionCurrentObject == null){ exhibitionCurrentObject = exhibitionObjectList.get(0); }
+        widthPanelInt   = exhibitionCurrentObject.widthPanelInt;
+        heightPanelInt  = exhibitionCurrentObject.heightPanelInt;
+        xPanelInt       = exhibitionCurrentObject.xPanelInt;
+        yPanelInt       = exhibitionCurrentObject.yPanelInt + ((playerSiblingIndexInt + 1)*heightPanelInt) + ((playerSiblingIndexInt + 1)*panelLayoutOffsetInt);
+        if              (widthPanelInt <= 10 ){ widthPanelInt = 10;  }
+        else if         (heightPanelInt <= 10){ heightPanelInt = 10; }
         
     }
 
@@ -654,6 +658,30 @@ class ObjectPlayer{
         roomCurrentObject               .visitorTotalInt    ++;
         floorCurrentObject              .visitorTotalInt    ++;
 
+        /*Get the explanation of the new exhibition.*/
+        int             counterInt      = 0;
+        int             indexRandomInt  = (int)Math.floor(Math.random()*exhibitionCurrentObject.explanationStringArray.length);
+        List<Integer>   indexIntList    = new ArrayList<Integer>();
+                        indexIntList    .add(indexRandomInt);
+        while(
+
+            (explanationStringList.contains(exhibitionCurrentObject.explanationStringArray[indexRandomInt])) ||
+            (counterInt                  >= exhibitionCurrentObject.explanationStringArray.length)
+
+        ){
+
+            Integer[]   indexIntArray    = new Integer[indexIntList.size()];
+                        indexIntList    .toArray(indexIntArray);
+                        indexRandomInt  = RandomNumberWithExclusionInt(0, (exhibitionCurrentObject.explanationStringArray.length - 1), indexIntArray);
+                        indexIntList    .add(indexRandomInt);
+
+            counterInt ++;
+
+        }
+        if(counterInt < exhibitionCurrentObject.explanationStringArray.length){
+            explanationStringList.add(exhibitionCurrentObject.explanationStringArray[indexRandomInt]);
+        }
+
         PopulateTagStringList           (false);
 
         AddTagCounterVoid               (exhibitionCurrentObject);
@@ -766,6 +794,16 @@ class ObjectPlayer{
         );
 
         return panelObject;
+
+    }
+
+    /*Generate random number with exclusion.*/
+    int RandomNumberWithExclusionInt(int _startInt, int _endInt, Integer... _excludeIntArray){
+
+        int randomInt = 0;
+        do{ randomInt = (int)random(_startInt, _endInt); }
+        while(Arrays.binarySearch(_excludeIntArray, randomInt) >= 0);
+        return randomInt;
 
     }
 

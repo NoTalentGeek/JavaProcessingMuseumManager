@@ -30,6 +30,8 @@ class   ObjectMuseum                                                            
 
     boolean             activeBoolean               = false;                            /*Variable to control ControlP5 GUI element.*/
 
+    String[]            explanationStringArray      = new String[4];
+
     /*Variables of panel graphical user interfaces.*/
     boolean             hoverBoolean                = false;
     color               floorPanelColor             = color(69 , 40, 60);
@@ -46,6 +48,7 @@ class   ObjectMuseum                                                            
         Name                                        _nameObject             ,
         String                                      _parentNameAltString    ,
         String                                      _typeString             ,
+        String[]                                    _explanationStringArray ,
         Tag...                                      _tagObjectArray
 
     ){
@@ -79,6 +82,8 @@ class   ObjectMuseum                                                            
             tagMuseumNameFullStringList.add(tagMuseumObjectList.get(i).nameFullString);
 
         }
+
+        for(int i = 0; i < 4; i ++){ explanationStringArray[i] = nameFullString + _explanationStringArray[i]; }
 
         /*Create panel.*/
         panelObject                                 = new Panel();
@@ -148,6 +153,12 @@ class   ObjectMuseum                                                            
         //if(nameAltString.equals("EXH_TES")){ println(parentObject.childObjectList.size()); }
 
         else if     (typeString.equals("ROM") || typeString.equals("EXH")){
+
+            /*Check whether the parent object has been deleted or not.*/
+            if(parentObject == null){
+                if      (typeString.equals("ROM")){ parentObject = floorObjectList.get(0); }
+                else if (typeString.equals("EXH")){ parentObject = roomObjectList.get(0) ; }
+            }
 
             widthPanelInt   = ((parentObject.widthPanelInt - ((parentObject.childObjectList.size() - 1)*panelLayoutOffsetInt))/parentObject.childObjectList.size());
             heightPanelInt  = parentObject.heightPanelInt;
@@ -241,18 +252,12 @@ class   ObjectMuseum                                                            
 
     }
 
-    /*A function to add the children of this object into childObjectList.*/
-    List<ObjectMuseum> SetChildObjectList(List<ObjectMuseum> _targetObjectList)         {
+    /*A function to set children of this museum object.*/
+    List<ObjectMuseum> SetChildObjectList(List<ObjectMuseum> _targetObjectList){
 
-        if(childObjectList.size() > 0){ childObjectList.clear(); }                                                                  /*Clear the previous child object array.*/
-
-        for(int i = 0;          i < _targetObjectList.size(); i ++){                                                                /*Itarete through all the object list to find whether or not there is a museum object that refers this object as its parent.*/
-
-            if(nameAltString    .equals(_targetObjectList.get(i).parentNameAltString)){ childObjectList.add(_targetObjectList.get(i)); }  /*If the parent object from the _targetObjectList is the same with this object name then add the object into this object child object list.*/
-
-        }
-
-        return                  childObjectList;
+        if(childObjectList.size() > 0){ childObjectList.clear(); }                                                                                                                      /*Clear the child object List and then this function will make a new child object List.                                 */
+        for(int i = 0; i < _targetObjectList.size(); i ++){ if(nameAltString.equals(_targetObjectList.get(i).parentNameAltString)){ childObjectList.add(_targetObjectList.get(i)); } }  /*Iterate through _targetObjectList to find any object of which has this object alternate name as its parent object.    */
+        return childObjectList;
 
     }
 
@@ -277,7 +282,7 @@ class   ObjectMuseum                                                            
     }
 
     /*A function to set this object parent object.*/
-    ObjectMuseum SetInitialParentObject(List<ObejctMuseum> _targetObjectList){
+    ObjectMuseum SetInitialParentObject(List<ObjectMuseum> _targetObjectList){
 
         /*Iterate through all parent object to find this object parent object.*/
         for(int i = 0; i < _targetObjectList.size(); i ++){
@@ -285,7 +290,7 @@ class   ObjectMuseum                                                            
         }
         /*If the parent object is not found within the list then move this object into the the first index of _targetObjectList.                                                                        */
         parentObject                = _targetObjectList.get(0)      ; /*Change the object.                                                                                                              */
-        parentObjectNameAltString   = parentObject.nameAltString    ; /*Do not forget to change the parent alternate name.                                                                              */
+        parentNameAltString         = parentObject.nameAltString    ; /*Do not forget to change the parent alternate name.                                                                              */
         return                      parentObject                    ; /*Return the parent object. This line of code executed when this object failed to find its parent within the _targetObjectList.   */
 
     }
