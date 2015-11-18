@@ -95,7 +95,7 @@ class   ObjectMuseum                                                            
     }
 
     /*A set of functions to move this object into a new parent object.
-    For initial use use SetParentObject() instead of this function!.*/
+    For initial use, use SetInitialParentObject() instead of this function!.*/
     void SetParentVoid(
 
         List<ObjectMuseum>  _targetObjectList       , 
@@ -107,7 +107,7 @@ class   ObjectMuseum                                                            
         SetParentNameAltString      (_parentNameAltString   );
         SetInitialParentObject      (_targetObjectList      );
         SetChildObjectList          (_targetObjectList      );
-        SetIndexAllInsideVoid       ();
+        SetIndexAllInsideVoid       (                       );
 
     }
 
@@ -276,17 +276,17 @@ class   ObjectMuseum                                                            
 
     }
 
-    /*A function to set this object parent.*/
-    ObjectMuseum SetInitialParentObject(List<ObjectMuseum> _targetObjectList)           {
+    /*A function to set this object parent object.*/
+    ObjectMuseum SetInitialParentObject(List<ObejctMuseum> _targetObjectList){
 
-        /*Iterate through all parent object list to find this object parent object.*/
+        /*Iterate through all parent object to find this object parent object.*/
         for(int i = 0; i < _targetObjectList.size(); i ++){
-
-            if(parentNameAltString.equals(_targetObjectList.get(i).nameAltString)){ parentObject = _targetObjectList.get(i); }
-
+            if(parentNameAltString.equals(_targetObjectList.get(i).nameAltString)){ parentObject = _targetObjectList.get(i); return parentObject; }
         }
-
-        return parentObject;
+        /*If the parent object is not found within the list then move this object into the the first index of _targetObjectList.                                                                        */
+        parentObject                = _targetObjectList.get(0)      ; /*Change the object.                                                                                                              */
+        parentObjectNameAltString   = parentObject.nameAltString    ; /*Do not forget to change the parent alternate name.                                                                              */
+        return                      parentObject                    ; /*Return the parent object. This line of code executed when this object failed to find its parent within the _targetObjectList.   */
 
     }
     

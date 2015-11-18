@@ -401,11 +401,11 @@ void CheckMuseumObjectHoverVoid(
     /*This is to check which museum/player object is hovered, then create panel based on that object position.*/
     if(_targetObjectList.get(_indexInt).SetHoverBoolean() == true && panelCardChangeBoolean == true && buttonOpenCloseBoolean == false){
 
-        xPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.xPanelInt + (_targetObjectList.get(_indexInt).panelObject.widthPanelInt /2 );
-        yPanelCardInt           = _targetObjectList.get(_indexInt).panelObject.yPanelInt + (_targetObjectList.get(_indexInt).panelObject.heightPanelInt/2);
+        xPanelCardInt               = _targetObjectList.get(_indexInt).panelObject.xPanelInt + (_targetObjectList.get(_indexInt).panelObject.widthPanelInt /2 );
+        yPanelCardInt               = _targetObjectList.get(_indexInt).panelObject.yPanelInt + (_targetObjectList.get(_indexInt).panelObject.heightPanelInt/2);
         tempSelectedMuseumObject    = _targetObjectList.get(_indexInt);
 
-        panelCardChangeBoolean  = false;
+        panelCardChangeBoolean      = false;
 
     }
 
@@ -2043,17 +2043,34 @@ void AddPlayerGroupPickExhibitionStartScrollableListObject  (int _indexInt){
     addPlayerGroupGUIObject.tempExhibitionStartNameAltString    = tempStartingExhibitionNameAltString;
 
 }
+/*A function to control what happen when user click Add Player button.*/
 void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
 
-    int             temporaryBiggestPlayerIndexInt      = biggestPlayerIndexInt + 1;
-    String          tempStartingExhibitionNameAltString = addPlayerGroupGUIObject.tempExhibitionStartNameAltString;
-    String          tempPlayerNameString                = addPlayerGroupGUIObject.addPlayerGroupPlayerNameTextfieldObject.getText();
-    ObjectPlayer    tempPlayerObject                    = new ObjectPlayer(temporaryBiggestPlayerIndexInt, tempPlayerNameString, tempStartingExhibitionNameAltString);
+    int             tempNextBiggestPlayerIndexInt       = tempNextBiggestPlayerIndexInt;                                                    /*Take the next biggest player index. This index will be the index number for the newly created player.*/
+    String          tempPlayerNameString                = addPlayerGroupGUIObject.addPlayerGroupPlayerNameTextfieldObject.getText();        /*This will be the name of the newly player.                                                           */
+    String          tempStartingExhibitionNameAltString = addPlayerGroupGUIObject.tempExhibitionStartNameAltString;                         /*This variable is for detrmining the starting exhibition of the newly created player.                 */
 
-    playerStringList.add("" + tempPlayerObject.playerIndexInt);
+    /*If one or more field in this group form is not completed, then prevent the user from adding new player into the mian scene.*/
+    if(
 
-    selectPlayerScrollableListObject                                                        .setItems(playerStringList);
-    removePlayerGroupGUIObject.removePlayerGroupSelectPlayerToRemoveScrollableListObject    .setItems(playerStringList);
+        (tempBiggestPlayerIndexInt              >  0                                                    ) &&                                /*Make sure the index is larger than zero.                                                             */
+        (tempPlayerNameAltString                != "" || tempPlayerNameAltString                != null ) &&                                /*Make sure the player has a name.                                                                     */
+        (tempStartingExhibitionNameAltString    != "" || tempStartingExhibitionNameAltString    != null )                                   /*Make sure the newly created player has a starting exhibition String from this group scrollable list. */
+
+    ){
+
+        ObjectPlayer tempPlayerObject                                                           = new ObjectPlayer(                         /*Create the new player.*/
+
+            tempNextBiggestPlayerIndexInt       ,
+            tempPlayerNameString                ,
+            tempStartingExhibitionNameAltString
+
+        );
+        playerStringList                                                                        .add("" + tempPlayerObject.playerIndexInt); /*Add the player index number into the player String  list. PENDING: Add also the player name into the player String list. */
+        selectPlayerScrollableListObject                                                        .setItems(playerStringList);                /*Set all the player objects back into the scrollable list of all available player objects including the newly created one.*/
+        removePlayerGroupGUIObject.removePlayerGroupSelectPlayerToRemoveScrollableListObject    .setItems(playerStringList);                /*This one is to set the all available players into the scrollable list of player selection that the user wants to remove. */
+
+    }
 
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -594,11 +594,7 @@ class ObjectPlayer{
     }
 
     /*A function to move this player into new exhibition and add the tags to the tag coutner list.*/
-    ObjectMuseum ExhibitionMoveObject(
-
-        String _targetNameAltString
-
-    ){
+    ObjectMuseum ExhibitionMoveObject(String _targetNameAltString){
 
         /*Variable to hold currently visited museum object.*/
         ObjectMuseum exhibitionCurrentObject    = null;
@@ -633,10 +629,17 @@ class ObjectPlayer{
 
         }
 
-        exhibitionCurrentString                 = _targetNameAltString;                                         /*Chance the String for current exhibition.*/
-        exhibitionCurrentObject                 = FindObject(exhibitionObjectList, exhibitionCurrentString);
-        exhibitionVisitedNameAltStringList      .add(exhibitionCurrentObject.nameAltString );                   /*Add the current exhibition to visited exhibition list.*/
-        exhibitionVisitedNameFullStringList     .add(exhibitionCurrentObject.nameFullString);
+        /*Change this player current exhibition into the new exhibition.*/
+        exhibitionCurrentString             =  _targetNameAltString;                                        /*Change the current exhibition object String.                                                                                                                                          */
+        exhibitionCurrentObject             =  FindObject(exhibitionObjectList, exhibitionCurrentString);   /*From the String we find the object in the List of exhibition objects.                                                                                                                 */
+        if(exhibitionCurrentObject          == null){                                                       /*If there is nothing in the exhibition object list with the name listed in exhibitionCurrentString variable. Move the player into the first exhibition in the exhibition object List.  */
+
+            exhibitionCurrentString         =  exhibitionObjectList.get(0).nameAltString;
+            exhibitionCurrentObject         =  exhibitionObjectList.get(0);
+
+        }
+        exhibitionVisitedNameAltStringList  .add(exhibitionCurrentObject.nameAltString );                   /*Put the new current exhibition into the String List of visited object.*/
+        exhibitionVisitedNameFullStringList .add(exhibitionCurrentObject.nameFullString);                   /*Put the new current exhibition into the String List of visited object.*/
         
         /*Re - instantiated all newly visited museum objects.*/
         exhibitionCurrentObject         = FindObject(exhibitionObjectList   , exhibitionCurrentString                           );
