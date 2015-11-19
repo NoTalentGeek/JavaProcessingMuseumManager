@@ -7,7 +7,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     ScrollableList  selectExhibitionScrollableListObject;
 
-    String          tempSelectedTagTypeString                   = "";
+    String          tempSelectedTagTypeString                           = "";
     String          tempSelectedTagNameAltString                        = "";
     String          tempSelectedTagNameFullString                       = "";
     String          tempSelectedTagSubjectString                        = "";
@@ -55,19 +55,16 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     EditTagGroupGUIObject(
 
-        int             _guiXInt                            ,
-        int             _guiYInt                            ,
-        int             _guiWidthInt                        ,
-        int             _guiHeightInt                       ,
-        ScrollableList  _selectExhibitionScrollableListObject   ,
+        int             _guiXInt        ,
+        int             _guiYInt        ,
+        int             _guiWidthInt    ,
+        int             _guiHeightInt   ,
         PApplet         _pAppletObject
 
     ){
 
         super                                   (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         editTagGroupControlP5Object             = new ControlP5(pAppletObject);
-
-        selectExhibitionScrollableListObject    = _selectExhibitionScrollableListObject;
 
         GenerateAllTagNameFullVoid();
 
@@ -320,7 +317,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     void DrawVoid(float   _alphaFloat){
 
-        //super.DrawVoid(_alphaFloat, addTagGroupObject);
+        super.DrawVoid(_alphaFloat, editTagGroupObject);
 
         ControlFormVoid();
 

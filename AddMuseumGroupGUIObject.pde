@@ -5,8 +5,6 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
 
     ControlP5       addMuseumGroupControlP5Object                                               ;                           /*ControlP5 object to control all graphical user interface controller.              */
 
-    Group           addTagGroupObject                                                           ;
-
     String          tempSelectedParentNameAltString                                             = "";                       /*Selected object museum parent name alt  string.                                   */
     String          tempSelectedParentNameFullString                                            = "";                       /*Selected object museum parent name full string.                                   */
     String          tempSelectedTypeObjectMuseumNameAltString                                   = "";                       /*Selected object museum type   name alt  string ("FLR"  , "ROM" , "EXH"       ).   */
@@ -40,15 +38,12 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
         int         _guiYInt            ,
         int         _guiWidthInt        ,
         int         _guiHeightInt       ,
-        Group       _addTagGroupObject  ,
         PApplet     _pAppletObject
 
     ){
 
         super                                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        addMuseumGroupControlP5Object                                               = new ControlP5(pAppletObject);
-
-        addTagGroupObject                                                           = _addTagGroupObject;                                               /*PENDING.*/
+        addMuseumGroupControlP5Object                                               = new ControlP5(pAppletObject);                                       /*PENDING.*/
 
 
 

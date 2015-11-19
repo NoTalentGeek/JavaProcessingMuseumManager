@@ -73,7 +73,8 @@ int                         menuHeightInt                           ;
 int                         leftMenuXInt                            ;
 int                         rightMenuXInt                           ;
 int                         menuYInt                                ;
-int                         addTagGroupHeightInt                    = 244;
+int                         editTagGroupHeightInt                   = 245;
+int                         addTagGroupHeightInt                    = 245;
 int                         addMuseumGroupHeightInt                 = 450;
 int                         editPlayerGroupHeightInt                = 427;
 int                         removePlayerGroupHeightInt              = 104;
@@ -1719,9 +1720,9 @@ void SetupGUIVoid(){
                     .setSize                    (menuWidthInt, menuHeightInt)
                     .setType                    (ControlP5.LIST);
 
-    addTagGroupGUIObject                        = new AddTagGroupGUIObject          (rightMenuXInt, menuYInt, menuWidthInt, addTagGroupHeightInt        , selectMuseumObjectScrollableListObject                , this);
-    addMuseumGroupGUIObject                     = new AddMuseumGroupGUIObject       (rightMenuXInt, menuYInt, menuWidthInt, addMuseumGroupHeightInt     , addTagGroupGUIObject       .addTagGroupObject         , this);
-    editTagGroupGUIObject                       = new EditTagGroupGUIObject         (((width/2) - (menuWidthInt/2)), ((height/2) - 250), menuWidthInt, 500, selectMuseumObjectScrollableListObject              , this);
+    editTagGroupGUIObject                       = new EditTagGroupGUIObject         (rightMenuXInt, menuYInt, menuWidthInt, editTagGroupHeightInt       , this);
+    addTagGroupGUIObject                        = new AddTagGroupGUIObject          (rightMenuXInt, menuYInt, menuWidthInt, addTagGroupHeightInt        , this);
+    addMuseumGroupGUIObject                     = new AddMuseumGroupGUIObject       (rightMenuXInt, menuYInt, menuWidthInt, addMuseumGroupHeightInt     , this);
     editPlayerGroupGUIObject                    = new EditPlayerGroupGUIObject      (leftMenuXInt , menuYInt, menuWidthInt, editPlayerGroupHeightInt    , selectPlayerScrollableListObject                      , this);
     removePlayerGroupGUIObject                  = new RemovePlayerGroupGUIObject    (leftMenuXInt , menuYInt, menuWidthInt, removePlayerGroupHeightInt  , editPlayerGroupGUIObject   .editPlayerGroupObject     , this);
     addPlayerGroupGUIObject                     = new AddPlayerGroupGUIObject       (leftMenuXInt , menuYInt, menuWidthInt, addPlayerGroupHeightInt     , removePlayerGroupGUIObject .removePlayerGroupObject   , this);
@@ -1730,6 +1731,7 @@ void SetupGUIVoid(){
         cp5Object   .addAccordion               ("RightMenuAccordionObject")
                     .addItem                    (addMuseumGroupGUIObject.addMuseumGroupObject)
                     .addItem                    (addTagGroupGUIObject.addTagGroupObject)
+                    .addItem                    (editTagGroupGUIObject.editTagGroupObject)
                     .setCollapseMode            (Accordion.SINGLE)
                     .setPosition                (rightMenuXInt, menuYInt)
                     .setWidth                   (menuWidthInt);
@@ -1758,9 +1760,10 @@ void DrawGUIVoid(){
     removePlayerGroupGUIObject              .DrawVoid(dropdownPlayerAlphaFloat) ;
     editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat) ;
 
-    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 469); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 469); }
-    else if (addTagGroupGUIObject           .addTagGroupObject      .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 263); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 263); }
-    else                                                                                { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 19 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 19 ); }
+    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 479); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 479); }
+    else if (addTagGroupGUIObject           .addTagGroupObject      .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 274); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 274); }
+    else if (editTagGroupGUIObject          .editTagGroupObject     .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 274); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 274); }
+    else                                                                                { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 29 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 29 ); }
 
     if      (addPlayerGroupGUIObject        .addPlayerGroupObject   .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 173); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 173); }
     else if (editPlayerGroupGUIObject       .editPlayerGroupObject  .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 456); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 456); }

@@ -1,14 +1,14 @@
 [
   {
-    "nameFullString": "Subject Napoleonasdasd",
+    "nameFullString": "Subject Napoleon",
     "tagTypeString": "SUB",
-    "nameAltString": "SUB_NAPasdasd",
-    "tagSubjectString": "Napoleonasdasd"
+    "nameAltString": "SUB_NAP",
+    "tagSubjectString": "Napoleon"
   },
   {
-    "nameFullString": "Subject Washingtonasdsad",
+    "nameFullString": "Subject Washington",
     "tagTypeString": "SUB",
-    "nameAltString": "SUB_WASasdasd",
-    "tagSubjectString": "Washingtonsadsadsad"
+    "nameAltString": "SUB_WAS",
+    "tagSubjectString": "Washington"
   }
 ]

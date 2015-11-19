@@ -108,7 +108,8 @@ int                         menuHeightInt                           ;
 int                         leftMenuXInt                            ;
 int                         rightMenuXInt                           ;
 int                         menuYInt                                ;
-int                         addTagGroupHeightInt                    = 244;
+int                         editTagGroupHeightInt                   = 245;
+int                         addTagGroupHeightInt                    = 245;
 int                         addMuseumGroupHeightInt                 = 450;
 int                         editPlayerGroupHeightInt                = 427;
 int                         removePlayerGroupHeightInt              = 104;
@@ -1754,9 +1755,9 @@ public void SetupGUIVoid(){
                     .setSize                    (menuWidthInt, menuHeightInt)
                     .setType                    (ControlP5.LIST);
 
-    addTagGroupGUIObject                        = new AddTagGroupGUIObject          (rightMenuXInt, menuYInt, menuWidthInt, addTagGroupHeightInt        , selectMuseumObjectScrollableListObject                , this);
-    addMuseumGroupGUIObject                     = new AddMuseumGroupGUIObject       (rightMenuXInt, menuYInt, menuWidthInt, addMuseumGroupHeightInt     , addTagGroupGUIObject       .addTagGroupObject         , this);
-    editTagGroupGUIObject                       = new EditTagGroupGUIObject         (((width/2) - (menuWidthInt/2)), ((height/2) - 250), menuWidthInt, 500, selectMuseumObjectScrollableListObject              , this);
+    editTagGroupGUIObject                       = new EditTagGroupGUIObject         (rightMenuXInt, menuYInt, menuWidthInt, editTagGroupHeightInt       , this);
+    addTagGroupGUIObject                        = new AddTagGroupGUIObject          (rightMenuXInt, menuYInt, menuWidthInt, addTagGroupHeightInt        , this);
+    addMuseumGroupGUIObject                     = new AddMuseumGroupGUIObject       (rightMenuXInt, menuYInt, menuWidthInt, addMuseumGroupHeightInt     , this);
     editPlayerGroupGUIObject                    = new EditPlayerGroupGUIObject      (leftMenuXInt , menuYInt, menuWidthInt, editPlayerGroupHeightInt    , selectPlayerScrollableListObject                      , this);
     removePlayerGroupGUIObject                  = new RemovePlayerGroupGUIObject    (leftMenuXInt , menuYInt, menuWidthInt, removePlayerGroupHeightInt  , editPlayerGroupGUIObject   .editPlayerGroupObject     , this);
     addPlayerGroupGUIObject                     = new AddPlayerGroupGUIObject       (leftMenuXInt , menuYInt, menuWidthInt, addPlayerGroupHeightInt     , removePlayerGroupGUIObject .removePlayerGroupObject   , this);
@@ -1765,6 +1766,7 @@ public void SetupGUIVoid(){
         cp5Object   .addAccordion               ("RightMenuAccordionObject")
                     .addItem                    (addMuseumGroupGUIObject.addMuseumGroupObject)
                     .addItem                    (addTagGroupGUIObject.addTagGroupObject)
+                    .addItem                    (editTagGroupGUIObject.editTagGroupObject)
                     .setCollapseMode            (Accordion.SINGLE)
                     .setPosition                (rightMenuXInt, menuYInt)
                     .setWidth                   (menuWidthInt);
@@ -1793,9 +1795,10 @@ public void DrawGUIVoid(){
     removePlayerGroupGUIObject              .DrawVoid(dropdownPlayerAlphaFloat) ;
     editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat) ;
 
-    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 469); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 469); }
-    else if (addTagGroupGUIObject           .addTagGroupObject      .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 263); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 263); }
-    else                                                                                { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 19 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 19 ); }
+    if      (addMuseumGroupGUIObject        .addMuseumGroupObject   .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 479); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 479); }
+    else if (addTagGroupGUIObject           .addTagGroupObject      .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 274); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 274); }
+    else if (editTagGroupGUIObject          .editTagGroupObject     .isOpen() == true)  { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 274); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 274); }
+    else                                                                                { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 29 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 29 ); }
 
     if      (addPlayerGroupGUIObject        .addPlayerGroupObject   .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 173); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 173); }
     else if (editPlayerGroupGUIObject       .editPlayerGroupObject  .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 456); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 456); }
@@ -2497,8 +2500,6 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
 
     ControlP5       addMuseumGroupControlP5Object                                               ;                           /*ControlP5 object to control all graphical user interface controller.              */
 
-    Group           addTagGroupObject                                                           ;
-
     String          tempSelectedParentNameAltString                                             = "";                       /*Selected object museum parent name alt  string.                                   */
     String          tempSelectedParentNameFullString                                            = "";                       /*Selected object museum parent name full string.                                   */
     String          tempSelectedTypeObjectMuseumNameAltString                                   = "";                       /*Selected object museum type   name alt  string ("FLR"  , "ROM" , "EXH"       ).   */
@@ -2532,15 +2533,12 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
         int         _guiYInt            ,
         int         _guiWidthInt        ,
         int         _guiHeightInt       ,
-        Group       _addTagGroupObject  ,
         PApplet     _pAppletObject
 
     ){
 
         super                                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        addMuseumGroupControlP5Object                                               = new ControlP5(pAppletObject);
-
-        addTagGroupObject                                                           = _addTagGroupObject;                                               /*PENDING.*/
+        addMuseumGroupControlP5Object                                               = new ControlP5(pAppletObject);                                       /*PENDING.*/
 
 
 
@@ -2881,8 +2879,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
 
     ControlP5       addTagGroupControllerP5Object                       ;
 
-    ScrollableList  selectMuseumObjectScrollableListObject              ;
-
     String          tempSelectedTagTypeNameFullString                   = "";
 
     /*ControlP5 related graphical user interface controller variables.*/
@@ -2915,7 +2911,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
         int                 _guiYInt                                ,
         int                 _guiWidthInt                            ,
         int                 _guiHeightInt                           ,
-        ScrollableList      _selectMuseumObjectScrollableListObject ,
         PApplet             _pAppletObject
 
     ){
@@ -2923,8 +2918,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
 
         super(_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         addTagGroupControllerP5Object               = new ControlP5(pAppletObject);
-
-        selectMuseumObjectScrollableListObject      = _selectMuseumObjectScrollableListObject;
 
 
 
@@ -3917,7 +3910,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     ScrollableList  selectExhibitionScrollableListObject;
 
-    String          tempSelectedTagTypeString                   = "";
+    String          tempSelectedTagTypeString                           = "";
     String          tempSelectedTagNameAltString                        = "";
     String          tempSelectedTagNameFullString                       = "";
     String          tempSelectedTagSubjectString                        = "";
@@ -3965,19 +3958,16 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     EditTagGroupGUIObject(
 
-        int             _guiXInt                            ,
-        int             _guiYInt                            ,
-        int             _guiWidthInt                        ,
-        int             _guiHeightInt                       ,
-        ScrollableList  _selectExhibitionScrollableListObject   ,
+        int             _guiXInt        ,
+        int             _guiYInt        ,
+        int             _guiWidthInt    ,
+        int             _guiHeightInt   ,
         PApplet         _pAppletObject
 
     ){
 
         super                                   (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         editTagGroupControlP5Object             = new ControlP5(pAppletObject);
-
-        selectExhibitionScrollableListObject    = _selectExhibitionScrollableListObject;
 
         GenerateAllTagNameFullVoid();
 
@@ -4230,7 +4220,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     public void DrawVoid(float   _alphaFloat){
 
-        //super.DrawVoid(_alphaFloat, addTagGroupObject);
+        super.DrawVoid(_alphaFloat, editTagGroupObject);
 
         ControlFormVoid();
 

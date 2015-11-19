@@ -5,8 +5,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
 
     ControlP5       addTagGroupControllerP5Object                       ;
 
-    ScrollableList  selectMuseumObjectScrollableListObject              ;
-
     String          tempSelectedTagTypeNameFullString                   = "";
 
     /*ControlP5 related graphical user interface controller variables.*/
@@ -39,7 +37,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
         int                 _guiYInt                                ,
         int                 _guiWidthInt                            ,
         int                 _guiHeightInt                           ,
-        ScrollableList      _selectMuseumObjectScrollableListObject ,
         PApplet             _pAppletObject
 
     ){
@@ -47,8 +44,6 @@ class AddTagGroupGUIObject extends GroupGUIObject{
 
         super(_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         addTagGroupControllerP5Object               = new ControlP5(pAppletObject);
-
-        selectMuseumObjectScrollableListObject      = _selectMuseumObjectScrollableListObject;
 
 
 
