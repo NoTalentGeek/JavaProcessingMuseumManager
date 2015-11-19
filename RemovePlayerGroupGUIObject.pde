@@ -5,8 +5,6 @@ class RemovePlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5       removePlayerGroupControlP5Object                            ;
 
-    Group           editPlayerScrollableListObject                              ;
-
     ObjectPlayer    tempPlayerToRemoveObject                                    ;
 
     /*ControlP5 related graphical user interface controller variables.*/
@@ -20,15 +18,12 @@ class RemovePlayerGroupGUIObject extends GroupGUIObject{
         int             _guiYInt                        ,
         int             _guiWidthInt                    ,
         int             _guiHeightInt                   ,
-        Group           _editPlayerScrollableListObject ,
         PApplet         _pAppletObject
 
     ){
 
         super                                   (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         removePlayerGroupControlP5Object        = new ControlP5(pAppletObject);
-
-        editPlayerScrollableListObject          = _editPlayerScrollableListObject;
 
 
 

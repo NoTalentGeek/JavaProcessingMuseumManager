@@ -5,8 +5,6 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5       addPlayerGroupControlP5Object                           ;
 
-    Group           removePlayerGroupObject                                 ;
-
     String          tempExhibitionStartNameAltString                        = "";
 
     /*ControlP5 related graphical user interface controller variables.*/
@@ -23,15 +21,12 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
         int         _guiYInt                    ,
         int         _guiWidthInt                ,
         int         _guiHeightInt               ,
-        Group       _removePlayerGroupObject    ,
         PApplet     _pAppletObject
 
     ){
 
         super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         addPlayerGroupControlP5Object                               = new ControlP5(pAppletObject);
-
-        removePlayerGroupObject                                     = _removePlayerGroupObject;
 
         addPlayerGroupObject                                        =
             addPlayerGroupControlP5Object   .addGroup               ("AddPlayerGroupObject")

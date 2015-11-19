@@ -5,8 +5,6 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ControlP5       editPlayerGroupControlP5Object                              ;                           /*ControlP5 object to control all graphical user interface controller.                              */
 
-    ScrollableList  selectPlayerScrollableListObject                            ;
-
     ObjectPlayer    tempSelectedPlayerObject                                    ;                           /*Selected player object.*/
     int             tempSelectedPlayerMovementModeInt                           = 2;                        /*Movement mode of selected player object.                                                          */
     String          tempSelectedPlayerExplanationString                         = "";
@@ -47,15 +45,12 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         int             _guiYInt                            ,
         int             _guiWidthInt                        ,
         int             _guiHeightInt                       ,
-        ScrollableList  _selectPlayerScrollableListObject   ,
         PApplet         _pAppletObject
 
     ){
 
         super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);
-
-        selectPlayerScrollableListObject                            = _selectPlayerScrollableListObject;                                                                /*PENDING.*/
+        editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);                                                             /*PENDING.*/
 
         tempSelectedPlayerObject                                    =  playerObjectList     .get(0);                                                                    /*Set the default player object.                                            */
         tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */

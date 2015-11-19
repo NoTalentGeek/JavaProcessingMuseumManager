@@ -5,8 +5,6 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     ControlP5       editTagGroupControlP5Object;
 
-    ScrollableList  selectExhibitionScrollableListObject;
-
     String          tempSelectedTagTypeString                           = "";
     String          tempSelectedTagNameAltString                        = "";
     String          tempSelectedTagNameFullString                       = "";
