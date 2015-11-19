@@ -89,6 +89,7 @@ AddMuseumGroupGUIObject     addMuseumGroupGUIObject                 ;
 AddTagGroupGUIObject        addTagGroupGUIObject                    ;
 AddPlayerGroupGUIObject     addPlayerGroupGUIObject                 ;
 RemovePlayerGroupGUIObject  removePlayerGroupGUIObject              ;
+EditTagGroupGUIObject       editTagGroupGUIObject                   ;
 EditPlayerGroupGUIObject    editPlayerGroupGUIObject                ;
 /*Misc variables.*/
 boolean                     buttonOpenCloseBoolean                  = false                         ;
@@ -1720,6 +1721,7 @@ void SetupGUIVoid(){
 
     addTagGroupGUIObject                        = new AddTagGroupGUIObject          (rightMenuXInt, menuYInt, menuWidthInt, addTagGroupHeightInt        , selectMuseumObjectScrollableListObject                , this);
     addMuseumGroupGUIObject                     = new AddMuseumGroupGUIObject       (rightMenuXInt, menuYInt, menuWidthInt, addMuseumGroupHeightInt     , addTagGroupGUIObject       .addTagGroupObject         , this);
+    editTagGroupGUIObject                       = new EditTagGroupGUIObject         (((width/2) - (menuWidthInt/2)), ((height/2) - 250), menuWidthInt, 500, selectMuseumObjectScrollableListObject              , this);
     editPlayerGroupGUIObject                    = new EditPlayerGroupGUIObject      (leftMenuXInt , menuYInt, menuWidthInt, editPlayerGroupHeightInt    , selectPlayerScrollableListObject                      , this);
     removePlayerGroupGUIObject                  = new RemovePlayerGroupGUIObject    (leftMenuXInt , menuYInt, menuWidthInt, removePlayerGroupHeightInt  , editPlayerGroupGUIObject   .editPlayerGroupObject     , this);
     addPlayerGroupGUIObject                     = new AddPlayerGroupGUIObject       (leftMenuXInt , menuYInt, menuWidthInt, addPlayerGroupHeightInt     , removePlayerGroupGUIObject .removePlayerGroupObject   , this);
@@ -1751,6 +1753,7 @@ void DrawGUIVoid(){
     dropdownPlayerAlphaFloat                = ScrollableDrawFloat(dropdownPlayerAlphaFloat  , guiLayoutOffsetInt          , guiLayoutOffsetInt, buttonOpenClosePlayerObject, selectPlayerScrollableListObject       );
     addMuseumGroupGUIObject                 .DrawVoid(dropdownMObjectAlphaFloat);
     addTagGroupGUIObject                    .DrawVoid(dropdownMObjectAlphaFloat);
+    editTagGroupGUIObject                   .DrawVoid(dropdownMObjectAlphaFloat);
     addPlayerGroupGUIObject                 .DrawVoid(dropdownPlayerAlphaFloat) ;
     removePlayerGroupGUIObject              .DrawVoid(dropdownPlayerAlphaFloat) ;
     editPlayerGroupGUIObject                .DrawVoid(dropdownPlayerAlphaFloat) ;
@@ -2187,6 +2190,148 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //END//AddTagGroupGUIObject.pde Controller's Functions./////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//START//EditTagGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void EditTagGroupSelectTagScrollableListObject(int _indexInt){
+
+    String  tempSelectedTagNameFullString                       = editTagGroupGUIObject.editTagGroupSelectTagScrollableListObject.getItem(_indexInt).get("text").toString();
+    Tag     tempSelectedTagObject                               = FindTagObject(tempSelectedTagNameFullString);
+    editTagGroupGUIObject.tempSelectedTagObject                 = tempSelectedTagObject;
+    String  tempSelectedTagTypeString                           = tempSelectedTagObject.tagTypeString;
+    editTagGroupGUIObject.tempSelectedTagTypeString             = tempSelectedTagTypeString;
+
+    if(tempSelectedTagObject != null){
+        editTagGroupGUIObject                   .tempSelectedTagNameAltString                       = editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 ;
+        editTagGroupGUIObject                   .tempSelectedTagNameFullString                      = editTagGroupGUIObject.tempSelectedTagObject.nameFullString                ;
+        editTagGroupGUIObject                   .tempSelectedTagSubjectString                       = editTagGroupGUIObject.tempSelectedTagObject.tagSubjectString              ;
+        editTagGroupGUIObject                   .tempSelectedTagVerb1String                         = editTagGroupGUIObject.tempSelectedTagObject.tagVerb1String                ;
+        editTagGroupGUIObject                   .tempSelectedTagVerb2String                         = editTagGroupGUIObject.tempSelectedTagObject.tagVerb2String                ;
+        editTagGroupGUIObject                   .tempSelectedTagVerb3String                         = editTagGroupGUIObject.tempSelectedTagObject.tagVerb3String                ;
+        editTagGroupGUIObject                   .tempSelectedTagVerbIngString                       = editTagGroupGUIObject.tempSelectedTagObject.tagVerbIngString              ;
+        editTagGroupGUIObject                   .tempSelectedTagVerbSString                         = editTagGroupGUIObject.tempSelectedTagObject.tagVerbSString                ;
+        editTagGroupGUIObject                   .tempSelectedTagNegativeVerb1String                 = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerb1String        ;
+        editTagGroupGUIObject                   .tempSelectedTagNegativeVerb2String                 = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerb2String        ;
+        editTagGroupGUIObject                   .tempSelectedTagNegativeVerb3String                 = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerb3String        ;
+        editTagGroupGUIObject                   .tempSelectedTagNegativeVerbIngString               = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerbIngString      ;
+        editTagGroupGUIObject                   .tempSelectedTagNegativeVerbSString                 = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerbSString        ;
+        editTagGroupGUIObject                   .tempSelectedTagNounString                          = editTagGroupGUIObject.tempSelectedTagObject.tagNounString                 ;
+        editTagGroupGUIObject                   .tempSelectedTagNounSString                         = editTagGroupGUIObject.tempSelectedTagObject.tagNounSString                ;
+        editTagGroupGUIObject                   .tempSelectedTagAdjectiveString                     = editTagGroupGUIObject.tempSelectedTagObject.tagAdjectiveString            ;
+        editTagGroupGUIObject                   .tempSelectedTagNegativeAdjectiveString             = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeAdjectiveString    ;
+        editTagGroupGUIObject                   .tempSelectedTagAdverbString                        = editTagGroupGUIObject.tempSelectedTagObject.tagAdverbString               ;
+        editTagGroupGUIObject                   .tempSelectedTagNegativeAdverbString                = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeAdverbString       ;
+        editTagGroupGUIObject                   .editTagGroupTagNameAltTextfieldObject              .setText(editTagGroupGUIObject.tempSelectedTagNameAltString                 );
+        editTagGroupGUIObject                   .editTagGroupTagNameFullTextfieldObject             .setText(editTagGroupGUIObject.tempSelectedTagNameFullString                );
+        editTagGroupGUIObject                   .editTagGroupTagSubjectTextfieldObject              .setText(editTagGroupGUIObject.tempSelectedTagSubjectString                 );
+        editTagGroupGUIObject                   .editTagGroupTagVerb1TextfieldObject                .setText(editTagGroupGUIObject.tempSelectedTagVerb1String                   );
+        editTagGroupGUIObject                   .editTagGroupTagVerb2TextfieldObject                .setText(editTagGroupGUIObject.tempSelectedTagVerb2String                   );
+        editTagGroupGUIObject                   .editTagGroupTagVerb3TextfieldObject                .setText(editTagGroupGUIObject.tempSelectedTagVerb3String                   );
+        editTagGroupGUIObject                   .editTagGroupTagVerbIngTextfieldObject              .setText(editTagGroupGUIObject.tempSelectedTagVerbIngString                 );
+        editTagGroupGUIObject                   .editTagGroupTagVerbSTextfieldObject                .setText(editTagGroupGUIObject.tempSelectedTagVerbSString                   );
+        editTagGroupGUIObject                   .editTagGroupTagNegativeVerb1TextfieldObject        .setText(editTagGroupGUIObject.tempSelectedTagNegativeVerb1String           );
+        editTagGroupGUIObject                   .editTagGroupTagNegativeVerb2TextfieldObject        .setText(editTagGroupGUIObject.tempSelectedTagNegativeVerb2String           );
+        editTagGroupGUIObject                   .editTagGroupTagNegativeVerb3TextfieldObject        .setText(editTagGroupGUIObject.tempSelectedTagNegativeVerb3String           );
+        editTagGroupGUIObject                   .editTagGroupTagNegativeVerbIngTextfieldObject      .setText(editTagGroupGUIObject.tempSelectedTagNegativeVerbIngString         );
+        editTagGroupGUIObject                   .editTagGroupTagNegativeVerbSTextfieldObject        .setText(editTagGroupGUIObject.tempSelectedTagNegativeVerbSString           );
+        editTagGroupGUIObject                   .editTagGroupTagNounTextfieldObject                 .setText(editTagGroupGUIObject.tempSelectedTagNounString                    );
+        editTagGroupGUIObject                   .editTagGroupTagNounSTextfieldObject                .setText(editTagGroupGUIObject.tempSelectedTagNounSString                   );
+        editTagGroupGUIObject                   .editTagGroupTagAdjectiveTextfieldObject            .setText(editTagGroupGUIObject.tempSelectedTagAdjectiveString               );
+        editTagGroupGUIObject                   .editTagGroupTagNegativeAdjectiveTextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagNegativeAdjectiveString       );
+        editTagGroupGUIObject                   .editTagGroupTagAdverbTextfieldObject               .setText(editTagGroupGUIObject.tempSelectedTagAdverbString                  );
+        editTagGroupGUIObject                   .editTagGroupTagNegativeAdverbTextfieldObject       .setText(editTagGroupGUIObject.tempSelectedTagNegativeAdverbString          );
+    }
+
+}
+void EditTagGroupTagEditButtonObject(int _indexInt){
+
+    if      (editTagGroupGUIObject.tempSelectedTagTypeString.equals("SUB")){
+        println(subjectTagObjectList.size());
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagSubjectString              = editTagGroupGUIObject.editTagGroupTagSubjectTextfieldObject.getText();
+        subjectTagNameAltStringList                 .clear();
+        subjectTagNameFullStringList                .clear();
+        for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList.add(subjectTagObjectList.get(i).nameAltString ); subjectTagNameFullStringList.add(subjectTagObjectList.get(i).nameFullString); }
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("VER")){
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagVerb1String                = editTagGroupGUIObject.editTagGroupTagVerb1TextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagVerb2String                = editTagGroupGUIObject.editTagGroupTagVerb2TextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagVerb3String                = editTagGroupGUIObject.editTagGroupTagVerb3TextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagVerbIngString              = editTagGroupGUIObject.editTagGroupTagVerbIngTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagVerbSString                = editTagGroupGUIObject.editTagGroupTagVerbSTextfieldObject.getText();
+        verbTagNameAltStringList                    .clear();
+        verbTagNameFullStringList                   .clear();
+        for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList.add(verbTagObjectList.get(i).nameAltString ); verbTagNameFullStringList.add(verbTagObjectList.get(i).nameFullString); }
+
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NVE")){
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerb1String        = editTagGroupGUIObject.editTagGroupTagNegativeVerb1TextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerb2String        = editTagGroupGUIObject.editTagGroupTagNegativeVerb2TextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerb3String        = editTagGroupGUIObject.editTagGroupTagNegativeVerb3TextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerbIngString      = editTagGroupGUIObject.editTagGroupTagNegativeVerbIngTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNegativeVerbSString        = editTagGroupGUIObject.editTagGroupTagNegativeVerbSTextfieldObject.getText();
+        negativeVerbTagNameAltStringList            .clear();
+        negativeVerbTagNameFullStringList           .clear();
+        for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList.add(negativeVerbTagObjectList.get(i).nameAltString ); negativeVerbTagNameFullStringList.add(negativeVerbTagObjectList.get(i).nameFullString); }
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NOU")){
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNounString                 = editTagGroupGUIObject.editTagGroupTagNounTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNounSString                = editTagGroupGUIObject.editTagGroupTagNounSTextfieldObject.getText();
+        nounTagNameAltStringList                    .clear();
+        nounTagNameFullStringList                   .clear();
+        for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList.add(nounTagObjectList.get(i).nameAltString ); nounTagNameFullStringList.add(nounTagObjectList.get(i).nameFullString); }
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("ADJ")){
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagAdjectiveString            = editTagGroupGUIObject.editTagGroupTagAdjectiveTextfieldObject.getText();
+        adjectiveTagNameAltStringList               .clear();
+        adjectiveTagNameFullStringList              .clear();
+        for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList.add(adjectiveTagObjectList.get(i).nameAltString ); adjectiveTagNameFullStringList.add(adjectiveTagObjectList.get(i).nameFullString); }
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NDJ")){
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNegativeAdjectiveString    = editTagGroupGUIObject.editTagGroupTagNegativeAdjectiveTextfieldObject.getText();
+        negativeAdjectiveTagNameAltStringList       .clear();
+        negativeAdjectiveTagNameFullStringList      .clear();
+        for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList.add(negativeAdjectiveTagObjectList.get(i).nameAltString ); negativeAdjectiveTagNameFullStringList.add(negativeAdjectiveTagObjectList.get(i).nameFullString); }
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("ADV")){
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagAdverbString               = editTagGroupGUIObject.editTagGroupTagAdverbTextfieldObject.getText();
+        adverbTagNameAltStringList                  .clear();
+        adverbTagNameFullStringList                 .clear();
+        for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList.add(adverbTagObjectList.get(i).nameAltString ); adverbTagNameFullStringList.add(adverbTagObjectList.get(i).nameFullString); }
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NDV")){
+        editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
+        editTagGroupGUIObject.tempSelectedTagObject.tagNegativeAdverbString       = editTagGroupGUIObject.editTagGroupTagNegativeAdverbTextfieldObject.getText();
+        negativeAdverbTagNameAltStringList          .clear();
+        negativeAdverbTagNameFullStringList         .clear();
+        for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList.add(negativeAdverbTagObjectList.get(i).nameAltString ); negativeAdverbTagNameFullStringList.add(negativeAdverbTagObjectList.get(i).nameFullString); }
+    }
+
+    editTagGroupGUIObject.tempTagNameFullStringList.clear();
+    editTagGroupGUIObject.GenerateAllTagNameFullVoid();
+    editTagGroupGUIObject.editTagGroupSelectTagScrollableListObject.setItems(editTagGroupGUIObject.tempTagNameFullStringList);
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//END//EditTagGroupGUIObject.pde Controller's Functions.////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
