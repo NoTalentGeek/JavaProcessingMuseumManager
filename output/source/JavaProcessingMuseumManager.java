@@ -2285,13 +2285,14 @@ public void EditTagGroupSelectTagScrollableListObject(int _indexInt){
 public void EditTagGroupTagEditButtonObject(int _indexInt){
 
     if      (editTagGroupGUIObject.tempSelectedTagTypeString.equals("SUB")){
-        println(subjectTagObjectList.size());
+
         editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
         editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
         editTagGroupGUIObject.tempSelectedTagObject.tagSubjectString              = editTagGroupGUIObject.editTagGroupTagSubjectTextfieldObject.getText();
         subjectTagNameAltStringList                 .clear();
         subjectTagNameFullStringList                .clear();
         for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList.add(subjectTagObjectList.get(i).nameAltString ); subjectTagNameFullStringList.add(subjectTagObjectList.get(i).nameFullString); }
+    
     }
     else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("VER")){
         editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
@@ -5211,6 +5212,7 @@ class ObjectPlayer{
         SetHoverBoolean ();
         PanelDrawVoid   ();
 
+
         /*PROTOTYPE: Changing player mode.*/
         if(playerMovementModeInt == 1){ AIAutoVoid(); }
         /*PROTOTYPE: Creating function to move this player manually.*/
@@ -5220,6 +5222,8 @@ class ObjectPlayer{
         exhibitionTagCounterNameFullStringList.clear();
         for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
 
+            exhibitionTagCounterList.get(i).SetTagNameAltString(exhibitionTagCounterList.get(i).tagObject.nameAltString);
+            exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.nameFullString);
             String  tempTagNameAltString                = "";
             String  tempTagNameFullString               = "";
                     tempTagNameAltString                = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameAltString ());
@@ -5244,7 +5248,7 @@ class ObjectPlayer{
 
         /*Determine the current exhibition.
         PENDING: Please put current exhibition, current room , and current floor to be public variable of this class.*/
-        ObjectMuseum    exhibitionCurrentObject = FindObject(exhibitionObjectList, exhibitionCurrentString);
+        ObjectMuseum exhibitionCurrentObject = FindObject(exhibitionObjectList, exhibitionCurrentString);
 
         /*If there is a previous exhibition visited before you visit new exhibition clear all TagStringList before adding new one.*/
         if(_isPreviousBoolean == true){

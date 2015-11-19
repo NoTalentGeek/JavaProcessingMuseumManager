@@ -2250,13 +2250,14 @@ void EditTagGroupSelectTagScrollableListObject(int _indexInt){
 void EditTagGroupTagEditButtonObject(int _indexInt){
 
     if      (editTagGroupGUIObject.tempSelectedTagTypeString.equals("SUB")){
-        println(subjectTagObjectList.size());
+
         editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();
         editTagGroupGUIObject.tempSelectedTagObject.nameFullString                = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject.getText();
         editTagGroupGUIObject.tempSelectedTagObject.tagSubjectString              = editTagGroupGUIObject.editTagGroupTagSubjectTextfieldObject.getText();
         subjectTagNameAltStringList                 .clear();
         subjectTagNameFullStringList                .clear();
         for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList.add(subjectTagObjectList.get(i).nameAltString ); subjectTagNameFullStringList.add(subjectTagObjectList.get(i).nameFullString); }
+    
     }
     else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("VER")){
         editTagGroupGUIObject.tempSelectedTagObject.nameAltString                 = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject.getText();

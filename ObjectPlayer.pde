@@ -239,6 +239,7 @@ class ObjectPlayer{
         SetHoverBoolean ();
         PanelDrawVoid   ();
 
+
         /*PROTOTYPE: Changing player mode.*/
         if(playerMovementModeInt == 1){ AIAutoVoid(); }
         /*PROTOTYPE: Creating function to move this player manually.*/
@@ -248,6 +249,8 @@ class ObjectPlayer{
         exhibitionTagCounterNameFullStringList.clear();
         for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
 
+            exhibitionTagCounterList.get(i).SetTagNameAltString(exhibitionTagCounterList.get(i).tagObject.nameAltString);
+            exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.nameFullString);
             String  tempTagNameAltString                = "";
             String  tempTagNameFullString               = "";
                     tempTagNameAltString                = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameAltString ());
@@ -272,7 +275,7 @@ class ObjectPlayer{
 
         /*Determine the current exhibition.
         PENDING: Please put current exhibition, current room , and current floor to be public variable of this class.*/
-        ObjectMuseum    exhibitionCurrentObject = FindObject(exhibitionObjectList, exhibitionCurrentString);
+        ObjectMuseum exhibitionCurrentObject = FindObject(exhibitionObjectList, exhibitionCurrentString);
 
         /*If there is a previous exhibition visited before you visit new exhibition clear all TagStringList before adding new one.*/
         if(_isPreviousBoolean == true){
