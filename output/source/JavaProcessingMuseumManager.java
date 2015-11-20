@@ -5960,31 +5960,69 @@ class ObjectPlayer{
     public String  SentenceWordFixString               (String     _fixString)             { return _fixString.substring(0, 1).toUpperCase() + _fixString.substring(1, _fixString.length()); }
     public String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
 
-        String  textString = "";
+        String[][]  patternStringArray      = new String[][]{
+
+            /*Subject VerbIng Habit.
+            Subject VerbVerbS to Verb1.
+            Iwill VerbVerb Subject to Verb1.*/
+            {
+                "{ % +."              ,
+                "{ * to @."           ,
+                "I will & { to @."
+            },
+            /*Subject Is Noun.
+            VerbIng A Noun Adv.
+            Habit VerbS Adj.*/
+            {
+
+                "{ is a _ (."   ,
+                "% a ( =."  ,
+                "+ ^ _."
+
+            },
+            /*A Adj Adj Noun.
+            A Subject VerbS To Noun.
+            Verb Habit.*/
+            {
+
+                "A _ _ (."      ,
+                "{ ^ to (."   ,
+                "^ +."
+
+            },
+            /*Noun Verbs.
+            What Subject Was VerbS.
+            Are Adj of NounS.*/
+            {
+
+                "( ^."          ,
+                "What { was ^." ,
+                "Are _ of )."
+
+            }
+
+        };
+
+        int         stringPatternIndexInt = SentenceRandomNumberGeneratorInt(patternStringArray.length);
+        String[]    stringPatternIndexString = patternStringArray[stringPatternIndexInt];
+        String      textString = "";
         for     (int i = 0; i < _numberOfSentenceInt; i ++){
 
-            if(i == 0) { textString = SentenceSingleGenerateString(); }
-            else                                { textString = textString + "\n" + SentenceSingleGenerateString(); }
+            if  (i == 0)    { textString = SentenceSingleGenerateString(stringPatternIndexString[i]);                          }
+            else            { textString = textString + "\n" + SentenceSingleGenerateString(stringPatternIndexString[i]);      }
             
 
         }
         return  textString;
 
     }
-    public String  SentenceSingleGenerateString        (){
+    public String  SentenceSingleGenerateString        (String _patternString){
 
-        String[]    patternStringArray                          = new String[]{
-
-            "{ % +."              ,
-            "{ * to @."           ,
-            "I will & { to @."
-
-        };
         String[]    verbVerbCurrentPrevTagStringList           = new String[]{ "agree", "demand", "desire", "expect", "know how", "like", "need", "offer", "promise", "refuse", "want", "wish" };
         String[]    verbVerbSCurrentPrevTagStringList          = new String[]{ "agrees", "demands", "desires", "expects", "knows how", "likes", "needs", "offers", "promises", "refuses", "wants", "wishes" };
         String[]    adjectiveHabitCurrentPrevTagStringList     = new String[]{ "every day", "about once a week", "all the time", "as often as possible", "at least twice a week", "every evening", "every month", "every night", "every other day", "every other month", "every other week", "every third day", "every thirty minutes", "every year", "four or five times a day", "three times a day", "more than four times a month", "once a week", "once or twice a year", "three times a year", "twice a day", "twice a month" };
 
-        String      patternString   = patternStringArray[SentenceRandomNumberGeneratorInt(patternStringArray.length)];
+        String      patternString   = _patternString;
         String      sentenceString  = "";
 
         for         (int i = 0; i   < patternString.length(); i ++){
