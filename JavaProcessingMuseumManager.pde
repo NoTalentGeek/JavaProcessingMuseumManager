@@ -77,7 +77,7 @@ int                         addMuseumGroupHeightInt                 = 450;
 int                         addPlayerGroupHeightInt                 = 144;
 int                         addTagGroupHeightInt                    = 245;
 int                         editMuseumGroupHeightInt                = 100;
-int                         editPlayerGroupHeightInt                = 427;
+int                         editPlayerGroupHeightInt                = 448;
 int                         editTagGroupHeightInt                   = 245;
 int                         removeMuseumGroupHeightInt              = 100;
 int                         removePlayerGroupHeightInt              = 104;
@@ -228,7 +228,7 @@ class Tag{
 
 void setup(){
 
-    size                            (1024, 576, P2D);
+    size                            (1152, 648, P2D);
     noStroke                        ();
 
     OnExit                          ();
@@ -1788,7 +1788,7 @@ void DrawGUIVoid(){
     else                                                                                    { selectMuseumObjectScrollableListObject  .setPosition(rightMenuXInt, menuYInt + 1 + 59 ); selectMuseumObjectScrollableListObject   .setHeight(height - (buttonSizeInt*2) - 1 - 59 ); }
 
     if      (addPlayerGroupGUIObject        .addPlayerGroupObject       .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 173); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 173); }
-    else if (editPlayerGroupGUIObject       .editPlayerGroupObject      .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 456); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 456); }
+    else if (editPlayerGroupGUIObject       .editPlayerGroupObject      .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 477); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 477); }
     else if (removePlayerGroupGUIObject     .removePlayerGroupObject    .isOpen() == true)  { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 133); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 133); }
     else                                                                                    { selectPlayerScrollableListObject        .setPosition(leftMenuXInt , menuYInt + 1 + 29 ); selectPlayerScrollableListObject         .setHeight(height - (buttonSizeInt*2) - 1 - 29 ); }
     
@@ -1962,6 +1962,7 @@ void SelectMuseumObjectScrollableListObject (int _indexInt){
 void SelectPlayerScrollableListObject       (int _indexInt){
 
     editPlayerGroupGUIObject.tempSelectedPlayerObject                           = playerObjectList.get(_indexInt);                                                          /*Assign the selected player.                               */
+    editPlayerGroupGUIObject.editPlayerGroupPlayerNameTextfieldObject           .setText ((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerNameString));
     editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject    .activate((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt - 1));   /*Assign the mode of selected player into the radio button. */
 
 }
@@ -2226,6 +2227,22 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //START//EditTagGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+void EditMuseumGroupResetAllMuseumButtonObject      (int _indexInt){
+
+    for(int i = 0; i < floorObjectList      .size(); i ++){ floorObjectList         .get(i).ResetVoid(); }
+    for(int i = 0; i < roomObjectList       .size(); i ++){ roomObjectList          .get(i).ResetVoid(); }
+    for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).ResetVoid(); }
+
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//END//EditTagGroupGUIObject.pde Controller's Functions.////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//START//EditTagGroupGUIObject.pde Controller's Functions.//////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
 void EditTagGroupSelectTagScrollableListObject(int _indexInt){
 
     String  tempSelectedTagNameFullString                       = editTagGroupGUIObject.editTagGroupSelectTagScrollableListObject.getItem(_indexInt).get("text").toString();
@@ -2418,6 +2435,58 @@ void AddPlayerGroupPlayerAddButtonObject                    (int _indexInt){
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+void EditPlayerGroupPlayerNameChangeButtonObject                (int _indexInt)     {
+
+    String tempPlayerNameString                                         = editPlayerGroupGUIObject.editPlayerGroupPlayerNameTextfieldObject.getText();
+    editPlayerGroupGUIObject.tempSelectedPlayerObject.playerNameString  = tempPlayerNameString;
+    editPlayerGroupGUIObject.editPlayerGroupPlayerNameTextfieldObject   .setText (editPlayerGroupGUIObject.tempSelectedPlayerObject.playerNameString);
+
+}
+/*Set the movement mode for both player object and the graphical user interface object.
+This function is to make sure that both mode is always the same.*/
+void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
+
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt                  = _intIndex;
+    editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt     = _intIndex;
+
+}
+/*A function to move the selected player into new exhibition.
+This function need to only happened when the appropriate movement mode is selected.*/
+void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
+
+    if(editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt == 2){
+
+        String  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
+        String  receivedMuseumNameAltString     = FindMuseumObject(receivedMuseumNameFullString).nameAltString;
+
+        editPlayerGroupGUIObject.tempSelectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
+
+    }
+
+}
+void EditPlayerGroupSetAllModeSoftwareAutoButtonObject          (int _indexInt)     {
+
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt                                          = 1;
+    for(int i = 0; i < playerObjectList.size(); i ++){ playerObjectList.get(i).playerMovementModeInt    = 1; }
+
+}
+void EditPlayerGroupSetAllModeSoftwareManualButtonObject        (int _indexInt)     {
+
+    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt                                          = 2;
+    for(int i = 0; i < playerObjectList.size(); i ++){ playerObjectList.get(i).playerMovementModeInt    = 2; }
+
+}
+void EditPlayerGroupPlayerResetButtonObject                     (int _indexInt)     { editPlayerGroupGUIObject.tempSelectedPlayerObject.ResetVoid(); }
+void EditPlayerGroupPlayerResetAllButtonObject                  (int _indexInt)     { for(int i = 0; i < playerObjectList.size(); i ++){ playerObjectList.get(i).ResetVoid(); } }
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//END//EditPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 //START//RemovePlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*This function below is for the user to pick which player they want to remove.*/
@@ -2449,37 +2518,6 @@ void RemovePlayerGroupRemoveButtonObject                        (int _indexInt){
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //END//RemovePlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////////////////////////// 
-
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//START//EditPlayerGroupGUIObject.pde Controller's Functions.///////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////
-/*Set the movement mode for both player object and the graphical user interface object.
-This function is to make sure that both mode is always the same.*/
-void EditPlayerGroupPlayerModeValueRadioButtonObject            (int _intIndex)     {
-
-    editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt                  = _intIndex;
-    editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt     = _intIndex;
-
-}
-/*A function to move the selected player into new exhibition.
-This function need to only happened when the appropriate movement mode is selected.*/
-void EditPlayerGroupPlayerExhibitionNextScrollableListObject    (int _indexInt)     {
-
-    if(editPlayerGroupGUIObject.tempSelectedPlayerMovementModeInt == 2){
-
-        String  receivedMuseumNameFullString    = editPlayerGroupGUIObject.editPlayerGroupPlayerExhibitionNextScrollableListObject.getItem(_indexInt).get("text").toString();
-        String  receivedMuseumNameAltString     = FindMuseumObject(receivedMuseumNameFullString).nameAltString;
-
-        editPlayerGroupGUIObject.tempSelectedPlayerObject.ExhibitionMoveObject(receivedMuseumNameAltString);
-
-    }
-
-}
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//END//EditPlayerGroupGUIObject.pde Controller's Functions./////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //END//Controller's Functions.//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

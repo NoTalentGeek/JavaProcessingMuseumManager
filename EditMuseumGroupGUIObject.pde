@@ -3,8 +3,9 @@ import controlP5.*;
 
 class EditMuseumGroupGUIObject extends GroupGUIObject{
 
-    ControlP5       editMuseumGroupControlP5Object;
-    Group           editMuseumGroupObject;
+    ControlP5       editMuseumGroupControlP5Object              ;
+    Group           editMuseumGroupObject                       ;
+    Button          editMuseumGroupResetAllMuseumButtonObject   ;
 
     EditMuseumGroupGUIObject(
 
@@ -32,6 +33,17 @@ class EditMuseumGroupGUIObject extends GroupGUIObject{
                                             .setLabel               ("EDIT MUSEUM OBJECT:")
                                             .setPosition            (guiXInt, guiYInt)
                                             .setWidth               (guiWidthInt);
+
+
+
+        editMuseumGroupResetAllMuseumButtonObject                   =
+            editMuseumGroupControlP5Object
+                .addButton                                          ("EditMuseumGroupResetAllMuseumButtonObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editMuseumGroupObject)
+                .setLabel                                           ("RESET ALL MUSEUM OBJECT")
+                .setPosition                                        (guiElement1ColumnFirstColumnXInt, guiLayoutOffsetInt)
+                .setSize                                            (guiElement1ColumnWidth, guiLayoutOffsetInt);
 
 
 

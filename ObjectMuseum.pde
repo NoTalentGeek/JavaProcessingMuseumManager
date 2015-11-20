@@ -99,6 +99,14 @@ class   ObjectMuseum                                                            
 
     }
 
+    void ResetVoid(){
+
+        fullBoolean         = false;
+        visitorCurrentInt   = 0;
+        visitorTotalInt     = 0;
+
+    }
+
     /*A set of functions to move this object into a new parent object.
     For initial use, use SetInitialParentObject() instead of this function!.*/
     void SetParentVoid(

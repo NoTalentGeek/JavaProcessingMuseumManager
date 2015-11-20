@@ -266,7 +266,42 @@ class ObjectPlayer{
 
     void ResetVoid(){
 
-        println("Function under construction.");
+        if(exhibitionTargetNameAltStringList            .size() > 0){ exhibitionTargetNameAltStringList         .clear(); }
+        if(exhibitionVisitedNameAltStringList           .size() > 0){ exhibitionVisitedNameAltStringList        .clear(); }
+        if(exhibitionTagCounterNameAltStringList        .size() > 0){ exhibitionTagCounterNameAltStringList     .clear(); }
+        if(exhibitionTargetNameFullStringList           .size() > 0){ exhibitionTargetNameFullStringList        .clear(); }
+        if(exhibitionVisitedNameFullStringList          .size() > 0){ exhibitionVisitedNameFullStringList       .clear(); }
+        if(exhibitionTagCounterNameFullStringList       .size() > 0){ exhibitionTagCounterNameFullStringList    .clear(); }
+        if(sentenceStringList                           .size() > 0){ sentenceStringList                        .clear(); }
+        if(explanationStringList                        .size() > 0){ explanationStringList                     .clear(); }
+        if(exhibitionTagCounterList                     .size() > 0){ exhibitionTagCounterList                  .clear(); }
+        if(subjectCurrentPrevTagStringList              .size() > 0){ subjectCurrentPrevTagStringList           .clear(); }
+        if(verb1CurrentPrevTagStringList                .size() > 0){ verb1CurrentPrevTagStringList             .clear(); }
+        if(verb2CurrentPrevTagStringList                .size() > 0){ verb2CurrentPrevTagStringList             .clear(); }
+        if(verb3CurrentPrevTagStringList                .size() > 0){ verb3CurrentPrevTagStringList             .clear(); }
+        if(verbSCurrentPrevTagStringList                .size() > 0){ verbSCurrentPrevTagStringList             .clear(); }
+        if(verbIngCurrentPrevTagStringList              .size() > 0){ verbIngCurrentPrevTagStringList           .clear(); }
+        if(negativeVerb1CurrentPrevTagStringList        .size() > 0){ negativeVerb1CurrentPrevTagStringList     .clear(); }
+        if(negativeVerb2CurrentPrevTagStringList        .size() > 0){ negativeVerb2CurrentPrevTagStringList     .clear(); }
+        if(negativeVerb3CurrentPrevTagStringList        .size() > 0){ negativeVerb3CurrentPrevTagStringList     .clear(); }
+        if(negativeVerbSCurrentPrevTagStringList        .size() > 0){ negativeVerbSCurrentPrevTagStringList     .clear(); }
+        if(negativeVerbIngCurrentPrevTagStringList      .size() > 0){ negativeVerbIngCurrentPrevTagStringList   .clear(); }
+        if(nounCurrentPrevTagStringList                 .size() > 0){ nounCurrentPrevTagStringList              .clear(); }
+        if(nounSCurrentPrevTagStringList                .size() > 0){ nounSCurrentPrevTagStringList             .clear(); }
+        if(adjectiveCurrentPrevTagStringList            .size() > 0){ adjectiveCurrentPrevTagStringList         .clear(); }
+        if(negativeAdjectiveCurrentPrevTagStringList    .size() > 0){ negativeAdjectiveCurrentPrevTagStringList .clear(); }
+        if(adverbCurrentPrevTagStringList               .size() > 0){ adverbCurrentPrevTagStringList            .clear(); }
+        if(negativeAdverbCurrentPrevTagStringList       .size() > 0){ negativeAdverbCurrentPrevTagStringList    .clear(); }
+        if(playerSiblingObjectList                      .size() > 0){ playerSiblingObjectList                   .clear(); }
+
+        playerSiblingIndexInt                           = -1;
+        timeCurrentExhibitionFloat                      = 0f;
+        ExhibitionMoveObject                            (exhibitionCurrentString);
+        exhibitionCurrentObject                         = FindObject(exhibitionObjectList, exhibitionCurrentString);
+        playerFinishedBoolean                           = false;
+        playerScoreInt                                  = 0;
+        playerVisitCorrectExhibitionBoolean             = false;
+        playerFinishedBoolean                           = false;
 
     }
 
@@ -819,8 +854,8 @@ class ObjectPlayer{
         String  textString = "";
         for     (int i = 0; i < _numberOfSentenceInt; i ++){
 
-            if(i == 0) { textString = SentenceSingleGenerateString(); }
-            else                                { textString = textString + "\n" + SentenceSingleGenerateString(); }
+            if  (i == 0)    { textString = SentenceSingleGenerateString();                          }
+            else            { textString = textString + "\n" + SentenceSingleGenerateString();      }
             
 
         }

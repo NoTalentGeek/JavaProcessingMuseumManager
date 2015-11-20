@@ -36,6 +36,9 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
     Textlabel       editPlayerGroupPlayerModeTextlabelObject                    ;
     RadioButton     editPlayerGroupPlayerModeValueRadioButtonObject             ;
     ScrollableList  editPlayerGroupPlayerExhibitionNextScrollableListObject     ;
+    Button          editPlayerGroupSetAllModeSoftwareAutoButtonObject           ;
+    Button          editPlayerGroupSetAllModeSoftwareManualButtonObject         ;
+    Button          editPlayerGroupPlayerResetAllButtonObject                   ;
     Button          editPlayerGroupPlayerResetButtonObject                      ;
     Button          editPlayerGroupPlayerGeneratePatternButtonObject            ;
 
@@ -49,22 +52,21 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ){
 
-        super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);                                                             /*PENDING.*/
+        super                                                   (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
+        editPlayerGroupControlP5Object                          = new ControlP5(pAppletObject);                                                                         /*PENDING.*/
 
-        tempSelectedPlayerObject                                    =  playerObjectList     .get(0);                                                                    /*Set the default player object.                                            */
-        tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                     /*Convert boolean value into String type data with sentence case.           */
-        
+        tempSelectedPlayerObject                                =  playerObjectList     .get(0);                                                                        /*Set the default player object.                                            */
+        tempSelectedPlayerFinishedString                        = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                         /*Convert boolean value into String type data with sentence case.           */
         for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerExplanationString          =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
-            else        { tempSelectedPlayerExplanationString          = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerExplanationString   =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+            else        { tempSelectedPlayerExplanationString   = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
 
         }
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
-            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerSentenceString      =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+            else        { tempSelectedPlayerSentenceString      = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
 
@@ -113,7 +115,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR NAME:")
                 .setPosition                                        (guiElement2ColumnFirstColumnXInt, (guiLayoutOffsetInt*3))
-                .setSize                                            (guiElement2ColumnWidth,  guiElement2LineHeight);
+                .setSize                                            (guiElement2ColumnWidth,  guiElement2LineHeight)
+                .setText                                            (tempSelectedPlayerObject.playerNameString);
 
 
 
@@ -296,6 +299,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addItem                                            ("SOFTWARE - MANUAL", 2)
                 .addItem                                            ("HARDWARE - MANUAL", 3)
                 .setGroup                                           (editPlayerGroupObject)
+                .setNoneSelectedAllowed                             (true)
                 .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*3)))
                 .setSize                                            (guiLayoutOffsetInt, guiLayoutOffsetInt);
 
@@ -314,13 +318,46 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
 
 
+        editPlayerGroupSetAllModeSoftwareAutoButtonObject           =
+            editPlayerGroupControlP5Object
+                .addButton                                          ("EditPlayerGroupSetAllModeSoftwareAutoButtonObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("SET ALL VISITOR SOFTWARE AUTO")
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement2ColumnWidth, guiLayoutOffsetInt);
+
+
+
+        editPlayerGroupSetAllModeSoftwareManualButtonObject         =
+            editPlayerGroupControlP5Object
+                .addButton                                          ("EditPlayerGroupSetAllModeSoftwareManualButtonObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("SET ALL VISITOR SOFTWARE MANUAL")
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement2ColumnWidth, guiLayoutOffsetInt);
+
+
+
+        editPlayerGroupPlayerResetAllButtonObject                   =
+            editPlayerGroupControlP5Object
+                .addButton                                          ("EditPlayerGroupPlayerResetAllButtonObject")
+                .setColor                                           (defaultCColor)
+                .setGroup                                           (editPlayerGroupObject)
+                .setLabel                                           ("RESET ALL VISITOR")
+                .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement2ColumnWidth, guiLayoutOffsetInt);
+
+
+
         editPlayerGroupPlayerResetButtonObject                      =
             editPlayerGroupControlP5Object
                 .addButton                                          ("EditPlayerGroupPlayerResetButtonObject")
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("RESET VISITOR")
-                .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
+                .setPosition                                        (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList5RowHeightInt*4)))
                 .setSize                                            (guiElement2ColumnWidth, guiLayoutOffsetInt);
 
 
@@ -331,8 +368,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .setColor                                           (defaultCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("GENERATE PATTERN")
-                .setPosition                                        (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*4)))
-                .setSize                                            (guiElement2ColumnWidth, guiLayoutOffsetInt);
+                .setPosition                                        (guiElement1ColumnFirstColumnXInt, ((guiLayoutOffsetInt*18) + (guiScrollableList5RowHeightInt*4)))
+                .setSize                                            (guiElement1ColumnWidth, guiLayoutOffsetInt);
 
 
 
@@ -342,42 +379,27 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, editPlayerGroupObject);
 
-        /*Specify the position of another controller below this group controller.*/
-        if      (editPlayerGroupObject.isOpen() == true ){
-
-                selectPlayerScrollableListObject.setPosition(
-                    editPlayerGroupObject.getPosition()[0],
-                    editPlayerGroupObject.getPosition()[1] + guiHeightInt
-                );
-
-        }
-        else if (editPlayerGroupObject.isOpen() == false){
-
-                selectPlayerScrollableListObject.setPosition(
-                    editPlayerGroupObject.getPosition()[0],
-                    editPlayerGroupObject.getPosition()[1]
-                );
-
-        }
-
         /*Always assign values to the controllers.*/
-        if(tempSelectedPlayerObject                             != null ){
+        if(tempSelectedPlayerObject                                 != null ){
 
-            tempSelectedPlayerFinishedString                = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
+            tempSelectedPlayerFinishedString                        = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";     /*Convert boolean value into String type data with sentence case.           */
+            if(tempSelectedPlayerObject.explanationStringList.size() <= 0)  { tempSelectedPlayerExplanationString = ""; }
             for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
 
-                if(i == 0)  { tempSelectedPlayerExplanationString          =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
-                else        { tempSelectedPlayerExplanationString          = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+                if(i == 0)  { tempSelectedPlayerExplanationString   =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+                else        { tempSelectedPlayerExplanationString   = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
 
             }
+            if(tempSelectedPlayerObject.sentenceStringList.size() <= 0)     { tempSelectedPlayerSentenceString = ""; }
             for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-                if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
-                else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+                if(i == 0)  { tempSelectedPlayerSentenceString      =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+                else        { tempSelectedPlayerSentenceString      = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
             }
 
             editPlayerGroupPlayerIndexValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerIndexInt                         ));
+            //editPlayerGroupPlayerNameTextfieldObject                  .setText ((     tempSelectedPlayerObject.playerNameString                       ));
             editPlayerGroupPlayerFinishedValueTextlabelObject           .setText ((     tempSelectedPlayerFinishedString                                ));
             editPlayerGroupPlayerScoreValueTextlabelObject              .setText (("" + tempSelectedPlayerObject.playerScoreInt                         ));
             editPlayerGroupPlayerExhibitionCurrentValueTextlabelObject  .setText ((     tempSelectedPlayerObject.exhibitionCurrentNameFullString        ));
