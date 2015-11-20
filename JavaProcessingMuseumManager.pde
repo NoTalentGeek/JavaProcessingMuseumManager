@@ -1,45 +1,6 @@
 import controlP5.*;
 import java.util.*;
 
-/*Database of all important objects in this applications.*/
-List<Tag>                   subjectTagObjectList                    = new ArrayList<Tag>            ();
-List<Tag>                   verbTagObjectList                       = new ArrayList<Tag>            ();
-List<Tag>                   negativeVerbTagObjectList               = new ArrayList<Tag>            ();
-List<Tag>                   nounTagObjectList                       = new ArrayList<Tag>            ();
-List<Tag>                   adjectiveTagObjectList                  = new ArrayList<Tag>            ();
-List<Tag>                   negativeAdjectiveTagObjectList          = new ArrayList<Tag>            ();
-List<Tag>                   adverbTagObjectList                     = new ArrayList<Tag>            ();
-List<Tag>                   negativeAdverbTagObjectList             = new ArrayList<Tag>            ();
-List<String>                subjectTagNameAltStringList             = new ArrayList<String>         ();
-List<String>                verbTagNameAltStringList                = new ArrayList<String>         ();
-List<String>                negativeVerbTagNameAltStringList        = new ArrayList<String>         ();
-List<String>                nounTagNameAltStringList                = new ArrayList<String>         ();
-List<String>                adjectiveTagNameAltStringList           = new ArrayList<String>         ();
-List<String>                negativeAdjectiveTagNameAltStringList   = new ArrayList<String>         ();
-List<String>                adverbTagNameAltStringList              = new ArrayList<String>         ();
-List<String>                negativeAdverbTagNameAltStringList      = new ArrayList<String>         ();
-List<String>                subjectTagNameFullStringList            = new ArrayList<String>         ();
-List<String>                verbTagNameFullStringList               = new ArrayList<String>         ();
-List<String>                negativeVerbTagNameFullStringList       = new ArrayList<String>         ();
-List<String>                nounTagNameFullStringList               = new ArrayList<String>         ();
-List<String>                adjectiveTagNameFullStringList          = new ArrayList<String>         ();
-List<String>                negativeAdjectiveTagNameFullStringList  = new ArrayList<String>         ();
-List<String>                adverbTagNameFullStringList             = new ArrayList<String>         ();
-List<String>                negativeAdverbTagNameFullStringList     = new ArrayList<String>         ();
-List<ObjectMuseum>          floorObjectList                         = new ArrayList<ObjectMuseum>   ();
-List<ObjectMuseum>          roomObjectList                          = new ArrayList<ObjectMuseum>   ();
-List<ObjectMuseum>          exhibitionObjectList                    = new ArrayList<ObjectMuseum>   ();
-List<ObjectPlayer>          playerObjectList                        = new ArrayList<ObjectPlayer>   ();
-List<String>                museumNameAltStringList                 = new ArrayList<String>         ();
-List<String>                floorNameAltStringList                  = new ArrayList<String>         ();
-List<String>                roomNameAltStringList                   = new ArrayList<String>         ();
-List<String>                exhibitionNameAltStringList             = new ArrayList<String>         ();
-List<String>                floorNameFullStringList                 = new ArrayList<String>         ();
-List<String>                roomNameFullStringList                  = new ArrayList<String>         ();
-List<String>                exhibitionNameFullStringList            = new ArrayList<String>         ();
-List<String>                playerStringList                        = new ArrayList<String>         ();
-List<String>                museumNameFullStringList                = new ArrayList<String>         ();
-List<String>                defaultStringList                       ;
 /*Panel card variables.*/
 boolean                     panelCardChangeBoolean                  = true                          ;
 color                       panelCardColor                          = color(63, 63, 116)            ;
@@ -129,6 +90,46 @@ JSONObject                  playerSaveJSONObject                    = new JSONOb
 JSONObject                  roomSaveJSONObject                      = new JSONObject();
 JSONObject                  subjectTagSaveJSONObject                = new JSONObject();
 JSONObject                  verbTagSaveJSONObject                   = new JSONObject();
+
+/*Database of all important objects in this applications.*/
+List<Tag>                   subjectTagObjectList                    = new ArrayList<Tag>            ();
+List<Tag>                   verbTagObjectList                       = new ArrayList<Tag>            ();
+List<Tag>                   negativeVerbTagObjectList               = new ArrayList<Tag>            ();
+List<Tag>                   nounTagObjectList                       = new ArrayList<Tag>            ();
+List<Tag>                   adjectiveTagObjectList                  = new ArrayList<Tag>            ();
+List<Tag>                   negativeAdjectiveTagObjectList          = new ArrayList<Tag>            ();
+List<Tag>                   adverbTagObjectList                     = new ArrayList<Tag>            ();
+List<Tag>                   negativeAdverbTagObjectList             = new ArrayList<Tag>            ();
+List<String>                subjectTagNameAltStringList             = new ArrayList<String>         ();
+List<String>                verbTagNameAltStringList                = new ArrayList<String>         ();
+List<String>                negativeVerbTagNameAltStringList        = new ArrayList<String>         ();
+List<String>                nounTagNameAltStringList                = new ArrayList<String>         ();
+List<String>                adjectiveTagNameAltStringList           = new ArrayList<String>         ();
+List<String>                negativeAdjectiveTagNameAltStringList   = new ArrayList<String>         ();
+List<String>                adverbTagNameAltStringList              = new ArrayList<String>         ();
+List<String>                negativeAdverbTagNameAltStringList      = new ArrayList<String>         ();
+List<String>                subjectTagNameFullStringList            = new ArrayList<String>         ();
+List<String>                verbTagNameFullStringList               = new ArrayList<String>         ();
+List<String>                negativeVerbTagNameFullStringList       = new ArrayList<String>         ();
+List<String>                nounTagNameFullStringList               = new ArrayList<String>         ();
+List<String>                adjectiveTagNameFullStringList          = new ArrayList<String>         ();
+List<String>                negativeAdjectiveTagNameFullStringList  = new ArrayList<String>         ();
+List<String>                adverbTagNameFullStringList             = new ArrayList<String>         ();
+List<String>                negativeAdverbTagNameFullStringList     = new ArrayList<String>         ();
+List<ObjectMuseum>          floorObjectList                         = new ArrayList<ObjectMuseum>   ();
+List<ObjectMuseum>          roomObjectList                          = new ArrayList<ObjectMuseum>   ();
+List<ObjectMuseum>          exhibitionObjectList                    = new ArrayList<ObjectMuseum>   ();
+List<ObjectPlayer>          playerObjectList                        = new ArrayList<ObjectPlayer>   ();
+List<String>                museumNameAltStringList                 = new ArrayList<String>         ();
+List<String>                floorNameAltStringList                  = new ArrayList<String>         ();
+List<String>                roomNameAltStringList                   = new ArrayList<String>         ();
+List<String>                exhibitionNameAltStringList             = new ArrayList<String>         ();
+List<String>                floorNameFullStringList                 = new ArrayList<String>         ();
+List<String>                roomNameFullStringList                  = new ArrayList<String>         ();
+List<String>                exhibitionNameFullStringList            = new ArrayList<String>         ();
+List<String>                playerStringList                        = new ArrayList<String>         ();
+List<String>                museumNameFullStringList                = new ArrayList<String>         ();
+List<String>                defaultStringList                       ;
 
 /*Name class to manage an object name.*/
 class Name{

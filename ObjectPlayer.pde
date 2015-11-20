@@ -8,31 +8,31 @@ class TagCounter{
 
     /*I create an array becuse comparator will not working on primitive data type.
     Hence, I put the value in one element List.*/
-    int             tagCounterInt       = -1;
-    List<Integer>   tagCounterIntList   = new ArrayList<Integer>();
-    String          tagNameAltString    = "";
-    String          tagNameFullString   = "";
-    Tag             tagObject           ;
+    int                 tagCounterInt       = -1;
+    List<Integer>       tagCounterIntList   = new ArrayList<Integer>();
+    String              tagNameAltString    = "";
+    String              tagNameFullString   = "";
+    Tag                 tagObject           ;
 
-    TagCounter(){}
+    TagCounter          (){}
 
     /*Getter and setter function for counting tha tags.*/
-    void    SetTagObject            (Tag    _tagObject)         { tagObject         = _tagObject; }
-    void    SetTagNameAltString     (String _tagNameAltString)  { tagNameAltString  = _tagNameAltString;    }
-    void    SetTagNameFullString    (String _tagNameFullString) { tagNameFullString = _tagNameFullString;   }
-    void    SetTagCounterIntVoid    (int    _tagCounterInt)     {
+    void                SetTagObject            (Tag    _tagObject)         { tagObject         = _tagObject; }
+    void                SetTagNameAltString     (String _tagNameAltString)  { tagNameAltString  = _tagNameAltString;    }
+    void                SetTagNameFullString    (String _tagNameFullString) { tagNameFullString = _tagNameFullString;   }
+    void                SetTagCounterIntVoid    (int    _tagCounterInt)     {
 
-        /*I create an array becuse comparator will not working on primitive data type.
-        Hence, I put the value in one element List.*/
-        tagCounterInt       = _tagCounterInt;
-        tagCounterIntList   = new ArrayList<Integer>();
-        tagCounterIntList   .add(tagCounterInt);
+                        /*I create an array becuse comparator will not working on primitive data type.
+                        Hence, I put the value in one element List.*/
+                        tagCounterInt       = _tagCounterInt;
+                        tagCounterIntList   = new ArrayList<Integer>();
+                        tagCounterIntList   .add(tagCounterInt);
 
     }
-    int     GetTagCounterInt        (){ return tagCounterInt;       }
-    Tag     GetTagObject            (){ return tagObject;           }
-    String  GetTagNameAltString     (){ return tagNameAltString;    }
-    String  GetTagNameFullString    (){ return tagNameFullString;   }
+    int                 GetTagCounterInt        (){ return tagCounterInt;       }
+    Tag                 GetTagObject            (){ return tagObject;           }
+    String              GetTagNameAltString     (){ return tagNameAltString;    }
+    String              GetTagNameFullString    (){ return tagNameFullString;   }
 
 }
 
@@ -41,68 +41,59 @@ The player object will be the class that can be either played by the user (somek
     or being automated.*/
 class ObjectPlayer{
 
-    String exhibitionCurrentNameAltString = "";
-    String exhibitionCurrentNameFullString = "";
-
-    String              exhibitionCurrentString                     = "";                               /*Current exhibition in String.*/
+    boolean             playerFinishedBoolean                       = false;
+    boolean             playerVisitCorrectExhibitionBoolean         = false;
+    float               timeCurrentExhibitionFloat                  = 0f;                               /*How many frame/tick this player already stay in an exhibition.                        */
+    int                 playerIndexInt                              = 0;                                /*Unique identifier for each player object, can be changed later to name.               */
+    int                 playerMovementModeInt                       = 2;                                /*The mode that runs this player.
+                                                                                                            editPlayerMode =    1, this player controlled by AIAutoVoid.
+                                                                                                            editPlayerMode =    2, this player controlled manually using this application.
+                                                                                                            editPlayerMode =    3, this player controlled manually using Arduino.               */
+    int                 playerScoreInt                              = 0;
+    int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.                    */
     ObjectMuseum        exhibitionCurrentObject                     = null;
-    List<String>        exhibitionTargetNameAltStringList           = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedNameAltStringList          = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<String>        exhibitionTagCounterNameAltStringList       = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
-    
-    List<String>        exhibitionTargetNameFullStringList          = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedNameFullStringList         = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<String>        exhibitionTagCounterNameFullStringList      = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
-    
-    List<String>        sentenceStringList                          = new ArrayList<String>();
+    String              exhibitionCurrentNameAltString              = "";
+    String              exhibitionCurrentNameFullString             = "";
+    String              exhibitionCurrentString                     = "";       
+    String              playerNameString                            = "";
+
+    /*Panel variable.*/
+    boolean             hoverBoolean                                = false;
+    color               panelFinishedColor                          = color(223, 113, 38 );
+    color               panelUnfinishedColor                        = color(217, 160, 102);
+    int                 widthPanelInt                               = 0;
+    int                 heightPanelInt                              = 0;
+    int                 xPanelInt                                   = 0;
+    int                 yPanelInt                                   = 0;
+    Panel               panelObject                                 = null;
+
+    List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.                                                                    */
+    List<String>        adjectiveCurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        adverbCurrentPrevTagStringList              = new ArrayList<String>();
+    List<String>        exhibitionTagCounterNameAltStringList       = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.    */
+    List<String>        exhibitionTagCounterNameFullStringList      = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.    */
+    List<String>        exhibitionTargetNameAltStringList           = new ArrayList<String>();          /*Target exhibition that will be given to the player.                                                                   */
+    List<String>        exhibitionTargetNameFullStringList          = new ArrayList<String>();          /*Target exhibition that will be given to the player.                                                                   */
+    List<String>        exhibitionVisitedNameAltStringList          = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.                                                            */
+    List<String>        exhibitionVisitedNameFullStringList         = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.                                                            */
     List<String>        explanationStringList                       = new ArrayList<String>();
-
-
-
+    List<String>        negativeAdjectiveCurrentPrevTagStringList   = new ArrayList<String>();
+    List<String>        negativeAdverbCurrentPrevTagStringList      = new ArrayList<String>();
+    List<String>        negativeVerb1CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerb2CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerb3CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerbIngCurrentPrevTagStringList     = new ArrayList<String>();
+    List<String>        negativeVerbSCurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        nounCurrentPrevTagStringList                = new ArrayList<String>();
+    List<String>        nounSCurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        sentenceStringList                          = new ArrayList<String>();
     List<String>        subjectCurrentPrevTagStringList             = new ArrayList<String>();
     List<String>        verb1CurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        verb2CurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        verb3CurrentPrevTagStringList               = new ArrayList<String>();
-    List<String>        verbSCurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        verbIngCurrentPrevTagStringList             = new ArrayList<String>();
-    List<String>        negativeVerb1CurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerb2CurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerb3CurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerbSCurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerbIngCurrentPrevTagStringList     = new ArrayList<String>();
-    List<String>        nounCurrentPrevTagStringList                = new ArrayList<String>();
-    List<String>        nounSCurrentPrevTagStringList               = new ArrayList<String>();
-    List<String>        adjectiveCurrentPrevTagStringList           = new ArrayList<String>();
-    List<String>        negativeAdjectiveCurrentPrevTagStringList   = new ArrayList<String>();
-    List<String>        adverbCurrentPrevTagStringList              = new ArrayList<String>();
-    List<String>        negativeAdverbCurrentPrevTagStringList      = new ArrayList<String>();
-    List<TagCounter>    exhibitionTagCounterList                    = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
-
-    int                 playerIndexInt                              = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
-    String              playerNameString                            = "";
-
-    List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
-    int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.*/
-
-    int                 playerMovementModeInt                       = 2;                                /*The mode that runs this player.
-                                                                                                            editPlayerMode =    1, this player controlled by AIAutoVoid.
-                                                                                                            editPlayerMode =    2, this player controlled manually using this application.
-                                                                                                            editPlayerMode =    3, this player controlled manually using Arduino.*/
-    float               timeCurrentExhibitionFloat                  = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
-
-    /*Panel variable.*/
-    boolean hoverBoolean                                            = false;
-    color   panelUnfinishedColor                                    = color(217, 160, 102);
-    color   panelFinishedColor                                      = color(223, 113, 38 );
-    int     widthPanelInt                                           = 0;
-    int     heightPanelInt                                          = 0;
-    int     xPanelInt                                               = 0;
-    int     yPanelInt                                               = 0;
-    Panel   panelObject                                             = null;
-
-    int     playerScoreInt                                          = 0;
-    boolean playerVisitCorrectExhibitionBoolean                     = false;
-    boolean playerFinishedBoolean                                   = false;
+    List<String>        verbSCurrentPrevTagStringList               = new ArrayList<String>();
+    List<TagCounter>    exhibitionTagCounterList                    = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.                                                            */
 
     /*Constructor.*/
     ObjectPlayer(
@@ -240,9 +231,7 @@ class ObjectPlayer{
         PanelDrawVoid   ();
 
 
-        /*PROTOTYPE: Changing player mode.*/
         if(playerMovementModeInt == 1){ AIAutoVoid(); }
-        /*PROTOTYPE: Creating function to move this player manually.*/
 
         /*PENDING: Give the codes below in the new own method and create commentation for these code below.*/
         exhibitionTagCounterNameAltStringList .clear();

@@ -5,43 +5,35 @@ The museum objects within this application are things that can interract with vi
 For example floor, room, and exhibition.*/
 class   ObjectMuseum                                                                    {
 
-    List<ObjectMuseum>  childObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
-    List<ObjectPlayer>  childPlayerObjectList       = new ArrayList<ObjectPlayer>(); 
-
-    int                 indexGlobalInt              = -1;                               /*This is an index number of the location of this object in its respective list.*/
-    int                 indexLocalInt               = -1;                               /*This is an index number of the location of this object within its parent child object list.*/
-
-    Name                nameObject                  = null;                             /*Name object that contains the alternative name and the full name of this object.*/
-    String              nameAltString               = "";                               /*This variable is intended solely to store the alternative name of this object.*/
-    String              nameFullString              = "";                               /*This variable is intended solely to store the full name of this object.*/
-
-    ObjectMuseum        parentObject                = null;                             /*The object parent of this object, which means this object should be inside the parent object's child object list.*/
-    String              parentNameAltString         = "";                               /*The alternative name of the parent object.*/
-    
-    String              typeString                  = "";                               /*The type of this object (the only possible values are "FLR", "ROM", and "EXH").*/
-
-    List<Tag>           tagMuseumObjectList         = new ArrayList<Tag>();             /*Object tag list.*/
-    List<String>        tagMuseumNameAltStringList  = new ArrayList<String>();          /*The tags for this museum object.*/
-    List<String>        tagMuseumNameFullStringList = new ArrayList<String>();          /*The tags for this museum object.*/
-
-    boolean             fullBoolean                 = false;                            /*Whether this museum object is full or not.*/
-    int                 visitorCurrentInt           = 0;                                /*This museum object current visitor.*/
-    int                 visitorTotalInt             = 0;                                /*This museum objecy total visitor.*/
-
-    boolean             activeBoolean               = false;                            /*Variable to control ControlP5 GUI element.*/
-
-    String[]            explanationStringArray      = new String[4];
-
+    boolean             activeBoolean               = false;                            /*Variable to control ControlP5 GUI element.                                                                            */
+    boolean             fullBoolean                 = false;                            /*Whether this museum object is full or not.                                                                            */
+    int                 indexGlobalInt              = -1;                               /*This is an index number of the location of this object in its respective list.                                        */
+    int                 indexLocalInt               = -1;                               /*This is an index number of the location of this object within its parent child object list.                           */
+    int                 visitorCurrentInt           = 0;                                /*This museum object current visitor.                                                                                   */
+    int                 visitorTotalInt             = 0;                                /*This museum objecy total visitor.                                                                                     */
+    Name                nameObject                  = null;                             /*Name object that contains the alternative name and the full name of this object.                                      */
+    ObjectMuseum        parentObject                = null;                             /*The object parent of this object, which means this object should be inside the parent object's child object list.     */
+    String              nameAltString               = "";                               /*This variable is intended solely to store the alternative name of this object.                                        */
+    String              nameFullString              = "";                               /*This variable is intended solely to store the full name of this object.                                               */
+    String              parentNameAltString         = "";                               /*The alternative name of the parent object.                                                                            */
+    String              typeString                  = "";                               /*The type of this object (the only possible values are "FLR", "ROM", and "EXH").                                       */
     /*Variables of panel graphical user interfaces.*/
     boolean             hoverBoolean                = false;
+    color               exhibitionPanelColor        = color(143, 86, 59);
     color               floorPanelColor             = color(69 , 40, 60);
     color               roomPanelColor              = color(102, 57, 49);
-    color               exhibitionPanelColor        = color(143, 86, 59);
     int                 widthPanelInt               = 0;
     int                 heightPanelInt              = 0;
     int                 xPanelInt                   = 0;
     int                 yPanelInt                   = 0;
     Panel               panelObject                 = null;
+
+    List<ObjectMuseum>  childObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.    */
+    List<ObjectPlayer>  childPlayerObjectList       = new ArrayList<ObjectPlayer>(); 
+    List<String>        tagMuseumNameAltStringList  = new ArrayList<String>();          /*The tags for this museum object.                      */
+    List<String>        tagMuseumNameFullStringList = new ArrayList<String>();          /*The tags for this museum object.                      */
+    List<Tag>           tagMuseumObjectList         = new ArrayList<Tag>();             /*Object tag list.                                      */
+    String[]            explanationStringArray      = new String[4];
 
     ObjectMuseum                                    (
 
@@ -212,9 +204,7 @@ class   ObjectMuseum                                                            
 
         int indexInt            = -1;
         for(int i = 0; i < _targetObjectList.size(); i ++){
-
             if(_targetObjectList.get(i).nameAltString.equals(nameAltString)){ indexInt = i; break; }
-
         }
 
         return indexInt;
@@ -251,11 +241,8 @@ class   ObjectMuseum                                                            
     List<ObjectMuseum> RemoveChildObjectList(List<ObjectMuseum> _targetObjectList)      {
 
         for(int i = 0; i < parentObject.childObjectList.size(); i ++){
-
             if(parentObject.childObjectList.get(i).nameAltString.equals(nameAltString)){ parentObject.childObjectList.remove(i); }
-
         }
-
         return _targetObjectList;
 
     }
@@ -269,8 +256,6 @@ class   ObjectMuseum                                                            
 
     }
 
-
-
     /*A function to return object from any object list.*/
     ObjectMuseum FindObject(
 
@@ -281,9 +266,7 @@ class   ObjectMuseum                                                            
 
         ObjectMuseum objectMuseum = null;
         for(int i = 0; i < _targetObjectList.size(); i ++){
-
             if(_targetObjectList.get(i).nameAltString.equals(_nameAltString)){ objectMuseum = _targetObjectList.get(i); }
-
         }
         return objectMuseum;
 
