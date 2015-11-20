@@ -1,12 +1,22 @@
 [
   {
+    "tagNegativeVerb1String": "assasinate",
+    "tagNegativeVerbIngString": "assasinating",
+    "tagNegativeVerb3String": "assasinated",
+    "nameFullString": "Verb Assasinate",
+    "tagTypeString": "NVE",
+    "nameAltString": "NVE_ASS",
+    "tagNegativeVerbSString": "assasinates",
+    "tagNegativeVerb2String": "assasinated"
+  },
+  {
     "tagNegativeVerb1String": "die",
-    "tagNegativeVerbIngString": "dying",
+    "tagNegativeVerbIngString": "dies",
     "tagNegativeVerb3String": "died",
     "nameFullString": "Verb Die",
     "tagTypeString": "NVE",
     "nameAltString": "NVE_DIE",
-    "tagNegativeVerbSString": "dies",
+    "tagNegativeVerbSString": "dying",
     "tagNegativeVerb2String": "died"
   },
   {
@@ -17,6 +27,16 @@
     "tagTypeString": "NVE",
     "nameAltString": "NVE_KIL",
     "tagNegativeVerbSString": "kills",
+    "tagNegativeVerb2String": "killed"
+  },
+  {
+    "tagNegativeVerb1String": "kill",
+    "tagNegativeVerbIngString": "kills",
+    "tagNegativeVerb3String": "killed",
+    "nameFullString": "Verb Kill",
+    "tagTypeString": "NVE",
+    "nameAltString": "NVE_KIL",
+    "tagNegativeVerbSString": "killing",
     "tagNegativeVerb2String": "killed"
   }
 ]

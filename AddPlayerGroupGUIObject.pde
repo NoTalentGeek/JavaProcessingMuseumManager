@@ -98,6 +98,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, addPlayerGroupObject);
 
+        addPlayerGroupPlayerNameTextfieldObject.setColorValue(groupColorLabelColor);
+
     }
 
 }

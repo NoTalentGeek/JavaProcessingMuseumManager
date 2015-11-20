@@ -1,5 +1,12 @@
 [
   {
+    "tagNounSString": "anklets",
+    "tagNounString": "anklet",
+    "nameFullString": "Noun Anklet",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_ANK"
+  },
+  {
     "tagNounSString": "balls",
     "tagNounString": "ball",
     "nameFullString": "Noun Ball",
@@ -7,10 +14,108 @@
     "nameAltString": "NOU_BAL"
   },
   {
+    "tagNounSString": "crowns",
+    "tagNounString": "crown",
+    "nameFullString": "Noun Crown",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_CRO"
+  },
+  {
+    "tagNounSString": "double crown",
+    "tagNounString": "double crown",
+    "nameFullString": "Noun DoubleCrown",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_DCR"
+  },
+  {
+    "tagNounSString": "figures",
+    "tagNounString": "figure",
+    "nameFullString": "Noun Figure",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_FIG"
+  },
+  {
     "tagNounSString": "guns",
     "tagNounString": "gun",
     "nameFullString": "Noun Gun",
     "tagTypeString": "NOU",
     "nameAltString": "NOU_GUN"
+  },
+  {
+    "tagNounSString": "hierogliphs",
+    "tagNounString": "hierogliph",
+    "nameFullString": "Noun Hierogliph",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_HIE"
+  },
+  {
+    "tagNounSString": "Iraq",
+    "tagNounString": "Iraq",
+    "nameFullString": "Noun Iraq",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_IRQ"
+  },
+  {
+    "tagNounSString": "Italy",
+    "tagNounString": "Italy",
+    "nameFullString": "Noun Italy",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_ITA"
+  },
+  {
+    "tagNounSString": "papers",
+    "tagNounString": "paper",
+    "nameFullString": "Noun Paper",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_PAP"
+  },
+  {
+    "tagNounSString": "plaques",
+    "tagNounString": "plaque",
+    "nameFullString": "Noun Plaque",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_PLA"
+  },
+  {
+    "tagNounSString": "Rome",
+    "tagNounString": "Rome",
+    "nameFullString": "Noun Rome",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_ROM"
+  },
+  {
+    "tagNounSString": "Russia",
+    "tagNounString": "Russia",
+    "nameFullString": "Noun Russia",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_RUS"
+  },
+  {
+    "tagNounSString": "statues",
+    "tagNounString": "statue",
+    "nameFullString": "Noun Statue",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_STA"
+  },
+  {
+    "tagNounSString": "stones",
+    "tagNounString": "stone",
+    "nameFullString": "Noun Stone",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_STO"
+  },
+  {
+    "tagNounSString": "stones",
+    "tagNounString": "stone",
+    "nameFullString": "Noun Stone",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_STO"
+  },
+  {
+    "tagNounSString": "water",
+    "tagNounString": "water",
+    "nameFullString": "Noun Water",
+    "tagTypeString": "NOU",
+    "nameAltString": "NOU_WAT"
   }
 ]

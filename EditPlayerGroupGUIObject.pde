@@ -420,6 +420,10 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         else if (tempSelectedPlayerMovementModeInt == 3){ editPlayerGroupPlayerExhibitionNextScrollableListObject.hide(); }
         else                                            { editPlayerGroupPlayerExhibitionNextScrollableListObject.hide(); }
 
+        editPlayerGroupPlayerNameTextfieldObject                .setColorValue(groupColorLabelColor);
+        editPlayerGroupPlayerSentenceValueTextareaObject        .setColorValue(groupColorLabelColor);
+        editPlayerGroupPlayerExplanationValueTextareaObject     .setColorValue(groupColorLabelColor);
+
     }
 
 }

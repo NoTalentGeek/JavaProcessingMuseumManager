@@ -319,6 +319,26 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
         ControlFormVoid();
 
+        editTagGroupTagNameAltTextfieldObject           .setColorValue(groupColorLabelColor);
+        editTagGroupTagNameFullTextfieldObject          .setColorValue(groupColorLabelColor);
+        editTagGroupTagSubjectTextfieldObject           .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerb1TextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerb2TextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerb3TextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerbIngTextfieldObject           .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerbSTextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerb1TextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerb2TextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerb3TextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerbIngTextfieldObject   .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerbSTextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounTextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounSTextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagAdjectiveTextfieldObject         .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeAdjectiveTextfieldObject .setColorValue(groupColorLabelColor);
+        editTagGroupTagAdverbTextfieldObject            .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeAdverbTextfieldObject    .setColorValue(groupColorLabelColor);
+
     }
 
     /*Show the necessary text field according to the selected type tag.*/

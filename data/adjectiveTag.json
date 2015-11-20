@@ -6,9 +6,27 @@
     "tagAdjectiveString": "excellent"
   },
   {
+    "nameFullString": "Adjective Crossed",
+    "tagTypeString": "ADJ",
+    "nameAltString": "ADJ_CRO",
+    "tagAdjectiveString": "crossed"
+  },
+  {
     "nameFullString": "Adjective Good",
     "tagTypeString": "ADJ",
     "nameAltString": "ADJ_GOD",
     "tagAdjectiveString": "good"
+  },
+  {
+    "nameFullString": "Adjective Hard",
+    "tagTypeString": "ADJ",
+    "nameAltString": "ADJ_HAR",
+    "tagAdjectiveString": "hard"
+  },
+  {
+    "nameFullString": "Adjective Soft",
+    "tagTypeString": "ADJ",
+    "nameAltString": "ADJ_SOF",
+    "tagAdjectiveString": "soft"
   }
 ]

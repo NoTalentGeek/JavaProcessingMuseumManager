@@ -840,19 +840,30 @@ class ObjectPlayer{
     String  SentenceWordFixString               (String     _fixString)             { return _fixString.substring(0, 1).toUpperCase() + _fixString.substring(1, _fixString.length()); }
     String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
 
+        /*Subject VerbIng Habit.
+        Subject VerbVerbS to Verb1.
+        Iwill VerbVerb Subject to Verb1.
+        
+        Subject Is Noun.
+        VerbIng A Noun Adv.
+        Habit VerbS Adj.
+        
+        A Adj Adj Noun.
+        A Subject VerbS To Noun.
+        Verb Habit.
+        
+        Noun Verbs.
+        What Subject Was VerbS.
+        Are Adj of NounS.*/
+
         String[][]  patternStringArray      = new String[][]{
 
-            /*Subject VerbIng Habit.
-            Subject VerbVerbS to Verb1.
-            Iwill VerbVerb Subject to Verb1.*/
+
             {
                 "{ % +."              ,
                 "{ * to @."           ,
                 "I will & { to @."
             },
-            /*Subject Is Noun.
-            VerbIng A Noun Adv.
-            Habit VerbS Adj.*/
             {
 
                 "{ is a _ (."   ,
@@ -860,9 +871,6 @@ class ObjectPlayer{
                 "+ ^ _."
 
             },
-            /*A Adj Adj Noun.
-            A Subject VerbS To Noun.
-            Verb Habit.*/
             {
 
                 "A _ _ (."      ,
@@ -870,14 +878,11 @@ class ObjectPlayer{
                 "^ +."
 
             },
-            /*Noun Verbs.
-            What Subject Was VerbS.
-            Are Adj of NounS.*/
             {
 
                 "( ^."          ,
                 "What { was ^." ,
-                "Are _ of )."
+                "Are _ )."
 
             }
 

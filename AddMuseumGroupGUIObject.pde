@@ -266,6 +266,13 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, addMuseumGroupObject);
 
+        addMuseumGroupExplanation1TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupExplanation2TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupExplanation3TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupExplanation4TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupNameFullMuseumObjectTextfieldObject   .setColorValue(groupColorLabelColor);
+        addMuseumGroupNameAltMuseumObjectTextfieldObject    .setColorValue(groupColorLabelColor);
+
     }
 
 }

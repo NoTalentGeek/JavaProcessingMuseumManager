@@ -10,5 +10,125 @@
     "tagTypeString": "SUB",
     "nameAltString": "SUB_WAS",
     "tagSubjectString": "Washington"
+  },
+  {
+    "nameFullString": "Subject Assasin",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_ASS",
+    "tagSubjectString": "assasin"
+  },
+  {
+    "nameFullString": "Subject Bodhisattva",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_BOD",
+    "tagSubjectString": "Bodhisattva"
+  },
+  {
+    "nameFullString": "Subject Buddha",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_BUD",
+    "tagSubjectString": "Buddha"
+  },
+  {
+    "nameFullString": "Subject Dimitri",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_DIM",
+    "tagSubjectString": "Dimitri"
+  },
+  {
+    "nameFullString": "Subject DimitriMitropoulos",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_DMI",
+    "tagSubjectString": "Dimitri Mitropoulos"
+  },
+  {
+    "nameFullString": "Subject Dragon",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_DRA",
+    "tagSubjectString": "dragon"
+  },
+  {
+    "nameFullString": "Subject TheFirst",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_FIR",
+    "tagSubjectString": "the first"
+  },
+  {
+    "nameFullString": "Subject Iraqi",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_IRQ",
+    "tagSubjectString": "iraqi"
+  },
+  {
+    "nameFullString": "Subject Italian",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_ITA",
+    "tagSubjectString": "italian"
+  },
+  {
+    "nameFullString": "Subject JuliusCaesar",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_JUC",
+    "tagSubjectString": "Julius Caesar"
+  },
+  {
+    "nameFullString": "Subject Julius",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_JUL",
+    "tagSubjectString": "Julius"
+  },
+  {
+    "nameFullString": "Subject Killer",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_KIL",
+    "tagSubjectString": "killer"
+  },
+  {
+    "nameFullString": "Subject Koshchey",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_KOS",
+    "tagSubjectString": "Koshchey"
+  },
+  {
+    "nameFullString": "Subject Maria",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_MAR",
+    "tagSubjectString": "Maria"
+  },
+  {
+    "nameFullString": "Subject Medusa",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_MED",
+    "tagSubjectString": "Medusa"
+  },
+  {
+    "nameFullString": "Subject MariaMorevna",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_MMO",
+    "tagSubjectString": "Maria Morevna"
+  },
+  {
+    "nameFullString": "Subject Painter",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_PAI",
+    "tagSubjectString": "painter"
+  },
+  {
+    "nameFullString": "Subject Romanian",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_ROM",
+    "tagSubjectString": "romanian"
+  },
+  {
+    "nameFullString": "Subject Russian",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_RUS",
+    "tagSubjectString": "russian"
+  },
+  {
+    "nameFullString": "Subject Sphinx",
+    "tagTypeString": "SUB",
+    "nameAltString": "SUB_SPH",
+    "tagSubjectString": "Sphinx"
   }
 ]

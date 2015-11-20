@@ -42,45 +42,6 @@ public class JavaProcessingMuseumManager extends PApplet {
 
 
 
-/*Database of all important objects in this applications.*/
-List<Tag>                   subjectTagObjectList                    = new ArrayList<Tag>            ();
-List<Tag>                   verbTagObjectList                       = new ArrayList<Tag>            ();
-List<Tag>                   negativeVerbTagObjectList               = new ArrayList<Tag>            ();
-List<Tag>                   nounTagObjectList                       = new ArrayList<Tag>            ();
-List<Tag>                   adjectiveTagObjectList                  = new ArrayList<Tag>            ();
-List<Tag>                   negativeAdjectiveTagObjectList          = new ArrayList<Tag>            ();
-List<Tag>                   adverbTagObjectList                     = new ArrayList<Tag>            ();
-List<Tag>                   negativeAdverbTagObjectList             = new ArrayList<Tag>            ();
-List<String>                subjectTagNameAltStringList             = new ArrayList<String>         ();
-List<String>                verbTagNameAltStringList                = new ArrayList<String>         ();
-List<String>                negativeVerbTagNameAltStringList        = new ArrayList<String>         ();
-List<String>                nounTagNameAltStringList                = new ArrayList<String>         ();
-List<String>                adjectiveTagNameAltStringList           = new ArrayList<String>         ();
-List<String>                negativeAdjectiveTagNameAltStringList   = new ArrayList<String>         ();
-List<String>                adverbTagNameAltStringList              = new ArrayList<String>         ();
-List<String>                negativeAdverbTagNameAltStringList      = new ArrayList<String>         ();
-List<String>                subjectTagNameFullStringList            = new ArrayList<String>         ();
-List<String>                verbTagNameFullStringList               = new ArrayList<String>         ();
-List<String>                negativeVerbTagNameFullStringList       = new ArrayList<String>         ();
-List<String>                nounTagNameFullStringList               = new ArrayList<String>         ();
-List<String>                adjectiveTagNameFullStringList          = new ArrayList<String>         ();
-List<String>                negativeAdjectiveTagNameFullStringList  = new ArrayList<String>         ();
-List<String>                adverbTagNameFullStringList             = new ArrayList<String>         ();
-List<String>                negativeAdverbTagNameFullStringList     = new ArrayList<String>         ();
-List<ObjectMuseum>          floorObjectList                         = new ArrayList<ObjectMuseum>   ();
-List<ObjectMuseum>          roomObjectList                          = new ArrayList<ObjectMuseum>   ();
-List<ObjectMuseum>          exhibitionObjectList                    = new ArrayList<ObjectMuseum>   ();
-List<ObjectPlayer>          playerObjectList                        = new ArrayList<ObjectPlayer>   ();
-List<String>                museumNameAltStringList                 = new ArrayList<String>         ();
-List<String>                floorNameAltStringList                  = new ArrayList<String>         ();
-List<String>                roomNameAltStringList                   = new ArrayList<String>         ();
-List<String>                exhibitionNameAltStringList             = new ArrayList<String>         ();
-List<String>                floorNameFullStringList                 = new ArrayList<String>         ();
-List<String>                roomNameFullStringList                  = new ArrayList<String>         ();
-List<String>                exhibitionNameFullStringList            = new ArrayList<String>         ();
-List<String>                playerStringList                        = new ArrayList<String>         ();
-List<String>                museumNameFullStringList                = new ArrayList<String>         ();
-List<String>                defaultStringList                       ;
 /*Panel card variables.*/
 boolean                     panelCardChangeBoolean                  = true                          ;
 int                       panelCardColor                          = color(63, 63, 116)            ;
@@ -144,7 +105,7 @@ boolean                     buttonOpenCloseBoolean                  = false     
 int                         biggestPlayerIndexInt                   = 0                             ;
 int                         nextBiggestPlayerIndexInt               = 0                             ;
 int                         museumObjectFullThresholdInt            = 0                             ;
-int                         playerAmountInt                         = 30                            ;
+int                         playerAmountInt                         = 100                           ;
 
 JSONArray                   adjectiveTagSaveJSONArrayObject         = new JSONArray();
 JSONArray                   adverbTagSaveJSONArrayObject            = new JSONArray();
@@ -170,6 +131,46 @@ JSONObject                  playerSaveJSONObject                    = new JSONOb
 JSONObject                  roomSaveJSONObject                      = new JSONObject();
 JSONObject                  subjectTagSaveJSONObject                = new JSONObject();
 JSONObject                  verbTagSaveJSONObject                   = new JSONObject();
+
+/*Database of all important objects in this applications.*/
+List<Tag>                   subjectTagObjectList                    = new ArrayList<Tag>            ();
+List<Tag>                   verbTagObjectList                       = new ArrayList<Tag>            ();
+List<Tag>                   negativeVerbTagObjectList               = new ArrayList<Tag>            ();
+List<Tag>                   nounTagObjectList                       = new ArrayList<Tag>            ();
+List<Tag>                   adjectiveTagObjectList                  = new ArrayList<Tag>            ();
+List<Tag>                   negativeAdjectiveTagObjectList          = new ArrayList<Tag>            ();
+List<Tag>                   adverbTagObjectList                     = new ArrayList<Tag>            ();
+List<Tag>                   negativeAdverbTagObjectList             = new ArrayList<Tag>            ();
+List<String>                subjectTagNameAltStringList             = new ArrayList<String>         ();
+List<String>                verbTagNameAltStringList                = new ArrayList<String>         ();
+List<String>                negativeVerbTagNameAltStringList        = new ArrayList<String>         ();
+List<String>                nounTagNameAltStringList                = new ArrayList<String>         ();
+List<String>                adjectiveTagNameAltStringList           = new ArrayList<String>         ();
+List<String>                negativeAdjectiveTagNameAltStringList   = new ArrayList<String>         ();
+List<String>                adverbTagNameAltStringList              = new ArrayList<String>         ();
+List<String>                negativeAdverbTagNameAltStringList      = new ArrayList<String>         ();
+List<String>                subjectTagNameFullStringList            = new ArrayList<String>         ();
+List<String>                verbTagNameFullStringList               = new ArrayList<String>         ();
+List<String>                negativeVerbTagNameFullStringList       = new ArrayList<String>         ();
+List<String>                nounTagNameFullStringList               = new ArrayList<String>         ();
+List<String>                adjectiveTagNameFullStringList          = new ArrayList<String>         ();
+List<String>                negativeAdjectiveTagNameFullStringList  = new ArrayList<String>         ();
+List<String>                adverbTagNameFullStringList             = new ArrayList<String>         ();
+List<String>                negativeAdverbTagNameFullStringList     = new ArrayList<String>         ();
+List<ObjectMuseum>          floorObjectList                         = new ArrayList<ObjectMuseum>   ();
+List<ObjectMuseum>          roomObjectList                          = new ArrayList<ObjectMuseum>   ();
+List<ObjectMuseum>          exhibitionObjectList                    = new ArrayList<ObjectMuseum>   ();
+List<ObjectPlayer>          playerObjectList                        = new ArrayList<ObjectPlayer>   ();
+List<String>                museumNameAltStringList                 = new ArrayList<String>         ();
+List<String>                floorNameAltStringList                  = new ArrayList<String>         ();
+List<String>                roomNameAltStringList                   = new ArrayList<String>         ();
+List<String>                exhibitionNameAltStringList             = new ArrayList<String>         ();
+List<String>                floorNameFullStringList                 = new ArrayList<String>         ();
+List<String>                roomNameFullStringList                  = new ArrayList<String>         ();
+List<String>                exhibitionNameFullStringList            = new ArrayList<String>         ();
+List<String>                playerStringList                        = new ArrayList<String>         ();
+List<String>                museumNameFullStringList                = new ArrayList<String>         ();
+List<String>                defaultStringList                       ;
 
 /*Name class to manage an object name.*/
 class Name{
@@ -247,8 +248,8 @@ class Tag{
             tagNegativeVerb1String      = _wordDerivativeStringArray[0];
             tagNegativeVerb2String      = _wordDerivativeStringArray[1];
             tagNegativeVerb3String      = _wordDerivativeStringArray[2];
-            tagNegativeVerbSString      = _wordDerivativeStringArray[3];
-            tagNegativeVerbIngString    = _wordDerivativeStringArray[4];
+            tagNegativeVerbIngString    = _wordDerivativeStringArray[3];
+            tagNegativeVerbSString      = _wordDerivativeStringArray[4];
 
         }
         else if (tagTypeString.equals("NOU")){
@@ -297,18 +298,18 @@ public void setup(){
     for(int i = 0; i < roomObjectList.size()            ; i ++) { roomObjectList.get(i)         .SetIndexInsideVoid(); }
     for(int i = 0; i < exhibitionObjectList.size()      ; i ++) { exhibitionObjectList.get(i)   .SetIndexInsideVoid(); }
     /*Populate String list.*/
-    for(int i = 0; i < floorObjectList          .size(); i ++){ floorNameAltStringList                  .add(     floorObjectList                   .get(i).nameAltString ); floorNameFullStringList                .add(floorObjectList                .get(i).nameFullString); }
-    for(int i = 0; i < roomObjectList           .size(); i ++){ roomNameAltStringList                   .add(     roomObjectList                    .get(i).nameAltString ); roomNameFullStringList                 .add(roomObjectList                 .get(i).nameFullString); }
-    for(int i = 0; i < exhibitionObjectList     .size(); i ++){ exhibitionNameAltStringList             .add(     exhibitionObjectList              .get(i).nameAltString ); exhibitionNameFullStringList           .add(exhibitionObjectList           .get(i).nameFullString); }
-    for(int i = 0; i < playerObjectList         .size(); i ++){ playerStringList                        .add("" + playerObjectList                  .get(i).playerIndexInt); }
-    for(int i = 0; i < subjectTagObjectList     .size(); i ++){ subjectTagNameAltStringList             .add(     subjectTagObjectList              .get(i).nameAltString ); subjectTagNameFullStringList           .add(subjectTagObjectList           .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ verbTagNameAltStringList                .add(     verbTagObjectList                 .get(i).nameAltString ); verbTagNameFullStringList              .add(verbTagObjectList              .get(i).nameFullString); }
-    for(int i = 0; i < verbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(     negativeVerbTagObjectList         .get(i).nameAltString ); negativeVerbTagNameFullStringList      .add(negativeVerbTagObjectList      .get(i).nameFullString); }
-    for(int i = 0; i < nounTagObjectList        .size(); i ++){ nounTagNameAltStringList                .add(     nounTagObjectList                 .get(i).nameAltString ); nounTagNameFullStringList              .add(nounTagObjectList              .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ adjectiveTagNameAltStringList           .add(     adjectiveTagObjectList            .get(i).nameAltString ); adjectiveTagNameFullStringList         .add(adjectiveTagObjectList         .get(i).nameFullString); }
-    for(int i = 0; i < adjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(     negativeAdjectiveTagObjectList    .get(i).nameAltString ); negativeAdjectiveTagNameFullStringList .add(negativeAdjectiveTagObjectList .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ adverbTagNameAltStringList              .add(     adverbTagObjectList               .get(i).nameAltString ); adverbTagNameFullStringList            .add(adverbTagObjectList            .get(i).nameFullString); }
-    for(int i = 0; i < adverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(     negativeAdverbTagObjectList       .get(i).nameAltString ); negativeAdverbTagNameFullStringList    .add(negativeAdverbTagObjectList    .get(i).nameFullString); }
+    for(int i = 0; i < floorObjectList                  .size(); i ++){ floorNameAltStringList                  .add(     floorObjectList                   .get(i).nameAltString ); floorNameFullStringList                .add(floorObjectList                .get(i).nameFullString); }
+    for(int i = 0; i < roomObjectList                   .size(); i ++){ roomNameAltStringList                   .add(     roomObjectList                    .get(i).nameAltString ); roomNameFullStringList                 .add(roomObjectList                 .get(i).nameFullString); }
+    for(int i = 0; i < exhibitionObjectList             .size(); i ++){ exhibitionNameAltStringList             .add(     exhibitionObjectList              .get(i).nameAltString ); exhibitionNameFullStringList           .add(exhibitionObjectList           .get(i).nameFullString); }
+    for(int i = 0; i < playerObjectList                 .size(); i ++){ playerStringList                        .add("" + playerObjectList                  .get(i).playerIndexInt); }
+    for(int i = 0; i < subjectTagObjectList             .size(); i ++){ subjectTagNameAltStringList             .add(     subjectTagObjectList              .get(i).nameAltString ); subjectTagNameFullStringList           .add(subjectTagObjectList           .get(i).nameFullString); }
+    for(int i = 0; i < verbTagObjectList                .size(); i ++){ verbTagNameAltStringList                .add(     verbTagObjectList                 .get(i).nameAltString ); verbTagNameFullStringList              .add(verbTagObjectList              .get(i).nameFullString); }
+    for(int i = 0; i < negativeVerbTagObjectList        .size(); i ++){ negativeVerbTagNameAltStringList        .add(     negativeVerbTagObjectList         .get(i).nameAltString ); negativeVerbTagNameFullStringList      .add(negativeVerbTagObjectList      .get(i).nameFullString); }
+    for(int i = 0; i < nounTagObjectList                .size(); i ++){ nounTagNameAltStringList                .add(     nounTagObjectList                 .get(i).nameAltString ); nounTagNameFullStringList              .add(nounTagObjectList              .get(i).nameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList           .size(); i ++){ adjectiveTagNameAltStringList           .add(     adjectiveTagObjectList            .get(i).nameAltString ); adjectiveTagNameFullStringList         .add(adjectiveTagObjectList         .get(i).nameFullString); }
+    for(int i = 0; i < negativeAdjectiveTagObjectList   .size(); i ++){ negativeAdjectiveTagNameAltStringList   .add(     negativeAdjectiveTagObjectList    .get(i).nameAltString ); negativeAdjectiveTagNameFullStringList .add(negativeAdjectiveTagObjectList .get(i).nameFullString); }
+    for(int i = 0; i < adverbTagObjectList              .size(); i ++){ adverbTagNameAltStringList              .add(     adverbTagObjectList               .get(i).nameAltString ); adverbTagNameFullStringList            .add(adverbTagObjectList            .get(i).nameFullString); }
+    for(int i = 0; i < negativeAdverbTagObjectList      .size(); i ++){ negativeAdverbTagNameAltStringList      .add(     negativeAdverbTagObjectList       .get(i).nameAltString ); negativeAdverbTagNameFullStringList    .add(negativeAdverbTagObjectList    .get(i).nameFullString); }
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
     defaultStringList   = Arrays.asList();
 
@@ -596,39 +597,6 @@ public void LoadVoid(){
 
     if      (initBool   == true ){
 
-        subjectTagObjectList            = Arrays.asList(
-            new Tag(new Name("SUB_NAP", "Subject Napoleon"      ), "SUB", "Napoleon"),
-            new Tag(new Name("SUB_WAS", "Subject Washington"    ), "SUB", "Washington")
-        );
-        verbTagObjectList               = Arrays.asList(
-            new Tag(new Name("VER_JUM", "Verb Jump"             ), "VER", "jump", "jumped", "jumped", "jumps", "jumping"),
-            new Tag(new Name("VER_RUN", "Verb Run"              ), "VER", "run", "ran", "run", "runs", "running")
-        );
-        negativeVerbTagObjectList       = Arrays.asList(
-            new Tag(new Name("NVE_DIE", "Verb Die"              ), "NVE", "die", "died", "died", "dies", "dying"),
-            new Tag(new Name("NVE_KIL", "Verb Kill"             ), "NVE", "kill", "killed", "killed", "kills", "killing")
-        );
-        nounTagObjectList               = Arrays.asList(
-            new Tag(new Name("NOU_BAL", "Noun Ball"             ), "NOU", "ball", "balls"),
-            new Tag(new Name("NOU_GUN", "Noun Gun"              ), "NOU", "gun", "guns")
-        );
-        adjectiveTagObjectList          = Arrays.asList(
-            new Tag(new Name("ADJ_BAD", "Adjective Excellent"   ), "ADJ", "excellent"),
-            new Tag(new Name("ADJ_GOD", "Adjective Good"        ), "ADJ", "good")
-        );
-        negativeAdjectiveTagObjectList  = Arrays.asList(
-            new Tag(new Name("NDJ_AWF", "Adjective Awful"       ), "NDJ", "awful"),
-            new Tag(new Name("NDJ_BAD", "Adjective Bad"         ), "NDJ", "bad")
-        );
-        adverbTagObjectList             = Arrays.asList(
-            new Tag(new Name("ADV_PER", "Adverb Perfectly"      ), "ADV", "perfectly"),
-            new Tag(new Name("ADV_QUI", "Adverb Quickly"        ), "ADV", "quickly")
-        );
-        negativeAdverbTagObjectList     = Arrays.asList(
-            new Tag(new Name("NDV_DES", "Adverb Desperately"    ), "NDV", "desperately"),
-            new Tag(new Name("NDV_SLO", "Adverb Slowly"         ), "NDV", "slowly")
-        );
-
         String[] exampleExplanationStringArray = {
 
             "Explanation 1",
@@ -638,38 +606,110 @@ public void LoadVoid(){
 
         };
 
+        subjectTagObjectList            = Arrays.asList(
+            new Tag(new Name("SUB_NAP", "Subject Napoleon"              ), "SUB", "Napoleon"            ),
+            new Tag(new Name("SUB_WAS", "Subject Washington"            ), "SUB", "Washington"          ),
+            new Tag(new Name("SUB_ASS", "Subject Assasin"               ), "SUB", "assasin"             ),
+            new Tag(new Name("SUB_BOD", "Subject Bodhisattva"           ), "SUB", "Bodhisattva"         ),
+            new Tag(new Name("SUB_BUD", "Subject Buddha"                ), "SUB", "Buddha"              ),
+            new Tag(new Name("SUB_DIM", "Subject Dimitri"               ), "SUB", "Dimitri"             ),
+            new Tag(new Name("SUB_DMI", "Subject DimitriMitropoulos"    ), "SUB", "Dimitri Mitropoulos" ),
+            new Tag(new Name("SUB_DRA", "Subject Dragon"                ), "SUB", "dragon"              ),
+            new Tag(new Name("SUB_FIR", "Subject TheFirst"              ), "SUB", "the first"           ),
+            new Tag(new Name("SUB_IRQ", "Subject Iraqi"                 ), "SUB", "iraqi"               ),
+            new Tag(new Name("SUB_ITA", "Subject Italian"               ), "SUB", "italian"             ),
+            new Tag(new Name("SUB_JUC", "Subject JuliusCaesar"          ), "SUB", "Julius Caesar"       ),
+            new Tag(new Name("SUB_JUL", "Subject Julius"                ), "SUB", "Julius"              ),
+            new Tag(new Name("SUB_KIL", "Subject Killer"                ), "SUB", "killer"              ),
+            new Tag(new Name("SUB_KOS", "Subject Koshchey"              ), "SUB", "Koshchey"            ),
+            new Tag(new Name("SUB_MAR", "Subject Maria"                 ), "SUB", "Maria"               ),
+            new Tag(new Name("SUB_MED", "Subject Medusa"                ), "SUB", "Medusa"              ),
+            new Tag(new Name("SUB_MMO", "Subject MariaMorevna"          ), "SUB", "Maria Morevna"       ),
+            new Tag(new Name("SUB_PAI", "Subject Painter"               ), "SUB", "painter"             ),
+            new Tag(new Name("SUB_ROM", "Subject Romanian"              ), "SUB", "romanian"            ),
+            new Tag(new Name("SUB_RUS", "Subject Russian"               ), "SUB", "russian"             ),
+            new Tag(new Name("SUB_SPH", "Subject Sphinx"                ), "SUB", "Sphinx"              )
+        );
+        verbTagObjectList               = Arrays.asList(
+            new Tag(new Name("VER_CAL", "Verb Run"                      ), "VER", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
+            new Tag(new Name("VER_DRI", "Verb Run"                      ), "VER", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
+            new Tag(new Name("VER_EAT", "Verb Run"                      ), "VER", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
+            new Tag(new Name("VER_JUM", "Verb Jump"                     ), "VER", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
+            new Tag(new Name("VER_PAI", "Verb Paint"                    ), "VER", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
+            new Tag(new Name("VER_RUN", "Verb Run"                      ), "VER", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
+            new Tag(new Name("VER_SIN", "Verb Run"                      ), "VER", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
+            new Tag(new Name("VER_SIT", "Verb Run"                      ), "VER", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
+            new Tag(new Name("VER_SLE", "Verb Run"                      ), "VER", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
+            new Tag(new Name("VER_TAL", "Verb Run"                      ), "VER", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
+        );
+        negativeVerbTagObjectList       = Arrays.asList(
+            new Tag(new Name("NVE_ASS", "Verb Assasinate"               ), "NVE", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
+            new Tag(new Name("NVE_DIE", "Verb Die"                      ), "NVE", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
+            new Tag(new Name("NVE_KIL", "Verb Kill"                     ), "NVE", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       ),
+            new Tag(new Name("NVE_KIL", "Verb Kill"                     ), "NVE", "kill"        , "killed"      , "killed"      , "kills"           , "killing"     )
+        );
+        nounTagObjectList               = Arrays.asList(
+            new Tag(new Name("NOU_ANK", "Noun Anklet"                   ), "NOU", "anklet"          , "anklets"         ),
+            new Tag(new Name("NOU_BAL", "Noun Ball"                     ), "NOU", "ball"            , "balls"           ),
+            new Tag(new Name("NOU_CRO", "Noun Crown"                    ), "NOU", "crown"           , "crowns"          ),
+            new Tag(new Name("NOU_DCR", "Noun DoubleCrown"              ), "NOU", "double crown"    , "double crown"    ),
+            new Tag(new Name("NOU_FIG", "Noun Figure"                   ), "NOU", "figure"          , "figures"         ),
+            new Tag(new Name("NOU_GUN", "Noun Gun"                      ), "NOU", "gun"             , "guns"            ),
+            new Tag(new Name("NOU_HIE", "Noun Hierogliph"               ), "NOU", "hierogliph"      , "hierogliphs"     ),
+            new Tag(new Name("NOU_IRQ", "Noun Iraq"                     ), "NOU", "Iraq"            , "Iraq"            ),
+            new Tag(new Name("NOU_ITA", "Noun Italy"                    ), "NOU", "Italy"           , "Italy"           ),
+            new Tag(new Name("NOU_PAP", "Noun Paper"                    ), "NOU", "paper"           , "papers"          ),
+            new Tag(new Name("NOU_PLA", "Noun Plaque"                   ), "NOU", "plaque"          , "plaques"         ),
+            new Tag(new Name("NOU_ROM", "Noun Rome"                     ), "NOU", "Rome"            , "Rome"            ),
+            new Tag(new Name("NOU_RUS", "Noun Russia"                   ), "NOU", "Russia"          , "Russia"          ),
+            new Tag(new Name("NOU_STA", "Noun Statue"                   ), "NOU", "statue"          , "statues"         ),
+            new Tag(new Name("NOU_STO", "Noun Stone"                    ), "NOU", "stone"           , "stones"          ),
+            new Tag(new Name("NOU_STO", "Noun Stone"                    ), "NOU", "stone"           , "stones"          ),
+            new Tag(new Name("NOU_WAT", "Noun Water"                    ), "NOU", "water"           , "water"           )
+        );
+        adjectiveTagObjectList          = Arrays.asList(
+            new Tag(new Name("ADJ_BAD", "Adjective Excellent"           ), "ADJ", "excellent"   ),
+            new Tag(new Name("ADJ_CRO", "Adjective Crossed"             ), "ADJ", "crossed"     ),
+            new Tag(new Name("ADJ_GOD", "Adjective Good"                ), "ADJ", "good"        ),
+            new Tag(new Name("ADJ_HAR", "Adjective Hard"                ), "ADJ", "hard"        ),
+            new Tag(new Name("ADJ_SOF", "Adjective Soft"                ), "ADJ", "soft"        )
+        );
+        negativeAdjectiveTagObjectList  = Arrays.asList(
+            new Tag(new Name("NDJ_AWF", "Adjective Awful"               ), "NDJ", "awful"),
+            new Tag(new Name("NDJ_BAD", "Adjective Bad"                 ), "NDJ", "bad")
+        );
+        adverbTagObjectList             = Arrays.asList(
+            new Tag(new Name("ADV_PER", "Adverb Perfectly"              ), "ADV", "perfectly"),
+            new Tag(new Name("ADV_QUI", "Adverb Quickly"                ), "ADV", "quickly")
+        );
+        negativeAdverbTagObjectList     = Arrays.asList(
+            new Tag(new Name("NDV_DES", "Adverb Desperately"            ), "NDV", "desperately"),
+            new Tag(new Name("NDV_SLO", "Adverb Slowly"                 ), "NDV", "slowly")
+        );
         floorObjectList         = Arrays.asList(
-            new ObjectMuseum(new Name("FLR_001", "First Floor"                        ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("FLR_002", "Second Floor"                       ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+            new ObjectMuseum(new Name("FLR_001", "First Floor"                                                  ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("FLR_002", "Second Floor"                                                 ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
         );
         roomObjectList          = Arrays.asList(
-            new ObjectMuseum(new Name("ROM_AFK", "Room Afrika"                        ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("ROM_AME", "Room America"                       ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("ROM_ASI", "Room Asia"                          ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("ROM_EUR", "Room Europe"                        ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+            new ObjectMuseum(new Name("ROM_CHN", "Room China"                                                   ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_IRQ", "Room Iraq"                                                    ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_ROM", "Room Rome"                                                    ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_RUS", "Room Russia"                                                  ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
         );
         exhibitionObjectList    = Arrays.asList(
-            new ObjectMuseum(new Name("EXH_CAO", "Exhibition Cameroon"                ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_EGY", "Exhibition Egypt"                   ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_ETH", "Exhibition Ethiopia"                ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_NIG", "Exhibition Nigeria"                 ), "ROM_AFK", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_BRA", "Exhibition Brazil"                  ), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_CAN", "Exhibition Canada"                  ), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_MEX", "Exhibition Mexico"                  ), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_USA", "Exhibition United States Of America"), "ROM_AME", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_CAM", "Exhibition Cambodia"                ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_IND", "Exhibition India"                   ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_JAP", "Exhibition Japan"                   ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_SIN", "Exhibition Singapore"               ), "ROM_ASI", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_BEL", "Exhibition Belgium"                 ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_FRA", "Exhibition France"                  ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_GER", "Exhibition Germany"                 ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_NED", "Exhibition The Netherlands"         ), "ROM_EUR", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+            new ObjectMuseum(new Name("EXH_ZOD", "Exhibition Zodiac Figure Dragon"                              ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_BOD", "Exhibition Bodhisattva Crossed Ankle"                         ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_SPH", "Exhibition Plaque With A Sphinx Wearing Double Crown"         ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_USH", "Exhibition Stele Of Ushumgal"                                 ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_ASS", "Exhibition The Assasination Of Julius Caesar Painting"        ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_MED", "Exhibition Head Of Medusa"                                    ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_KOS", "Exhibition Koshchey The Deathless Carries Off Maria Morevna"  ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_DIM", "Exhibition Dimitri Mitropoulos"                               ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
         );
         for(int i = 0; i < playerAmountInt; i ++)                   {
             ObjectPlayer objectPlayer = new ObjectPlayer(
                 (i + 1),
-                "DUMMY NAME",
+                "DUMMY_NAME",
                 exhibitionObjectList.get((int)(Math.floor((Math.random()*exhibitionObjectList.size()) + 0))).nameAltString      /*Generate random starting exhibition for the player.*/
             );
         }
@@ -2831,6 +2871,13 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
 
         super.DrawVoid(_alphaFloat, addMuseumGroupObject);
 
+        addMuseumGroupExplanation1TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupExplanation2TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupExplanation3TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupExplanation4TextfieldObject           .setColorValue(groupColorLabelColor);
+        addMuseumGroupNameFullMuseumObjectTextfieldObject   .setColorValue(groupColorLabelColor);
+        addMuseumGroupNameAltMuseumObjectTextfieldObject    .setColorValue(groupColorLabelColor);
+
     }
 
 }
@@ -2933,6 +2980,8 @@ class AddPlayerGroupGUIObject extends GroupGUIObject{
     public void DrawVoid                                                   (float   _alphaFloat){
 
         super.DrawVoid(_alphaFloat, addPlayerGroupObject);
+
+        addPlayerGroupPlayerNameTextfieldObject.setColorValue(groupColorLabelColor);
 
     }
 
@@ -3236,6 +3285,26 @@ class AddTagGroupGUIObject extends GroupGUIObject{
         super.DrawVoid(_alphaFloat, addTagGroupObject);
 
         ControlFormVoid();
+
+        addTagGroupTagNameAltTextfieldObject           .setColorValue(groupColorLabelColor);
+        addTagGroupTagNameFullTextfieldObject          .setColorValue(groupColorLabelColor);
+        addTagGroupTagSubjectTextfieldObject           .setColorValue(groupColorLabelColor);
+        addTagGroupTagVerb1TextfieldObject             .setColorValue(groupColorLabelColor);
+        addTagGroupTagVerb2TextfieldObject             .setColorValue(groupColorLabelColor);
+        addTagGroupTagVerb3TextfieldObject             .setColorValue(groupColorLabelColor);
+        addTagGroupTagVerbIngTextfieldObject           .setColorValue(groupColorLabelColor);
+        addTagGroupTagVerbSTextfieldObject             .setColorValue(groupColorLabelColor);
+        addTagGroupTagNegativeVerb1TextfieldObject     .setColorValue(groupColorLabelColor);
+        addTagGroupTagNegativeVerb2TextfieldObject     .setColorValue(groupColorLabelColor);
+        addTagGroupTagNegativeVerb3TextfieldObject     .setColorValue(groupColorLabelColor);
+        addTagGroupTagNegativeVerbIngTextfieldObject   .setColorValue(groupColorLabelColor);
+        addTagGroupTagNegativeVerbSTextfieldObject     .setColorValue(groupColorLabelColor);
+        addTagGroupTagNounTextfieldObject              .setColorValue(groupColorLabelColor);
+        addTagGroupTagNounSTextfieldObject             .setColorValue(groupColorLabelColor);
+        addTagGroupTagAdjectiveTextfieldObject         .setColorValue(groupColorLabelColor);
+        addTagGroupTagNegativeAdjectiveTextfieldObject .setColorValue(groupColorLabelColor);
+        addTagGroupTagAdverbTextfieldObject            .setColorValue(groupColorLabelColor);
+        addTagGroupTagNegativeAdverbTextfieldObject    .setColorValue(groupColorLabelColor);
 
     }
 
@@ -4038,6 +4107,10 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         else if (tempSelectedPlayerMovementModeInt == 3){ editPlayerGroupPlayerExhibitionNextScrollableListObject.hide(); }
         else                                            { editPlayerGroupPlayerExhibitionNextScrollableListObject.hide(); }
 
+        editPlayerGroupPlayerNameTextfieldObject                .setColorValue(groupColorLabelColor);
+        editPlayerGroupPlayerSentenceValueTextareaObject        .setColorValue(groupColorLabelColor);
+        editPlayerGroupPlayerExplanationValueTextareaObject     .setColorValue(groupColorLabelColor);
+
     }
 
 }
@@ -4361,6 +4434,26 @@ class EditTagGroupGUIObject extends GroupGUIObject{
         super.DrawVoid(_alphaFloat, editTagGroupObject);
 
         ControlFormVoid();
+
+        editTagGroupTagNameAltTextfieldObject           .setColorValue(groupColorLabelColor);
+        editTagGroupTagNameFullTextfieldObject          .setColorValue(groupColorLabelColor);
+        editTagGroupTagSubjectTextfieldObject           .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerb1TextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerb2TextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerb3TextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerbIngTextfieldObject           .setColorValue(groupColorLabelColor);
+        editTagGroupTagVerbSTextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerb1TextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerb2TextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerb3TextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerbIngTextfieldObject   .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeVerbSTextfieldObject     .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounTextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounSTextfieldObject             .setColorValue(groupColorLabelColor);
+        editTagGroupTagAdjectiveTextfieldObject         .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeAdjectiveTextfieldObject .setColorValue(groupColorLabelColor);
+        editTagGroupTagAdverbTextfieldObject            .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeAdverbTextfieldObject    .setColorValue(groupColorLabelColor);
 
     }
 
@@ -4773,43 +4866,35 @@ The museum objects within this application are things that can interract with vi
 For example floor, room, and exhibition.*/
 class   ObjectMuseum                                                                    {
 
-    List<ObjectMuseum>  childObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.*/
-    List<ObjectPlayer>  childPlayerObjectList       = new ArrayList<ObjectPlayer>(); 
-
-    int                 indexGlobalInt              = -1;                               /*This is an index number of the location of this object in its respective list.*/
-    int                 indexLocalInt               = -1;                               /*This is an index number of the location of this object within its parent child object list.*/
-
-    Name                nameObject                  = null;                             /*Name object that contains the alternative name and the full name of this object.*/
-    String              nameAltString               = "";                               /*This variable is intended solely to store the alternative name of this object.*/
-    String              nameFullString              = "";                               /*This variable is intended solely to store the full name of this object.*/
-
-    ObjectMuseum        parentObject                = null;                             /*The object parent of this object, which means this object should be inside the parent object's child object list.*/
-    String              parentNameAltString         = "";                               /*The alternative name of the parent object.*/
-    
-    String              typeString                  = "";                               /*The type of this object (the only possible values are "FLR", "ROM", and "EXH").*/
-
-    List<Tag>           tagMuseumObjectList         = new ArrayList<Tag>();             /*Object tag list.*/
-    List<String>        tagMuseumNameAltStringList  = new ArrayList<String>();          /*The tags for this museum object.*/
-    List<String>        tagMuseumNameFullStringList = new ArrayList<String>();          /*The tags for this museum object.*/
-
-    boolean             fullBoolean                 = false;                            /*Whether this museum object is full or not.*/
-    int                 visitorCurrentInt           = 0;                                /*This museum object current visitor.*/
-    int                 visitorTotalInt             = 0;                                /*This museum objecy total visitor.*/
-
-    boolean             activeBoolean               = false;                            /*Variable to control ControlP5 GUI element.*/
-
-    String[]            explanationStringArray      = new String[4];
-
+    boolean             activeBoolean               = false;                            /*Variable to control ControlP5 GUI element.                                                                            */
+    boolean             fullBoolean                 = false;                            /*Whether this museum object is full or not.                                                                            */
+    int                 indexGlobalInt              = -1;                               /*This is an index number of the location of this object in its respective list.                                        */
+    int                 indexLocalInt               = -1;                               /*This is an index number of the location of this object within its parent child object list.                           */
+    int                 visitorCurrentInt           = 0;                                /*This museum object current visitor.                                                                                   */
+    int                 visitorTotalInt             = 0;                                /*This museum objecy total visitor.                                                                                     */
+    Name                nameObject                  = null;                             /*Name object that contains the alternative name and the full name of this object.                                      */
+    ObjectMuseum        parentObject                = null;                             /*The object parent of this object, which means this object should be inside the parent object's child object list.     */
+    String              nameAltString               = "";                               /*This variable is intended solely to store the alternative name of this object.                                        */
+    String              nameFullString              = "";                               /*This variable is intended solely to store the full name of this object.                                               */
+    String              parentNameAltString         = "";                               /*The alternative name of the parent object.                                                                            */
+    String              typeString                  = "";                               /*The type of this object (the only possible values are "FLR", "ROM", and "EXH").                                       */
     /*Variables of panel graphical user interfaces.*/
     boolean             hoverBoolean                = false;
+    int               exhibitionPanelColor        = color(143, 86, 59);
     int               floorPanelColor             = color(69 , 40, 60);
     int               roomPanelColor              = color(102, 57, 49);
-    int               exhibitionPanelColor        = color(143, 86, 59);
     int                 widthPanelInt               = 0;
     int                 heightPanelInt              = 0;
     int                 xPanelInt                   = 0;
     int                 yPanelInt                   = 0;
     Panel               panelObject                 = null;
+
+    List<ObjectMuseum>  childObjectList             = new ArrayList<ObjectMuseum>();    /*This list contains all possible exhibition object.    */
+    List<ObjectPlayer>  childPlayerObjectList       = new ArrayList<ObjectPlayer>(); 
+    List<String>        tagMuseumNameAltStringList  = new ArrayList<String>();          /*The tags for this museum object.                      */
+    List<String>        tagMuseumNameFullStringList = new ArrayList<String>();          /*The tags for this museum object.                      */
+    List<Tag>           tagMuseumObjectList         = new ArrayList<Tag>();             /*Object tag list.                                      */
+    String[]            explanationStringArray      = new String[4];
 
     ObjectMuseum                                    (
 
@@ -4980,9 +5065,7 @@ class   ObjectMuseum                                                            
 
         int indexInt            = -1;
         for(int i = 0; i < _targetObjectList.size(); i ++){
-
             if(_targetObjectList.get(i).nameAltString.equals(nameAltString)){ indexInt = i; break; }
-
         }
 
         return indexInt;
@@ -5019,11 +5102,8 @@ class   ObjectMuseum                                                            
     public List<ObjectMuseum> RemoveChildObjectList(List<ObjectMuseum> _targetObjectList)      {
 
         for(int i = 0; i < parentObject.childObjectList.size(); i ++){
-
             if(parentObject.childObjectList.get(i).nameAltString.equals(nameAltString)){ parentObject.childObjectList.remove(i); }
-
         }
-
         return _targetObjectList;
 
     }
@@ -5037,8 +5117,6 @@ class   ObjectMuseum                                                            
 
     }
 
-
-
     /*A function to return object from any object list.*/
     public ObjectMuseum FindObject(
 
@@ -5049,9 +5127,7 @@ class   ObjectMuseum                                                            
 
         ObjectMuseum objectMuseum = null;
         for(int i = 0; i < _targetObjectList.size(); i ++){
-
             if(_targetObjectList.get(i).nameAltString.equals(_nameAltString)){ objectMuseum = _targetObjectList.get(i); }
-
         }
         return objectMuseum;
 
@@ -5117,31 +5193,31 @@ class TagCounter{
 
     /*I create an array becuse comparator will not working on primitive data type.
     Hence, I put the value in one element List.*/
-    int             tagCounterInt       = -1;
-    List<Integer>   tagCounterIntList   = new ArrayList<Integer>();
-    String          tagNameAltString    = "";
-    String          tagNameFullString   = "";
-    Tag             tagObject           ;
+    int                 tagCounterInt       = -1;
+    List<Integer>       tagCounterIntList   = new ArrayList<Integer>();
+    String              tagNameAltString    = "";
+    String              tagNameFullString   = "";
+    Tag                 tagObject           ;
 
-    TagCounter(){}
+    TagCounter          (){}
 
     /*Getter and setter function for counting tha tags.*/
-    public void    SetTagObject            (Tag    _tagObject)         { tagObject         = _tagObject; }
-    public void    SetTagNameAltString     (String _tagNameAltString)  { tagNameAltString  = _tagNameAltString;    }
-    public void    SetTagNameFullString    (String _tagNameFullString) { tagNameFullString = _tagNameFullString;   }
-    public void    SetTagCounterIntVoid    (int    _tagCounterInt)     {
+    public void                SetTagObject            (Tag    _tagObject)         { tagObject         = _tagObject; }
+    public void                SetTagNameAltString     (String _tagNameAltString)  { tagNameAltString  = _tagNameAltString;    }
+    public void                SetTagNameFullString    (String _tagNameFullString) { tagNameFullString = _tagNameFullString;   }
+    public void                SetTagCounterIntVoid    (int    _tagCounterInt)     {
 
-        /*I create an array becuse comparator will not working on primitive data type.
-        Hence, I put the value in one element List.*/
-        tagCounterInt       = _tagCounterInt;
-        tagCounterIntList   = new ArrayList<Integer>();
-        tagCounterIntList   .add(tagCounterInt);
+                        /*I create an array becuse comparator will not working on primitive data type.
+                        Hence, I put the value in one element List.*/
+                        tagCounterInt       = _tagCounterInt;
+                        tagCounterIntList   = new ArrayList<Integer>();
+                        tagCounterIntList   .add(tagCounterInt);
 
     }
-    public int     GetTagCounterInt        (){ return tagCounterInt;       }
-    public Tag     GetTagObject            (){ return tagObject;           }
-    public String  GetTagNameAltString     (){ return tagNameAltString;    }
-    public String  GetTagNameFullString    (){ return tagNameFullString;   }
+    public int                 GetTagCounterInt        (){ return tagCounterInt;       }
+    public Tag                 GetTagObject            (){ return tagObject;           }
+    public String              GetTagNameAltString     (){ return tagNameAltString;    }
+    public String              GetTagNameFullString    (){ return tagNameFullString;   }
 
 }
 
@@ -5150,68 +5226,59 @@ The player object will be the class that can be either played by the user (somek
     or being automated.*/
 class ObjectPlayer{
 
-    String exhibitionCurrentNameAltString = "";
-    String exhibitionCurrentNameFullString = "";
-
-    String              exhibitionCurrentString                     = "";                               /*Current exhibition in String.*/
+    boolean             playerFinishedBoolean                       = false;
+    boolean             playerVisitCorrectExhibitionBoolean         = false;
+    float               timeCurrentExhibitionFloat                  = 0f;                               /*How many frame/tick this player already stay in an exhibition.                        */
+    int                 playerIndexInt                              = 0;                                /*Unique identifier for each player object, can be changed later to name.               */
+    int                 playerMovementModeInt                       = 2;                                /*The mode that runs this player.
+                                                                                                            editPlayerMode =    1, this player controlled by AIAutoVoid.
+                                                                                                            editPlayerMode =    2, this player controlled manually using this application.
+                                                                                                            editPlayerMode =    3, this player controlled manually using Arduino.               */
+    int                 playerScoreInt                              = 0;
+    int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.                    */
     ObjectMuseum        exhibitionCurrentObject                     = null;
-    List<String>        exhibitionTargetNameAltStringList           = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedNameAltStringList          = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<String>        exhibitionTagCounterNameAltStringList       = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
-    
-    List<String>        exhibitionTargetNameFullStringList          = new ArrayList<String>();          /*Target exhibition that will be given to the player*/
-    List<String>        exhibitionVisitedNameFullStringList         = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.*/
-    List<String>        exhibitionTagCounterNameFullStringList      = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.*/
-    
-    List<String>        sentenceStringList                          = new ArrayList<String>();
+    String              exhibitionCurrentNameAltString              = "";
+    String              exhibitionCurrentNameFullString             = "";
+    String              exhibitionCurrentString                     = "";       
+    String              playerNameString                            = "";
+
+    /*Panel variable.*/
+    boolean             hoverBoolean                                = false;
+    int               panelFinishedColor                          = color(223, 113, 38 );
+    int               panelUnfinishedColor                        = color(217, 160, 102);
+    int                 widthPanelInt                               = 0;
+    int                 heightPanelInt                              = 0;
+    int                 xPanelInt                                   = 0;
+    int                 yPanelInt                                   = 0;
+    Panel               panelObject                                 = null;
+
+    List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.                                                                    */
+    List<String>        adjectiveCurrentPrevTagStringList           = new ArrayList<String>();
+    List<String>        adverbCurrentPrevTagStringList              = new ArrayList<String>();
+    List<String>        exhibitionTagCounterNameAltStringList       = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.    */
+    List<String>        exhibitionTagCounterNameFullStringList      = new ArrayList<String>();          /*This is exactly the exhibitionTagCounter but with easy String coversion so that the value can be easily displayed.    */
+    List<String>        exhibitionTargetNameAltStringList           = new ArrayList<String>();          /*Target exhibition that will be given to the player.                                                                   */
+    List<String>        exhibitionTargetNameFullStringList          = new ArrayList<String>();          /*Target exhibition that will be given to the player.                                                                   */
+    List<String>        exhibitionVisitedNameAltStringList          = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.                                                            */
+    List<String>        exhibitionVisitedNameFullStringList         = new ArrayList<String>();          /*Amount of exhibition that have just visited by the player.                                                            */
     List<String>        explanationStringList                       = new ArrayList<String>();
-
-
-
+    List<String>        negativeAdjectiveCurrentPrevTagStringList   = new ArrayList<String>();
+    List<String>        negativeAdverbCurrentPrevTagStringList      = new ArrayList<String>();
+    List<String>        negativeVerb1CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerb2CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerb3CurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        negativeVerbIngCurrentPrevTagStringList     = new ArrayList<String>();
+    List<String>        negativeVerbSCurrentPrevTagStringList       = new ArrayList<String>();
+    List<String>        nounCurrentPrevTagStringList                = new ArrayList<String>();
+    List<String>        nounSCurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        sentenceStringList                          = new ArrayList<String>();
     List<String>        subjectCurrentPrevTagStringList             = new ArrayList<String>();
     List<String>        verb1CurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        verb2CurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        verb3CurrentPrevTagStringList               = new ArrayList<String>();
-    List<String>        verbSCurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        verbIngCurrentPrevTagStringList             = new ArrayList<String>();
-    List<String>        negativeVerb1CurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerb2CurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerb3CurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerbSCurrentPrevTagStringList       = new ArrayList<String>();
-    List<String>        negativeVerbIngCurrentPrevTagStringList     = new ArrayList<String>();
-    List<String>        nounCurrentPrevTagStringList                = new ArrayList<String>();
-    List<String>        nounSCurrentPrevTagStringList               = new ArrayList<String>();
-    List<String>        adjectiveCurrentPrevTagStringList           = new ArrayList<String>();
-    List<String>        negativeAdjectiveCurrentPrevTagStringList   = new ArrayList<String>();
-    List<String>        adverbCurrentPrevTagStringList              = new ArrayList<String>();
-    List<String>        negativeAdverbCurrentPrevTagStringList      = new ArrayList<String>();
-    List<TagCounter>    exhibitionTagCounterList                    = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.*/
-
-    int                 playerIndexInt                              = 0;                                /*Unique identifier for each player object, can be changed later to name.*/
-    String              playerNameString                            = "";
-
-    List<ObjectPlayer>  playerSiblingObjectList                     = new ArrayList<ObjectPlayer>();    /*How many player object are in the same exhibition.*/
-    int                 playerSiblingIndexInt                       = -1;                               /*The index of this object within the List of object player sibling.*/
-
-    int                 playerMovementModeInt                       = 2;                                /*The mode that runs this player.
-                                                                                                            editPlayerMode =    1, this player controlled by AIAutoVoid.
-                                                                                                            editPlayerMode =    2, this player controlled manually using this application.
-                                                                                                            editPlayerMode =    3, this player controlled manually using Arduino.*/
-    float               timeCurrentExhibitionFloat                  = 0f;                               /*How many frame/tick this player already stay in an exhibition.*/
-
-    /*Panel variable.*/
-    boolean hoverBoolean                                            = false;
-    int   panelUnfinishedColor                                    = color(217, 160, 102);
-    int   panelFinishedColor                                      = color(223, 113, 38 );
-    int     widthPanelInt                                           = 0;
-    int     heightPanelInt                                          = 0;
-    int     xPanelInt                                               = 0;
-    int     yPanelInt                                               = 0;
-    Panel   panelObject                                             = null;
-
-    int     playerScoreInt                                          = 0;
-    boolean playerVisitCorrectExhibitionBoolean                     = false;
-    boolean playerFinishedBoolean                                   = false;
+    List<String>        verbSCurrentPrevTagStringList               = new ArrayList<String>();
+    List<TagCounter>    exhibitionTagCounterList                    = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.                                                            */
 
     /*Constructor.*/
     ObjectPlayer(
@@ -5349,9 +5416,7 @@ class ObjectPlayer{
         PanelDrawVoid   ();
 
 
-        /*PROTOTYPE: Changing player mode.*/
         if(playerMovementModeInt == 1){ AIAutoVoid(); }
-        /*PROTOTYPE: Creating function to move this player manually.*/
 
         /*PENDING: Give the codes below in the new own method and create commentation for these code below.*/
         exhibitionTagCounterNameAltStringList .clear();
@@ -5960,19 +6025,30 @@ class ObjectPlayer{
     public String  SentenceWordFixString               (String     _fixString)             { return _fixString.substring(0, 1).toUpperCase() + _fixString.substring(1, _fixString.length()); }
     public String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
 
+        /*Subject VerbIng Habit.
+        Subject VerbVerbS to Verb1.
+        Iwill VerbVerb Subject to Verb1.
+        
+        Subject Is Noun.
+        VerbIng A Noun Adv.
+        Habit VerbS Adj.
+        
+        A Adj Adj Noun.
+        A Subject VerbS To Noun.
+        Verb Habit.
+        
+        Noun Verbs.
+        What Subject Was VerbS.
+        Are Adj of NounS.*/
+
         String[][]  patternStringArray      = new String[][]{
 
-            /*Subject VerbIng Habit.
-            Subject VerbVerbS to Verb1.
-            Iwill VerbVerb Subject to Verb1.*/
+
             {
                 "{ % +."              ,
                 "{ * to @."           ,
                 "I will & { to @."
             },
-            /*Subject Is Noun.
-            VerbIng A Noun Adv.
-            Habit VerbS Adj.*/
             {
 
                 "{ is a _ (."   ,
@@ -5980,9 +6056,6 @@ class ObjectPlayer{
                 "+ ^ _."
 
             },
-            /*A Adj Adj Noun.
-            A Subject VerbS To Noun.
-            Verb Habit.*/
             {
 
                 "A _ _ (."      ,
@@ -5990,14 +6063,11 @@ class ObjectPlayer{
                 "^ +."
 
             },
-            /*Noun Verbs.
-            What Subject Was VerbS.
-            Are Adj of NounS.*/
             {
 
                 "( ^."          ,
                 "What { was ^." ,
-                "Are _ of )."
+                "Are _ )."
 
             }
 
