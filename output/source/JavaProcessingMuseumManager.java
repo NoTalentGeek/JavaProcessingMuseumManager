@@ -699,11 +699,11 @@ public void LoadVoid(){
         exhibitionObjectList    = Arrays.asList(
             new ObjectMuseum(new Name("EXH_ZOD", "Exhibition Zodiac Figure Dragon"                              ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
             new ObjectMuseum(new Name("EXH_BOD", "Exhibition Bodhisattva Crossed Ankle"                         ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_SPH", "Exhibition Plaque With A Sphinx Wearing Double Crown"         ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_SPH", "Exhibition Plaque With A Sphinx"                              ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
             new ObjectMuseum(new Name("EXH_USH", "Exhibition Stele Of Ushumgal"                                 ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_ASS", "Exhibition The Assasination Of Julius Caesar Painting"        ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_ASS", "Exhibition The Assasination"                                  ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
             new ObjectMuseum(new Name("EXH_MED", "Exhibition Head Of Medusa"                                    ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_KOS", "Exhibition Koshchey The Deathless Carries Off Maria Morevna"  ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_KOS", "Exhibition Koshchey"                                          ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
             new ObjectMuseum(new Name("EXH_DIM", "Exhibition Dimitri Mitropoulos"                               ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
         );
         for(int i = 0; i < playerAmountInt; i ++)                   {
@@ -6039,10 +6039,14 @@ class ObjectPlayer{
         
         Noun Verbs.
         What Subject Was VerbS.
-        Are Adj of NounS.*/
+        Are Adj of NounS.
+
+        As the Subject does Verb1
+        Across the Noun, Subject sees the...
+        Subject Verb in Habit
+        */
 
         String[][]  patternStringArray      = new String[][]{
-
 
             {
                 "{ % +."              ,
@@ -6065,9 +6069,16 @@ class ObjectPlayer{
             },
             {
 
-                "( ^."          ,
+                "{ ^."          ,
                 "What { was ^." ,
                 "Are _ )."
+
+            },
+            {
+
+                "As the { does @.",
+                "Across the (, { sees the...",
+                "{ @ in +."
 
             }
 

@@ -854,10 +854,14 @@ class ObjectPlayer{
         
         Noun Verbs.
         What Subject Was VerbS.
-        Are Adj of NounS.*/
+        Are Adj of NounS.
+
+        As the Subject does Verb1
+        Across the Noun, Subject sees the...
+        Subject Verb in Habit
+        */
 
         String[][]  patternStringArray      = new String[][]{
-
 
             {
                 "{ % +."              ,
@@ -880,9 +884,16 @@ class ObjectPlayer{
             },
             {
 
-                "( ^."          ,
+                "{ ^."          ,
                 "What { was ^." ,
                 "Are _ )."
+
+            },
+            {
+
+                "As the { does @.",
+                "Across the (, { sees the...",
+                "{ @ in +."
 
             }
 
