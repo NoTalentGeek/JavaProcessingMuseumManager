@@ -82,6 +82,7 @@ JSONArray                   negativeAdjectiveTagSaveJSONArrayObject         = ne
 JSONArray                   negativeAdverbTagSaveJSONArrayObject            = new JSONArray();
 JSONArray                   negativeIntransitiveVerbTagSaveJSONArrayObject  = new JSONArray();
 JSONArray                   negativeTransitiveVerbTagSaveJSONArrayObject    = new JSONArray();
+JSONArray                   nounAbstractTagSaveJSONArrayObject              = new JSONArray();
 JSONArray                   nounTagSaveJSONArrayObject                      = new JSONArray();
 JSONArray                   subjectTagSaveJSONArrayObject                   = new JSONArray();
 JSONArray                   transitiveVerbTagSaveJSONArrayObject            = new JSONArray();
@@ -92,6 +93,7 @@ JSONObject                  negativeAdjectiveTagSaveJSONObject              = ne
 JSONObject                  negativeAdverbTagSaveJSONObject                 = new JSONObject();
 JSONObject                  negativeIntransitiveVerbTagSaveJSONObject       = new JSONObject();
 JSONObject                  negativeTransitiveVerbTagSaveJSONObject         = new JSONObject();
+JSONObject                  nounAbstractTagSaveJSONObject                   = new JSONObject();
 JSONObject                  nounTagSaveJSONObject                           = new JSONObject();
 JSONObject                  subjectTagSaveJSONObject                        = new JSONObject();
 JSONObject                  transitiveVerbTagSaveJSONObject                 = new JSONObject();
@@ -104,6 +106,7 @@ List<Tag>                   negativeAdjectiveTagObjectList                  = ne
 List<Tag>                   negativeAdverbTagObjectList                     = new ArrayList<Tag>            ();
 List<Tag>                   negativeIntransitiveVerbTagObjectList           = new ArrayList<Tag>            ();
 List<Tag>                   negativeTransitiveVerbTagObjectList             = new ArrayList<Tag>            ();
+List<Tag>                   nounAbstractTagObjectList                       = new ArrayList<Tag>            ();
 List<Tag>                   nounTagObjectList                               = new ArrayList<Tag>            ();
 List<Tag>                   subjectTagObjectList                            = new ArrayList<Tag>            ();
 List<Tag>                   transitiveVerbTagObjectList                     = new ArrayList<Tag>            ();
@@ -121,6 +124,8 @@ List<String>                negativeIntransitiveVerbTagNameAltStringList    = ne
 List<String>                negativeIntransitiveVerbTagNameFullStringList   = new ArrayList<String>         ();
 List<String>                negativeTransitiveVerbTagNameAltStringList      = new ArrayList<String>         ();
 List<String>                negativeTransitiveVerbTagNameFullStringList     = new ArrayList<String>         ();
+List<String>                nounAbstractTagNameAltStringList                = new ArrayList<String>         ();
+List<String>                nounAbstractTagNameFullStringList               = new ArrayList<String>         ();
 List<String>                nounTagNameAltStringList                        = new ArrayList<String>         ();
 List<String>                nounTagNameFullStringList                       = new ArrayList<String>         ();
 List<String>                subjectTagNameAltStringList                     = new ArrayList<String>         ();
@@ -191,10 +196,12 @@ class Tag{
     String  tagNegativeTransitiveVerb3String        = "";
     String  tagNegativeTransitiveVerbIngString      = "";
     String  tagNegativeTransitiveVerbSString        = "";
+    String  tagNounAbstractSString                  = "";
+    String  tagNounAbstractString                   = "";
     String  tagNounSString                          = "";
     String  tagNounString                           = "";
-    String  tagSubjectString                        = "";
     String  tagSubjectPossesionString               = "";
+    String  tagSubjectString                        = "";
     String  tagTransitiveVerb1String                = "";
     String  tagTransitiveVerb2String                = "";
     String  tagTransitiveVerb3String                = "";
@@ -239,6 +246,10 @@ class Tag{
             tagNegativeIntransitiveVerb3String      = _wordDerivativeStringArray[2];
             tagNegativeIntransitiveVerbIngString    = _wordDerivativeStringArray[3];
             tagNegativeIntransitiveVerbSString      = _wordDerivativeStringArray[];
+        }
+        else    if(typeString.equals("NOA")){ /*Noun.                         */
+            tagNounAbstractSString                  = _wordDerivativeStringArray[0];
+            tagNounAbstractString                   = _wordDerivativeStringArray[1];
         }
         else    if(typeString.equals("NOU")){ /*Noun.                         */
             tagNounSString                          = _wordDerivativeStringArray[0];
@@ -296,20 +307,21 @@ void setup(){
     for(int i = 0; i < roomObjectList                           .size(); i ++){ roomObjectList                                  .get(i).SetIndexInsideVoid(); }
     for(int i = 0; i < exhibitionObjectList                     .size(); i ++){ exhibitionObjectList                            .get(i).SetIndexInsideVoid(); }
     /*Populate String list.*/
-    for(int i = 0; i < exhibitionObjectList                     .size(); i ++){ exhibitionNameAltStringList                     .add(     exhibitionObjectList                  .get(i).nameAltString    ); floorNameFullStringList                .add(exhibitionObjectList                            .get(i).nameFullString   ); }
-    for(int i = 0; i < floorObjectList                          .size(); i ++){ floorNameAltStringList                          .add(     floorObjectList                       .get(i).nameAltString    ); roomNameFullStringList                 .add(floorObjectList                                 .get(i).nameFullString   ); }
-    for(int i = 0; i < roomObjectList                           .size(); i ++){ roomNameAltStringList                           .add(     roomObjectList                        .get(i).nameAltString    ); exhibitionNameFullStringList           .add(roomObjectList                                  .get(i).nameFullString   ); }
+    for(int i = 0; i < exhibitionObjectList                     .size(); i ++){ exhibitionNameAltStringList                     .add(     exhibitionObjectList                  .get(i).nameAltString    ); floorNameFullStringList                         .add(exhibitionObjectList                   .get(i).nameFullString   ); }
+    for(int i = 0; i < floorObjectList                          .size(); i ++){ floorNameAltStringList                          .add(     floorObjectList                       .get(i).nameAltString    ); roomNameFullStringList                          .add(floorObjectList                        .get(i).nameFullString   ); }
+    for(int i = 0; i < roomObjectList                           .size(); i ++){ roomNameAltStringList                           .add(     roomObjectList                        .get(i).nameAltString    ); exhibitionNameFullStringList                    .add(roomObjectList                         .get(i).nameFullString   ); }
     for(int i = 0; i < playerObjectList                         .size(); i ++){ playerStringList                                .add("" + playerObjectList                      .get(i).playerIndexInt   ); }
-    for(int i = 0; i < adjectiveTagObjectList                   .size(); i ++){ adjectiveTagNameAltStringList                   .add(     adjectiveTagObjectList                .get(i).tagNameAltString ); subjectTagNameFullStringList           .add(adjectiveTagNameAltStringList                   .get(i).tagNameFullString); }
-    for(int i = 0; i < adverbTagObjectList                      .size(); i ++){ adverbTagNameAltStringList                      .add(     adverbTagObjectList                   .get(i).tagNameAltString ); verbTagNameFullStringList              .add(adverbTagNameAltStringList                      .get(i).tagNameFullString); }
-    for(int i = 0; i < intransitiveVerbTagObjectList            .size(); i ++){ intransitiveVerbTagNameAltStringList            .add(     intransitiveVerbTagObjectList         .get(i).tagNameAltString ); negativeVerbTagNameFullStringList      .add(intransitiveVerbTagNameAltStringList            .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeAdjectiveTagObjectList           .size(); i ++){ negativeAdjectiveTagNameAltStringList           .add(     negativeAdjectiveTagObjectList        .get(i).tagNameAltString ); nounTagNameFullStringList              .add(negativeAdjectiveTagNameAltStringList           .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeAdverbTagObjectList              .size(); i ++){ negativeAdverbTagNameAltStringList              .add(     negativeAdverbTagObjectList           .get(i).tagNameAltString ); adjectiveTagNameFullStringList         .add(negativeAdverbTagNameAltStringList              .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeIntransitiveVerbTagObjectList    .size(); i ++){ negativeIntransitiveVerbTagNameAltStringList    .add(     negativeIntransitiveVerbTagObjectList .get(i).tagNameAltString ); negativeAdjectiveTagNameFullStringList .add(negativeIntransitiveVerbTagNameAltStringList    .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeTransitiveVerbTagObjectList      .size(); i ++){ negativeTransitiveVerbTagNameAltStringList      .add(     negativeTransitiveVerbTagObjectList   .get(i).tagNameAltString ); adverbTagNameFullStringList            .add(negativeTransitiveVerbTagNameAltStringList      .get(i).tagNameFullString); }
-    for(int i = 0; i < nounTagObjectList                        .size(); i ++){ nounTagNameAltStringList                        .add(     nounTagObjectList                     .get(i).tagNameAltString ); negativeAdverbTagNameFullStringList    .add(nounTagNameAltStringList                        .get(i).tagNameFullString); }
-    for(int i = 0; i < subjectTagObjectList                     .size(); i ++){ subjectTagNameAltStringList                     .add(     subjectTagObjectList                  .get(i).tagNameAltString ); adverbTagNameFullStringList            .add(subjectTagNameAltStringList                     .get(i).tagNameFullString); }
-    for(int i = 0; i < transitiveVerbTagObjectList              .size(); i ++){ transitiveVerbTagNameAltStringList              .add(     transitiveVerbTagObjectList           .get(i).tagNameAltString ); negativeAdverbTagNameFullStringList    .add(transitiveVerbTagNameAltStringList              .get(i).tagNameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList                   .size(); i ++){ adjectiveTagNameAltStringList                   .add(     adjectiveTagObjectList                .get(i).tagNameAltString ); adjectiveTagNameAltStringList                   .add(adjectiveTagObjectList                 .get(i).tagNameFullString); }
+    for(int i = 0; i < adverbTagObjectList                      .size(); i ++){ adverbTagNameAltStringList                      .add(     adverbTagObjectList                   .get(i).tagNameAltString ); adverbTagNameAltStringList                      .add(adverbTagObjectList                    .get(i).tagNameFullString); }
+    for(int i = 0; i < intransitiveVerbTagObjectList            .size(); i ++){ intransitiveVerbTagNameAltStringList            .add(     intransitiveVerbTagObjectList         .get(i).tagNameAltString ); intransitiveVerbTagNameAltStringList            .add(intransitiveVerbTagObjectList          .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeAdjectiveTagObjectList           .size(); i ++){ negativeAdjectiveTagNameAltStringList           .add(     negativeAdjectiveTagObjectList        .get(i).tagNameAltString ); negativeAdjectiveTagNameAltStringList           .add(negativeAdjectiveTagObjectList         .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeAdverbTagObjectList              .size(); i ++){ negativeAdverbTagNameAltStringList              .add(     negativeAdverbTagObjectList           .get(i).tagNameAltString ); negativeAdverbTagNameAltStringList              .add(negativeAdverbTagObjectList            .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeIntransitiveVerbTagObjectList    .size(); i ++){ negativeIntransitiveVerbTagNameAltStringList    .add(     negativeIntransitiveVerbTagObjectList .get(i).tagNameAltString ); negativeIntransitiveVerbTagNameAltStringList    .add(negativeIntransitiveVerbTagObjectList  .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeTransitiveVerbTagObjectList      .size(); i ++){ negativeTransitiveVerbTagNameAltStringList      .add(     negativeTransitiveVerbTagObjectList   .get(i).tagNameAltString ); negativeTransitiveVerbTagNameAltStringList      .add(negativeTransitiveVerbTagObjectList    .get(i).tagNameFullString); }
+    for(int i = 0; i < nounAbstractTagObjectList                .size(); i ++){ nounAbstractAltNameStringList                   .add(     nounAbstractTagObjectList             .get(i).tagNameAltString ); nounAbstractAltNameStringList                   .add(nounAbstractTagObjectList              .get(i).tagNameFullString); }
+    for(int i = 0; i < nounTagObjectList                        .size(); i ++){ nounTagNameAltStringList                        .add(     nounTagObjectList                     .get(i).tagNameAltString ); nounTagNameAltStringList                        .add(nounTagObjectList                      .get(i).tagNameFullString); }
+    for(int i = 0; i < subjectTagObjectList                     .size(); i ++){ subjectTagNameAltStringList                     .add(     subjectTagObjectList                  .get(i).tagNameAltString ); subjectTagNameAltStringList                     .add(subjectTagObjectList                   .get(i).tagNameFullString); }
+    for(int i = 0; i < transitiveVerbTagObjectList              .size(); i ++){ transitiveVerbTagNameAltStringList              .add(     transitiveVerbTagObjectList           .get(i).tagNameAltString ); transitiveVerbTagNameAltStringList              .add(transitiveVerbTagObjectList            .get(i).tagNameFullString); }
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
     defaultStringList                                           = Arrays.asList();
     SetupGUIVoid                                                ();
@@ -777,6 +789,17 @@ void LoadVoid(){
             Tag         tempTagObject                                                       = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempTagNegativeTransitiveVerb1String, tempTagNegativeTransitiveVerb2String, tempTagNegativeTransitiveVerb3String, tempTagNegativeTransitiveVerbIngString, tempTagNegativeTransitiveVerbSString);
                         negativeTransitiveVerbTagObjectList                                 .add(tempTagObject);
         }
+        JSONArray       nounAbstractTagLoadJSONArrayObject                                  = loadJSONArray("data/nounAbstractTag.json");
+        for(int i = 0; i < nounAbstractTagLoadJSONArrayObject.size(); i ++){
+            JSONObject  nounAbstractTagLoadJSONObject                                       = nounAbstractTagLoadJSONArrayObject                .getJSONObject  (i);
+            String      tempTagNameAltString                                                = nounAbstractTagLoadJSONObject                     .getString      ("tagNameAltString"                         );
+            String      tempTagNameFullString                                               = nounAbstractTagLoadJSONObject                     .getString      ("tagNameFullString"                        );
+            String      tempTagNounAbstractSString                                          = nounAbstractTagLoadJSONObject                     .getString      ("tagNounAbstractSString"                   );
+            String      tempTagNounAbstractString                                           = nounAbstractTagLoadJSONObject                     .getString      ("tagNounAbstractString"                    );
+            String      tempTagTypeString                                                   = nounAbstractTagLoadJSONObject                     .getString      ("tagTypeString"                            );
+            Tag         tempTagObject                                                       = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempTagNounAbstractString, tempTagNounAbstractSString);
+                        nounAbstractTagObjectList                                           .add(tempTagObject);
+        }
         JSONArray       nounTagLoadJSONArrayObject                                          = loadJSONArray("data/nounTag.json");
         for(int i = 0; i < nounTagLoadJSONArrayObject.size(); i ++){
             JSONObject  nounTagLoadJSONObject                                               = nounTagLoadJSONArrayObject                        .getJSONObject  (i);
@@ -991,43 +1014,6 @@ void LoadVoid(){
                                 indexCounterInt                                             ++;
             }
                                 indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNegativeAdjectiveCurrentPrevTagString                   = playerLoadJSONObject.getString("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .negativeAdjectiveCurrentPrevTagStringList.add(tempNegativeAdjectiveCurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("negativeAdverbCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNegativeAdverbCurrentPrevTagString                      = playerLoadJSONObject.getString("negativeAdverbCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .negativeAdverbCurrentPrevTagStringList.add(tempNegativeAdverbCurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("nounCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNounCurrentPrevTagString                                = playerLoadJSONObject.getString("nounCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .nounCurrentPrevTagStringList.add(tempNounCurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("nounSCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNounSCurrentPrevTagString                               = playerLoadJSONObject.getString("nounSCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .nounSCurrentPrevTagStringList.add(tempNounSCurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("playerSiblingObjectList" + indexCounterInt)){
-                int             tempPlayerSiblingObjectInt                                  = playerLoadJSONObject.getInt("playerSiblingObjectList" + indexCounterInt);
-                ObjectPlayer    tempObjectPlayer                                            = FindPlayerObject(tempPlayerSiblingObjectInt);
-                                tempPlayerObject                                            .playerSiblingObjectList.add(tempObjectPlayer);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("sentenceStringList" + indexCounterInt)){
-                String          tempSentenceString                                          = playerLoadJSONObject.getString("sentenceStringList" + indexCounterInt);
-                                tempPlayerObject                                            .sentenceStringList.add(tempSentenceString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
             while(playerLoadJSONObject.hasKey("subjectCurrentPrevTagStringList" + indexCounterInt)){
                 String          tempSubjectCurrentPrevTagString                             = playerLoadJSONObject.getString("subjectCurrentPrevTagStringList" + indexCounterInt);
                                 tempPlayerObject                                            .subjectCurrentPrevTagStringList.add(tempSubjectCurrentPrevTagString);
@@ -1053,14 +1039,26 @@ void LoadVoid(){
             }
                                 indexCounterInt                                             = 0;
             while(playerLoadJSONObject.hasKey("intransitiveVerbIngCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempIntransitiveVerbSCurrentPrevTagStringList               = playerLoadJSONObject.getString("intransitiveVerbIngCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .intransitiveVerbIngCurrentPrevTagStringList.add(tempIntransitiveVerbSCurrentPrevTagStringList);
+                String          tempIntransitiveVerbIngCurrentPrevTagStringList             = playerLoadJSONObject.getString("intransitiveVerbIngCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .intransitiveVerbIngCurrentPrevTagStringList.add(tempIntransitiveVerbIngCurrentPrevTagStringList);
                                 indexCounterInt                                             ++;
             }
                                 indexCounterInt                                             = 0;
             while(playerLoadJSONObject.hasKey("intransitiveVerbSCurrentPrevTagStringList" + indexCounterInt)){
                 String          tempIntransitiveVerbSCurrentPrevTagString                   = playerLoadJSONObject.getString("intransitiveVerbSCurrentPrevTagStringList" + indexCounterInt);
                                 tempPlayerObject                                            .intransitiveVerbSCurrentPrevTagStringList.add(tempIntransitiveVerbSCurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             ++;
+            while(playerLoadJSONObject.hasKey("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNegativeAdjectiveCurrentPrevTagString                   = playerLoadJSONObject.getString("negativeAdjectiveCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .negativeAdjectiveCurrentPrevTagStringList.add(tempNegativeAdjectiveCurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("negativeAdverbCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNegativeAdverbCurrentPrevTagString                      = playerLoadJSONObject.getString("negativeAdverbCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .negativeAdverbCurrentPrevTagStringList.add(tempNegativeAdverbCurrentPrevTagString);
                                 indexCounterInt                                             ++;
             }
                                 indexCounterInt                                             = 0;
@@ -1094,6 +1092,72 @@ void LoadVoid(){
                                 indexCounterInt                                             ++;
             }
                                 indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("negativeTransitiveVerb1CurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNegativeTransitiveVerb1CurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerb1CurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .negativeTransitiveVerb1CurrentPrevTagStringList.add(tempNegativeTransitiveVerb1CurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("negativeTransitiveVerb2CurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNegativeTransitiveVerb2CurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerb2CurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .negativeTransitiveVerb2CurrentPrevTagStringList.add(tempNegativeTransitiveVerb2CurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("negativeTransitiveVerb3CurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNegativeTransitiveVerb3CurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerb3CurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .negativeTransitiveVerb3CurrentPrevTagStringList.add(tempNegativeTransitiveVerb3CurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("negativeTransitiveVerbIngCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNegativeTransitiveVerbIngCurrentPrevTagStringList       = playerLoadJSONObject.getString("negativeTransitiveVerbIngCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .negativeTransitiveVerbIngCurrentPrevTagStringList.add(tempNegativeTransitiveVerbIngCurrentPrevTagStringList);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("negativeTransitiveVerbSCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNegativeTransitiveVerbSCurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerbSCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .negativeTransitiveVerbSCurrentPrevTagStringList.add(tempNegativeTransitiveVerbSCurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("nounAbstractCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNounAbstractCurrentPrevTagString                        = playerLoadJSONObject.getString("nounAbstractCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .nounAbstractCurrentPrevTagStringList.add(tempNounAbstractCurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("nounAbstractSCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNounAbstractSCurrentPrevTagString                       = playerLoadJSONObject.getString("nounAbstractSCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .nounAbstractSCurrentPrevTagStringList.add(tempNounAbstractSCurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("nounCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNounCurrentPrevTagString                                = playerLoadJSONObject.getString("nounCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .nounCurrentPrevTagStringList.add(tempNounCurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("nounSCurrentPrevTagStringList" + indexCounterInt)){
+                String          tempNounSCurrentPrevTagString                               = playerLoadJSONObject.getString("nounSCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .nounSCurrentPrevTagStringList.add(tempNounSCurrentPrevTagString);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("playerSiblingObjectList" + indexCounterInt)){
+                int             tempPlayerSiblingObjectInt                                  = playerLoadJSONObject.getInt("playerSiblingObjectList" + indexCounterInt);
+                ObjectPlayer    tempObjectPlayer                                            = FindPlayerObject(tempPlayerSiblingObjectInt);
+                                tempPlayerObject                                            .playerSiblingObjectList.add(tempObjectPlayer);
+                                indexCounterInt                                             ++;
+            }
+                                indexCounterInt                                             = 0;
+            while(playerLoadJSONObject.hasKey("sentenceStringList" + indexCounterInt)){
+                String          tempSentenceString                                          = playerLoadJSONObject.getString("sentenceStringList" + indexCounterInt);
+                                tempPlayerObject                                            .sentenceStringList.add(tempSentenceString);
+                                indexCounterInt                                             ++;
+            }
                                 indexCounterInt                                             = 0;
             while(playerLoadJSONObject.hasKey("transitiveVerb1CurrentPrevTagStringList" + indexCounterInt)){
                 String          tempTransitiveVerb1CurrentPrevTagString                     = playerLoadJSONObject.getString("transitiveVerb1CurrentPrevTagStringList" + indexCounterInt);
@@ -1114,45 +1178,14 @@ void LoadVoid(){
             }
                                 indexCounterInt                                             = 0;
             while(playerLoadJSONObject.hasKey("transitiveVerbIngCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempTransitiveVerbSCurrentPrevTagStringList                 = playerLoadJSONObject.getString("transitiveVerbIngCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .transitiveVerbIngCurrentPrevTagStringList.add(tempTransitiveVerbSCurrentPrevTagStringList);
+                String          tempTransitiveVerbIngCurrentPrevTagStringList               = playerLoadJSONObject.getString("transitiveVerbIngCurrentPrevTagStringList" + indexCounterInt);
+                                tempPlayerObject                                            .transitiveVerbIngCurrentPrevTagStringList.add(tempTransitiveVerbIngCurrentPrevTagStringList);
                                 indexCounterInt                                             ++;
             }
                                 indexCounterInt                                             = 0;
             while(playerLoadJSONObject.hasKey("transitiveVerbSCurrentPrevTagStringList" + indexCounterInt)){
                 String          tempTransitiveVerbSCurrentPrevTagString                     = playerLoadJSONObject.getString("transitiveVerbSCurrentPrevTagStringList" + indexCounterInt);
                                 tempPlayerObject                                            .transitiveVerbSCurrentPrevTagStringList.add(tempTransitiveVerbSCurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("negativeTransitiveVerb1CurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNegativeTransitiveVerb1CurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerb1CurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .negativeTransitiveVerb1CurrentPrevTagStringList.add(tempNegativeTransitiveVerb1CurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("negativeTransitiveVerb2CurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNegativeTransitiveVerb2CurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerb2CurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .negativeTransitiveVerb2CurrentPrevTagStringList.add(tempNegativeTransitiveVerb2CurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("negativeTransitiveVerb3CurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNegativeTransitiveVerb3CurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerb3CurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .negativeTransitiveVerb3CurrentPrevTagStringList.add(tempNegativeTransitiveVerb3CurrentPrevTagString);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("negativeTransitiveVerbIngCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNegativeTransitiveVerbSCurrentPrevTagStringList         = playerLoadJSONObject.getString("negativeTransitiveVerbIngCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .negativeTransitiveVerbIngCurrentPrevTagStringList.add(tempNegativeTransitiveVerbSCurrentPrevTagStringList);
-                                indexCounterInt                                             ++;
-            }
-                                indexCounterInt                                             = 0;
-            while(playerLoadJSONObject.hasKey("negativeTransitiveVerbSCurrentPrevTagStringList" + indexCounterInt)){
-                String          tempNegativeTransitiveVerbSCurrentPrevTagString             = playerLoadJSONObject.getString("negativeTransitiveVerbSCurrentPrevTagStringList" + indexCounterInt);
-                                tempPlayerObject                                            .negativeTransitiveVerbSCurrentPrevTagStringList.add(tempNegativeTransitiveVerbSCurrentPrevTagString);
                                 indexCounterInt                                             ++;
             }
                                 indexCounterInt                                             = 0;
@@ -1239,6 +1272,15 @@ void SaveVoid(){
         negativeTransitiveVerbTagSaveJSONObject         .setString      ("tagNegativeTransitiveVerbSString"         , negativeTransitiveVerbTagObjectList       .get(i).tagNegativeTransitiveVerbSString        );
         negativeTransitiveVerbTagSaveJSONObject         .setString      ("tagNegativeTransitiveVerbIngString"       , negativeTransitiveVerbTagObjectList       .get(i).tagNegativeTransitiveVerbIngString      );
         negativeTransitiveVerbTagSaveJSONArrayObject    .setJSONObject  (i, negativeTransitiveVerbTagSaveJSONObject);
+    }
+    for(int i = 0; i < nounAbstractTagObjectList.size(); i ++){
+        nounAbstractTagSaveJSONObject                   = new JSONObject();
+        nounAbstractTagSaveJSONObject                   .setString      ("tagNameAltString"                         , nounAbstractTagObjectList                 .get(i).tagNameAltString                        );
+        nounAbstractTagSaveJSONObject                   .setString      ("tagNameFullString"                        , nounAbstractTagObjectList                 .get(i).tagNameFullString                       );
+        nounAbstractTagSaveJSONObject                   .setString      ("tagTypeString"                            , nounAbstractTagObjectList                 .get(i).tagTypeString                           );
+        nounAbstractTagSaveJSONObject                   .setString      ("tagNounAbstractString"                    , nounAbstractTagObjectList                 .get(i).tagNounAbstractString                   );
+        nounAbstractTagSaveJSONObject                   .setString      ("tagNounAbstractSString"                   , nounAbstractTagObjectList                 .get(i).tagNounAbstractSString                  );
+        nounAbstractTagSaveJSONArrayObject              .setJSONObject  (i, nounAbstractTagSaveJSONObject);
     }
     for(int i = 0; i < nounTagObjectList.size(); i ++){
         nounTagSaveJSONObject                               = new JSONObject();
@@ -1358,6 +1400,8 @@ void SaveVoid(){
         for(int j = 0; j < playerObjectList.get(i).negativeTransitiveVerbIngCurrentPrevTagStringList    .size(); j ++){ playerSaveJSONObject.setString  ("negativeTransitiveVerbIngCurrentPrevTagStringList"    + j, playerObjectList.get(i).negativeTransitiveVerbIngCurrentPrevTagStringList  .get(j)); }
         for(int j = 0; j < playerObjectList.get(i).negativeTransitiveVerbSCurrentPrevTagStringList      .size(); j ++){ playerSaveJSONObject.setString  ("negativeTransitiveVerbSCurrentPrevTagStringList"      + j, playerObjectList.get(i).negativeTransitiveVerbSCurrentPrevTagStringList    .get(j)); }
         for(int j = 0; j < playerObjectList.get(i).negativeTransitiveVerbSCurrentPrevTagStringList      .size(); j ++){ playerSaveJSONObject.setString  ("negativeTransitiveVerbSCurrentPrevTagStringList"      + j, playerObjectList.get(i).negativeTransitiveVerbSCurrentPrevTagStringList    .get(j)); }
+        for(int j = 0; j < playerObjectList.get(i).nounAbstractCurrentPrevTagStringList                 .size(); j ++){ playerSaveJSONObject.setString  ("nounAbstractCurrentPrevTagStringList"                 + j, playerObjectList.get(i).nounAbstractCurrentPrevTagStringList               .get(j)); }
+        for(int j = 0; j < playerObjectList.get(i).nounAbstractSCurrentPrevTagStringList                .size(); j ++){ playerSaveJSONObject.setString  ("nounAbstractSCurrentPrevTagStringList"                + j, playerObjectList.get(i).nounAbstractSCurrentPrevTagStringList              .get(j)); }
         for(int j = 0; j < playerObjectList.get(i).nounCurrentPrevTagStringList                         .size(); j ++){ playerSaveJSONObject.setString  ("nounCurrentPrevTagStringList"                         + j, playerObjectList.get(i).nounCurrentPrevTagStringList                       .get(j)); }
         for(int j = 0; j < playerObjectList.get(i).nounSCurrentPrevTagStringList                        .size(); j ++){ playerSaveJSONObject.setString  ("nounSCurrentPrevTagStringList"                        + j, playerObjectList.get(i).nounSCurrentPrevTagStringList                      .get(j)); }
         for(int j = 0; j < playerObjectList.get(i).playerSiblingObjectList                              .size(); j ++){ playerSaveJSONObject.setInt     ("playerSiblingObjectList"                              + j, playerObjectList.get(i).playerSiblingObjectList                            .get(j).playerIndexInt);    }
@@ -1388,6 +1432,7 @@ void SaveVoid(){
     saveJSONArray(negativeIntransitiveVerbTagSaveJSONArrayObject,   "data/negativeIntransitiveVerbTag.json"     );
     saveJSONArray(negativeTransitiveVerbTagSaveJSONArrayObject,     "data/negativeTransitiveVerbTag.json"       );
     saveJSONArray(nounTagSaveJSONArrayObject,                       "data/nounTag.json"                         );
+    saveJSONArray(nounAbstractTagSaveJSONArrayObject,               "data/nounAbstractTag.json"                 );
     saveJSONArray(playerSaveJSONArrayObject,                        "data/player.json"                          );
     saveJSONArray(roomSaveJSONArrayObject,                          "data/room.json"                            );
     saveJSONArray(subjectTagSaveJSONArrayObject,                    "data/subjectTag.json"                      );
@@ -1744,6 +1789,12 @@ Tag FindTagObject(String _tagNameString){
         if(negativeTransitiveVerbTagObjectList      .get(i).tagNameFullString  .equals(_tagNameString)){ tempTagObject = negativeTransitiveVerbTagObjectList     .get(i); }
 
     }
+    for(int i = 0; i < nounAbstractTagObjectList.size(); i ++){
+
+        if(nounAbstractTagObjectList                .get(i).tagNameAltString   .equals(_tagNameString)){ tempTagObject = nounAbstractTagObjectList              .get(i); }
+        if(nounAbstractTagObjectList                .get(i).tagNameFullString  .equals(_tagNameString)){ tempTagObject = nounAbstractTagObjectList              .get(i); }
+
+    }
     for(int i = 0; i < nounTagObjectList.size(); i ++){
 
         if(nounTagObjectList                        .get(i).tagNameAltString   .equals(_tagNameString)){ tempTagObject = nounTagObjectList                       .get(i); }
@@ -1842,9 +1893,10 @@ Tag[] AssignRandomTagArray(
     List<Tag> _negativeAdverbTagObjectList              ,
     List<Tag> _negativeIntransitiveVerbTagObjectList    ,
     List<Tag> _negativeTransitiveVerbTagObjectList      ,
+    List<Tag> _nounAbstractTagObjectList                ,
     List<Tag> _nounTagObjectList                        ,
     List<Tag> _subjectTagObjectList                     ,
-    List<Tag> _transitiveVerbTagObjectList              ,
+    List<Tag> _transitiveVerbTagObjectList
 
 ){
 
@@ -1857,6 +1909,7 @@ Tag[] AssignRandomTagArray(
     AssignRandomTagLoopVoid (_negativeAdverbTagObjectList               , assignTagObjectList);
     AssignRandomTagLoopVoid (_negativeIntransitiveVerbTagObjectList     , assignTagObjectList);
     AssignRandomTagLoopVoid (_negativeTransitiveVerbTagObjectList       , assignTagObjectList);
+    AssignRandomTagLoopVoid (_nounAbstractTagObjectList                 , assignTagObjectList);
     AssignRandomTagLoopVoid (_nounTagObjectList                         , assignTagObjectList);
     AssignRandomTagLoopVoid (_subjectTagObjectList                      , assignTagObjectList);
     AssignRandomTagLoopVoid (_transitiveVerbTagObjectList               , assignTagObjectList);
@@ -2183,17 +2236,18 @@ void AddMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject      
 void AddMuseumGroupSelectNegativeIntransitiveVerbTagMuseumObjectScrollableListObject    (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeIntransitiveVerbTagMuseumObjectScrollableListObject  ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeIntransitiveVerbTagNameFullStringList  , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeIntransitiveVerbTagMuseumObjectScrollableListObject  ); }
 void AddMuseumGroupSelectNegativeTransitiveVerbTagMuseumObjectScrollableListObject      (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNegativeTransitiveVerbTagMuseumObjectScrollableListObject    ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(negativeTransitiveVerbTagNameFullStringList    , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNegativeTransitiveVerbTagMuseumObjectScrollableListObject    ); }
 void AddMuseumGroupSelectNounTagMuseumObjectScrollableListObject                        (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                      ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(nounTagNameFullStringList                      , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                      ); }
+void AddMuseumGroupSelectNounAbstractTagMuseumObjectScrollableListObject                (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectNounAbstractTagMuseumObjectScrollableListObject              ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(nounAbstractTagNameFullStringList              , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectNounAbstractTagMuseumObjectScrollableListObject              ); }
 void AddMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject                     (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject                   ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(subjectTagNameFullStringList                   , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject                   ); }
 void AddMuseumGroupSelectTransitiveVerbTagMuseumObjectScrollableListObject              (int _indexInt) { addMuseumGroupGUIObject.CovertScrollableListIntoCheckListVoid(_indexInt, addMuseumGroupGUIObject.addMuseumGroupSelectTransitiveVerbTagMuseumObjectScrollableListObject            ); addMuseumGroupGUIObject.tempSelectedTagNameFullStringList    = addMuseumGroupGUIObject.SetSelectedCheckListStringList(transitiveVerbTagNameFullStringList            , addMuseumGroupGUIObject.tempSelectedTagNameFullStringList  , addMuseumGroupGUIObject.addMuseumGroupSelectTransitiveVerbTagMuseumObjectScrollableListObject            ); }
 /*A function to set the full name of parent object.*/
-void AddMuseumGroupSelectParentMuseumObjectScrollableListObject                 (int _indexInt) {
+void AddMuseumGroupSelectParentMuseumObjectScrollableListObject                         (int _indexInt) {
 
     addMuseumGroupGUIObject.tempSelectedParentNameFullString        = addMuseumGroupGUIObject.addMuseumGroupSelectParentMuseumObjectScrollableListObject.getItem(_indexInt).get("text").toString();
     addMuseumGroupGUIObject.tempSelectedParentNameAltString         = FindMuseumObject(addMuseumGroupGUIObject.tempSelectedParentNameFullString).nameAltString;
 
 }
 /*Add new museum object with all collected property values.*/
-void AddMuseumGroupAddMuseumObjectButtonObject                                  (int _indexInt) {
+void AddMuseumGroupAddMuseumObjectButtonObject                                          (int _indexInt) {
 
     String          tempNameAltString                   = addMuseumGroupGUIObject.addMuseumGroupNameAltMuseumObjectTextfieldObject  .getText();                         /*Get the   alternate  name for the new museum object that the user will add.     */
     String          tempNameFullString                  = addMuseumGroupGUIObject.addMuseumGroupNameFullMuseumObjectTextfieldObject .getText();                         /*Get the   full       name for the new museum object that the user will add.     */
@@ -2352,6 +2406,19 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
         tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeTransitiveVerb1String, tempNegativeTransitiveVerb2String, tempVer3bString, tempVerIngbString, tempNegativeTransitiveVerbSString);
 
     }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN ABSTRACT"))                {
+
+        tempTagTypeString                               = "NOA";
+        tempTagObjectList                               = nounAbstractTagObjectList;
+        tempTagNameAltStringList                        = nounAbstractTagNameAltStringList;
+        tempTagNameFullStringList                       = nounAbstractTagNameFullStringList;
+
+        String tempNounAbstractString                   = addTagGroupGUIObject.addTagGroupTagNounAbstractTextfieldObject                    .getText();
+        String tempNounAbstractSString                  = addTagGroupGUIObject.addTagGroupTagNounAbstractSTextfieldObject                   .getText();
+        tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNounAbstractString, tempNounAbstractSString);
+
+
+    }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"))                         {
 
         tempTagTypeString                               = "NOU";
@@ -2424,6 +2491,7 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE TRANSITIVE VERB"       )){ addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE VERB"                  )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject       .setItems(tempTagNameFullStringList); }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"                           )){ addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN ABSTRACT"                  )){ addMuseumGroupGUIObject.addMuseumGroupSelectNounAbstractTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADJECTIVE"                      )){ addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE"             )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADVERB"                         )){ addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
@@ -2489,6 +2557,8 @@ void EditTagGroupSelectTagScrollableListObject(int _indexInt){
         editTagGroupGUIObject                   .tempSelectedTagNegativeTransitiveVerb3String               = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeTransitiveVerb3String      ;
         editTagGroupGUIObject                   .tempSelectedTagNegativeTransitiveVerbIngString             = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeTransitiveVerbIngString    ;
         editTagGroupGUIObject                   .tempSelectedTagNegativeTransitiveVerbSString               = editTagGroupGUIObject.tempSelectedTagObject.tagNegativeTransitiveVerbSString      ;
+        editTagGroupGUIObject                   .tempSelectedTagNounAbstractSString                         = editTagGroupGUIObject.tempSelectedTagObject.tagNounAbstractSString                ;
+        editTagGroupGUIObject                   .tempSelectedTagNounAbstractString                          = editTagGroupGUIObject.tempSelectedTagObject.tagNounAbstractString                 ;
         editTagGroupGUIObject                   .tempSelectedTagNounSString                                 = editTagGroupGUIObject.tempSelectedTagObject.tagNounSString                        ;
         editTagGroupGUIObject                   .tempSelectedTagNounString                                  = editTagGroupGUIObject.tempSelectedTagObject.tagNounString                         ;
         editTagGroupGUIObject                   .tempSelectedTagSubjectPossesionString                      = editTagGroupGUIObject.tempSelectedTagObject.tagSubjectPossesionString             ;
@@ -2519,6 +2589,8 @@ void EditTagGroupSelectTagScrollableListObject(int _indexInt){
         editTagGroupGUIObject                   .editTagGroupTagNegativeTransitiveVerb3TextfieldObject      .setText(editTagGroupGUIObject.tempSelectedTagNegativeTransitiveVerb3String         );
         editTagGroupGUIObject                   .editTagGroupTagNegativeTransitiveVerbIngTextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagNegativeTransitiveVerbIngString       );
         editTagGroupGUIObject                   .editTagGroupTagNegativeTransitiveVerbSTextfieldObject      .setText(editTagGroupGUIObject.tempSelectedTagNegativeTransitiveVerbSString         );
+        editTagGroupGUIObject                   .editTagGroupTagNounAbstractSTextfieldObject                .setText(editTagGroupGUIObject.tempSelectedTagNounAbstractSString                   );
+        editTagGroupGUIObject                   .editTagGroupTagNounAbstractTextfieldObject                 .setText(editTagGroupGUIObject.tempSelectedTagNounAbstractString                    );
         editTagGroupGUIObject                   .editTagGroupTagNounSTextfieldObject                        .setText(editTagGroupGUIObject.tempSelectedTagNounSString                           );
         editTagGroupGUIObject                   .editTagGroupTagNounTextfieldObject                         .setText(editTagGroupGUIObject.tempSelectedTagNounString                            );
         editTagGroupGUIObject                   .editTagGroupTagSubjectPossesionTextfieldObject             .setText(editTagGroupGUIObject.tempSelectedTagSubjectPossesionString                );
@@ -2590,6 +2662,15 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         negativeTransitiveTagNameAltStringList                  .clear();
         negativeTransitiveTagNameFullStringList                 .clear();
         for(int i = 0; i < negativeTransitiveTagObjectList      .size(); i ++){ negativeTransitiveTagNameAltStringList.add(negativeTransitiveTagObjectList.get(i).tagNameAltString ); negativeTransitiveTagNameFullStringList.add(negativeTransitiveTagObjectList.get(i).tagNameFullString); }
+    }
+    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NOA")){
+        editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
+        editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
+        editTagGroupGUIObject.tempSelectedTagObject             .tagNounAbstractSString                 = editTagGroupGUIObject.editTagGroupTagNounAbstractSTextfieldObject                 .getText();
+        editTagGroupGUIObject.tempSelectedTagObject             .tagNounAbstractString                  = editTagGroupGUIObject.editTagGroupTagNounAbstractTextfieldObject                  .getText();
+        nounAbstractTagNameAltStringList                        .clear();
+        nounAbstractTagNameFullStringList                       .clear();
+        for(int i = 0; i < nounAbstractTagObjectList            .size(); i ++){ nounAbstractTagNameAltStringList.add(nounAbstractTagObjectList.get(i).tagNameAltString ); nounAbstractTagNameFullStringList.add(nounAbstractTagObjectList.get(i).tagNameFullString); }
     }
     else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NOU")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
