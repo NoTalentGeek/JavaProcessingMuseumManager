@@ -200,7 +200,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         editPlayerGroupPlayerExhibitionTargetScrollableListObject   =
             editPlayerGroupControlP5Object
                 .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionTargetScrollableListObject")
-                .addItems                                           (tempSelectedPlayerObject.exhibitionTagCounterNameFullStringList)
+                .addItems                                           (tempSelectedPlayerObject.exhibitionTargetNameFullStringList)
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR TARGET EXHIBITIONS:")
@@ -213,7 +213,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         editPlayerGroupPlayerExhibitionVisitedScrollableListObject  =
             editPlayerGroupControlP5Object
                 .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionVisitedScrollableListObject")
-                .addItems                                           (tempSelectedPlayerExhibitionVisitedNameFullStringList)
+                .addItems                                           (tempSelectedPlayer.exhibitionVisitedNameFullStringList)
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR VISITED EXHIBITIONS:")
@@ -270,7 +270,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         editPlayerGroupPlayerTagScrollableListObject                =
             editPlayerGroupControlP5Object
                 .addScrollableList                                  ("EditPlayerGroupPlayerTagScrollableListObject")
-                .addItems                                           (tempSelectedPlayerTagNameFullStringList)
+                .addItems                                           (tempSelectedPlayerObject.exhibitionTagCounterNameFullStringList)
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR COLLECTED TAGS:")

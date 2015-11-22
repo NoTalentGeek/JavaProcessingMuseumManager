@@ -23,16 +23,17 @@ class EditMuseumGroupGUIObject extends GroupGUIObject{
 
 
         editMuseumGroupObject                                       =
-            editMuseumGroupControlP5Object  .addGroup               ("EditMuseumObjectGroupObject")
-                                            .close                  ()
-                                            .setBackgroundColor     (groupBackgroundColor)
-                                            .setBackgroundHeight    (guiHeightInt)
-                                            .setColor               (defaultCColor)
-                                            .setColorBackground     (groupColorBackgroundColor)
-                                            .setColorLabel          (groupColorLabelColor)
-                                            .setLabel               ("EDIT MUSEUM OBJECT:")
-                                            .setPosition            (guiXInt, guiYInt)
-                                            .setWidth               (guiWidthInt);
+            editMuseumGroupControlP5Object  
+                .addGroup                                           ("EditMuseumObjectGroupObject")
+                .close                                              ()
+                .setBackgroundColor                                 (groupBackgroundColor)
+                .setBackgroundHeight                                (guiHeightInt)
+                .setColor                                           (defaultCColor)
+                .setColorBackground                                 (groupColorBackgroundColor)
+                .setColorLabel                                      (groupColorLabelColor)
+                .setLabel                                           ("EDIT MUSEUM OBJECT:")
+                .setPosition                                        (guiXInt, guiYInt)
+                .setWidth                                           (guiWidthInt);
 
 
 
