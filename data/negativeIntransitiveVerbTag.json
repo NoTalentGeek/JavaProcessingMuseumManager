@@ -1,0 +1,32 @@
+[
+  {
+    "tagNegativeIntransitiveVerb2String": "assasinated",
+    "tagNegativeIntransitiveVerbSString": "assasinates",
+    "tagNegativeIntransitiveVerbIngString": "assasinating",
+    "tagNegativeIntransitiveVerb3String": "assasinated",
+    "tagNegativeIntransitiveVerb1String": "assasinate",
+    "tagTypeString": "NIV",
+    "tagNameFullString": "Verb Assasinate",
+    "tagNameAltString": "NIV_ASS"
+  },
+  {
+    "tagNegativeIntransitiveVerb2String": "died",
+    "tagNegativeIntransitiveVerbSString": "dying",
+    "tagNegativeIntransitiveVerbIngString": "dies",
+    "tagNegativeIntransitiveVerb3String": "died",
+    "tagNegativeIntransitiveVerb1String": "die",
+    "tagTypeString": "NIV",
+    "tagNameFullString": "Verb Die",
+    "tagNameAltString": "NIV_DIE"
+  },
+  {
+    "tagNegativeIntransitiveVerb2String": "killed",
+    "tagNegativeIntransitiveVerbSString": "kills",
+    "tagNegativeIntransitiveVerbIngString": "killing",
+    "tagNegativeIntransitiveVerb3String": "killed",
+    "tagNegativeIntransitiveVerb1String": "kill",
+    "tagTypeString": "NIV",
+    "tagNameFullString": "Verb Kill",
+    "tagNameAltString": "NIV_KIL"
+  }
+]

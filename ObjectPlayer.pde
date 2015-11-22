@@ -80,6 +80,8 @@ class ObjectPlayer{
     List<String>        intransitiveVerb1CurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        intransitiveVerb2CurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        intransitiveVerb3CurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        intransitiveVerbIngCurrentPrevTagStringList             = new ArrayList<String>();
+    List<String>        intransitiveVerbSCurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        negativeAdjectiveCurrentPrevTagStringList               = new ArrayList<String>();
     List<String>        negativeAdverbCurrentPrevTagStringList                  = new ArrayList<String>();
     List<String>        negativeIntransitiveVerb1CurrentPrevTagStringList       = new ArrayList<String>();
@@ -99,13 +101,11 @@ class ObjectPlayer{
     List<String>        sentenceStringList                                      = new ArrayList<String>();
     List<String>        subjectCurrentPrevTagStringList                         = new ArrayList<String>();
     List<String>        subjectPossesionCurrentPrevTagStringList                = new ArrayList<String>();
-    List<String>        transitiveverb1CurrentPrevTagStringList                 = new ArrayList<String>();
-    List<String>        transitiveverb2CurrentPrevTagStringList                 = new ArrayList<String>();
-    List<String>        transitiveverb3CurrentPrevTagStringList                 = new ArrayList<String>();
-    List<String>        transitiveverbIngCurrentPrevTagStringList               = new ArrayList<String>();
-    List<String>        transitiveverbIngCurrentPrevTagStringList               = new ArrayList<String>();
-    List<String>        transitiveverbSCurrentPrevTagStringList                 = new ArrayList<String>();
-    List<String>        transitiveverbSCurrentPrevTagStringList                 = new ArrayList<String>();
+    List<String>        transitiveVerb1CurrentPrevTagStringList                 = new ArrayList<String>();
+    List<String>        transitiveVerb2CurrentPrevTagStringList                 = new ArrayList<String>();
+    List<String>        transitiveVerb3CurrentPrevTagStringList                 = new ArrayList<String>();
+    List<String>        transitiveVerbIngCurrentPrevTagStringList               = new ArrayList<String>();
+    List<String>        transitiveVerbSCurrentPrevTagStringList                 = new ArrayList<String>();;
     List<TagCounter>    exhibitionTagCounterList                                = new ArrayList<TagCounter>();      /*The amount of tag that have been collected by this player.                                                            */
 
     /*Constructor.*/
@@ -251,8 +251,8 @@ class ObjectPlayer{
         exhibitionTagCounterNameFullStringList.clear();
         for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
 
-            exhibitionTagCounterList.get(i).SetTagNameAltString(exhibitionTagCounterList.get(i).tagObject.nameAltString);
-            exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.nameFullString);
+            exhibitionTagCounterList.get(i).SetTagNameAltString (exhibitionTagCounterList.get(i).tagObject.tagNameAltString );
+            exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.tagNameFullString);
             String  tempTagNameAltString                = "";
             String  tempTagNameFullString               = "";
                     tempTagNameAltString                = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameAltString ());
@@ -268,47 +268,47 @@ class ObjectPlayer{
 
     void ResetVoid(){
 
-        if(adjectiveCurrentPrevTagStringList                    .size() > 0){ adjectiveCurrentPrevTagStringList         .clear(); }
-        if(adverbCurrentPrevTagStringList                       .size() > 0){ adverbCurrentPrevTagStringList            .clear(); }
-        if(exhibitionTagCounterList                             .size() > 0){ exhibitionTagCounterList                  .clear(); }
-        if(exhibitionTagCounterNameAltStringList                .size() > 0){ exhibitionTagCounterNameAltStringList     .clear(); }
-        if(exhibitionTagCounterNameFullStringList               .size() > 0){ exhibitionTagCounterNameFullStringList    .clear(); }
-        if(exhibitionTargetNameAltStringList                    .size() > 0){ exhibitionTargetNameAltStringList         .clear(); }
-        if(exhibitionTargetNameFullStringList                   .size() > 0){ exhibitionTargetNameFullStringList        .clear(); }
-        if(exhibitionVisitedNameAltStringList                   .size() > 0){ exhibitionVisitedNameAltStringList        .clear(); }
-        if(exhibitionVisitedNameFullStringList                  .size() > 0){ exhibitionVisitedNameFullStringList       .clear(); }
-        if(explanationStringList                                .size() > 0){ explanationStringList                     .clear(); }
-        if(explanationStringList                                .size() > 0){ explanationStringList                     .clear(); }
-        if(intransitiveVerb1CurrentPrevTagStringList            .size() > 0){ verb1CurrentPrevTagStringList             .clear(); }
-        if(intransitiveVerb2CurrentPrevTagStringList            .size() > 0){ verb2CurrentPrevTagStringList             .clear(); }
-        if(intransitiveVerb3CurrentPrevTagStringList            .size() > 0){ verb3CurrentPrevTagStringList             .clear(); }
-        if(intransitiveVerbIngCurrentPrevTagStringList          .size() > 0){ verbIngCurrentPrevTagStringList           .clear(); }
-        if(intransitiveVerbSCurrentPrevTagStringList            .size() > 0){ verbSCurrentPrevTagStringList             .clear(); }
-        if(negativeAdjectiveCurrentPrevTagStringList            .size() > 0){ negativeAdjectiveCurrentPrevTagStringList .clear(); }
-        if(negativeAdverbCurrentPrevTagStringList               .size() > 0){ negativeAdverbCurrentPrevTagStringList    .clear(); }
-        if(negativeIntransitiveVerb1CurrentPrevTagStringList    .size() > 0){ negativeVerb1CurrentPrevTagStringList     .clear(); }
-        if(negativeIntransitiveVerb2CurrentPrevTagStringList    .size() > 0){ negativeVerb2CurrentPrevTagStringList     .clear(); }
-        if(negativeIntransitiveVerb3CurrentPrevTagStringList    .size() > 0){ negativeVerb3CurrentPrevTagStringList     .clear(); }
-        if(negativeIntransitiveVerbIngCurrentPrevTagStringList  .size() > 0){ negativeVerbIngCurrentPrevTagStringList   .clear(); }
-        if(negativeIntransitiveVerbSCurrentPrevTagStringList    .size() > 0){ negativeVerbSCurrentPrevTagStringList     .clear(); }
-        if(negativeTransitiveVerb1CurrentPrevTagStringList      .size() > 0){ negativeVerb1CurrentPrevTagStringList     .clear(); }
-        if(negativeTransitiveVerb2CurrentPrevTagStringList      .size() > 0){ negativeVerb2CurrentPrevTagStringList     .clear(); }
-        if(negativeTransitiveVerb3CurrentPrevTagStringList      .size() > 0){ negativeVerb3CurrentPrevTagStringList     .clear(); }
-        if(negativeTransitiveVerbIngCurrentPrevTagStringList    .size() > 0){ negativeVerbIngCurrentPrevTagStringList   .clear(); }
-        if(negativeTransitiveVerbSCurrentPrevTagStringList      .size() > 0){ negativeVerbSCurrentPrevTagStringList     .clear(); }
-        if(nounAbstractCurrentPrevTagStringList                 .size() > 0){ nounCurrentPrevTagStringList              .clear(); }
-        if(nounAbstractSCurrentPrevTagStringList                .size() > 0){ nounSCurrentPrevTagStringList             .clear(); }
-        if(nounCurrentPrevTagStringList                         .size() > 0){ nounCurrentPrevTagStringList              .clear(); }
-        if(nounSCurrentPrevTagStringList                        .size() > 0){ nounSCurrentPrevTagStringList             .clear(); }
-        if(playerSiblingObjectList                              .size() > 0){ playerSiblingObjectList                   .clear(); }
-        if(sentenceStringList                                   .size() > 0){ sentenceStringList                        .clear(); }
-        if(subjectCurrentPrevTagStringList                      .size() > 0){ subjectCurrentPrevTagStringList           .clear(); }
-        if(subjectPossesionCurrentPrevTagStringList             .size() > 0){ subjectPossesionCurrentPrevTagStringList  .clear(); }
-        if(transitiveVerb1CurrentPrevTagStringList              .size() > 0){ verb1CurrentPrevTagStringList             .clear(); }
-        if(transitiveVerb2CurrentPrevTagStringList              .size() > 0){ verb2CurrentPrevTagStringList             .clear(); }
-        if(transitiveVerb3CurrentPrevTagStringList              .size() > 0){ verb3CurrentPrevTagStringList             .clear(); }
-        if(transitiveVerbIngCurrentPrevTagStringList            .size() > 0){ verbIngCurrentPrevTagStringList           .clear(); }
-        if(transitiveVerbSCurrentPrevTagStringList              .size() > 0){ verbSCurrentPrevTagStringList             .clear(); }
+        if(adjectiveCurrentPrevTagStringList                    .size() > 0){ adjectiveCurrentPrevTagStringList                     .clear(); }
+        if(adverbCurrentPrevTagStringList                       .size() > 0){ adverbCurrentPrevTagStringList                        .clear(); }
+        if(exhibitionTagCounterList                             .size() > 0){ exhibitionTagCounterList                              .clear(); }
+        if(exhibitionTagCounterNameAltStringList                .size() > 0){ exhibitionTagCounterNameAltStringList                 .clear(); }
+        if(exhibitionTagCounterNameFullStringList               .size() > 0){ exhibitionTagCounterNameFullStringList                .clear(); }
+        if(exhibitionTargetNameAltStringList                    .size() > 0){ exhibitionTargetNameAltStringList                     .clear(); }
+        if(exhibitionTargetNameFullStringList                   .size() > 0){ exhibitionTargetNameFullStringList                    .clear(); }
+        if(exhibitionVisitedNameAltStringList                   .size() > 0){ exhibitionVisitedNameAltStringList                    .clear(); }
+        if(exhibitionVisitedNameFullStringList                  .size() > 0){ exhibitionVisitedNameFullStringList                   .clear(); }
+        if(explanationStringList                                .size() > 0){ explanationStringList                                 .clear(); }
+        if(explanationStringList                                .size() > 0){ explanationStringList                                 .clear(); }
+        if(intransitiveVerb1CurrentPrevTagStringList            .size() > 0){ intransitiveVerb1CurrentPrevTagStringList             .clear(); }
+        if(intransitiveVerb2CurrentPrevTagStringList            .size() > 0){ intransitiveVerb2CurrentPrevTagStringList             .clear(); }
+        if(intransitiveVerb3CurrentPrevTagStringList            .size() > 0){ intransitiveVerb3CurrentPrevTagStringList             .clear(); }
+        if(intransitiveVerbIngCurrentPrevTagStringList          .size() > 0){ intransitiveVerbIngCurrentPrevTagStringList           .clear(); }
+        if(intransitiveVerbSCurrentPrevTagStringList            .size() > 0){ intransitiveVerbSCurrentPrevTagStringList             .clear(); }
+        if(negativeAdjectiveCurrentPrevTagStringList            .size() > 0){ negativeAdjectiveCurrentPrevTagStringList             .clear(); }
+        if(negativeAdverbCurrentPrevTagStringList               .size() > 0){ negativeAdverbCurrentPrevTagStringList                .clear(); }
+        if(negativeIntransitiveVerb1CurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerb1CurrentPrevTagStringList     .clear(); }
+        if(negativeIntransitiveVerb2CurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerb2CurrentPrevTagStringList     .clear(); }
+        if(negativeIntransitiveVerb3CurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerb3CurrentPrevTagStringList     .clear(); }
+        if(negativeIntransitiveVerbIngCurrentPrevTagStringList  .size() > 0){ negativeIntransitiveVerbIngCurrentPrevTagStringList   .clear(); }
+        if(negativeIntransitiveVerbSCurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerbSCurrentPrevTagStringList     .clear(); }
+        if(negativeTransitiveVerb1CurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerb1CurrentPrevTagStringList       .clear(); }
+        if(negativeTransitiveVerb2CurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerb2CurrentPrevTagStringList       .clear(); }
+        if(negativeTransitiveVerb3CurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerb3CurrentPrevTagStringList       .clear(); }
+        if(negativeTransitiveVerbIngCurrentPrevTagStringList    .size() > 0){ negativeTransitiveVerbIngCurrentPrevTagStringList     .clear(); }
+        if(negativeTransitiveVerbSCurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerbSCurrentPrevTagStringList       .clear(); }
+        if(nounAbstractCurrentPrevTagStringList                 .size() > 0){ nounCurrentPrevTagStringList                          .clear(); }
+        if(nounAbstractSCurrentPrevTagStringList                .size() > 0){ nounSCurrentPrevTagStringList                         .clear(); }
+        if(nounCurrentPrevTagStringList                         .size() > 0){ nounCurrentPrevTagStringList                          .clear(); }
+        if(nounSCurrentPrevTagStringList                        .size() > 0){ nounSCurrentPrevTagStringList                         .clear(); }
+        if(playerSiblingObjectList                              .size() > 0){ playerSiblingObjectList                               .clear(); }
+        if(sentenceStringList                                   .size() > 0){ sentenceStringList                                    .clear(); }
+        if(subjectCurrentPrevTagStringList                      .size() > 0){ subjectCurrentPrevTagStringList                       .clear(); }
+        if(subjectPossesionCurrentPrevTagStringList             .size() > 0){ subjectPossesionCurrentPrevTagStringList              .clear(); }
+        if(transitiveVerb1CurrentPrevTagStringList              .size() > 0){ transitiveVerb1CurrentPrevTagStringList               .clear(); }
+        if(transitiveVerb2CurrentPrevTagStringList              .size() > 0){ transitiveVerb2CurrentPrevTagStringList               .clear(); }
+        if(transitiveVerb3CurrentPrevTagStringList              .size() > 0){ transitiveVerb3CurrentPrevTagStringList               .clear(); }
+        if(transitiveVerbIngCurrentPrevTagStringList            .size() > 0){ transitiveVerbIngCurrentPrevTagStringList             .clear(); }
+        if(transitiveVerbSCurrentPrevTagStringList              .size() > 0){ transitiveVerbSCurrentPrevTagStringList               .clear(); }
 
         playerSiblingIndexInt                           = -1;
         timeCurrentExhibitionFloat                      = 0f;
@@ -331,36 +331,36 @@ class ObjectPlayer{
         /*If there is a previous exhibition visited before you visit new exhibition clear all TagStringList before adding new one.*/
         if(_isPreviousBoolean == true){
 
-            if(adjectiveCurrentPrevTagStringList                    .size() > 0){ adjectiveCurrentPrevTagStringList         .clear(); }
-            if(adverbCurrentPrevTagStringList                       .size() > 0){ adverbCurrentPrevTagStringList            .clear(); }
-            if(intransitiveVerb1CurrentPrevTagStringList            .size() > 0){ verb1CurrentPrevTagStringList             .clear(); }
-            if(intransitiveVerb2CurrentPrevTagStringList            .size() > 0){ verb2CurrentPrevTagStringList             .clear(); }
-            if(intransitiveVerb3CurrentPrevTagStringList            .size() > 0){ verb3CurrentPrevTagStringList             .clear(); }
-            if(intransitiveVerbIngCurrentPrevTagStringList          .size() > 0){ verbIngCurrentPrevTagStringList           .clear(); }
-            if(intransitiveVerbSCurrentPrevTagStringList            .size() > 0){ verbSCurrentPrevTagStringList             .clear(); }
-            if(negativeAdjectiveCurrentPrevTagStringList            .size() > 0){ negativeAdjectiveCurrentPrevTagStringList .clear(); }
-            if(negativeAdverbCurrentPrevTagStringList               .size() > 0){ negativeAdverbCurrentPrevTagStringList    .clear(); }
-            if(negativeIntransitiveVerb1CurrentPrevTagStringList    .size() > 0){ negativeVerb1CurrentPrevTagStringList     .clear(); }
-            if(negativeIntransitiveVerb2CurrentPrevTagStringList    .size() > 0){ negativeVerb2CurrentPrevTagStringList     .clear(); }
-            if(negativeIntransitiveVerb3CurrentPrevTagStringList    .size() > 0){ negativeVerb3CurrentPrevTagStringList     .clear(); }
-            if(negativeIntransitiveVerbIngCurrentPrevTagStringList  .size() > 0){ negativeVerbIngCurrentPrevTagStringList   .clear(); }
-            if(negativeIntransitiveVerbSCurrentPrevTagStringList    .size() > 0){ negativeVerbSCurrentPrevTagStringList     .clear(); }
-            if(negativeTransitiveVerb1CurrentPrevTagStringList      .size() > 0){ negativeVerb1CurrentPrevTagStringList     .clear(); }
-            if(negativeTransitiveVerb2CurrentPrevTagStringList      .size() > 0){ negativeVerb2CurrentPrevTagStringList     .clear(); }
-            if(negativeTransitiveVerb3CurrentPrevTagStringList      .size() > 0){ negativeVerb3CurrentPrevTagStringList     .clear(); }
-            if(negativeTransitiveVerbIngCurrentPrevTagStringList    .size() > 0){ negativeVerbIngCurrentPrevTagStringList   .clear(); }
-            if(negativeTransitiveVerbSCurrentPrevTagStringList      .size() > 0){ negativeVerbSCurrentPrevTagStringList     .clear(); }
-            if(nounAbstractCurrentPrevTagStringList                 .size() > 0){ nounCurrentPrevTagStringList              .clear(); }
-            if(nounAbstractSCurrentPrevTagStringList                .size() > 0){ nounSCurrentPrevTagStringList             .clear(); }
-            if(nounCurrentPrevTagStringList                         .size() > 0){ nounCurrentPrevTagStringList              .clear(); }
-            if(nounSCurrentPrevTagStringList                        .size() > 0){ nounSCurrentPrevTagStringList             .clear(); }
-            if(subjectCurrentPrevTagStringList                      .size() > 0){ subjectCurrentPrevTagStringList           .clear(); }
-            if(subjectPossesionCurrentPrevTagStringList             .size() > 0){ subjectPossesionCurrentPrevTagStringList  .clear(); }
-            if(transitiveVerb1CurrentPrevTagStringList              .size() > 0){ verb1CurrentPrevTagStringList             .clear(); }
-            if(transitiveVerb2CurrentPrevTagStringList              .size() > 0){ verb2CurrentPrevTagStringList             .clear(); }
-            if(transitiveVerb3CurrentPrevTagStringList              .size() > 0){ verb3CurrentPrevTagStringList             .clear(); }
-            if(transitiveVerbIngCurrentPrevTagStringList            .size() > 0){ verbIngCurrentPrevTagStringList           .clear(); }
-            if(transitiveVerbSCurrentPrevTagStringList              .size() > 0){ verbSCurrentPrevTagStringList             .clear(); }
+            if(adjectiveCurrentPrevTagStringList                    .size() > 0){ adjectiveCurrentPrevTagStringList                     .clear(); }
+            if(adverbCurrentPrevTagStringList                       .size() > 0){ adverbCurrentPrevTagStringList                        .clear(); }
+            if(intransitiveVerb1CurrentPrevTagStringList            .size() > 0){ intransitiveVerb1CurrentPrevTagStringList             .clear(); }
+            if(intransitiveVerb2CurrentPrevTagStringList            .size() > 0){ intransitiveVerb2CurrentPrevTagStringList             .clear(); }
+            if(intransitiveVerb3CurrentPrevTagStringList            .size() > 0){ intransitiveVerb3CurrentPrevTagStringList             .clear(); }
+            if(intransitiveVerbIngCurrentPrevTagStringList          .size() > 0){ intransitiveVerbIngCurrentPrevTagStringList           .clear(); }
+            if(intransitiveVerbSCurrentPrevTagStringList            .size() > 0){ intransitiveVerbSCurrentPrevTagStringList             .clear(); }
+            if(negativeAdjectiveCurrentPrevTagStringList            .size() > 0){ negativeAdjectiveCurrentPrevTagStringList             .clear(); }
+            if(negativeAdverbCurrentPrevTagStringList               .size() > 0){ negativeAdverbCurrentPrevTagStringList                .clear(); }
+            if(negativeIntransitiveVerb1CurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerb1CurrentPrevTagStringList     .clear(); }
+            if(negativeIntransitiveVerb2CurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerb2CurrentPrevTagStringList     .clear(); }
+            if(negativeIntransitiveVerb3CurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerb3CurrentPrevTagStringList     .clear(); }
+            if(negativeIntransitiveVerbIngCurrentPrevTagStringList  .size() > 0){ negativeIntransitiveVerbIngCurrentPrevTagStringList   .clear(); }
+            if(negativeIntransitiveVerbSCurrentPrevTagStringList    .size() > 0){ negativeIntransitiveVerbSCurrentPrevTagStringList     .clear(); }
+            if(negativeTransitiveVerb1CurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerb1CurrentPrevTagStringList       .clear(); }
+            if(negativeTransitiveVerb2CurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerb2CurrentPrevTagStringList       .clear(); }
+            if(negativeTransitiveVerb3CurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerb3CurrentPrevTagStringList       .clear(); }
+            if(negativeTransitiveVerbIngCurrentPrevTagStringList    .size() > 0){ negativeTransitiveVerbIngCurrentPrevTagStringList     .clear(); }
+            if(negativeTransitiveVerbSCurrentPrevTagStringList      .size() > 0){ negativeTransitiveVerbSCurrentPrevTagStringList       .clear(); }
+            if(nounAbstractCurrentPrevTagStringList                 .size() > 0){ nounCurrentPrevTagStringList                          .clear(); }
+            if(nounAbstractSCurrentPrevTagStringList                .size() > 0){ nounSCurrentPrevTagStringList                         .clear(); }
+            if(nounCurrentPrevTagStringList                         .size() > 0){ nounCurrentPrevTagStringList                          .clear(); }
+            if(nounSCurrentPrevTagStringList                        .size() > 0){ nounSCurrentPrevTagStringList                         .clear(); }
+            if(subjectCurrentPrevTagStringList                      .size() > 0){ subjectCurrentPrevTagStringList                       .clear(); }
+            if(subjectPossesionCurrentPrevTagStringList             .size() > 0){ subjectPossesionCurrentPrevTagStringList              .clear(); }
+            if(transitiveVerb1CurrentPrevTagStringList              .size() > 0){ transitiveVerb1CurrentPrevTagStringList               .clear(); }
+            if(transitiveVerb2CurrentPrevTagStringList              .size() > 0){ transitiveVerb2CurrentPrevTagStringList               .clear(); }
+            if(transitiveVerb3CurrentPrevTagStringList              .size() > 0){ transitiveVerb3CurrentPrevTagStringList               .clear(); }
+            if(transitiveVerbIngCurrentPrevTagStringList            .size() > 0){ transitiveVerbIngCurrentPrevTagStringList             .clear(); }
+            if(transitiveVerbSCurrentPrevTagStringList              .size() > 0){ transitiveVerbSCurrentPrevTagStringList               .clear(); }
 
         }
 

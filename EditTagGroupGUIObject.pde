@@ -5,10 +5,11 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
     ControlP5       editTagGroupControlP5Object                                 ;
 
-    String          tempSelectedTagTypeString                                   = "";
+    String          tempSelectedTagTypeNameAltString                            = "";
     String          tempSelectedTagNameAltString                                = "";
     String          tempSelectedTagNameFullString                               = "";
     String          tempSelectedTagSubjectString                                = "";
+    String          tempSelectedTagSubjectPossesionString                       = "";
     String          tempSelectedTagIntransitiveVerb1String                      = "";
     String          tempSelectedTagIntransitiveVerb2String                      = "";
     String          tempSelectedTagIntransitiveVerb3String                      = "";
@@ -73,7 +74,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
     Textfield       editTagGroupTagAdjectiveTextfieldObject                     ;
     Textfield       editTagGroupTagNegativeAdjectiveTextfieldObject             ;
     Textfield       editTagGroupTagAdverbTextfieldObject                        ;
-    Textfield       addTagGroupTagNegativeAdverbTextfieldObject                 ;
+    Textfield       editTagGroupTagNegativeAdverbTextfieldObject                ;
     Button          editTagGroupTagEditButtonObject                             ;
 
     EditTagGroupGUIObject(
@@ -140,7 +141,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
          editTagGroupTagSubjectTextfieldObject                      =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagSubjectTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagSubjectTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -151,7 +152,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagSubjectPossesionTextfieldObject              =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagSubjectPossesionTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagSubjectPossesionTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -162,7 +163,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagIntransitiveVerb1TextfieldObject             =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagIntransitiveVerb1TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagIntransitiveVerb1TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -173,7 +174,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
  
         editTagGroupTagIntransitiveVerb2TextfieldObject             =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagIntransitiveVerb2TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagIntransitiveVerb2TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -184,7 +185,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagIntransitiveVerb3TextfieldObject             =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagIntransitiveVerb3TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagIntransitiveVerb3TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -195,7 +196,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagIntransitiveVerbIngTextfieldObject           =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagIntransitiveVerbIngTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagIntransitiveVerbIngTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -206,7 +207,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagIntransitiveVerbSTextfieldObject             =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagIntransitiveVerbSTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagIntransitiveVerbSTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -217,7 +218,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeIntransitiveVerb1TextfieldObject     =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeIntransitiveVerb1TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeIntransitiveVerb1TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -228,7 +229,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeIntransitiveVerb2TextfieldObject     =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeIntransitiveVerb2TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeIntransitiveVerb2TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -239,7 +240,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeIntransitiveVerb3TextfieldObject     =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeIntransitiveVerb3TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeIntransitiveVerb3TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -250,7 +251,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject   =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeIntransitiveVerbIngTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeIntransitiveVerbIngTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -261,7 +262,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeIntransitiveVerbSTextfieldObject     =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeIntransitiveVerbSTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeIntransitiveVerbSTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -272,7 +273,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagTransitiveVerb1TextfieldObject               =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagTransitiveVerb1TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagTransitiveVerb1TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -283,7 +284,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagTransitiveVerb2TextfieldObject               =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagTransitiveVerb2TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagTransitiveVerb2TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -294,7 +295,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagTransitiveVerb3TextfieldObject               =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagTransitiveVerb3TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagTransitiveVerb3TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -305,7 +306,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagTransitiveVerbIngTextfieldObject             =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagTransitiveVerbIngTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagTransitiveVerbIngTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -316,7 +317,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagTransitiveVerbSTextfieldObject               =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagTransitiveVerbSTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagTransitiveVerbSTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -327,7 +328,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeTransitiveVerb1TextfieldObject       =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeTransitiveVerb1TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeTransitiveVerb1TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -338,7 +339,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeTransitiveVerb2TextfieldObject       =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeTransitiveVerb2TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeTransitiveVerb2TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -349,7 +350,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeTransitiveVerb3TextfieldObject       =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeTransitiveVerb3TextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeTransitiveVerb3TextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -360,7 +361,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeTransitiveVerbIngTextfieldObject     =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeTransitiveVerbIngTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeTransitiveVerbIngTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -371,7 +372,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeTransitiveVerbSTextfieldObject       =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeTransitiveVerbSTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeTransitiveVerbSTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -382,7 +383,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNounAbstractTextfieldObject                  =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNounAbstractTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNounAbstractTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -393,7 +394,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNounAbstractSTextfieldObject                 =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNounAbstractSTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNounAbstractSTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -404,7 +405,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNounTextfieldObject                          =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNounTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNounTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -415,7 +416,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNounSTextfieldObject                         =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNounSTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNounSTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -426,7 +427,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagAdjectiveTextfieldObject                     =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagAdjectiveTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagAdjectiveTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -437,7 +438,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeAdjectiveTextfieldObject             =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeAdjectiveTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeAdjectiveTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -448,7 +449,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagAdverbTextfieldObject                        =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagAdverbTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagAdverbTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -459,7 +460,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
 
         editTagGroupTagNegativeAdverbTextfieldObject                =
-            editTagGroupControllerP5Object   .editTextfield         ("EditTagGroupTagNegativeAdverbTextfieldObject")
+            editTagGroupControlP5Object     .addTextfield           ("EditTagGroupTagNegativeAdverbTextfieldObject")
                                             .hide                   ()
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
@@ -486,415 +487,415 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
         ControlFormVoid();
 
-        addTagGroupTagNameAltTextfieldObject                        .setColorValue(groupColorLabelColor);
-        addTagGroupTagNameFullTextfieldObject                       .setColorValue(groupColorLabelColor);
-        addTagGroupTagSubjectTextfieldObject                        .setColorValue(groupColorLabelColor);
-        addTagGroupTagSubjectPossesionTextfieldObject               .setColorValue(groupColorLabelColor);
-        addTagGroupTagIntransitiveVerb1TextfieldObject              .setColorValue(groupColorLabelColor);
-        addTagGroupTagIntransitiveVerb2TextfieldObject              .setColorValue(groupColorLabelColor);
-        addTagGroupTagIntransitiveVerb3TextfieldObject              .setColorValue(groupColorLabelColor);
-        addTagGroupTagIntransitiveVerbIngTextfieldObject            .setColorValue(groupColorLabelColor);
-        addTagGroupTagIntransitiveVerbSTextfieldObject              .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .setColorValue(groupColorLabelColor);
-        addTagGroupTagTransitiveVerb1TextfieldObject                .setColorValue(groupColorLabelColor);
-        addTagGroupTagTransitiveVerb2TextfieldObject                .setColorValue(groupColorLabelColor);
-        addTagGroupTagTransitiveVerb3TextfieldObject                .setColorValue(groupColorLabelColor);
-        addTagGroupTagTransitiveVerbIngTextfieldObject              .setColorValue(groupColorLabelColor);
-        addTagGroupTagTransitiveVerbSTextfieldObject                .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .setColorValue(groupColorLabelColor);
-        addTagGroupTagNounAbstractTextfieldObject                   .setColorValue(groupColorLabelColor);
-        addTagGroupTagNounAbstractSTextfieldObject                  .setColorValue(groupColorLabelColor);
-        addTagGroupTagNounTextfieldObject                           .setColorValue(groupColorLabelColor);
-        addTagGroupTagNounSTextfieldObject                          .setColorValue(groupColorLabelColor);
-        addTagGroupTagAdjectiveTextfieldObject                      .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeAdjectiveTextfieldObject              .setColorValue(groupColorLabelColor);
-        addTagGroupTagAdverbTextfieldObject                         .setColorValue(groupColorLabelColor);
-        addTagGroupTagNegativeAdverbTextfieldObject                 .setColorValue(groupColorLabelColor);
+        editTagGroupTagNameAltTextfieldObject                        .setColorValue(groupColorLabelColor);
+        editTagGroupTagNameFullTextfieldObject                       .setColorValue(groupColorLabelColor);
+        editTagGroupTagSubjectTextfieldObject                        .setColorValue(groupColorLabelColor);
+        editTagGroupTagSubjectPossesionTextfieldObject               .setColorValue(groupColorLabelColor);
+        editTagGroupTagIntransitiveVerb1TextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagIntransitiveVerb2TextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagIntransitiveVerb3TextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagIntransitiveVerbIngTextfieldObject            .setColorValue(groupColorLabelColor);
+        editTagGroupTagIntransitiveVerbSTextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .setColorValue(groupColorLabelColor);
+        editTagGroupTagTransitiveVerb1TextfieldObject                .setColorValue(groupColorLabelColor);
+        editTagGroupTagTransitiveVerb2TextfieldObject                .setColorValue(groupColorLabelColor);
+        editTagGroupTagTransitiveVerb3TextfieldObject                .setColorValue(groupColorLabelColor);
+        editTagGroupTagTransitiveVerbIngTextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagTransitiveVerbSTextfieldObject                .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounAbstractTextfieldObject                   .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounAbstractSTextfieldObject                  .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounTextfieldObject                           .setColorValue(groupColorLabelColor);
+        editTagGroupTagNounSTextfieldObject                          .setColorValue(groupColorLabelColor);
+        editTagGroupTagAdjectiveTextfieldObject                      .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeAdjectiveTextfieldObject              .setColorValue(groupColorLabelColor);
+        editTagGroupTagAdverbTextfieldObject                         .setColorValue(groupColorLabelColor);
+        editTagGroupTagNegativeAdverbTextfieldObject                 .setColorValue(groupColorLabelColor);
 
     }
 
     /*Show the necessary text field according to the selected type tag.*/
     void ControlFormVoid(){
 
-        if(tempSelectedTagTypeNameFullString.equals("SUBJECT"))                             {
+        if(tempSelectedTagTypeNameAltString.equals("SUB")){
 
-            addTagGroupTagSubjectTextfieldObject                        .show();
-            addTagGroupTagSubjectPossesionTextfieldObject               .show();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
-
-        }
-        else if(tempSelectedTagTypeNameFullString.equals("INTRANSITIVE VERB"))              {
-
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .show();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .show();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .show();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .show();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .show();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+            editTagGroupTagSubjectTextfieldObject                        .show();
+            editTagGroupTagSubjectPossesionTextfieldObject               .show();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
 
         }
-        else if(tempSelectedTagTypeNameFullString.equals("NEGATIVE INTRANSITIVE VERB"))     {
+        else if(tempSelectedTagTypeNameAltString.equals("IVR")){
 
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .show();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .show();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .show();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .show();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .show();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
-
-        }
-        else if(tempSelectedTagTypeNameFullString.equals("TRANSITIVE VERB"))                {
-
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .show();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .show();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .show();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .show();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .show();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .show();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .show();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .show();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .show();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .show();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
 
         }
-        else if(tempSelectedTagTypeNameFullString.equals("NEGATIVE TRANSITIVE VERB"))       {
+        else if(tempSelectedTagTypeNameAltString.equals("NIV")){
 
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .show();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .show();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .show();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .show();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .show();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
-
-        }
-        else if(tempSelectedTagTypeNameFullString.equals("NOUN ABSTRACT"))                  {
-
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .show();
-            addTagGroupTagNounAbstractSTextfieldObject                  .show();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
-        }
-        else if(tempSelectedTagTypeNameFullString.equals("NOUN"))                           {
-
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .show();
-            addTagGroupTagNounSTextfieldObject                          .show();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .show();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .show();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .show();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .show();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .show();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
 
         }
-        else if(tempSelectedTagTypeNameFullString.equals("ADJECTIVE"))                      {
+        else if(tempSelectedTagTypeNameAltString.equals("TVR")){
 
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .show();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
-
-        }
-        else if(tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE"))             {
-
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .show();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .show();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .show();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .show();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .show();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .show();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
 
         }
-        else if(tempSelectedTagTypeNameFullString.equals("ADVERB"))                         {
+        else if(tempSelectedTagTypeNameAltString.equals("NTV")){
 
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .show();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .show();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .show();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .show();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .show();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .show();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
 
         }
-        else if(tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"))                {
+        else if(tempSelectedTagTypeNameAltString.equals("NOA")){
 
-            addTagGroupTagSubjectTextfieldObject                        .hide();
-            addTagGroupTagSubjectPossesionTextfieldObject               .hide();
-            addTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
-            addTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
-            addTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
-            addTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
-            addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
-            addTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
-            addTagGroupTagTransitiveVerb1TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb2TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerb3TextfieldObject                .hide();
-            addTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
-            addTagGroupTagTransitiveVerbSTextfieldObject                .hide();
-            addTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
-            addTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
-            addTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
-            addTagGroupTagNounAbstractTextfieldObject                   .hide();
-            addTagGroupTagNounAbstractSTextfieldObject                  .hide();
-            addTagGroupTagNounTextfieldObject                           .hide();
-            addTagGroupTagNounSTextfieldObject                          .hide();
-            addTagGroupTagAdjectiveTextfieldObject                      .hide();
-            addTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
-            addTagGroupTagAdverbTextfieldObject                         .hide();
-            addTagGroupTagNegativeAdverbTextfieldObject                 .show();
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .show();
+            editTagGroupTagNounAbstractSTextfieldObject                  .show();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+        }
+        else if(tempSelectedTagTypeNameAltString.equals("NOU")){
+
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .show();
+            editTagGroupTagNounSTextfieldObject                          .show();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+
+        }
+        else if(tempSelectedTagTypeNameAltString.equals("ADJ")){
+
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .show();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+
+        }
+        else if(tempSelectedTagTypeNameAltString.equals("NDJ")){
+
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .show();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+
+        }
+        else if(tempSelectedTagTypeNameAltString.equals("ADV")){
+
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .show();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .hide();
+
+        }
+        else if(tempSelectedTagTypeNameAltString.equals("NDV")){
+
+            editTagGroupTagSubjectTextfieldObject                        .hide();
+            editTagGroupTagSubjectPossesionTextfieldObject               .hide();
+            editTagGroupTagIntransitiveVerb1TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb2TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerb3TextfieldObject              .hide();
+            editTagGroupTagIntransitiveVerbIngTextfieldObject            .hide();
+            editTagGroupTagIntransitiveVerbSTextfieldObject              .hide();
+            editTagGroupTagNegativeIntransitiveVerb1TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb2TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerb3TextfieldObject      .hide();
+            editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject    .hide();
+            editTagGroupTagNegativeIntransitiveVerbSTextfieldObject      .hide();
+            editTagGroupTagTransitiveVerb1TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb2TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerb3TextfieldObject                .hide();
+            editTagGroupTagTransitiveVerbIngTextfieldObject              .hide();
+            editTagGroupTagTransitiveVerbSTextfieldObject                .hide();
+            editTagGroupTagNegativeTransitiveVerb1TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb2TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerb3TextfieldObject        .hide();
+            editTagGroupTagNegativeTransitiveVerbIngTextfieldObject      .hide();
+            editTagGroupTagNegativeTransitiveVerbSTextfieldObject        .hide();
+            editTagGroupTagNounAbstractTextfieldObject                   .hide();
+            editTagGroupTagNounAbstractSTextfieldObject                  .hide();
+            editTagGroupTagNounTextfieldObject                           .hide();
+            editTagGroupTagNounSTextfieldObject                          .hide();
+            editTagGroupTagAdjectiveTextfieldObject                      .hide();
+            editTagGroupTagNegativeAdjectiveTextfieldObject              .hide();
+            editTagGroupTagAdverbTextfieldObject                         .hide();
+            editTagGroupTagNegativeAdverbTextfieldObject                 .show();
 
         }
 
@@ -904,7 +905,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
 
         tempTagNameFullStringList.addAll(adjectiveTagNameFullStringList                 );
         tempTagNameFullStringList.addAll(adverbTagNameFullStringList                    );
-        tempTagNameFullStringList.addAll(intransitiveverbTagNameFullStringList          );
+        tempTagNameFullStringList.addAll(intransitiveVerbTagNameFullStringList          );
         tempTagNameFullStringList.addAll(negativeAdjectiveTagNameFullStringList         );
         tempTagNameFullStringList.addAll(negativeAdverbTagNameFullStringList            );
         tempTagNameFullStringList.addAll(negativeIntransitiveVerbTagNameFullStringList  );
@@ -912,7 +913,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
         tempTagNameFullStringList.addAll(nounAbstractTagNameFullStringList              );
         tempTagNameFullStringList.addAll(nounTagNameFullStringList                      );
         tempTagNameFullStringList.addAll(subjectTagNameFullStringList                   );
-        tempTagNameFullStringList.addAll(transitiveverbTagNameFullStringList            );
+        tempTagNameFullStringList.addAll(transitiveVerbTagNameFullStringList            );
 
     }
 

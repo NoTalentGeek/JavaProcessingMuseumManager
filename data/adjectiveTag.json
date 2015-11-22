@@ -1,32 +1,32 @@
 [
   {
-    "nameFullString": "Adjective Excellent",
     "tagTypeString": "ADJ",
-    "nameAltString": "ADJ_BAD",
+    "tagNameFullString": "Adjective Excellent",
+    "tagNameAltString": "ADJ_BAD",
     "tagAdjectiveString": "excellent"
   },
   {
-    "nameFullString": "Adjective Crossed",
     "tagTypeString": "ADJ",
-    "nameAltString": "ADJ_CRO",
+    "tagNameFullString": "Adjective Crossed",
+    "tagNameAltString": "ADJ_CRO",
     "tagAdjectiveString": "crossed"
   },
   {
-    "nameFullString": "Adjective Good",
     "tagTypeString": "ADJ",
-    "nameAltString": "ADJ_GOD",
+    "tagNameFullString": "Adjective Good",
+    "tagNameAltString": "ADJ_GOD",
     "tagAdjectiveString": "good"
   },
   {
-    "nameFullString": "Adjective Hard",
     "tagTypeString": "ADJ",
-    "nameAltString": "ADJ_HAR",
+    "tagNameFullString": "Adjective Hard",
+    "tagNameAltString": "ADJ_HAR",
     "tagAdjectiveString": "hard"
   },
   {
-    "nameFullString": "Adjective Soft",
     "tagTypeString": "ADJ",
-    "nameAltString": "ADJ_SOF",
+    "tagNameFullString": "Adjective Soft",
+    "tagNameAltString": "ADJ_SOF",
     "tagAdjectiveString": "soft"
   }
 ]

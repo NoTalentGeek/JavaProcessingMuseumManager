@@ -217,56 +217,56 @@ class Tag{
     ){
  
         tagNameObject       = _tagNameObject;
-        tagNameAltString    = tagName.nameAltString;
-        tagNameFullString   = tagName.nameFullString;
+        tagNameAltString    = tagNameObject.nameAltString;
+        tagNameFullString   = tagNameObject.nameFullString;
         tagTypeString       = _tagTypeString;
 
-                if(typeString.equals("ADJ")){ /*Adjective.                    */
+                if(tagTypeString.equals("ADJ")){ /*Adjective.                    */
             tagAdjectiveString                      = _wordDerivativeStringArray[0];
         }
-        else    if(typeString.equals("ADV")){ /*Adverb.                       */
+        else    if(tagTypeString.equals("ADV")){ /*Adverb.                       */
             tagAdverbString                         = _wordDerivativeStringArray[0];
         }
-        else    if(typeString.equals("IVR")){ /*Intransitive Verb.            */
+        else    if(tagTypeString.equals("IVR")){ /*Intransitive Verb.            */
             tagIntransitiveVerb1String              = _wordDerivativeStringArray[0];
             tagIntransitiveVerb2String              = _wordDerivativeStringArray[1];
             tagIntransitiveVerb3String              = _wordDerivativeStringArray[2];
             tagIntransitiveVerbIngString            = _wordDerivativeStringArray[3];
             tagIntransitiveVerbSString              = _wordDerivativeStringArray[4];
         }
-        else    if(typeString.equals("NDV")){ /*Negative Adverb.              */
+        else    if(tagTypeString.equals("NDV")){ /*Negative Adverb.              */
             tagNegativeAdverbString                 = _wordDerivativeStringArray[0];
         }
-        else    if(typeString.equals("NDJ")){ /*Negative Adjective.           */
+        else    if(tagTypeString.equals("NDJ")){ /*Negative Adjective.           */
             tagNegativeAdjectiveString              = _wordDerivativeStringArray[0];
         }
-        else    if(typeString.equals("NIV")){ /*Negative Intransitive Verb.   */
+        else    if(tagTypeString.equals("NIV")){ /*Negative Intransitive Verb.   */
             tagNegativeIntransitiveVerb1String      = _wordDerivativeStringArray[0];
             tagNegativeIntransitiveVerb2String      = _wordDerivativeStringArray[1];
             tagNegativeIntransitiveVerb3String      = _wordDerivativeStringArray[2];
             tagNegativeIntransitiveVerbIngString    = _wordDerivativeStringArray[3];
-            tagNegativeIntransitiveVerbSString      = _wordDerivativeStringArray[];
+            tagNegativeIntransitiveVerbSString      = _wordDerivativeStringArray[4];
         }
-        else    if(typeString.equals("NOA")){ /*Noun.                         */
+        else    if(tagTypeString.equals("NOA")){ /*Noun.                         */
             tagNounAbstractSString                  = _wordDerivativeStringArray[0];
             tagNounAbstractString                   = _wordDerivativeStringArray[1];
         }
-        else    if(typeString.equals("NOU")){ /*Noun.                         */
+        else    if(tagTypeString.equals("NOU")){ /*Noun.                         */
             tagNounSString                          = _wordDerivativeStringArray[0];
             tagNounString                           = _wordDerivativeStringArray[1];
         }
-        else    if(typeString.equals("NTV")){ /*Negative Transitive Verb.     */
+        else    if(tagTypeString.equals("NTV")){ /*Negative Transitive Verb.     */
             tagNegativeTransitiveVerb1String        = _wordDerivativeStringArray[0];
             tagNegativeTransitiveVerb2String        = _wordDerivativeStringArray[1];
             tagNegativeTransitiveVerb3String        = _wordDerivativeStringArray[2];
             tagNegativeTransitiveVerbIngString      = _wordDerivativeStringArray[3];
             tagNegativeTransitiveVerbSString        = _wordDerivativeStringArray[4];
         }
-        else    if(typeString.equals("SUB")){ /*Subject.                      */
+        else    if(tagTypeString.equals("SUB")){ /*Subject.                      */
             tagSubjectString                        = _wordDerivativeStringArray[0];
             tagSubjectPossesionString               = _wordDerivativeStringArray[1];
         }
-        else    if(typeString.equals("TVR")){ /*Transitive Verb.              */
+        else    if(tagTypeString.equals("TVR")){ /*Transitive Verb.              */
             tagTransitiveVerb1String                = _wordDerivativeStringArray[0];
             tagTransitiveVerb2String                = _wordDerivativeStringArray[1];
             tagTransitiveVerb3String                = _wordDerivativeStringArray[2];
@@ -311,17 +311,17 @@ void setup(){
     for(int i = 0; i < floorObjectList                          .size(); i ++){ floorNameAltStringList                          .add(     floorObjectList                       .get(i).nameAltString    ); roomNameFullStringList                          .add(floorObjectList                        .get(i).nameFullString   ); }
     for(int i = 0; i < roomObjectList                           .size(); i ++){ roomNameAltStringList                           .add(     roomObjectList                        .get(i).nameAltString    ); exhibitionNameFullStringList                    .add(roomObjectList                         .get(i).nameFullString   ); }
     for(int i = 0; i < playerObjectList                         .size(); i ++){ playerStringList                                .add("" + playerObjectList                      .get(i).playerIndexInt   ); }
-    for(int i = 0; i < adjectiveTagObjectList                   .size(); i ++){ adjectiveTagNameAltStringList                   .add(     adjectiveTagObjectList                .get(i).tagNameAltString ); adjectiveTagNameAltStringList                   .add(adjectiveTagObjectList                 .get(i).tagNameFullString); }
-    for(int i = 0; i < adverbTagObjectList                      .size(); i ++){ adverbTagNameAltStringList                      .add(     adverbTagObjectList                   .get(i).tagNameAltString ); adverbTagNameAltStringList                      .add(adverbTagObjectList                    .get(i).tagNameFullString); }
-    for(int i = 0; i < intransitiveVerbTagObjectList            .size(); i ++){ intransitiveVerbTagNameAltStringList            .add(     intransitiveVerbTagObjectList         .get(i).tagNameAltString ); intransitiveVerbTagNameAltStringList            .add(intransitiveVerbTagObjectList          .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeAdjectiveTagObjectList           .size(); i ++){ negativeAdjectiveTagNameAltStringList           .add(     negativeAdjectiveTagObjectList        .get(i).tagNameAltString ); negativeAdjectiveTagNameAltStringList           .add(negativeAdjectiveTagObjectList         .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeAdverbTagObjectList              .size(); i ++){ negativeAdverbTagNameAltStringList              .add(     negativeAdverbTagObjectList           .get(i).tagNameAltString ); negativeAdverbTagNameAltStringList              .add(negativeAdverbTagObjectList            .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeIntransitiveVerbTagObjectList    .size(); i ++){ negativeIntransitiveVerbTagNameAltStringList    .add(     negativeIntransitiveVerbTagObjectList .get(i).tagNameAltString ); negativeIntransitiveVerbTagNameAltStringList    .add(negativeIntransitiveVerbTagObjectList  .get(i).tagNameFullString); }
-    for(int i = 0; i < negativeTransitiveVerbTagObjectList      .size(); i ++){ negativeTransitiveVerbTagNameAltStringList      .add(     negativeTransitiveVerbTagObjectList   .get(i).tagNameAltString ); negativeTransitiveVerbTagNameAltStringList      .add(negativeTransitiveVerbTagObjectList    .get(i).tagNameFullString); }
-    for(int i = 0; i < nounAbstractTagObjectList                .size(); i ++){ nounAbstractAltNameStringList                   .add(     nounAbstractTagObjectList             .get(i).tagNameAltString ); nounAbstractAltNameStringList                   .add(nounAbstractTagObjectList              .get(i).tagNameFullString); }
-    for(int i = 0; i < nounTagObjectList                        .size(); i ++){ nounTagNameAltStringList                        .add(     nounTagObjectList                     .get(i).tagNameAltString ); nounTagNameAltStringList                        .add(nounTagObjectList                      .get(i).tagNameFullString); }
-    for(int i = 0; i < subjectTagObjectList                     .size(); i ++){ subjectTagNameAltStringList                     .add(     subjectTagObjectList                  .get(i).tagNameAltString ); subjectTagNameAltStringList                     .add(subjectTagObjectList                   .get(i).tagNameFullString); }
-    for(int i = 0; i < transitiveVerbTagObjectList              .size(); i ++){ transitiveVerbTagNameAltStringList              .add(     transitiveVerbTagObjectList           .get(i).tagNameAltString ); transitiveVerbTagNameAltStringList              .add(transitiveVerbTagObjectList            .get(i).tagNameFullString); }
+    for(int i = 0; i < adjectiveTagObjectList                   .size(); i ++){ adjectiveTagNameAltStringList                   .add(     adjectiveTagObjectList                .get(i).tagNameAltString ); adjectiveTagNameFullStringList                  .add(adjectiveTagObjectList                 .get(i).tagNameFullString); }
+    for(int i = 0; i < adverbTagObjectList                      .size(); i ++){ adverbTagNameAltStringList                      .add(     adverbTagObjectList                   .get(i).tagNameAltString ); adverbTagNameFullStringList                     .add(adverbTagObjectList                    .get(i).tagNameFullString); }
+    for(int i = 0; i < intransitiveVerbTagObjectList            .size(); i ++){ intransitiveVerbTagNameAltStringList            .add(     intransitiveVerbTagObjectList         .get(i).tagNameAltString ); intransitiveVerbTagNameFullStringList           .add(intransitiveVerbTagObjectList          .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeAdjectiveTagObjectList           .size(); i ++){ negativeAdjectiveTagNameAltStringList           .add(     negativeAdjectiveTagObjectList        .get(i).tagNameAltString ); negativeAdjectiveTagNameFullStringList          .add(negativeAdjectiveTagObjectList         .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeAdverbTagObjectList              .size(); i ++){ negativeAdverbTagNameAltStringList              .add(     negativeAdverbTagObjectList           .get(i).tagNameAltString ); negativeAdverbTagNameFullStringList             .add(negativeAdverbTagObjectList            .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeIntransitiveVerbTagObjectList    .size(); i ++){ negativeIntransitiveVerbTagNameAltStringList    .add(     negativeIntransitiveVerbTagObjectList .get(i).tagNameAltString ); negativeIntransitiveVerbTagNameFullStringList   .add(negativeIntransitiveVerbTagObjectList  .get(i).tagNameFullString); }
+    for(int i = 0; i < negativeTransitiveVerbTagObjectList      .size(); i ++){ negativeTransitiveVerbTagNameAltStringList      .add(     negativeTransitiveVerbTagObjectList   .get(i).tagNameAltString ); negativeTransitiveVerbTagNameFullStringList     .add(negativeTransitiveVerbTagObjectList    .get(i).tagNameFullString); }
+    for(int i = 0; i < nounAbstractTagObjectList                .size(); i ++){ nounAbstractTagNameAltStringList                .add(     nounAbstractTagObjectList             .get(i).tagNameAltString ); nounAbstractTagNameFullStringList               .add(nounAbstractTagObjectList              .get(i).tagNameFullString); }
+    for(int i = 0; i < nounTagObjectList                        .size(); i ++){ nounTagNameAltStringList                        .add(     nounTagObjectList                     .get(i).tagNameAltString ); nounTagNameFullStringList                       .add(nounTagObjectList                      .get(i).tagNameFullString); }
+    for(int i = 0; i < subjectTagObjectList                     .size(); i ++){ subjectTagNameAltStringList                     .add(     subjectTagObjectList                  .get(i).tagNameAltString ); subjectTagNameFullStringList                    .add(subjectTagObjectList                   .get(i).tagNameFullString); }
+    for(int i = 0; i < transitiveVerbTagObjectList              .size(); i ++){ transitiveVerbTagNameAltStringList              .add(     transitiveVerbTagObjectList           .get(i).tagNameAltString ); transitiveVerbTagNameFullStringList             .add(transitiveVerbTagObjectList            .get(i).tagNameFullString); }
     /*Create empty list to display if the object created has no parent (for example, floor object will have no parent).*/
     defaultStringList                                           = Arrays.asList();
     SetupGUIVoid                                                ();
@@ -427,7 +427,7 @@ void AssignRandomTagLoopVoid(
         /*Keep looping over and over until the random index is not a tag that is already in the list.*/
         for(int i = 0; i                    < _targetTagObjectList.size(); i ++){
 
-            while(_targetTagObjectList.get(i).nameAltString.equals(tagObject.nameAltString)){
+            while(_targetTagObjectList.get(i).tagNameAltString.equals(tagObject.tagNameAltString)){
 
                 insideBoolean               = true;
                 randomIndexInt              = (int)((Math.random()*_sourceTagObjectList.size()) + 0);
@@ -612,49 +612,83 @@ void LoadVoid(){
 
         };
 
-        subjectTagObjectList            = Arrays.asList(
-            new Tag(new Name("SUB_NAP", "Subject Napoleon"              ), "SUB", "Napoleon"            ),
-            new Tag(new Name("SUB_WAS", "Subject Washington"            ), "SUB", "Washington"          ),
-            new Tag(new Name("SUB_ASS", "Subject Assasin"               ), "SUB", "assasin"             ),
-            new Tag(new Name("SUB_BOD", "Subject Bodhisattva"           ), "SUB", "Bodhisattva"         ),
-            new Tag(new Name("SUB_BUD", "Subject Buddha"                ), "SUB", "Buddha"              ),
-            new Tag(new Name("SUB_DIM", "Subject Dimitri"               ), "SUB", "Dimitri"             ),
-            new Tag(new Name("SUB_DMI", "Subject DimitriMitropoulos"    ), "SUB", "Dimitri Mitropoulos" ),
-            new Tag(new Name("SUB_DRA", "Subject Dragon"                ), "SUB", "dragon"              ),
-            new Tag(new Name("SUB_FIR", "Subject TheFirst"              ), "SUB", "the first"           ),
-            new Tag(new Name("SUB_IRQ", "Subject Iraqi"                 ), "SUB", "iraqi"               ),
-            new Tag(new Name("SUB_ITA", "Subject Italian"               ), "SUB", "italian"             ),
-            new Tag(new Name("SUB_JUC", "Subject JuliusCaesar"          ), "SUB", "Julius Caesar"       ),
-            new Tag(new Name("SUB_JUL", "Subject Julius"                ), "SUB", "Julius"              ),
-            new Tag(new Name("SUB_KIL", "Subject Killer"                ), "SUB", "killer"              ),
-            new Tag(new Name("SUB_KOS", "Subject Koshchey"              ), "SUB", "Koshchey"            ),
-            new Tag(new Name("SUB_MAR", "Subject Maria"                 ), "SUB", "Maria"               ),
-            new Tag(new Name("SUB_MED", "Subject Medusa"                ), "SUB", "Medusa"              ),
-            new Tag(new Name("SUB_MMO", "Subject MariaMorevna"          ), "SUB", "Maria Morevna"       ),
-            new Tag(new Name("SUB_PAI", "Subject Painter"               ), "SUB", "painter"             ),
-            new Tag(new Name("SUB_ROM", "Subject Romanian"              ), "SUB", "romanian"            ),
-            new Tag(new Name("SUB_RUS", "Subject Russian"               ), "SUB", "russian"             ),
-            new Tag(new Name("SUB_SPH", "Subject Sphinx"                ), "SUB", "Sphinx"              )
+        subjectTagObjectList                            = Arrays.asList(
+            new Tag(new Name("SUB_NAP", "Subject Napoleon"              ), "SUB", "Napoleon"           , "Napoleon's"               ),
+            new Tag(new Name("SUB_WAS", "Subject Washington"            ), "SUB", "Washington"         , "Washington's"             ),
+            new Tag(new Name("SUB_ASS", "Subject Assasin"               ), "SUB", "assasin"            , "assasin's"                ),
+            new Tag(new Name("SUB_BOD", "Subject Bodhisattva"           ), "SUB", "Bodhisattva"        , "Bodhisattva's"            ),
+            new Tag(new Name("SUB_BUD", "Subject Buddha"                ), "SUB", "Buddha"             , "Buddha's"                 ),
+            new Tag(new Name("SUB_DIM", "Subject Dimitri"               ), "SUB", "Dimitri"            , "Dimitri's"                ),
+            new Tag(new Name("SUB_DMI", "Subject DimitriMitropoulos"    ), "SUB", "Dimitri Mitropoulos", "Dimitri Mitropoulos'"     ),
+            new Tag(new Name("SUB_DRA", "Subject Dragon"                ), "SUB", "dragon"             , "dragon's"                 ),
+            new Tag(new Name("SUB_FIR", "Subject TheFirst"              ), "SUB", "the first"          , "the first's"              ),
+            new Tag(new Name("SUB_IRQ", "Subject Iraqi"                 ), "SUB", "iraqi"              , "iraqi's"                  ),
+            new Tag(new Name("SUB_ITA", "Subject Italian"               ), "SUB", "italian"            , "italian's"                ),
+            new Tag(new Name("SUB_JUC", "Subject JuliusCaesar"          ), "SUB", "Julius Caesar"      , "Julius Caesar's"          ),
+            new Tag(new Name("SUB_JUL", "Subject Julius"                ), "SUB", "Julius"             , "Julius'"                  ),
+            new Tag(new Name("SUB_KIL", "Subject Killer"                ), "SUB", "killer"             , "killer's"                 ),
+            new Tag(new Name("SUB_KOS", "Subject Koshchey"              ), "SUB", "Koshchey"           , "Koshchey's"               ),
+            new Tag(new Name("SUB_MAR", "Subject Maria"                 ), "SUB", "Maria"              , "Maria's"                  ),
+            new Tag(new Name("SUB_MED", "Subject Medusa"                ), "SUB", "Medusa"             , "Medusa's"                 ),
+            new Tag(new Name("SUB_MMO", "Subject MariaMorevna"          ), "SUB", "Maria Morevna"      , "Maria Morevna's"          ),
+            new Tag(new Name("SUB_PAI", "Subject Painter"               ), "SUB", "painter"            , "painter's"                ),
+            new Tag(new Name("SUB_ROM", "Subject Romanian"              ), "SUB", "romanian"           , "romanian's"               ),
+            new Tag(new Name("SUB_RUS", "Subject Russian"               ), "SUB", "russian"            , "russian's"                ),
+            new Tag(new Name("SUB_SPH", "Subject Sphinx"                ), "SUB", "Sphinx"             , "Sphinx's"                 )
         );
-        verbTagObjectList               = Arrays.asList(
-            new Tag(new Name("VER_CAL", "Verb Run"                      ), "VER", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
-            new Tag(new Name("VER_DRI", "Verb Run"                      ), "VER", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
-            new Tag(new Name("VER_EAT", "Verb Run"                      ), "VER", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
-            new Tag(new Name("VER_JUM", "Verb Jump"                     ), "VER", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
-            new Tag(new Name("VER_PAI", "Verb Paint"                    ), "VER", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
-            new Tag(new Name("VER_RUN", "Verb Run"                      ), "VER", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
-            new Tag(new Name("VER_SIN", "Verb Run"                      ), "VER", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
-            new Tag(new Name("VER_SIT", "Verb Run"                      ), "VER", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
-            new Tag(new Name("VER_SLE", "Verb Run"                      ), "VER", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
-            new Tag(new Name("VER_TAL", "Verb Run"                      ), "VER", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
+        intransitiveVerbTagObjectList                   = Arrays.asList(
+            new Tag(new Name("IVR_CAL", "Verb Call"                     ), "IVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
+            new Tag(new Name("IVR_DRI", "Verb Drink"                    ), "IVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
+            new Tag(new Name("IVR_EAT", "Verb Eat"                      ), "IVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
+            new Tag(new Name("IVR_JUM", "Verb Jump"                     ), "IVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
+            new Tag(new Name("IVR_PAI", "Verb Paint"                    ), "IVR", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
+            new Tag(new Name("IVR_RUN", "Verb Run"                      ), "IVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
+            new Tag(new Name("IVR_SIN", "Verb Sing"                     ), "IVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
+            new Tag(new Name("IVR_SIT", "Verb Sit"                      ), "IVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
+            new Tag(new Name("IVR_SLE", "Verb Sleep"                    ), "IVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
+            new Tag(new Name("IVR_TAL", "Verb Talk"                     ), "IVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
         );
-        negativeVerbTagObjectList       = Arrays.asList(
-            new Tag(new Name("NVE_ASS", "Verb Assasinate"               ), "NVE", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
-            new Tag(new Name("NVE_DIE", "Verb Die"                      ), "NVE", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
-            new Tag(new Name("NVE_KIL", "Verb Kill"                     ), "NVE", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       ),
-            new Tag(new Name("NVE_KIL", "Verb Kill"                     ), "NVE", "kill"        , "killed"      , "killed"      , "kills"           , "killing"     )
+        negativeIntransitiveVerbTagObjectList           = Arrays.asList(
+            new Tag(new Name("NIV_ASS", "Verb Assasinate"               ), "NIV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
+            new Tag(new Name("NIV_DIE", "Verb Die"                      ), "NIV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
+            new Tag(new Name("NIV_KIL", "Verb Kill"                     ), "NIV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
         );
-        nounTagObjectList               = Arrays.asList(
+        transitiveVerbTagObjectList                     = Arrays.asList(
+            new Tag(new Name("TVR_CAL", "Verb Call"                     ), "TVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
+            new Tag(new Name("TVR_DRI", "Verb Drink"                    ), "TVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
+            new Tag(new Name("TVR_EAT", "Verb Eat"                      ), "TVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
+            new Tag(new Name("TVR_JUM", "Verb Jump"                     ), "TVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
+            new Tag(new Name("TVR_PAI", "Verb Paint"                    ), "TVR", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
+            new Tag(new Name("TVR_RUN", "Verb Run"                      ), "TVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
+            new Tag(new Name("TVR_SIN", "Verb Sing"                     ), "TVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
+            new Tag(new Name("TVR_SIT", "Verb Sit"                      ), "TVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
+            new Tag(new Name("TVR_SLE", "Verb Sleep"                    ), "TVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
+            new Tag(new Name("TVR_TAL", "Verb Talk"                     ), "TVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
+        );
+        negativeTransitiveVerbTagObjectList             = Arrays.asList(
+            new Tag(new Name("NTV_ASS", "Verb Assasinate"               ), "NTV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
+            new Tag(new Name("NTV_DIE", "Verb Die"                      ), "NTV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
+            new Tag(new Name("NTV_KIL", "Verb Kill"                     ), "NTV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
+        );
+        nounAbstractTagObjectList                       = Arrays.asList(
+            new Tag(new Name("NOA_ANK", "Noun Anklet"                   ), "NOA", "anklet"          , "anklets"         ),
+            new Tag(new Name("NOA_BAL", "Noun Ball"                     ), "NOA", "ball"            , "balls"           ),
+            new Tag(new Name("NOA_CRO", "Noun Crown"                    ), "NOA", "crown"           , "crowns"          ),
+            new Tag(new Name("NOA_DCR", "Noun DoubleCrown"              ), "NOA", "double crown"    , "double crown"    ),
+            new Tag(new Name("NOA_FIG", "Noun Figure"                   ), "NOA", "figure"          , "figures"         ),
+            new Tag(new Name("NOA_GUN", "Noun Gun"                      ), "NOA", "gun"             , "guns"            ),
+            new Tag(new Name("NOA_HIE", "Noun Hierogliph"               ), "NOA", "hierogliph"      , "hierogliphs"     ),
+            new Tag(new Name("NOA_IRQ", "Noun Iraq"                     ), "NOA", "Iraq"            , "Iraq"            ),
+            new Tag(new Name("NOA_ITA", "Noun Italy"                    ), "NOA", "Italy"           , "Italy"           ),
+            new Tag(new Name("NOA_PAP", "Noun Paper"                    ), "NOA", "paper"           , "papers"          ),
+            new Tag(new Name("NOA_PLA", "Noun Plaque"                   ), "NOA", "plaque"          , "plaques"         ),
+            new Tag(new Name("NOA_ROM", "Noun Rome"                     ), "NOA", "Rome"            , "Rome"            ),
+            new Tag(new Name("NOA_RUS", "Noun Russia"                   ), "NOA", "Russia"          , "Russia"          ),
+            new Tag(new Name("NOA_STA", "Noun Statue"                   ), "NOA", "statue"          , "statues"         ),
+            new Tag(new Name("NOA_STO", "Noun Stone"                    ), "NOA", "stone"           , "stones"          ),
+            new Tag(new Name("NOA_WAT", "Noun Water"                    ), "NOA", "water"           , "water"           )
+        );
+        nounTagObjectList                               = Arrays.asList(
             new Tag(new Name("NOU_ANK", "Noun Anklet"                   ), "NOU", "anklet"          , "anklets"         ),
             new Tag(new Name("NOU_BAL", "Noun Ball"                     ), "NOU", "ball"            , "balls"           ),
             new Tag(new Name("NOU_CRO", "Noun Crown"                    ), "NOU", "crown"           , "crowns"          ),
@@ -670,47 +704,46 @@ void LoadVoid(){
             new Tag(new Name("NOU_RUS", "Noun Russia"                   ), "NOU", "Russia"          , "Russia"          ),
             new Tag(new Name("NOU_STA", "Noun Statue"                   ), "NOU", "statue"          , "statues"         ),
             new Tag(new Name("NOU_STO", "Noun Stone"                    ), "NOU", "stone"           , "stones"          ),
-            new Tag(new Name("NOU_STO", "Noun Stone"                    ), "NOU", "stone"           , "stones"          ),
             new Tag(new Name("NOU_WAT", "Noun Water"                    ), "NOU", "water"           , "water"           )
         );
-        adjectiveTagObjectList          = Arrays.asList(
+        adjectiveTagObjectList                          = Arrays.asList(
             new Tag(new Name("ADJ_BAD", "Adjective Excellent"           ), "ADJ", "excellent"   ),
             new Tag(new Name("ADJ_CRO", "Adjective Crossed"             ), "ADJ", "crossed"     ),
             new Tag(new Name("ADJ_GOD", "Adjective Good"                ), "ADJ", "good"        ),
             new Tag(new Name("ADJ_HAR", "Adjective Hard"                ), "ADJ", "hard"        ),
             new Tag(new Name("ADJ_SOF", "Adjective Soft"                ), "ADJ", "soft"        )
         );
-        negativeAdjectiveTagObjectList  = Arrays.asList(
+        negativeAdjectiveTagObjectList                  = Arrays.asList(
             new Tag(new Name("NDJ_AWF", "Adjective Awful"               ), "NDJ", "awful"),
             new Tag(new Name("NDJ_BAD", "Adjective Bad"                 ), "NDJ", "bad")
         );
-        adverbTagObjectList             = Arrays.asList(
+        adverbTagObjectList                             = Arrays.asList(
             new Tag(new Name("ADV_PER", "Adverb Perfectly"              ), "ADV", "perfectly"),
             new Tag(new Name("ADV_QUI", "Adverb Quickly"                ), "ADV", "quickly")
         );
-        negativeAdverbTagObjectList     = Arrays.asList(
+        negativeAdverbTagObjectList                     = Arrays.asList(
             new Tag(new Name("NDV_DES", "Adverb Desperately"            ), "NDV", "desperately"),
             new Tag(new Name("NDV_SLO", "Adverb Slowly"                 ), "NDV", "slowly")
         );
-        floorObjectList         = Arrays.asList(
-            new ObjectMuseum(new Name("FLR_001", "First Floor"                                                  ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("FLR_002", "Second Floor"                                                 ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        floorObjectList                                 = Arrays.asList(
+            new ObjectMuseum(new Name("FLR_001", "First Floor"                                                  ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("FLR_002", "Second Floor"                                                 ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList))
         );
-        roomObjectList          = Arrays.asList(
-            new ObjectMuseum(new Name("ROM_CHN", "Room China"                                                   ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("ROM_IRQ", "Room Iraq"                                                    ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("ROM_ROM", "Room Rome"                                                    ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("ROM_RUS", "Room Russia"                                                  ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        roomObjectList                                  = Arrays.asList(
+            new ObjectMuseum(new Name("ROM_CHN", "Room China"                                                   ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_IRQ", "Room Iraq"                                                    ), "FLR_001", "ROM", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_ROM", "Room Rome"                                                    ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("ROM_RUS", "Room Russia"                                                  ), "FLR_002", "ROM", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList))
         );
-        exhibitionObjectList    = Arrays.asList(
-            new ObjectMuseum(new Name("EXH_ZOD", "Exhibition Zodiac Figure Dragon"                              ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_BOD", "Exhibition Bodhisattva Crossed Ankle"                         ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_SPH", "Exhibition Plaque With A Sphinx"                              ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_USH", "Exhibition Stele Of Ushumgal"                                 ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_ASS", "Exhibition The Assasination"                                  ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_MED", "Exhibition Head Of Medusa"                                    ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_KOS", "Exhibition Koshchey"                                          ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList)),
-            new ObjectMuseum(new Name("EXH_DIM", "Exhibition Dimitri Mitropoulos"                               ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(subjectTagObjectList, verbTagObjectList, negativeVerbTagObjectList, nounTagObjectList, adjectiveTagObjectList, negativeAdjectiveTagObjectList, adverbTagObjectList, negativeAdverbTagObjectList))
+        exhibitionObjectList                            = Arrays.asList(
+            new ObjectMuseum(new Name("EXH_ZOD", "Exhibition Zodiac Figure Dragon"                              ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_BOD", "Exhibition Bodhisattva Crossed Ankle"                         ), "ROM_CHN", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_SPH", "Exhibition Plaque With A Sphinx"                              ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_USH", "Exhibition Stele Of Ushumgal"                                 ), "ROM_IRQ", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_ASS", "Exhibition The Assasination"                                  ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_MED", "Exhibition Head Of Medusa"                                    ), "ROM_ROM", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_KOS", "Exhibition Koshchey"                                          ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
+            new ObjectMuseum(new Name("EXH_DIM", "Exhibition Dimitri Mitropoulos"                               ), "ROM_RUS", "EXH", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList))
         );
         for(int i = 0; i < playerAmountInt; i ++)                   {
             ObjectPlayer objectPlayer = new ObjectPlayer(
@@ -2373,7 +2406,7 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
         String tempNegativeIntransitiveVerb3bString     = addTagGroupGUIObject.addTagGroupTagNegativeIntransitiveVerb3TextfieldObject       .getText();
         String tempNegativeIntransitiveVerbIngbString   = addTagGroupGUIObject.addTagGroupTagNegativeIntransitiveVerbIngTextfieldObject     .getText();
         String tempNegativeIntransitiveVerbSString      = addTagGroupGUIObject.addTagGroupTagNegativeIntransitiveVerbSTextfieldObject       .getText();
-        tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeIntransitiveVerb1String, tempNegativeIntransitiveVerb2String, tempVer3bString, tempVerIngbString, tempNegativeIntransitiveVerbSString);
+        tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeIntransitiveVerb1String, tempNegativeIntransitiveVerb2String, tempNegativeIntransitiveVerb3bString, tempNegativeIntransitiveVerbIngbString, tempNegativeIntransitiveVerbSString);
 
     }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("TRANSITIVE VERB"))              {
@@ -2388,7 +2421,7 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
         String tempTransitiveVerb3bString               = addTagGroupGUIObject.addTagGroupTagTransitiveVerb3TextfieldObject                 .getText();
         String tempTransitiveVerbIngbString             = addTagGroupGUIObject.addTagGroupTagTransitiveVerbIngTextfieldObject               .getText();
         String tempTransitiveVerbSString                = addTagGroupGUIObject.addTagGroupTagTransitiveVerbSTextfieldObject                 .getText();
-        tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempTransitiveVerb1String, tempTransitiveVerb2String, tempVer3bString, tempVerIngbString, tempTransitiveVerbSString);
+        tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempTransitiveVerb1String, tempTransitiveVerb2String, tempTransitiveVerb3bString, tempTransitiveVerbIngbString, tempTransitiveVerbSString);
 
     }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE TRANSITIVE VERB"))     {
@@ -2403,7 +2436,7 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
         String tempNegativeTransitiveVerb3bString       = addTagGroupGUIObject.addTagGroupTagNegativeTransitiveVerb3TextfieldObject         .getText();
         String tempNegativeTransitiveVerbIngbString     = addTagGroupGUIObject.addTagGroupTagNegativeTransitiveVerbIngTextfieldObject       .getText();
         String tempNegativeTransitiveVerbSString        = addTagGroupGUIObject.addTagGroupTagNegativeTransitiveVerbSTextfieldObject         .getText();
-        tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeTransitiveVerb1String, tempNegativeTransitiveVerb2String, tempVer3bString, tempVerIngbString, tempNegativeTransitiveVerbSString);
+        tempTagObject                                   = new Tag(new Name(tempTagNameAltString, tempTagNameFullString), tempTagTypeString, tempNegativeTransitiveVerb1String, tempNegativeTransitiveVerb2String, tempNegativeTransitiveVerb3bString, tempNegativeTransitiveVerbIngbString, tempNegativeTransitiveVerbSString);
 
     }
     else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN ABSTRACT"))                {
@@ -2481,21 +2514,20 @@ void AddTagGroupTagAddButtonObject                  (int _indexInt){
     }
 
     tempTagObjectList                           .add(tempTagObject);
-    tempTagNameAltStringList                    .add(tempTagObject.nameAltString );
-    tempTagNameFullStringList                   .add(tempTagObject.nameFullString);
+    tempTagNameAltStringList                    .add(tempTagObject.tagNameAltString );
+    tempTagNameFullStringList                   .add(tempTagObject.tagNameFullString);
 
-    if      (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("SUBJECT"                        )){ addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("INTRANSITIVE VERB"              )){ addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE INTRANSITIVE VERB"     )){ addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("TRANSITIVE VERB"                )){ addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE TRANSITIVE VERB"       )){ addMuseumGroupGUIObject.addMuseumGroupSelectVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE VERB"                  )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeVerbTagMuseumObjectScrollableListObject       .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"                           )){ addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN ABSTRACT"                  )){ addMuseumGroupGUIObject.addMuseumGroupSelectNounAbstractTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADJECTIVE"                      )){ addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject          .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE"             )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject  .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADVERB"                         )){ addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
-    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"                )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
+    if      (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("SUBJECT"                        )){ addMuseumGroupGUIObject.addMuseumGroupSelectSubjectTagMuseumObjectScrollableListObject                      .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("INTRANSITIVE VERB"              )){ addMuseumGroupGUIObject.addMuseumGroupSelectIntransitiveVerbTagMuseumObjectScrollableListObject             .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE INTRANSITIVE VERB"     )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeIntransitiveVerbTagMuseumObjectScrollableListObject     .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("TRANSITIVE VERB"                )){ addMuseumGroupGUIObject.addMuseumGroupSelectTransitiveVerbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE TRANSITIVE VERB"       )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeTransitiveVerbTagMuseumObjectScrollableListObject       .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN"                           )){ addMuseumGroupGUIObject.addMuseumGroupSelectNounTagMuseumObjectScrollableListObject                         .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NOUN ABSTRACT"                  )){ addMuseumGroupGUIObject.addMuseumGroupSelectNounAbstractTagMuseumObjectScrollableListObject                 .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADJECTIVE"                      )){ addMuseumGroupGUIObject.addMuseumGroupSelectAdjectiveTagMuseumObjectScrollableListObject                    .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADJECTIVE"             )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdjectiveTagMuseumObjectScrollableListObject            .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("ADVERB"                         )){ addMuseumGroupGUIObject.addMuseumGroupSelectAdverbTagMuseumObjectScrollableListObject                       .setItems(tempTagNameFullStringList); }
+    else if (addTagGroupGUIObject.tempSelectedTagTypeNameFullString.equals("NEGATIVE ADVERB"                )){ addMuseumGroupGUIObject.addMuseumGroupSelectNegativeAdverbTagMuseumObjectScrollableListObject               .setItems(tempTagNameFullStringList); }
     
     editTagGroupGUIObject.tempTagNameFullStringList.clear();
     editTagGroupGUIObject.GenerateAllTagNameFullVoid();
@@ -2532,8 +2564,8 @@ void EditTagGroupSelectTagScrollableListObject(int _indexInt){
     String  tempSelectedTagNameFullString                       = editTagGroupGUIObject.editTagGroupSelectTagScrollableListObject.getItem(_indexInt).get("text").toString();
     Tag     tempSelectedTagObject                               = FindTagObject(tempSelectedTagNameFullString);
     editTagGroupGUIObject.tempSelectedTagObject                 = tempSelectedTagObject;
-    String  tempSelectedTagTypeString                           = tempSelectedTagObject.tagTypeString;
-    editTagGroupGUIObject.tempSelectedTagTypeString             = tempSelectedTagTypeString;
+    String  tempSelectedTagTypeNameAltString                    = tempSelectedTagObject.tagTypeString;
+    editTagGroupGUIObject.tempSelectedTagTypeNameAltString      = tempSelectedTagTypeNameAltString;
 
     if(tempSelectedTagObject != null){
         editTagGroupGUIObject                                   .tempSelectedTagAdjectiveString                             = editTagGroupGUIObject.tempSelectedTagObject.tagAdjectiveString                    ;
@@ -2579,11 +2611,11 @@ void EditTagGroupSelectTagScrollableListObject(int _indexInt){
         editTagGroupGUIObject                                   .editTagGroupTagNameFullTextfieldObject                     .setText(editTagGroupGUIObject.tempSelectedTagNameFullString                        );
         editTagGroupGUIObject                                   .editTagGroupTagNegativeAdjectiveTextfieldObject            .setText(editTagGroupGUIObject.tempSelectedTagNegativeAdjectiveString               );
         editTagGroupGUIObject                                   .editTagGroupTagNegativeAdverbTextfieldObject               .setText(editTagGroupGUIObject.tempSelectedTagNegativeAdverbString                  );
-        editTagGroupGUIObject                                   .editTagGroupTagnegativeIntransitiveVerb1TextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagnegativeIntransitiveVerb1String       );
-        editTagGroupGUIObject                                   .editTagGroupTagnegativeIntransitiveVerb2TextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagnegativeIntransitiveVerb2String       );
-        editTagGroupGUIObject                                   .editTagGroupTagnegativeIntransitiveVerb3TextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagnegativeIntransitiveVerb3String       );
-        editTagGroupGUIObject                                   .editTagGroupTagnegativeIntransitiveVerbIngTextfieldObject  .setText(editTagGroupGUIObject.tempSelectedTagnegativeIntransitiveVerbIngString     );
-        editTagGroupGUIObject                                   .editTagGroupTagnegativeIntransitiveVerbSTextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagnegativeIntransitiveVerbSString       );
+        editTagGroupGUIObject                                   .editTagGroupTagNegativeIntransitiveVerb1TextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagNegativeIntransitiveVerb1String       );
+        editTagGroupGUIObject                                   .editTagGroupTagNegativeIntransitiveVerb2TextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagNegativeIntransitiveVerb2String       );
+        editTagGroupGUIObject                                   .editTagGroupTagNegativeIntransitiveVerb3TextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagNegativeIntransitiveVerb3String       );
+        editTagGroupGUIObject                                   .editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject  .setText(editTagGroupGUIObject.tempSelectedTagNegativeIntransitiveVerbIngString     );
+        editTagGroupGUIObject                                   .editTagGroupTagNegativeIntransitiveVerbSTextfieldObject    .setText(editTagGroupGUIObject.tempSelectedTagNegativeIntransitiveVerbSString       );
         editTagGroupGUIObject                                   .editTagGroupTagNegativeTransitiveVerb1TextfieldObject      .setText(editTagGroupGUIObject.tempSelectedTagNegativeTransitiveVerb1String         );
         editTagGroupGUIObject                                   .editTagGroupTagNegativeTransitiveVerb2TextfieldObject      .setText(editTagGroupGUIObject.tempSelectedTagNegativeTransitiveVerb2String         );
         editTagGroupGUIObject                                   .editTagGroupTagNegativeTransitiveVerb3TextfieldObject      .setText(editTagGroupGUIObject.tempSelectedTagNegativeTransitiveVerb3String         );
@@ -2605,7 +2637,7 @@ void EditTagGroupSelectTagScrollableListObject(int _indexInt){
 }
 void EditTagGroupTagEditButtonObject(int _indexInt){
 
-    if      (editTagGroupGUIObject.tempSelectedTagTypeString.equals("SUB")){
+    if      (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("SUB")){
 
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
@@ -2615,7 +2647,7 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         subjectTagNameFullStringList                            .clear();
         for(int i = 0; i < subjectTagObjectList                 .size(); i ++){ subjectTagNameAltStringList.add(subjectTagObjectList.get(i).tagNameAltString ); subjectTagNameFullStringList.add(subjectTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("IVR")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("IVR")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagIntransitiveVerb1String             = editTagGroupGUIObject.editTagGroupTagIntransitiveVerb1TextfieldObject             .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagIntransitiveVerb2String             = editTagGroupGUIObject.editTagGroupTagIntransitiveVerb2TextfieldObject             .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagIntransitiveVerb3String             = editTagGroupGUIObject.editTagGroupTagIntransitiveVerb3TextfieldObject             .getText();
@@ -2625,9 +2657,9 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         intransitiveVerbTagNameAltStringList                    .clear();
         intransitiveVerbTagNameFullStringList                   .clear();
-        for(int i = 0; i < verbTagObjectList                    .size(); i ++){ intransitiveVerbTagNameAltStringList.add(verbTagObjectList.get(i).tagNameAltString ); intransitiveVerbTagNameFullStringList.add(verbTagObjectList.get(i).tagNameFullString); }
+        for(int i = 0; i < intransitiveVerbTagObjectList        .size(); i ++){ intransitiveVerbTagNameAltStringList.add(intransitiveVerbTagObjectList.get(i).tagNameAltString ); intransitiveVerbTagNameFullStringList.add(intransitiveVerbTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NIV")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("NIV")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeIntransitiveVerb1String     = editTagGroupGUIObject.editTagGroupTagNegativeIntransitiveVerb1TextfieldObject     .getText();
@@ -2635,11 +2667,11 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeIntransitiveVerb3String     = editTagGroupGUIObject.editTagGroupTagNegativeIntransitiveVerb3TextfieldObject     .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeIntransitiveVerbIngString   = editTagGroupGUIObject.editTagGroupTagNegativeIntransitiveVerbIngTextfieldObject   .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeIntransitiveVerbSString     = editTagGroupGUIObject.editTagGroupTagNegativeIntransitiveVerbSTextfieldObject     .getText();
-        negativeIntransitiveTagNameAltStringList                .clear();
-        negativeIntransitiveTagNameFullStringList               .clear();
-        for(int i = 0; i < negativeIntransitiveTagObjectList    .size(); i ++){ negativeIntransitiveTagNameAltStringList.add(negativeIntransitiveTagObjectList.get(i).tagNameAltString ); negativeIntransitiveTagNameFullStringList.add(negativeIntransitiveTagObjectList.get(i).tagNameFullString); }
+        negativeIntransitiveVerbTagNameAltStringList            .clear();
+        negativeIntransitiveVerbTagNameFullStringList           .clear();
+        for(int i = 0; i < negativeIntransitiveVerbTagObjectList.size(); i ++){ negativeIntransitiveVerbTagNameAltStringList.add(negativeIntransitiveVerbTagObjectList.get(i).tagNameAltString ); negativeIntransitiveVerbTagNameFullStringList.add(negativeIntransitiveVerbTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("TVR")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("TVR")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagTransitiveVerb1String               = editTagGroupGUIObject.editTagGroupTagTransitiveVerb1TextfieldObject               .getText();
@@ -2651,7 +2683,7 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         transitiveVerbTagNameFullStringList                     .clear();
         for(int i = 0; i < transitiveVerbTagObjectList          .size(); i ++){ transitiveVerbTagNameAltStringList.add(transitiveVerbTagObjectList.get(i).tagNameAltString ); transitiveVerbTagNameFullStringList.add(transitiveVerbTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NTV")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("NTV")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeTransitiveVerb1String       = editTagGroupGUIObject.editTagGroupTagNegativeTransitiveVerb1TextfieldObject       .getText();
@@ -2659,11 +2691,11 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeTransitiveVerb3String       = editTagGroupGUIObject.editTagGroupTagNegativeTransitiveVerb3TextfieldObject       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeTransitiveVerbIngString     = editTagGroupGUIObject.editTagGroupTagNegativeTransitiveVerbIngTextfieldObject     .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeTransitiveVerbSString       = editTagGroupGUIObject.editTagGroupTagNegativeTransitiveVerbSTextfieldObject       .getText();
-        negativeTransitiveTagNameAltStringList                  .clear();
-        negativeTransitiveTagNameFullStringList                 .clear();
-        for(int i = 0; i < negativeTransitiveTagObjectList      .size(); i ++){ negativeTransitiveTagNameAltStringList.add(negativeTransitiveTagObjectList.get(i).tagNameAltString ); negativeTransitiveTagNameFullStringList.add(negativeTransitiveTagObjectList.get(i).tagNameFullString); }
+        negativeTransitiveVerbTagNameAltStringList              .clear();
+        negativeTransitiveVerbTagNameFullStringList             .clear();
+        for(int i = 0; i < negativeTransitiveVerbTagObjectList  .size(); i ++){ negativeTransitiveVerbTagNameAltStringList.add(negativeTransitiveVerbTagObjectList.get(i).tagNameAltString ); negativeTransitiveVerbTagNameFullStringList.add(negativeTransitiveVerbTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NOA")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("NOA")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNounAbstractSString                 = editTagGroupGUIObject.editTagGroupTagNounAbstractSTextfieldObject                 .getText();
@@ -2672,7 +2704,7 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         nounAbstractTagNameFullStringList                       .clear();
         for(int i = 0; i < nounAbstractTagObjectList            .size(); i ++){ nounAbstractTagNameAltStringList.add(nounAbstractTagObjectList.get(i).tagNameAltString ); nounAbstractTagNameFullStringList.add(nounAbstractTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NOU")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("NOU")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNounSString                         = editTagGroupGUIObject.editTagGroupTagNounSTextfieldObject                         .getText();
@@ -2681,7 +2713,7 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         nounTagNameFullStringList                               .clear();
         for(int i = 0; i < nounTagObjectList                    .size(); i ++){ nounTagNameAltStringList.add(nounTagObjectList.get(i).tagNameAltString ); nounTagNameFullStringList.add(nounTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("ADJ")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("ADJ")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagAdjectiveString                     = editTagGroupGUIObject.editTagGroupTagAdjectiveTextfieldObject                     .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
@@ -2689,7 +2721,7 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         adjectiveTagNameFullStringList                          .clear();
         for(int i = 0; i < adjectiveTagObjectList               .size(); i ++){ adjectiveTagNameAltStringList.add(adjectiveTagObjectList.get(i).tagNameAltString ); adjectiveTagNameFullStringList.add(adjectiveTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NDJ")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("NDJ")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeAdjectiveString             = editTagGroupGUIObject.editTagGroupTagNegativeAdjectiveTextfieldObject             .getText();
@@ -2697,7 +2729,7 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         negativeAdjectiveTagNameFullStringList                  .clear();
         for(int i = 0; i < adjectiveTagObjectList               .size(); i ++){ negativeAdjectiveTagNameAltStringList.add(negativeAdjectiveTagObjectList.get(i).tagNameAltString ); negativeAdjectiveTagNameFullStringList.add(negativeAdjectiveTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("ADV")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("ADV")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagAdverbString                        = editTagGroupGUIObject.editTagGroupTagAdverbTextfieldObject                        .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
@@ -2705,7 +2737,7 @@ void EditTagGroupTagEditButtonObject(int _indexInt){
         adverbTagNameFullStringList                             .clear();
         for(int i = 0; i < adverbTagObjectList                  .size(); i ++){ adverbTagNameAltStringList.add(adverbTagObjectList.get(i).tagNameAltString ); adverbTagNameFullStringList.add(adverbTagObjectList.get(i).tagNameFullString); }
     }
-    else if (editTagGroupGUIObject.tempSelectedTagTypeString.equals("NDV")){
+    else if (editTagGroupGUIObject.tempSelectedTagTypeNameAltString.equals("NDV")){
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameAltString                       = editTagGroupGUIObject.editTagGroupTagNameAltTextfieldObject                       .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNameFullString                      = editTagGroupGUIObject.editTagGroupTagNameFullTextfieldObject                      .getText();
         editTagGroupGUIObject.tempSelectedTagObject             .tagNegativeAdverbString                = editTagGroupGUIObject.editTagGroupTagNegativeAdverbTextfieldObject                .getText();

@@ -1,121 +1,114 @@
 [
   {
-    "tagNounSString": "anklets",
-    "tagNounString": "anklet",
-    "nameFullString": "Noun Anklet",
+    "tagNounSString": "anklet",
+    "tagNounString": "anklets",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_ANK"
+    "tagNameFullString": "Noun Anklet",
+    "tagNameAltString": "NOU_ANK"
   },
   {
-    "tagNounSString": "balls",
-    "tagNounString": "ball",
-    "nameFullString": "Noun Ball",
+    "tagNounSString": "ball",
+    "tagNounString": "balls",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_BAL"
+    "tagNameFullString": "Noun Ball",
+    "tagNameAltString": "NOU_BAL"
   },
   {
-    "tagNounSString": "crowns",
-    "tagNounString": "crown",
-    "nameFullString": "Noun Crown",
+    "tagNounSString": "crown",
+    "tagNounString": "crowns",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_CRO"
+    "tagNameFullString": "Noun Crown",
+    "tagNameAltString": "NOU_CRO"
   },
   {
     "tagNounSString": "double crown",
     "tagNounString": "double crown",
-    "nameFullString": "Noun DoubleCrown",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_DCR"
+    "tagNameFullString": "Noun DoubleCrown",
+    "tagNameAltString": "NOU_DCR"
   },
   {
-    "tagNounSString": "figures",
-    "tagNounString": "figure",
-    "nameFullString": "Noun Figure",
+    "tagNounSString": "figure",
+    "tagNounString": "figures",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_FIG"
+    "tagNameFullString": "Noun Figure",
+    "tagNameAltString": "NOU_FIG"
   },
   {
-    "tagNounSString": "guns",
-    "tagNounString": "gun",
-    "nameFullString": "Noun Gun",
+    "tagNounSString": "gun",
+    "tagNounString": "guns",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_GUN"
+    "tagNameFullString": "Noun Gun",
+    "tagNameAltString": "NOU_GUN"
   },
   {
-    "tagNounSString": "hierogliphs",
-    "tagNounString": "hierogliph",
-    "nameFullString": "Noun Hierogliph",
+    "tagNounSString": "hierogliph",
+    "tagNounString": "hierogliphs",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_HIE"
+    "tagNameFullString": "Noun Hierogliph",
+    "tagNameAltString": "NOU_HIE"
   },
   {
     "tagNounSString": "Iraq",
     "tagNounString": "Iraq",
-    "nameFullString": "Noun Iraq",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_IRQ"
+    "tagNameFullString": "Noun Iraq",
+    "tagNameAltString": "NOU_IRQ"
   },
   {
     "tagNounSString": "Italy",
     "tagNounString": "Italy",
-    "nameFullString": "Noun Italy",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_ITA"
+    "tagNameFullString": "Noun Italy",
+    "tagNameAltString": "NOU_ITA"
   },
   {
-    "tagNounSString": "papers",
-    "tagNounString": "paper",
-    "nameFullString": "Noun Paper",
+    "tagNounSString": "paper",
+    "tagNounString": "papers",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_PAP"
+    "tagNameFullString": "Noun Paper",
+    "tagNameAltString": "NOU_PAP"
   },
   {
-    "tagNounSString": "plaques",
-    "tagNounString": "plaque",
-    "nameFullString": "Noun Plaque",
+    "tagNounSString": "plaque",
+    "tagNounString": "plaques",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_PLA"
+    "tagNameFullString": "Noun Plaque",
+    "tagNameAltString": "NOU_PLA"
   },
   {
     "tagNounSString": "Rome",
     "tagNounString": "Rome",
-    "nameFullString": "Noun Rome",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_ROM"
+    "tagNameFullString": "Noun Rome",
+    "tagNameAltString": "NOU_ROM"
   },
   {
     "tagNounSString": "Russia",
     "tagNounString": "Russia",
-    "nameFullString": "Noun Russia",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_RUS"
+    "tagNameFullString": "Noun Russia",
+    "tagNameAltString": "NOU_RUS"
   },
   {
-    "tagNounSString": "statues",
-    "tagNounString": "statue",
-    "nameFullString": "Noun Statue",
+    "tagNounSString": "statue",
+    "tagNounString": "statues",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_STA"
+    "tagNameFullString": "Noun Statue",
+    "tagNameAltString": "NOU_STA"
   },
   {
-    "tagNounSString": "stones",
-    "tagNounString": "stone",
-    "nameFullString": "Noun Stone",
+    "tagNounSString": "stone",
+    "tagNounString": "stones",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_STO"
-  },
-  {
-    "tagNounSString": "stones",
-    "tagNounString": "stone",
-    "nameFullString": "Noun Stone",
-    "tagTypeString": "NOU",
-    "nameAltString": "NOU_STO"
+    "tagNameFullString": "Noun Stone",
+    "tagNameAltString": "NOU_STO"
   },
   {
     "tagNounSString": "water",
     "tagNounString": "water",
-    "nameFullString": "Noun Water",
     "tagTypeString": "NOU",
-    "nameAltString": "NOU_WAT"
+    "tagNameFullString": "Noun Water",
+    "tagNameAltString": "NOU_WAT"
   }
 ]

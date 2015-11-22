@@ -70,8 +70,8 @@ class   ObjectMuseum                                                            
         tagMuseumObjectList                         = Arrays.asList(_tagObjectArray);
         for(int i = 0; i < tagMuseumObjectList.size(); i ++){
 
-            tagMuseumNameAltStringList  .add(tagMuseumObjectList.get(i).nameAltString );
-            tagMuseumNameFullStringList .add(tagMuseumObjectList.get(i).nameFullString);
+            tagMuseumNameAltStringList  .add(tagMuseumObjectList.get(i).tagNameAltString );
+            tagMuseumNameFullStringList .add(tagMuseumObjectList.get(i).tagNameFullString);
 
         }
 

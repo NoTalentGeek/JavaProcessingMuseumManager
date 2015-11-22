@@ -1,0 +1,102 @@
+[
+  {
+    "tagTransitiveVerb1String": "call",
+    "tagTransitiveVerbIngString": "calling",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Call",
+    "tagTransitiveVerb3String": "called",
+    "tagTransitiveVerb2String": "called",
+    "tagNameAltString": "TVR_CAL",
+    "tagTransitiveVerbSString": "calls"
+  },
+  {
+    "tagTransitiveVerb1String": "drink",
+    "tagTransitiveVerbIngString": "drinking",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Drink",
+    "tagTransitiveVerb3String": "drank",
+    "tagTransitiveVerb2String": "drunk",
+    "tagNameAltString": "TVR_DRI",
+    "tagTransitiveVerbSString": "drinks"
+  },
+  {
+    "tagTransitiveVerb1String": "eat",
+    "tagTransitiveVerbIngString": "eating",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Eat",
+    "tagTransitiveVerb3String": "eaten",
+    "tagTransitiveVerb2String": "ate",
+    "tagNameAltString": "TVR_EAT",
+    "tagTransitiveVerbSString": "eats"
+  },
+  {
+    "tagTransitiveVerb1String": "jump",
+    "tagTransitiveVerbIngString": "jumping",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Jump",
+    "tagTransitiveVerb3String": "jumped",
+    "tagTransitiveVerb2String": "jumped",
+    "tagNameAltString": "TVR_JUM",
+    "tagTransitiveVerbSString": "jumps"
+  },
+  {
+    "tagTransitiveVerb1String": "paint",
+    "tagTransitiveVerbIngString": "painting",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Paint",
+    "tagTransitiveVerb3String": "painted",
+    "tagTransitiveVerb2String": "painted",
+    "tagNameAltString": "TVR_PAI",
+    "tagTransitiveVerbSString": "paints"
+  },
+  {
+    "tagTransitiveVerb1String": "run",
+    "tagTransitiveVerbIngString": "running",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Run",
+    "tagTransitiveVerb3String": "run",
+    "tagTransitiveVerb2String": "ran",
+    "tagNameAltString": "TVR_RUN",
+    "tagTransitiveVerbSString": "runs"
+  },
+  {
+    "tagTransitiveVerb1String": "sing",
+    "tagTransitiveVerbIngString": "singing",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Sing",
+    "tagTransitiveVerb3String": "sung",
+    "tagTransitiveVerb2String": "sang",
+    "tagNameAltString": "TVR_SIN",
+    "tagTransitiveVerbSString": "sings"
+  },
+  {
+    "tagTransitiveVerb1String": "sit",
+    "tagTransitiveVerbIngString": "sitting",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Sit",
+    "tagTransitiveVerb3String": "sat",
+    "tagTransitiveVerb2String": "sat",
+    "tagNameAltString": "TVR_SIT",
+    "tagTransitiveVerbSString": "sits"
+  },
+  {
+    "tagTransitiveVerb1String": "sleep",
+    "tagTransitiveVerbIngString": "sleeping",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Sleep",
+    "tagTransitiveVerb3String": "slept",
+    "tagTransitiveVerb2String": "slept",
+    "tagNameAltString": "TVR_SLE",
+    "tagTransitiveVerbSString": "sleeps"
+  },
+  {
+    "tagTransitiveVerb1String": "talk",
+    "tagTransitiveVerbIngString": "talking",
+    "tagTypeString": "TVR",
+    "tagNameFullString": "Verb Talk",
+    "tagTransitiveVerb3String": "told",
+    "tagTransitiveVerb2String": "told",
+    "tagNameAltString": "TVR_TAL",
+    "tagTransitiveVerbSString": "talks"
+  }
+]

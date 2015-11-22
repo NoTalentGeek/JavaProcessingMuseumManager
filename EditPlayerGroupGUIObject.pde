@@ -213,7 +213,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         editPlayerGroupPlayerExhibitionVisitedScrollableListObject  =
             editPlayerGroupControlP5Object
                 .addScrollableList                                  ("EditPlayerGroupPlayerExhibitionVisitedScrollableListObject")
-                .addItems                                           (tempSelectedPlayer.exhibitionVisitedNameFullStringList)
+                .addItems                                           (tempSelectedPlayerObject.exhibitionVisitedNameFullStringList)
                 .setColor                                           (staticScrollableListCColor)
                 .setGroup                                           (editPlayerGroupObject)
                 .setLabel                                           ("VISITOR VISITED EXHIBITIONS:")
