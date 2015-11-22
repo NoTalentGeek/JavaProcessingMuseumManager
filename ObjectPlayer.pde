@@ -914,41 +914,11 @@ class ObjectPlayer{
         */
 
         String[][]  patternStringArray      = new String[][]{
-
             {
-                "{ % +."              ,
-                "{ * to @."           ,
-                "I will & { to @."
-            },
-            {
-
-                "{ is a _ (."   ,
-                "% a ( =."  ,
-                "+ ^ _."
-
-            },
-            {
-
-                "A _ _ (."      ,
-                "{ ^ to (."   ,
-                "^ +."
-
-            },
-            {
-
-                "{ ^."          ,
-                "What { was ^." ,
-                "Are _ )."
-
-            },
-            {
-
-                "As the { does @.",
-                "Across the (, { sees the...",
-                "{ @ in +."
-
+                "The / ~ 1 = the <."    ,
+                "/, / ~ 1 ) a /, / >."  ,
+                ": is a / <."
             }
-
         };
 
         int         stringPatternIndexInt = SentenceRandomNumberGeneratorInt(patternStringArray.length);
