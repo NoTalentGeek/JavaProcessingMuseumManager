@@ -115,7 +115,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("SELECT TAG:")
                                             .setPosition            (guiElement1ColumnFirstColumnXInt, guiLayoutOffsetInt)
-                                            .setSize                (guiElement1ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setSize                (guiElement1ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                (ControlP5.LIST);
 
 
@@ -125,7 +125,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("TAG NAME FULL:")
-                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList4RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -135,7 +135,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("TAG NAME ALT:")
-                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList4RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -474,7 +474,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("EDIT TAG")  
-                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList5RowHeightInt))
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList4RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 

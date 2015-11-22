@@ -2,13 +2,13 @@
   {
     "tagNegativeAdjectiveString": "awful",
     "tagTypeString": "NDJ",
-    "tagNameFullString": "Adjective Awful",
+    "tagNameFullString": "NegativeAdjective Awful",
     "tagNameAltString": "NDJ_AWF"
   },
   {
     "tagNegativeAdjectiveString": "bad",
     "tagTypeString": "NDJ",
-    "tagNameFullString": "Adjective Bad",
+    "tagNameFullString": "NegativeAdjective Bad",
     "tagNameAltString": "NDJ_BAD"
   }
 ]

@@ -3,112 +3,112 @@
     "tagNounAbstractString": "anklets",
     "tagNounAbstractSString": "anklet",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Anklet",
+    "tagNameFullString": "NounAbs Anklet",
     "tagNameAltString": "NOA_ANK"
   },
   {
     "tagNounAbstractString": "balls",
     "tagNounAbstractSString": "ball",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Ball",
+    "tagNameFullString": "NounAbs Ball",
     "tagNameAltString": "NOA_BAL"
   },
   {
     "tagNounAbstractString": "crowns",
     "tagNounAbstractSString": "crown",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Crown",
+    "tagNameFullString": "NounAbs Crown",
     "tagNameAltString": "NOA_CRO"
   },
   {
     "tagNounAbstractString": "double crown",
     "tagNounAbstractSString": "double crown",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun DoubleCrown",
+    "tagNameFullString": "NounAbs DoubleCrown",
     "tagNameAltString": "NOA_DCR"
   },
   {
     "tagNounAbstractString": "figures",
     "tagNounAbstractSString": "figure",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Figure",
+    "tagNameFullString": "NounAbs Figure",
     "tagNameAltString": "NOA_FIG"
   },
   {
     "tagNounAbstractString": "guns",
     "tagNounAbstractSString": "gun",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Gun",
+    "tagNameFullString": "NounAbs Gun",
     "tagNameAltString": "NOA_GUN"
   },
   {
     "tagNounAbstractString": "hierogliphs",
     "tagNounAbstractSString": "hierogliph",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Hierogliph",
+    "tagNameFullString": "NounAbs Hierogliph",
     "tagNameAltString": "NOA_HIE"
   },
   {
     "tagNounAbstractString": "Iraq",
     "tagNounAbstractSString": "Iraq",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Iraq",
+    "tagNameFullString": "NounAbs Iraq",
     "tagNameAltString": "NOA_IRQ"
   },
   {
     "tagNounAbstractString": "Italy",
     "tagNounAbstractSString": "Italy",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Italy",
+    "tagNameFullString": "NounAbs Italy",
     "tagNameAltString": "NOA_ITA"
   },
   {
     "tagNounAbstractString": "papers",
     "tagNounAbstractSString": "paper",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Paper",
+    "tagNameFullString": "NounAbs Paper",
     "tagNameAltString": "NOA_PAP"
   },
   {
     "tagNounAbstractString": "plaques",
     "tagNounAbstractSString": "plaque",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Plaque",
+    "tagNameFullString": "NounAbs Plaque",
     "tagNameAltString": "NOA_PLA"
   },
   {
     "tagNounAbstractString": "Rome",
     "tagNounAbstractSString": "Rome",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Rome",
+    "tagNameFullString": "NounAbs Rome",
     "tagNameAltString": "NOA_ROM"
   },
   {
     "tagNounAbstractString": "Russia",
     "tagNounAbstractSString": "Russia",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Russia",
+    "tagNameFullString": "NounAbs Russia",
     "tagNameAltString": "NOA_RUS"
   },
   {
     "tagNounAbstractString": "statues",
     "tagNounAbstractSString": "statue",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Statue",
+    "tagNameFullString": "NounAbs Statue",
     "tagNameAltString": "NOA_STA"
   },
   {
     "tagNounAbstractString": "stones",
     "tagNounAbstractSString": "stone",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Stone",
+    "tagNameFullString": "NounAbs Stone",
     "tagNameAltString": "NOA_STO"
   },
   {
     "tagNounAbstractString": "water",
     "tagNounAbstractSString": "water",
     "tagTypeString": "NOA",
-    "tagNameFullString": "Noun Water",
+    "tagNameFullString": "NounAbs Water",
     "tagNameAltString": "NOA_WAT"
   }
 ]

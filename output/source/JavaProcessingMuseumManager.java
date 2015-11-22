@@ -75,7 +75,7 @@ int                         menuHeightInt                                   ;
 int                         leftMenuXInt                                    ;
 int                         rightMenuXInt                                   ;
 int                         menuYInt                                        ;
-int                         addMuseumGroupHeightInt                         = 450;
+int                         addMuseumGroupHeightInt                         = 462;
 int                         addPlayerGroupHeightInt                         = 144;
 int                         addTagGroupHeightInt                            = 245;
 int                         editMuseumGroupHeightInt                        = 100;
@@ -105,7 +105,7 @@ boolean                     buttonOpenCloseBoolean                          = fa
 int                         biggestPlayerIndexInt                           = 0                             ;
 int                         nextBiggestPlayerIndexInt                       = 0                             ;
 int                         museumObjectFullThresholdInt                    = 0                             ;
-int                         playerAmountInt                                 = 100                           ;
+int                         playerAmountInt                                 = 30                            ;
 
 JSONArray                   exhibitionSaveJSONArrayObject                   = new JSONArray();
 JSONArray                   floorSaveJSONArrayObject                        = new JSONArray();
@@ -348,9 +348,9 @@ public void setup(){
     for(int i = 0; i < roomObjectList                           .size(); i ++){ roomObjectList                                  .get(i).SetIndexInsideVoid(); }
     for(int i = 0; i < exhibitionObjectList                     .size(); i ++){ exhibitionObjectList                            .get(i).SetIndexInsideVoid(); }
     /*Populate String list.*/
-    for(int i = 0; i < exhibitionObjectList                     .size(); i ++){ exhibitionNameAltStringList                     .add(     exhibitionObjectList                  .get(i).nameAltString    ); floorNameFullStringList                         .add(exhibitionObjectList                   .get(i).nameFullString   ); }
-    for(int i = 0; i < floorObjectList                          .size(); i ++){ floorNameAltStringList                          .add(     floorObjectList                       .get(i).nameAltString    ); roomNameFullStringList                          .add(floorObjectList                        .get(i).nameFullString   ); }
-    for(int i = 0; i < roomObjectList                           .size(); i ++){ roomNameAltStringList                           .add(     roomObjectList                        .get(i).nameAltString    ); exhibitionNameFullStringList                    .add(roomObjectList                         .get(i).nameFullString   ); }
+    for(int i = 0; i < exhibitionObjectList                     .size(); i ++){ exhibitionNameAltStringList                     .add(     exhibitionObjectList                  .get(i).nameAltString    ); exhibitionNameFullStringList                    .add(exhibitionObjectList                   .get(i).nameFullString   ); }
+    for(int i = 0; i < floorObjectList                          .size(); i ++){ floorNameAltStringList                          .add(     floorObjectList                       .get(i).nameAltString    ); floorNameFullStringList                         .add(floorObjectList                        .get(i).nameFullString   ); }
+    for(int i = 0; i < roomObjectList                           .size(); i ++){ roomNameAltStringList                           .add(     roomObjectList                        .get(i).nameAltString    ); roomNameFullStringList                          .add(roomObjectList                         .get(i).nameFullString   ); }
     for(int i = 0; i < playerObjectList                         .size(); i ++){ playerStringList                                .add("" + playerObjectList                      .get(i).playerIndexInt   ); }
     for(int i = 0; i < adjectiveTagObjectList                   .size(); i ++){ adjectiveTagNameAltStringList                   .add(     adjectiveTagObjectList                .get(i).tagNameAltString ); adjectiveTagNameFullStringList                  .add(adjectiveTagObjectList                 .get(i).tagNameFullString); }
     for(int i = 0; i < adverbTagObjectList                      .size(); i ++){ adverbTagNameAltStringList                      .add(     adverbTagObjectList                   .get(i).tagNameAltString ); adverbTagNameFullStringList                     .add(adverbTagObjectList                    .get(i).tagNameFullString); }
@@ -654,117 +654,117 @@ public void LoadVoid(){
         };
 
         subjectTagObjectList                            = Arrays.asList(
-            new Tag(new Name("SUB_NAP", "Subject Napoleon"              ), "SUB", "Napoleon"           , "Napoleon's"               ),
-            new Tag(new Name("SUB_WAS", "Subject Washington"            ), "SUB", "Washington"         , "Washington's"             ),
-            new Tag(new Name("SUB_ASS", "Subject Assasin"               ), "SUB", "assasin"            , "assasin's"                ),
-            new Tag(new Name("SUB_BOD", "Subject Bodhisattva"           ), "SUB", "Bodhisattva"        , "Bodhisattva's"            ),
-            new Tag(new Name("SUB_BUD", "Subject Buddha"                ), "SUB", "Buddha"             , "Buddha's"                 ),
-            new Tag(new Name("SUB_DIM", "Subject Dimitri"               ), "SUB", "Dimitri"            , "Dimitri's"                ),
-            new Tag(new Name("SUB_DMI", "Subject DimitriMitropoulos"    ), "SUB", "Dimitri Mitropoulos", "Dimitri Mitropoulos'"     ),
-            new Tag(new Name("SUB_DRA", "Subject Dragon"                ), "SUB", "dragon"             , "dragon's"                 ),
-            new Tag(new Name("SUB_FIR", "Subject TheFirst"              ), "SUB", "the first"          , "the first's"              ),
-            new Tag(new Name("SUB_IRQ", "Subject Iraqi"                 ), "SUB", "iraqi"              , "iraqi's"                  ),
-            new Tag(new Name("SUB_ITA", "Subject Italian"               ), "SUB", "italian"            , "italian's"                ),
-            new Tag(new Name("SUB_JUC", "Subject JuliusCaesar"          ), "SUB", "Julius Caesar"      , "Julius Caesar's"          ),
-            new Tag(new Name("SUB_JUL", "Subject Julius"                ), "SUB", "Julius"             , "Julius'"                  ),
-            new Tag(new Name("SUB_KIL", "Subject Killer"                ), "SUB", "killer"             , "killer's"                 ),
-            new Tag(new Name("SUB_KOS", "Subject Koshchey"              ), "SUB", "Koshchey"           , "Koshchey's"               ),
-            new Tag(new Name("SUB_MAR", "Subject Maria"                 ), "SUB", "Maria"              , "Maria's"                  ),
-            new Tag(new Name("SUB_MED", "Subject Medusa"                ), "SUB", "Medusa"             , "Medusa's"                 ),
-            new Tag(new Name("SUB_MMO", "Subject MariaMorevna"          ), "SUB", "Maria Morevna"      , "Maria Morevna's"          ),
-            new Tag(new Name("SUB_PAI", "Subject Painter"               ), "SUB", "painter"            , "painter's"                ),
-            new Tag(new Name("SUB_ROM", "Subject Romanian"              ), "SUB", "romanian"           , "romanian's"               ),
-            new Tag(new Name("SUB_RUS", "Subject Russian"               ), "SUB", "russian"            , "russian's"                ),
-            new Tag(new Name("SUB_SPH", "Subject Sphinx"                ), "SUB", "Sphinx"             , "Sphinx's"                 )
+            new Tag(new Name("SUB_NAP", "Subject Napoleon"                      ), "SUB", "Napoleon"           , "Napoleon's"               ),
+            new Tag(new Name("SUB_WAS", "Subject Washington"                    ), "SUB", "Washington"         , "Washington's"             ),
+            new Tag(new Name("SUB_ASS", "Subject Assasin"                       ), "SUB", "assasin"            , "assasin's"                ),
+            new Tag(new Name("SUB_BOD", "Subject Bodhisattva"                   ), "SUB", "Bodhisattva"        , "Bodhisattva's"            ),
+            new Tag(new Name("SUB_BUD", "Subject Buddha"                        ), "SUB", "Buddha"             , "Buddha's"                 ),
+            new Tag(new Name("SUB_DIM", "Subject Dimitri"                       ), "SUB", "Dimitri"            , "Dimitri's"                ),
+            new Tag(new Name("SUB_DMI", "Subject DimitriMitropoulos"            ), "SUB", "Dimitri Mitropoulos", "Dimitri Mitropoulos'"     ),
+            new Tag(new Name("SUB_DRA", "Subject Dragon"                        ), "SUB", "dragon"             , "dragon's"                 ),
+            new Tag(new Name("SUB_FIR", "Subject TheFirst"                      ), "SUB", "the first"          , "the first's"              ),
+            new Tag(new Name("SUB_IRQ", "Subject Iraqi"                         ), "SUB", "iraqi"              , "iraqi's"                  ),
+            new Tag(new Name("SUB_ITA", "Subject Italian"                       ), "SUB", "italian"            , "italian's"                ),
+            new Tag(new Name("SUB_JUC", "Subject JuliusCaesar"                  ), "SUB", "Julius Caesar"      , "Julius Caesar's"          ),
+            new Tag(new Name("SUB_JUL", "Subject Julius"                        ), "SUB", "Julius"             , "Julius'"                  ),
+            new Tag(new Name("SUB_KIL", "Subject Killer"                        ), "SUB", "killer"             , "killer's"                 ),
+            new Tag(new Name("SUB_KOS", "Subject Koshchey"                      ), "SUB", "Koshchey"           , "Koshchey's"               ),
+            new Tag(new Name("SUB_MAR", "Subject Maria"                         ), "SUB", "Maria"              , "Maria's"                  ),
+            new Tag(new Name("SUB_MED", "Subject Medusa"                        ), "SUB", "Medusa"             , "Medusa's"                 ),
+            new Tag(new Name("SUB_MMO", "Subject MariaMorevna"                  ), "SUB", "Maria Morevna"      , "Maria Morevna's"          ),
+            new Tag(new Name("SUB_PAI", "Subject Painter"                       ), "SUB", "painter"            , "painter's"                ),
+            new Tag(new Name("SUB_ROM", "Subject Romanian"                      ), "SUB", "romanian"           , "romanian's"               ),
+            new Tag(new Name("SUB_RUS", "Subject Russian"                       ), "SUB", "russian"            , "russian's"                ),
+            new Tag(new Name("SUB_SPH", "Subject Sphinx"                        ), "SUB", "Sphinx"             , "Sphinx's"                 )
         );
         intransitiveVerbTagObjectList                   = Arrays.asList(
-            new Tag(new Name("IVR_CAL", "Verb Call"                     ), "IVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
-            new Tag(new Name("IVR_DRI", "Verb Drink"                    ), "IVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
-            new Tag(new Name("IVR_EAT", "Verb Eat"                      ), "IVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
-            new Tag(new Name("IVR_JUM", "Verb Jump"                     ), "IVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
-            new Tag(new Name("IVR_PAI", "Verb Paint"                    ), "IVR", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
-            new Tag(new Name("IVR_RUN", "Verb Run"                      ), "IVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
-            new Tag(new Name("IVR_SIN", "Verb Sing"                     ), "IVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
-            new Tag(new Name("IVR_SIT", "Verb Sit"                      ), "IVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
-            new Tag(new Name("IVR_SLE", "Verb Sleep"                    ), "IVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
-            new Tag(new Name("IVR_TAL", "Verb Talk"                     ), "IVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
+            new Tag(new Name("IVR_CAL", "IntransitiveVerb Call"                 ), "IVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
+            new Tag(new Name("IVR_DRI", "IntransitiveVerb Drink"                ), "IVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
+            new Tag(new Name("IVR_EAT", "IntransitiveVerb Eat"                  ), "IVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
+            new Tag(new Name("IVR_JUM", "IntransitiveVerb Jump"                 ), "IVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
+            new Tag(new Name("IVR_PAI", "IntransitiveVerb Paint"                ), "IVR", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
+            new Tag(new Name("IVR_RUN", "IntransitiveVerb Run"                  ), "IVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
+            new Tag(new Name("IVR_SIN", "IntransitiveVerb Sing"                 ), "IVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
+            new Tag(new Name("IVR_SIT", "IntransitiveVerb Sit"                  ), "IVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
+            new Tag(new Name("IVR_SLE", "IntransitiveVerb Sleep"                ), "IVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
+            new Tag(new Name("IVR_TAL", "IntransitiveVerb Talk"                 ), "IVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
         );
         negativeIntransitiveVerbTagObjectList           = Arrays.asList(
-            new Tag(new Name("NIV_ASS", "Verb Assasinate"               ), "NIV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
-            new Tag(new Name("NIV_DIE", "Verb Die"                      ), "NIV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
-            new Tag(new Name("NIV_KIL", "Verb Kill"                     ), "NIV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
+            new Tag(new Name("NIV_ASS", "NegativeIntransitiveVerb Assasinate"   ), "NIV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
+            new Tag(new Name("NIV_DIE", "NegativeIntransitiveVerb Die"          ), "NIV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
+            new Tag(new Name("NIV_KIL", "NegativeIntransitiveVerb Kill"         ), "NIV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
         );
         transitiveVerbTagObjectList                     = Arrays.asList(
-            new Tag(new Name("TVR_CAL", "Verb Call"                     ), "TVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
-            new Tag(new Name("TVR_DRI", "Verb Drink"                    ), "TVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
-            new Tag(new Name("TVR_EAT", "Verb Eat"                      ), "TVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
-            new Tag(new Name("TVR_JUM", "Verb Jump"                     ), "TVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
-            new Tag(new Name("TVR_PAI", "Verb Paint"                    ), "TVR", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
-            new Tag(new Name("TVR_RUN", "Verb Run"                      ), "TVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
-            new Tag(new Name("TVR_SIN", "Verb Sing"                     ), "TVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
-            new Tag(new Name("TVR_SIT", "Verb Sit"                      ), "TVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
-            new Tag(new Name("TVR_SLE", "Verb Sleep"                    ), "TVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
-            new Tag(new Name("TVR_TAL", "Verb Talk"                     ), "TVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
+            new Tag(new Name("TVR_CAL", "TransitiveVerb Call"                   ), "TVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
+            new Tag(new Name("TVR_DRI", "TransitiveVerb Drink"                  ), "TVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
+            new Tag(new Name("TVR_EAT", "TransitiveVerb Eat"                    ), "TVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
+            new Tag(new Name("TVR_JUM", "TransitiveVerb Jump"                   ), "TVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
+            new Tag(new Name("TVR_PAI", "TransitiveVerb Paint"                  ), "TVR", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
+            new Tag(new Name("TVR_RUN", "TransitiveVerb Run"                    ), "TVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
+            new Tag(new Name("TVR_SIN", "TransitiveVerb Sing"                   ), "TVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
+            new Tag(new Name("TVR_SIT", "TransitiveVerb Sit"                    ), "TVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
+            new Tag(new Name("TVR_SLE", "TransitiveVerb Sleep"                  ), "TVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
+            new Tag(new Name("TVR_TAL", "TransitiveVerb Talk"                   ), "TVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
         );
         negativeTransitiveVerbTagObjectList             = Arrays.asList(
-            new Tag(new Name("NTV_ASS", "Verb Assasinate"               ), "NTV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
-            new Tag(new Name("NTV_DIE", "Verb Die"                      ), "NTV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
-            new Tag(new Name("NTV_KIL", "Verb Kill"                     ), "NTV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
+            new Tag(new Name("NTV_ASS", "NegativeTransitiveVerb Assasinate"     ), "NTV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
+            new Tag(new Name("NTV_DIE", "NegativeTransitiveVerb Die"            ), "NTV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
+            new Tag(new Name("NTV_KIL", "NegativeTransitiveVerb Kill"           ), "NTV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
         );
         nounAbstractTagObjectList                       = Arrays.asList(
-            new Tag(new Name("NOA_ANK", "Noun Anklet"                   ), "NOA", "anklet"          , "anklets"         ),
-            new Tag(new Name("NOA_BAL", "Noun Ball"                     ), "NOA", "ball"            , "balls"           ),
-            new Tag(new Name("NOA_CRO", "Noun Crown"                    ), "NOA", "crown"           , "crowns"          ),
-            new Tag(new Name("NOA_DCR", "Noun DoubleCrown"              ), "NOA", "double crown"    , "double crown"    ),
-            new Tag(new Name("NOA_FIG", "Noun Figure"                   ), "NOA", "figure"          , "figures"         ),
-            new Tag(new Name("NOA_GUN", "Noun Gun"                      ), "NOA", "gun"             , "guns"            ),
-            new Tag(new Name("NOA_HIE", "Noun Hierogliph"               ), "NOA", "hierogliph"      , "hierogliphs"     ),
-            new Tag(new Name("NOA_IRQ", "Noun Iraq"                     ), "NOA", "Iraq"            , "Iraq"            ),
-            new Tag(new Name("NOA_ITA", "Noun Italy"                    ), "NOA", "Italy"           , "Italy"           ),
-            new Tag(new Name("NOA_PAP", "Noun Paper"                    ), "NOA", "paper"           , "papers"          ),
-            new Tag(new Name("NOA_PLA", "Noun Plaque"                   ), "NOA", "plaque"          , "plaques"         ),
-            new Tag(new Name("NOA_ROM", "Noun Rome"                     ), "NOA", "Rome"            , "Rome"            ),
-            new Tag(new Name("NOA_RUS", "Noun Russia"                   ), "NOA", "Russia"          , "Russia"          ),
-            new Tag(new Name("NOA_STA", "Noun Statue"                   ), "NOA", "statue"          , "statues"         ),
-            new Tag(new Name("NOA_STO", "Noun Stone"                    ), "NOA", "stone"           , "stones"          ),
-            new Tag(new Name("NOA_WAT", "Noun Water"                    ), "NOA", "water"           , "water"           )
+            new Tag(new Name("NOA_ANK", "NounAbs Anklet"                        ), "NOA", "anklet"          , "anklets"         ),
+            new Tag(new Name("NOA_BAL", "NounAbs Ball"                          ), "NOA", "ball"            , "balls"           ),
+            new Tag(new Name("NOA_CRO", "NounAbs Crown"                         ), "NOA", "crown"           , "crowns"          ),
+            new Tag(new Name("NOA_DCR", "NounAbs DoubleCrown"                   ), "NOA", "double crown"    , "double crown"    ),
+            new Tag(new Name("NOA_FIG", "NounAbs Figure"                        ), "NOA", "figure"          , "figures"         ),
+            new Tag(new Name("NOA_GUN", "NounAbs Gun"                           ), "NOA", "gun"             , "guns"            ),
+            new Tag(new Name("NOA_HIE", "NounAbs Hierogliph"                    ), "NOA", "hierogliph"      , "hierogliphs"     ),
+            new Tag(new Name("NOA_IRQ", "NounAbs Iraq"                          ), "NOA", "Iraq"            , "Iraq"            ),
+            new Tag(new Name("NOA_ITA", "NounAbs Italy"                         ), "NOA", "Italy"           , "Italy"           ),
+            new Tag(new Name("NOA_PAP", "NounAbs Paper"                         ), "NOA", "paper"           , "papers"          ),
+            new Tag(new Name("NOA_PLA", "NounAbs Plaque"                        ), "NOA", "plaque"          , "plaques"         ),
+            new Tag(new Name("NOA_ROM", "NounAbs Rome"                          ), "NOA", "Rome"            , "Rome"            ),
+            new Tag(new Name("NOA_RUS", "NounAbs Russia"                        ), "NOA", "Russia"          , "Russia"          ),
+            new Tag(new Name("NOA_STA", "NounAbs Statue"                        ), "NOA", "statue"          , "statues"         ),
+            new Tag(new Name("NOA_STO", "NounAbs Stone"                         ), "NOA", "stone"           , "stones"          ),
+            new Tag(new Name("NOA_WAT", "NounAbs Water"                         ), "NOA", "water"           , "water"           )
         );
         nounTagObjectList                               = Arrays.asList(
-            new Tag(new Name("NOU_ANK", "Noun Anklet"                   ), "NOU", "anklet"          , "anklets"         ),
-            new Tag(new Name("NOU_BAL", "Noun Ball"                     ), "NOU", "ball"            , "balls"           ),
-            new Tag(new Name("NOU_CRO", "Noun Crown"                    ), "NOU", "crown"           , "crowns"          ),
-            new Tag(new Name("NOU_DCR", "Noun DoubleCrown"              ), "NOU", "double crown"    , "double crown"    ),
-            new Tag(new Name("NOU_FIG", "Noun Figure"                   ), "NOU", "figure"          , "figures"         ),
-            new Tag(new Name("NOU_GUN", "Noun Gun"                      ), "NOU", "gun"             , "guns"            ),
-            new Tag(new Name("NOU_HIE", "Noun Hierogliph"               ), "NOU", "hierogliph"      , "hierogliphs"     ),
-            new Tag(new Name("NOU_IRQ", "Noun Iraq"                     ), "NOU", "Iraq"            , "Iraq"            ),
-            new Tag(new Name("NOU_ITA", "Noun Italy"                    ), "NOU", "Italy"           , "Italy"           ),
-            new Tag(new Name("NOU_PAP", "Noun Paper"                    ), "NOU", "paper"           , "papers"          ),
-            new Tag(new Name("NOU_PLA", "Noun Plaque"                   ), "NOU", "plaque"          , "plaques"         ),
-            new Tag(new Name("NOU_ROM", "Noun Rome"                     ), "NOU", "Rome"            , "Rome"            ),
-            new Tag(new Name("NOU_RUS", "Noun Russia"                   ), "NOU", "Russia"          , "Russia"          ),
-            new Tag(new Name("NOU_STA", "Noun Statue"                   ), "NOU", "statue"          , "statues"         ),
-            new Tag(new Name("NOU_STO", "Noun Stone"                    ), "NOU", "stone"           , "stones"          ),
-            new Tag(new Name("NOU_WAT", "Noun Water"                    ), "NOU", "water"           , "water"           )
+            new Tag(new Name("NOU_ANK", "Noun Anklet"                           ), "NOU", "anklet"          , "anklets"         ),
+            new Tag(new Name("NOU_BAL", "Noun Ball"                             ), "NOU", "ball"            , "balls"           ),
+            new Tag(new Name("NOU_CRO", "Noun Crown"                            ), "NOU", "crown"           , "crowns"          ),
+            new Tag(new Name("NOU_DCR", "Noun DoubleCrown"                      ), "NOU", "double crown"    , "double crown"    ),
+            new Tag(new Name("NOU_FIG", "Noun Figure"                           ), "NOU", "figure"          , "figures"         ),
+            new Tag(new Name("NOU_GUN", "Noun Gun"                              ), "NOU", "gun"             , "guns"            ),
+            new Tag(new Name("NOU_HIE", "Noun Hierogliph"                       ), "NOU", "hierogliph"      , "hierogliphs"     ),
+            new Tag(new Name("NOU_IRQ", "Noun Iraq"                             ), "NOU", "Iraq"            , "Iraq"            ),
+            new Tag(new Name("NOU_ITA", "Noun Italy"                            ), "NOU", "Italy"           , "Italy"           ),
+            new Tag(new Name("NOU_PAP", "Noun Paper"                            ), "NOU", "paper"           , "papers"          ),
+            new Tag(new Name("NOU_PLA", "Noun Plaque"                           ), "NOU", "plaque"          , "plaques"         ),
+            new Tag(new Name("NOU_ROM", "Noun Rome"                             ), "NOU", "Rome"            , "Rome"            ),
+            new Tag(new Name("NOU_RUS", "Noun Russia"                           ), "NOU", "Russia"          , "Russia"          ),
+            new Tag(new Name("NOU_STA", "Noun Statue"                           ), "NOU", "statue"          , "statues"         ),
+            new Tag(new Name("NOU_STO", "Noun Stone"                            ), "NOU", "stone"           , "stones"          ),
+            new Tag(new Name("NOU_WAT", "Noun Water"                            ), "NOU", "water"           , "water"           )
         );
         adjectiveTagObjectList                          = Arrays.asList(
-            new Tag(new Name("ADJ_BAD", "Adjective Excellent"           ), "ADJ", "excellent"   ),
-            new Tag(new Name("ADJ_CRO", "Adjective Crossed"             ), "ADJ", "crossed"     ),
-            new Tag(new Name("ADJ_GOD", "Adjective Good"                ), "ADJ", "good"        ),
-            new Tag(new Name("ADJ_HAR", "Adjective Hard"                ), "ADJ", "hard"        ),
-            new Tag(new Name("ADJ_SOF", "Adjective Soft"                ), "ADJ", "soft"        )
+            new Tag(new Name("ADJ_BAD", "Adjective Excellent"                   ), "ADJ", "excellent"       ),
+            new Tag(new Name("ADJ_CRO", "Adjective Crossed"                     ), "ADJ", "crossed"         ),
+            new Tag(new Name("ADJ_GOD", "Adjective Good"                        ), "ADJ", "good"            ),
+            new Tag(new Name("ADJ_HAR", "Adjective Hard"                        ), "ADJ", "hard"            ),
+            new Tag(new Name("ADJ_SOF", "Adjective Soft"                        ), "ADJ", "soft"            )
         );
         negativeAdjectiveTagObjectList                  = Arrays.asList(
-            new Tag(new Name("NDJ_AWF", "Adjective Awful"               ), "NDJ", "awful"),
-            new Tag(new Name("NDJ_BAD", "Adjective Bad"                 ), "NDJ", "bad")
+            new Tag(new Name("NDJ_AWF", "NegativeAdjective Awful"               ), "NDJ", "awful"           ),
+            new Tag(new Name("NDJ_BAD", "NegativeAdjective Bad"                 ), "NDJ", "bad"             )
         );
         adverbTagObjectList                             = Arrays.asList(
-            new Tag(new Name("ADV_PER", "Adverb Perfectly"              ), "ADV", "perfectly"),
-            new Tag(new Name("ADV_QUI", "Adverb Quickly"                ), "ADV", "quickly")
+            new Tag(new Name("ADV_PER", "Adverb Perfectly"                      ), "ADV", "perfectly"       ),
+            new Tag(new Name("ADV_QUI", "Adverb Quickly"                        ), "ADV", "quickly"         )
         );
         negativeAdverbTagObjectList                     = Arrays.asList(
-            new Tag(new Name("NDV_DES", "Adverb Desperately"            ), "NDV", "desperately"),
-            new Tag(new Name("NDV_SLO", "Adverb Slowly"                 ), "NDV", "slowly")
+            new Tag(new Name("NDV_DES", "NegativeAdverb Desperately"            ), "NDV", "desperately"     ),
+            new Tag(new Name("NDV_SLO", "NegativeAdverb Slowly"                 ), "NDV", "slowly"          )
         );
         floorObjectList                                 = Arrays.asList(
             new ObjectMuseum(new Name("FLR_001", "First Floor"                                                  ), "XXX_XXX", "FLR", exampleExplanationStringArray, AssignRandomTagArray(adjectiveTagObjectList, adverbTagObjectList, intransitiveVerbTagObjectList, negativeAdjectiveTagObjectList, negativeAdverbTagObjectList, negativeIntransitiveVerbTagObjectList, negativeTransitiveVerbTagObjectList, nounAbstractTagObjectList, nounTagObjectList, subjectTagObjectList, transitiveVerbTagObjectList)),
@@ -3021,7 +3021,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("PARENT OBJECT:")
                                             .setPosition                                (guiElement4ColumnSecondColumnXInt, guiLayoutOffsetInt)
-                                            .setSize                                    (((guiElement4ColumnWidth*3) + (guiLayoutOffsetInt*2)), guiScrollableList5RowHeightInt)
+                                            .setSize                                    (((guiElement4ColumnWidth*3) + (guiLayoutOffsetInt*2)), guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3031,7 +3031,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setColorValue                              (255)
                                             .setGroup                                   (addMuseumGroupObject)
-                                            .setPosition                                (guiElement1ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setPosition                                (guiElement1ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList4RowHeightInt))
                                             .setText                                    ("*YOU CAN ADD MULTIPLE TAGS\nBUT MINIMUM ONE TAG IN EACH CATEGORY.");
 
 
@@ -3042,8 +3042,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("SUBJECT TAG:")
-                                            .setPosition                                (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                    (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList4RowHeightInt))
+                                            .setSize                                    (guiElement2ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3054,8 +3054,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("INTRANSITIVE VERB TAG:")
-                                            .setPosition                                (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList5RowHeightInt))
-                                            .setSize                                    (guiElement2ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*5) + guiScrollableList4RowHeightInt))
+                                            .setSize                                    (guiElement2ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3066,8 +3066,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setLabel                                   ("NEGATIVE INTRANSITIVE TAG:")
                                             .setGroup                                   (addMuseumGroupObject)
-                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList4RowHeightInt*2)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3078,8 +3078,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("TRANSITIVE VERB TAG:")
-                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList4RowHeightInt*2)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3090,8 +3090,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("NEGATIVE TRANSITIVE VERB TAG:")
-                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList5RowHeightInt*2)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*6) + (guiScrollableList4RowHeightInt*2)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3102,8 +3102,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("NOUN TAG:")
-                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList4RowHeightInt*3)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3114,8 +3114,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("NOUN ABSTRACT TAG:")
-                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList4RowHeightInt*3)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3126,8 +3126,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("ADJECTIVE TAG:")
-                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList5RowHeightInt*3)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*7) + (guiScrollableList4RowHeightInt*3)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3138,8 +3138,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("NEGATIVE ADJECTIVE TAG:")
-                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList4RowHeightInt*4)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3150,8 +3150,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("ADVERB TAG:")
-                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList4RowHeightInt*4)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3162,8 +3162,8 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (falseCheckListCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("NEGATIVE ADVERB TAG:")
-                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList5RowHeightInt*4)))
-                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*8) + (guiScrollableList4RowHeightInt*4)))
+                                            .setSize                                    (guiElement3ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                                    (ControlP5.LIST);
 
 
@@ -3173,7 +3173,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("EXPLANATION 1:")
-                                            .setPosition                                (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                                (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList4RowHeightInt*5)))
                                             .setSize                                    (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -3183,7 +3183,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("EXPLANATION 2:")
-                                            .setPosition                                (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                                (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*9) + (guiScrollableList4RowHeightInt*5)))
                                             .setSize                                    (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -3193,7 +3193,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("EXPLANATION 3:")
-                                            .setPosition                                (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*13) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                                (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*13) + (guiScrollableList4RowHeightInt*5)))
                                             .setSize                                    (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -3203,7 +3203,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("EXPLANATION 4:")
-                                            .setPosition                                (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*13) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                                (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*13) + (guiScrollableList4RowHeightInt*5)))
                                             .setSize                                    (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -3212,7 +3212,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("NAME FULL")
-                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList5RowHeightInt*5)))
+                                            .setPosition                                (guiElement3ColumnFirstColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList4RowHeightInt*5)))
                                             .setSize                                    (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -3222,7 +3222,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("NAME ALTERNATIVE")
-                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList5RowHeightInt*4)))
+                                            .setPosition                                (guiElement3ColumnSecondColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList4RowHeightInt*5)))
                                             .setSize                                    (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -3232,7 +3232,7 @@ class AddMuseumGroupGUIObject extends GroupGUIObject{
                                             .setColor                                   (defaultCColor)
                                             .setGroup                                   (addMuseumGroupObject)
                                             .setLabel                                   ("ADD MUSEUM OBJECT")
-                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList5RowHeightInt*4)))
+                                            .setPosition                                (guiElement3ColumnThirdColumnXInt, ((guiLayoutOffsetInt*17) + (guiScrollableList4RowHeightInt*5)))
                                             .setSize                                    (guiElement3ColumnWidth, guiElement2LineHeight);
 
 
@@ -4978,7 +4978,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("SELECT TAG:")
                                             .setPosition            (guiElement1ColumnFirstColumnXInt, guiLayoutOffsetInt)
-                                            .setSize                (guiElement1ColumnWidth, guiScrollableList5RowHeightInt)
+                                            .setSize                (guiElement1ColumnWidth, guiScrollableList4RowHeightInt)
                                             .setType                (ControlP5.LIST);
 
 
@@ -4988,7 +4988,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("TAG NAME FULL:")
-                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setPosition            (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList4RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -4998,7 +4998,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("TAG NAME ALT:")
-                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList5RowHeightInt))
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*2) + guiScrollableList4RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 
@@ -5337,7 +5337,7 @@ class EditTagGroupGUIObject extends GroupGUIObject{
                                             .setColor               (defaultCColor)
                                             .setGroup               (editTagGroupObject)
                                             .setLabel               ("EDIT TAG")  
-                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList5RowHeightInt))
+                                            .setPosition            (guiElement2ColumnSecondColumnXInt, ((guiLayoutOffsetInt*14) + guiScrollableList4RowHeightInt))
                                             .setSize                (guiElement2ColumnWidth, guiElement2LineHeight);
 
 

@@ -6,7 +6,7 @@
     "tagNegativeIntransitiveVerb3String": "assasinated",
     "tagNegativeIntransitiveVerb1String": "assasinate",
     "tagTypeString": "NIV",
-    "tagNameFullString": "Verb Assasinate",
+    "tagNameFullString": "NegativeIntransitiveVerb Assasinate",
     "tagNameAltString": "NIV_ASS"
   },
   {
@@ -16,7 +16,7 @@
     "tagNegativeIntransitiveVerb3String": "died",
     "tagNegativeIntransitiveVerb1String": "die",
     "tagTypeString": "NIV",
-    "tagNameFullString": "Verb Die",
+    "tagNameFullString": "NegativeIntransitiveVerb Die",
     "tagNameAltString": "NIV_DIE"
   },
   {
@@ -26,7 +26,7 @@
     "tagNegativeIntransitiveVerb3String": "killed",
     "tagNegativeIntransitiveVerb1String": "kill",
     "tagTypeString": "NIV",
-    "tagNameFullString": "Verb Kill",
+    "tagNameFullString": "NegativeIntransitiveVerb Kill",
     "tagNameAltString": "NIV_KIL"
   }
 ]

@@ -6,7 +6,7 @@
     "tagIntransitiveVerb1String": "call",
     "tagIntransitiveVerb2String": "called",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Call",
+    "tagNameFullString": "IntransitiveVerb Call",
     "tagNameAltString": "IVR_CAL"
   },
   {
@@ -16,7 +16,7 @@
     "tagIntransitiveVerb1String": "drink",
     "tagIntransitiveVerb2String": "drunk",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Drink",
+    "tagNameFullString": "IntransitiveVerb Drink",
     "tagNameAltString": "IVR_DRI"
   },
   {
@@ -26,7 +26,7 @@
     "tagIntransitiveVerb1String": "eat",
     "tagIntransitiveVerb2String": "ate",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Eat",
+    "tagNameFullString": "IntransitiveVerb Eat",
     "tagNameAltString": "IVR_EAT"
   },
   {
@@ -36,7 +36,7 @@
     "tagIntransitiveVerb1String": "jump",
     "tagIntransitiveVerb2String": "jumped",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Jump",
+    "tagNameFullString": "IntransitiveVerb Jump",
     "tagNameAltString": "IVR_JUM"
   },
   {
@@ -46,7 +46,7 @@
     "tagIntransitiveVerb1String": "paint",
     "tagIntransitiveVerb2String": "painted",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Paint",
+    "tagNameFullString": "IntransitiveVerb Paint",
     "tagNameAltString": "IVR_PAI"
   },
   {
@@ -56,7 +56,7 @@
     "tagIntransitiveVerb1String": "run",
     "tagIntransitiveVerb2String": "ran",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Run",
+    "tagNameFullString": "IntransitiveVerb Run",
     "tagNameAltString": "IVR_RUN"
   },
   {
@@ -66,7 +66,7 @@
     "tagIntransitiveVerb1String": "sing",
     "tagIntransitiveVerb2String": "sang",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Sing",
+    "tagNameFullString": "IntransitiveVerb Sing",
     "tagNameAltString": "IVR_SIN"
   },
   {
@@ -76,7 +76,7 @@
     "tagIntransitiveVerb1String": "sit",
     "tagIntransitiveVerb2String": "sat",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Sit",
+    "tagNameFullString": "IntransitiveVerb Sit",
     "tagNameAltString": "IVR_SIT"
   },
   {
@@ -86,7 +86,7 @@
     "tagIntransitiveVerb1String": "sleep",
     "tagIntransitiveVerb2String": "slept",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Sleep",
+    "tagNameFullString": "IntransitiveVerb Sleep",
     "tagNameAltString": "IVR_SLE"
   },
   {
@@ -96,7 +96,7 @@
     "tagIntransitiveVerb1String": "talk",
     "tagIntransitiveVerb2String": "told",
     "tagTypeString": "IVR",
-    "tagNameFullString": "Verb Talk",
+    "tagNameFullString": "IntransitiveVerb Talk",
     "tagNameAltString": "IVR_TAL"
   }
 ]
