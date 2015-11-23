@@ -1,15 +1,5 @@
 [
   {
-    "tagNegativeIntransitiveVerb2String": "assasinated",
-    "tagNegativeIntransitiveVerbSString": "assasinates",
-    "tagNegativeIntransitiveVerbIngString": "assasinating",
-    "tagNegativeIntransitiveVerb3String": "assasinated",
-    "tagNegativeIntransitiveVerb1String": "assasinate",
-    "tagTypeString": "NIV",
-    "tagNameFullString": "NegativeIntransitiveVerb Assasinate",
-    "tagNameAltString": "NIV_ASS"
-  },
-  {
     "tagNegativeIntransitiveVerb2String": "died",
     "tagNegativeIntransitiveVerbSString": "dying",
     "tagNegativeIntransitiveVerbIngString": "dies",
@@ -20,13 +10,13 @@
     "tagNameAltString": "NIV_DIE"
   },
   {
-    "tagNegativeIntransitiveVerb2String": "killed",
-    "tagNegativeIntransitiveVerbSString": "kills",
-    "tagNegativeIntransitiveVerbIngString": "killing",
-    "tagNegativeIntransitiveVerb3String": "killed",
-    "tagNegativeIntransitiveVerb1String": "kill",
+    "tagNegativeIntransitiveVerb2String": "disintegrated",
+    "tagNegativeIntransitiveVerbSString": "disintegrates",
+    "tagNegativeIntransitiveVerbIngString": "disintegrating",
+    "tagNegativeIntransitiveVerb3String": "disintegrated",
+    "tagNegativeIntransitiveVerb1String": "disintegrate",
     "tagTypeString": "NIV",
-    "tagNameFullString": "NegativeIntransitiveVerb Kill",
-    "tagNameAltString": "NIV_KIL"
+    "tagNameFullString": "NegativeIntransitiveVerb Disintegrate",
+    "tagNameAltString": "NIV_DIS"
   }
 ]

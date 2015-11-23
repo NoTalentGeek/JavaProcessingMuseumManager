@@ -10,16 +10,6 @@
     "tagNegativeTransitiveVerb3String": "assasinated"
   },
   {
-    "tagNegativeTransitiveVerb2String": "died",
-    "tagNegativeTransitiveVerb1String": "die",
-    "tagTypeString": "NTV",
-    "tagNameFullString": "NegativeTransitiveVerb Die",
-    "tagNameAltString": "NTV_DIE",
-    "tagNegativeTransitiveVerbSString": "dying",
-    "tagNegativeTransitiveVerbIngString": "dies",
-    "tagNegativeTransitiveVerb3String": "died"
-  },
-  {
     "tagNegativeTransitiveVerb2String": "killed",
     "tagNegativeTransitiveVerb1String": "kill",
     "tagTypeString": "NTV",

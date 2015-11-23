@@ -7,21 +7,9 @@
   },
   {
     "tagTypeString": "ADJ",
-    "tagNameFullString": "Adjective Crossed",
-    "tagNameAltString": "ADJ_CRO",
-    "tagAdjectiveString": "crossed"
-  },
-  {
-    "tagTypeString": "ADJ",
     "tagNameFullString": "Adjective Good",
     "tagNameAltString": "ADJ_GOD",
     "tagAdjectiveString": "good"
-  },
-  {
-    "tagTypeString": "ADJ",
-    "tagNameFullString": "Adjective Hard",
-    "tagNameAltString": "ADJ_HAR",
-    "tagAdjectiveString": "hard"
   },
   {
     "tagTypeString": "ADJ",

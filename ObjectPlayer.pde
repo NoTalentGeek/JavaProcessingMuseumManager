@@ -251,8 +251,9 @@ class ObjectPlayer{
         exhibitionTagCounterNameFullStringList.clear();
         for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
 
-            exhibitionTagCounterList.get(i).SetTagNameAltString (exhibitionTagCounterList.get(i).tagObject.tagNameAltString );
-            exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.tagNameFullString);
+
+            //exhibitionTagCounterList.get(i).SetTagNameAltString (exhibitionTagCounterList.get(i).tagObject.tagNameAltString );
+            //exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.tagNameFullString);
             String  tempTagNameAltString                = "";
             String  tempTagNameFullString               = "";
                     tempTagNameAltString                = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameAltString ());
@@ -892,32 +893,91 @@ class ObjectPlayer{
     String  SentenceWordFixString               (String     _fixString)             { return _fixString.substring(0, 1).toUpperCase() + _fixString.substring(1, _fixString.length()); }
     String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
 
-        /*Subject VerbIng Habit.
-        Subject VerbVerbS to Verb1.
-        Iwill VerbVerb Subject to Verb1.
-        
-        Subject Is Noun.
-        VerbIng A Noun Adv.
-        Habit VerbS Adj.
-        
-        A Adj Adj Noun.
-        A Subject VerbS To Noun.
-        Verb Habit.
-        
-        Noun Verbs.
-        What Subject Was VerbS.
-        Are Adj of NounS.
+        /*
+        The 5 1 6 3s the 1.
+        The ADJECTIVE SUBJECT ADVERB TRANSITIVEVERBS the NOUN.
+        "The / ~ 1 = the <."
+        5, 5 1s 6 3 a 5, 5 1.
+        ADJECTIVE, ADJECTIVE SUBJECT ADVERB TRANSITIVEVERB a ADJECTIVE, ADJECTIVE NOUNS.
+        "/, / ~ 1 ) a /, / >."
+        2 is a 5 1.
+        NOUNABSTRACT is a ADJECTIVE NOUN.
+        ": is a / <."
 
-        As the Subject does Verb1
-        Across the Noun, Subject sees the...
-        Subject Verb in Habit
+
+
+        9, 2!
+        SUBJECT, NOUNABSTRACT!
+        "~, :!"
+        1s 4!
+        NOUNS VERBINTRANSITIVE!
+        "> |!"
+        The 1 4s like a 5 1.
+        The SUBJECT VERBINTRANSITIVES like a ADJECTIVE NOUN.
+        "The ~ $ like a / <."
+
+
+
+        1s 4 like 5 1s.
+        SUBJECT VERBINTRANSITIVES like ADJECTIVE NOUNS.
+        "~ $ like / >."
+        Why does the 1 4?
+        Why does the SUBJECT VERBINTRANSITIVES?
+        "Why does the ~ $?"
+        4 6 like a 5 1.
+        VERBINTRANSITIVE ADVERB like a ADJECTIVE NOUN.
+        "| 1 like a / <."
+
+
+
+        2, 2, and 2.
+        NOUNABSTRACT, NOUNABSTRACT, and NOUNABSTRACT.
+        ":, :, and :."
+        Where is the 5 1?
+        Where is the ADJECTIVE SUBJECT?
+        "Where is the / ~?"
+        All 1s 3 5, 5 1s.
+        All NOUNS VERBTRANSITIVE ADJECTIVE, ADJECTIVE SUBJECT.
+        "All > ) /, / ~."
+
+
+
+        Never 3 a 1.
+        Never VERBTRANSITIVE a NOUN.
+        "2 ) a <."
+        4 6 like a 5 1.
+        VERBINTRANSITIVE ADVERB like a ADJECTIVE NOUN.
+        ") 1 like a / <."
+        The 1 4s like a 5 1.
+        VERBINTRANSITIVE ADVERB like a ADJECTIVE NOUN.
+        "| 1 like a / <."
         */
 
         String[][]  patternStringArray      = new String[][]{
             {
                 "The / ~ 1 = the <."    ,
                 "/, / ~ 1 ) a /, / >."  ,
-                ": is a / <."
+                "< is a / :."
+            },
+            {
+                "~, :!"                 ,
+                ") 1 the ` / <."            ,
+                "The ~ $ a / <."
+            },
+            {
+                "~ $ / >."         ,
+                "Why does the ~ $?"     ,
+                "| 1 a / ~."
+            },
+            {
+                ":, :, and :."          ,
+                "Where is the / ~?"     ,
+                "~ ) /, / <."
+            },
+            {
+                "2 ) a <."              ,
+                "> |!"                  ,
+                "~ $ 1 into a / ~."
             }
         };
 
@@ -967,7 +1027,7 @@ class ObjectPlayer{
                         if(Math.random() <= 0.50){  wordString = subjectPossesionCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectPossesionCurrentPrevTagStringList.size())); }
                     }
             }
-            else    if(scanString.equals("!")){ /*Intransitive verb 1.                */
+            else    if(scanString.equals("|")){ /*Intransitive verb 1.                */
                             if(playerVisitCorrectExhibitionBoolean == true ){ wordString = intransitiveVerb1CurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(intransitiveVerb1CurrentPrevTagStringList.size())); }
                     else    if(playerVisitCorrectExhibitionBoolean == false){
                         if  (Math.random() > 0.80)  { wordString = negativeIntransitiveVerb1CurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(negativeIntransitiveVerb1CurrentPrevTagStringList.size())); }

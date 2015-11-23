@@ -1,15 +1,5 @@
 [
   {
-    "tagIntransitiveVerbIngString": "calling",
-    "tagIntransitiveVerbSString": "calls",
-    "tagIntransitiveVerb3String": "called",
-    "tagIntransitiveVerb1String": "call",
-    "tagIntransitiveVerb2String": "called",
-    "tagTypeString": "IVR",
-    "tagNameFullString": "IntransitiveVerb Call",
-    "tagNameAltString": "IVR_CAL"
-  },
-  {
     "tagIntransitiveVerbIngString": "drinking",
     "tagIntransitiveVerbSString": "drinks",
     "tagIntransitiveVerb3String": "drank",
@@ -88,15 +78,5 @@
     "tagTypeString": "IVR",
     "tagNameFullString": "IntransitiveVerb Sleep",
     "tagNameAltString": "IVR_SLE"
-  },
-  {
-    "tagIntransitiveVerbIngString": "talking",
-    "tagIntransitiveVerbSString": "talks",
-    "tagIntransitiveVerb3String": "told",
-    "tagIntransitiveVerb1String": "talk",
-    "tagIntransitiveVerb2String": "told",
-    "tagTypeString": "IVR",
-    "tagNameFullString": "IntransitiveVerb Talk",
-    "tagNameAltString": "IVR_TAL"
   }
 ]

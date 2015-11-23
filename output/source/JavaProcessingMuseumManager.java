@@ -678,7 +678,6 @@ public void LoadVoid(){
             new Tag(new Name("SUB_SPH", "Subject Sphinx"                        ), "SUB", "Sphinx"             , "Sphinx's"                 )
         );
         intransitiveVerbTagObjectList                   = Arrays.asList(
-            new Tag(new Name("IVR_CAL", "IntransitiveVerb Call"                 ), "IVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
             new Tag(new Name("IVR_DRI", "IntransitiveVerb Drink"                ), "IVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
             new Tag(new Name("IVR_EAT", "IntransitiveVerb Eat"                  ), "IVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
             new Tag(new Name("IVR_JUM", "IntransitiveVerb Jump"                 ), "IVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
@@ -686,72 +685,66 @@ public void LoadVoid(){
             new Tag(new Name("IVR_RUN", "IntransitiveVerb Run"                  ), "IVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
             new Tag(new Name("IVR_SIN", "IntransitiveVerb Sing"                 ), "IVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
             new Tag(new Name("IVR_SIT", "IntransitiveVerb Sit"                  ), "IVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
-            new Tag(new Name("IVR_SLE", "IntransitiveVerb Sleep"                ), "IVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
-            new Tag(new Name("IVR_TAL", "IntransitiveVerb Talk"                 ), "IVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
+            new Tag(new Name("IVR_SLE", "IntransitiveVerb Sleep"                ), "IVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  )
         );
         negativeIntransitiveVerbTagObjectList           = Arrays.asList(
-            new Tag(new Name("NIV_ASS", "NegativeIntransitiveVerb Assasinate"   ), "NIV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
-            new Tag(new Name("NIV_DIE", "NegativeIntransitiveVerb Die"          ), "NIV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
-            new Tag(new Name("NIV_KIL", "NegativeIntransitiveVerb Kill"         ), "NIV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
+            new Tag(new Name("NIV_DIE", "NegativeIntransitiveVerb Die"          ), "NIV", "die"         , "died"            , "died"            , "dies"            , "dying"           ),
+            new Tag(new Name("NIV_DIS", "NegativeIntransitiveVerb Disintegrate" ), "NIV", "disintegrate", "disintegrated"   , "disintegrated"   , "disintegrating"  , "disintegrates"   )
         );
         transitiveVerbTagObjectList                     = Arrays.asList(
-            new Tag(new Name("TVR_CAL", "TransitiveVerb Call"                   ), "TVR", "call"    , "called"  , "called"  , "calling"     , "calls"   ),
-            new Tag(new Name("TVR_DRI", "TransitiveVerb Drink"                  ), "TVR", "drink"   , "drunk"   , "drank"   , "drinking"    , "drinks"  ),
-            new Tag(new Name("TVR_EAT", "TransitiveVerb Eat"                    ), "TVR", "eat"     , "ate"     , "eaten"   , "eating"      , "eats"    ),
-            new Tag(new Name("TVR_JUM", "TransitiveVerb Jump"                   ), "TVR", "jump"    , "jumped"  , "jumped"  , "jumping"     , "jumps"   ),
-            new Tag(new Name("TVR_PAI", "TransitiveVerb Paint"                  ), "TVR", "paint"   , "painted" , "painted" , "painting"    , "paints"  ),
-            new Tag(new Name("TVR_RUN", "TransitiveVerb Run"                    ), "TVR", "run"     , "ran"     , "run"     , "running"     , "runs"    ),
-            new Tag(new Name("TVR_SIN", "TransitiveVerb Sing"                   ), "TVR", "sing"    , "sang"    , "sung"    , "singing"     , "sings"   ),
-            new Tag(new Name("TVR_SIT", "TransitiveVerb Sit"                    ), "TVR", "sit"     , "sat"     , "sat"     , "sitting"     , "sits"    ),
-            new Tag(new Name("TVR_SLE", "TransitiveVerb Sleep"                  ), "TVR", "sleep"   , "slept"   , "slept"   , "sleeping"    , "sleeps"  ),
-            new Tag(new Name("TVR_TAL", "TransitiveVerb Talk"                   ), "TVR", "talk"    , "told"    , "told"    , "talking"     , "talks"   )
+            new Tag(new Name("TVR_BUY", "TransitiveVerb Buy"                    ), "TVR", "buy"     , "bought"  , "bought"  , "buying"      , "buys"        ), 
+            new Tag(new Name("TVR_CAL", "TransitiveVerb Call"                   ), "TVR", "call"    , "called"  , "called"  , "calling"     , "calls"       ),
+            new Tag(new Name("TVR_DES", "TransitiveVerb Desire"                 ), "TVR", "desire"  , "desired" , "desired" , "desiring"    , "desires"     ), 
+            new Tag(new Name("TVR_DRI", "TransitiveVerb Drive"                  ), "TVR", "drive"   , "drove"   , "driven"  , "driving"     , "drives"      ), 
+            new Tag(new Name("TVR_FIG", "TransitiveVerb Fight"                  ), "TVR", "fight"   , "fought"  , "fought"  , "fighting"    , "fights"      ), 
+            new Tag(new Name("TVR_GET", "TransitiveVerb Get"                    ), "TVR", "get"     , "got"     , "gotten"  , "getting"     , "gets"        ), 
+            new Tag(new Name("TVR_GRA", "TransitiveVerb Grab"                   ), "TVR", "grab"    , "grabbed" , "grabbed" , "grabbing"    , "grabs"       ), 
+            new Tag(new Name("TVR_HUS", "TransitiveVerb Hustle"                 ), "TVR", "hustle"  , "hustled" , "hustled" , "hustling"    , "hustles"     ), 
+            new Tag(new Name("TVR_LOV", "TransitiveVerb Love"                   ), "TVR", "love"    , "loved"   , "loved"   , "loving"      , "loves"       ), 
+            new Tag(new Name("TVR_SEL", "TransitiveVerb Sell"                   ), "TVR", "sell"    , "sold"    , "sold"    , "selling"     , "sells"       ), 
+            new Tag(new Name("TVR_SHO", "TransitiveVerb Shove"                  ), "TVR", "shove"   , "shoved"  , "shoved"  , "shoving"     , "shoves"      ), 
+            new Tag(new Name("TVR_TAL", "TransitiveVerb Talk"                   ), "TVR", "talk"    , "told"    , "told"    , "talking"     , "talks"       )
         );
         negativeTransitiveVerbTagObjectList             = Arrays.asList(
             new Tag(new Name("NTV_ASS", "NegativeTransitiveVerb Assasinate"     ), "NTV", "assasinate"  , "assasinated" , "assasinated" , "assasinating"    , "assasinates" ),
-            new Tag(new Name("NTV_DIE", "NegativeTransitiveVerb Die"            ), "NTV", "die"         , "died"        , "died"        , "dies"            , "dying"       ),
             new Tag(new Name("NTV_KIL", "NegativeTransitiveVerb Kill"           ), "NTV", "kill"        , "killed"      , "killed"      , "killing"         , "kills"       )
         );
         nounAbstractTagObjectList                       = Arrays.asList(
-            new Tag(new Name("NOA_ANK", "NounAbs Anklet"                        ), "NOA", "anklet"          , "anklets"         ),
-            new Tag(new Name("NOA_BAL", "NounAbs Ball"                          ), "NOA", "ball"            , "balls"           ),
-            new Tag(new Name("NOA_CRO", "NounAbs Crown"                         ), "NOA", "crown"           , "crowns"          ),
-            new Tag(new Name("NOA_DCR", "NounAbs DoubleCrown"                   ), "NOA", "double crown"    , "double crown"    ),
-            new Tag(new Name("NOA_FIG", "NounAbs Figure"                        ), "NOA", "figure"          , "figures"         ),
-            new Tag(new Name("NOA_GUN", "NounAbs Gun"                           ), "NOA", "gun"             , "guns"            ),
-            new Tag(new Name("NOA_HIE", "NounAbs Hierogliph"                    ), "NOA", "hierogliph"      , "hierogliphs"     ),
-            new Tag(new Name("NOA_IRQ", "NounAbs Iraq"                          ), "NOA", "Iraq"            , "Iraq"            ),
-            new Tag(new Name("NOA_ITA", "NounAbs Italy"                         ), "NOA", "Italy"           , "Italy"           ),
-            new Tag(new Name("NOA_PAP", "NounAbs Paper"                         ), "NOA", "paper"           , "papers"          ),
-            new Tag(new Name("NOA_PLA", "NounAbs Plaque"                        ), "NOA", "plaque"          , "plaques"         ),
-            new Tag(new Name("NOA_ROM", "NounAbs Rome"                          ), "NOA", "Rome"            , "Rome"            ),
-            new Tag(new Name("NOA_RUS", "NounAbs Russia"                        ), "NOA", "Russia"          , "Russia"          ),
-            new Tag(new Name("NOA_STA", "NounAbs Statue"                        ), "NOA", "statue"          , "statues"         ),
-            new Tag(new Name("NOA_STO", "NounAbs Stone"                         ), "NOA", "stone"           , "stones"          ),
-            new Tag(new Name("NOA_WAT", "NounAbs Water"                         ), "NOA", "water"           , "water"           )
+            new Tag(new Name("NOA_ACT", "NounAbstract Action"                   ), "NOA", "action"          , "actions"         ),
+            new Tag(new Name("NOA_ANG", "NounAbstract Anger"                    ), "NOA", "anger"           , "angers"          ),
+            new Tag(new Name("NOA_COR", "NounAbstract Corner"                   ), "NOA", "corner"          , "corners"         ),
+            new Tag(new Name("NOA_DEA", "NounAbstract Death"                    ), "NOA", "death"           , "deaths"          ),
+            new Tag(new Name("NOA_DES", "NounAbstract Desolation"               ), "NOA", "desolation"      , "desolations"     ),
+            new Tag(new Name("NOA_EXH", "NounAbstract Exhaustion"               ), "NOA", "exhaustion"      , "exhaustions"     ),
+            new Tag(new Name("NOA_FAI", "NounAbstract Faith"                    ), "NOA", "faith"           , "faiths"          ),
+            new Tag(new Name("NOA_LIF", "NounAbstract Life"                     ), "NOA", "life"            , "lifes"           ),
+            new Tag(new Name("NOA_LOV", "NounAbstract Love"                     ), "NOA", "love"            , "loves"           ),
+            new Tag(new Name("NOA_NOI", "NounAbstract Noise"                    ), "NOA", "noise"           , "noises"          ),
+            new Tag(new Name("NOA_WOR", "NounAbstract Work"                     ), "NOA", "work"            , "works"           )
         );
         nounTagObjectList                               = Arrays.asList(
             new Tag(new Name("NOU_ANK", "Noun Anklet"                           ), "NOU", "anklet"          , "anklets"         ),
             new Tag(new Name("NOU_BAL", "Noun Ball"                             ), "NOU", "ball"            , "balls"           ),
+            new Tag(new Name("NOU_CIG", "Noun Cigarette"                        ), "NOU", "cigarette"       , "cigarettes"      ),
             new Tag(new Name("NOU_CRO", "Noun Crown"                            ), "NOU", "crown"           , "crowns"          ),
             new Tag(new Name("NOU_DCR", "Noun DoubleCrown"                      ), "NOU", "double crown"    , "double crown"    ),
+            new Tag(new Name("NOU_DOR", "Noun Door"                             ), "NOU", "door"            , "doors"           ),
             new Tag(new Name("NOU_FIG", "Noun Figure"                           ), "NOU", "figure"          , "figures"         ),
+            new Tag(new Name("NOU_FLO", "Noun Flower"                           ), "NOU", "flower"          , "flowers"         ),
             new Tag(new Name("NOU_GUN", "Noun Gun"                              ), "NOU", "gun"             , "guns"            ),
-            new Tag(new Name("NOU_HIE", "Noun Hierogliph"                       ), "NOU", "hierogliph"      , "hierogliphs"     ),
-            new Tag(new Name("NOU_IRQ", "Noun Iraq"                             ), "NOU", "Iraq"            , "Iraq"            ),
-            new Tag(new Name("NOU_ITA", "Noun Italy"                            ), "NOU", "Italy"           , "Italy"           ),
+            new Tag(new Name("NOU_HOD", "Noun Hood"                             ), "NOU", "hood"            , "hoods"           ),
+            new Tag(new Name("NOU_JHM", "Noun Jackhammer"                       ), "NOU", "jackhammer"      , "jackhammers"     ),
+            new Tag(new Name("NOU_JOB", "Noun Job"                              ), "NOU", "job"             , "jobs"            ),
             new Tag(new Name("NOU_PAP", "Noun Paper"                            ), "NOU", "paper"           , "papers"          ),
             new Tag(new Name("NOU_PLA", "Noun Plaque"                           ), "NOU", "plaque"          , "plaques"         ),
-            new Tag(new Name("NOU_ROM", "Noun Rome"                             ), "NOU", "Rome"            , "Rome"            ),
-            new Tag(new Name("NOU_RUS", "Noun Russia"                           ), "NOU", "Russia"          , "Russia"          ),
+            new Tag(new Name("NOU_RAI", "Noun Rain"                             ), "NOU", "rain"            , "rains"           ),
+            new Tag(new Name("NOU_SID", "Noun Sidewalk"                         ), "NOU", "sidewalk"        , "sidewalks"       ),
             new Tag(new Name("NOU_STA", "Noun Statue"                           ), "NOU", "statue"          , "statues"         ),
-            new Tag(new Name("NOU_STO", "Noun Stone"                            ), "NOU", "stone"           , "stones"          ),
-            new Tag(new Name("NOU_WAT", "Noun Water"                            ), "NOU", "water"           , "water"           )
+            new Tag(new Name("NOU_STO", "Noun Stone"                            ), "NOU", "stone"           , "stones"          )
         );
         adjectiveTagObjectList                          = Arrays.asList(
             new Tag(new Name("ADJ_BAD", "Adjective Excellent"                   ), "ADJ", "excellent"       ),
-            new Tag(new Name("ADJ_CRO", "Adjective Crossed"                     ), "ADJ", "crossed"         ),
             new Tag(new Name("ADJ_GOD", "Adjective Good"                        ), "ADJ", "good"            ),
-            new Tag(new Name("ADJ_HAR", "Adjective Hard"                        ), "ADJ", "hard"            ),
             new Tag(new Name("ADJ_SOF", "Adjective Soft"                        ), "ADJ", "soft"            )
         );
         negativeAdjectiveTagObjectList                  = Arrays.asList(
@@ -4489,8 +4482,8 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
         super                                                   (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
         editPlayerGroupControlP5Object                          = new ControlP5(pAppletObject);                                                                         /*PENDING.*/
 
-        tempSelectedPlayerObject                                =  playerObjectList     .get(0);                                                                        /*Set the default player object.                                            */
-        tempSelectedPlayerFinishedString                        = (tempSelectedPlayerObject .playerFinishedBoolean == true) ? "True" : "False";                         /*Convert boolean value into String type data with sentence case.           */
+        tempSelectedPlayerObject                                =  playerObjectList.get(0);                                                                        /*Set the default player object.                                            */
+        tempSelectedPlayerFinishedString                        = (tempSelectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";                         /*Convert boolean value into String type data with sentence case.           */
         for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
 
             if(i == 0)  { tempSelectedPlayerExplanationString   =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
@@ -6572,8 +6565,9 @@ class ObjectPlayer{
         exhibitionTagCounterNameFullStringList.clear();
         for(int i = 0; i < exhibitionTagCounterList.size(); i ++){
 
-            exhibitionTagCounterList.get(i).SetTagNameAltString (exhibitionTagCounterList.get(i).tagObject.tagNameAltString );
-            exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.tagNameFullString);
+
+            //exhibitionTagCounterList.get(i).SetTagNameAltString (exhibitionTagCounterList.get(i).tagObject.tagNameAltString );
+            //exhibitionTagCounterList.get(i).SetTagNameFullString(exhibitionTagCounterList.get(i).tagObject.tagNameFullString);
             String  tempTagNameAltString                = "";
             String  tempTagNameFullString               = "";
                     tempTagNameAltString                = ("(" + exhibitionTagCounterList.get(i).GetTagCounterInt() + ") " + exhibitionTagCounterList.get(i).GetTagNameAltString ());
@@ -7213,32 +7207,91 @@ class ObjectPlayer{
     public String  SentenceWordFixString               (String     _fixString)             { return _fixString.substring(0, 1).toUpperCase() + _fixString.substring(1, _fixString.length()); }
     public String  SentenceMultipleGenerateString      (int        _numberOfSentenceInt)   {
 
-        /*Subject VerbIng Habit.
-        Subject VerbVerbS to Verb1.
-        Iwill VerbVerb Subject to Verb1.
-        
-        Subject Is Noun.
-        VerbIng A Noun Adv.
-        Habit VerbS Adj.
-        
-        A Adj Adj Noun.
-        A Subject VerbS To Noun.
-        Verb Habit.
-        
-        Noun Verbs.
-        What Subject Was VerbS.
-        Are Adj of NounS.
+        /*
+        The 5 1 6 3s the 1.
+        The ADJECTIVE SUBJECT ADVERB TRANSITIVEVERBS the NOUN.
+        "The / ~ 1 = the <."
+        5, 5 1s 6 3 a 5, 5 1.
+        ADJECTIVE, ADJECTIVE SUBJECT ADVERB TRANSITIVEVERB a ADJECTIVE, ADJECTIVE NOUNS.
+        "/, / ~ 1 ) a /, / >."
+        2 is a 5 1.
+        NOUNABSTRACT is a ADJECTIVE NOUN.
+        ": is a / <."
 
-        As the Subject does Verb1
-        Across the Noun, Subject sees the...
-        Subject Verb in Habit
+
+
+        9, 2!
+        SUBJECT, NOUNABSTRACT!
+        "~, :!"
+        1s 4!
+        NOUNS VERBINTRANSITIVE!
+        "> |!"
+        The 1 4s like a 5 1.
+        The SUBJECT VERBINTRANSITIVES like a ADJECTIVE NOUN.
+        "The ~ $ like a / <."
+
+
+
+        1s 4 like 5 1s.
+        SUBJECT VERBINTRANSITIVES like ADJECTIVE NOUNS.
+        "~ $ like / >."
+        Why does the 1 4?
+        Why does the SUBJECT VERBINTRANSITIVES?
+        "Why does the ~ $?"
+        4 6 like a 5 1.
+        VERBINTRANSITIVE ADVERB like a ADJECTIVE NOUN.
+        "| 1 like a / <."
+
+
+
+        2, 2, and 2.
+        NOUNABSTRACT, NOUNABSTRACT, and NOUNABSTRACT.
+        ":, :, and :."
+        Where is the 5 1?
+        Where is the ADJECTIVE SUBJECT?
+        "Where is the / ~?"
+        All 1s 3 5, 5 1s.
+        All NOUNS VERBTRANSITIVE ADJECTIVE, ADJECTIVE SUBJECT.
+        "All > ) /, / ~."
+
+
+
+        Never 3 a 1.
+        Never VERBTRANSITIVE a NOUN.
+        "2 ) a <."
+        4 6 like a 5 1.
+        VERBINTRANSITIVE ADVERB like a ADJECTIVE NOUN.
+        ") 1 like a / <."
+        The 1 4s like a 5 1.
+        VERBINTRANSITIVE ADVERB like a ADJECTIVE NOUN.
+        "| 1 like a / <."
         */
 
         String[][]  patternStringArray      = new String[][]{
             {
                 "The / ~ 1 = the <."    ,
                 "/, / ~ 1 ) a /, / >."  ,
-                ": is a / <."
+                "< is a / :."
+            },
+            {
+                "~, :!"                 ,
+                ") 1 the ` / <."            ,
+                "The ~ $ a / <."
+            },
+            {
+                "~ $ / >."         ,
+                "Why does the ~ $?"     ,
+                "| 1 a / ~."
+            },
+            {
+                ":, :, and :."          ,
+                "Where is the / ~?"     ,
+                "~ ) /, / <."
+            },
+            {
+                "2 ) a <."              ,
+                "> |!"                  ,
+                "~ $ 1 into a / ~."
             }
         };
 
@@ -7288,7 +7341,7 @@ class ObjectPlayer{
                         if(Math.random() <= 0.50f){  wordString = subjectPossesionCurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(subjectPossesionCurrentPrevTagStringList.size())); }
                     }
             }
-            else    if(scanString.equals("!")){ /*Intransitive verb 1.                */
+            else    if(scanString.equals("|")){ /*Intransitive verb 1.                */
                             if(playerVisitCorrectExhibitionBoolean == true ){ wordString = intransitiveVerb1CurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(intransitiveVerb1CurrentPrevTagStringList.size())); }
                     else    if(playerVisitCorrectExhibitionBoolean == false){
                         if  (Math.random() > 0.80f)  { wordString = negativeIntransitiveVerb1CurrentPrevTagStringList.get(SentenceRandomNumberGeneratorInt(negativeIntransitiveVerb1CurrentPrevTagStringList.size())); }

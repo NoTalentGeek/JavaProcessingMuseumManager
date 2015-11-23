@@ -14,6 +14,13 @@
     "tagNameAltString": "NOU_BAL"
   },
   {
+    "tagNounSString": "cigarette",
+    "tagNounString": "cigarettes",
+    "tagTypeString": "NOU",
+    "tagNameFullString": "Noun Cigarette",
+    "tagNameAltString": "NOU_CIG"
+  },
+  {
     "tagNounSString": "crown",
     "tagNounString": "crowns",
     "tagTypeString": "NOU",
@@ -28,11 +35,25 @@
     "tagNameAltString": "NOU_DCR"
   },
   {
+    "tagNounSString": "door",
+    "tagNounString": "doors",
+    "tagTypeString": "NOU",
+    "tagNameFullString": "Noun Door",
+    "tagNameAltString": "NOU_DOR"
+  },
+  {
     "tagNounSString": "figure",
     "tagNounString": "figures",
     "tagTypeString": "NOU",
     "tagNameFullString": "Noun Figure",
     "tagNameAltString": "NOU_FIG"
+  },
+  {
+    "tagNounSString": "flower",
+    "tagNounString": "flowers",
+    "tagTypeString": "NOU",
+    "tagNameFullString": "Noun Flower",
+    "tagNameAltString": "NOU_FLO"
   },
   {
     "tagNounSString": "gun",
@@ -42,25 +63,25 @@
     "tagNameAltString": "NOU_GUN"
   },
   {
-    "tagNounSString": "hierogliph",
-    "tagNounString": "hierogliphs",
+    "tagNounSString": "hood",
+    "tagNounString": "hoods",
     "tagTypeString": "NOU",
-    "tagNameFullString": "Noun Hierogliph",
-    "tagNameAltString": "NOU_HIE"
+    "tagNameFullString": "Noun Hood",
+    "tagNameAltString": "NOU_HOD"
   },
   {
-    "tagNounSString": "Iraq",
-    "tagNounString": "Iraq",
+    "tagNounSString": "jackhammer",
+    "tagNounString": "jackhammers",
     "tagTypeString": "NOU",
-    "tagNameFullString": "Noun Iraq",
-    "tagNameAltString": "NOU_IRQ"
+    "tagNameFullString": "Noun Jackhammer",
+    "tagNameAltString": "NOU_JHM"
   },
   {
-    "tagNounSString": "Italy",
-    "tagNounString": "Italy",
+    "tagNounSString": "job",
+    "tagNounString": "jobs",
     "tagTypeString": "NOU",
-    "tagNameFullString": "Noun Italy",
-    "tagNameAltString": "NOU_ITA"
+    "tagNameFullString": "Noun Job",
+    "tagNameAltString": "NOU_JOB"
   },
   {
     "tagNounSString": "paper",
@@ -77,18 +98,18 @@
     "tagNameAltString": "NOU_PLA"
   },
   {
-    "tagNounSString": "Rome",
-    "tagNounString": "Rome",
+    "tagNounSString": "rain",
+    "tagNounString": "rains",
     "tagTypeString": "NOU",
-    "tagNameFullString": "Noun Rome",
-    "tagNameAltString": "NOU_ROM"
+    "tagNameFullString": "Noun Rain",
+    "tagNameAltString": "NOU_RAI"
   },
   {
-    "tagNounSString": "Russia",
-    "tagNounString": "Russia",
+    "tagNounSString": "sidewalk",
+    "tagNounString": "sidewalks",
     "tagTypeString": "NOU",
-    "tagNameFullString": "Noun Russia",
-    "tagNameAltString": "NOU_RUS"
+    "tagNameFullString": "Noun Sidewalk",
+    "tagNameAltString": "NOU_SID"
   },
   {
     "tagNounSString": "statue",
@@ -103,12 +124,5 @@
     "tagTypeString": "NOU",
     "tagNameFullString": "Noun Stone",
     "tagNameAltString": "NOU_STO"
-  },
-  {
-    "tagNounSString": "water",
-    "tagNounString": "water",
-    "tagTypeString": "NOU",
-    "tagNameFullString": "Noun Water",
-    "tagNameAltString": "NOU_WAT"
   }
 ]
