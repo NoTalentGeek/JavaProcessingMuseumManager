@@ -43,14 +43,15 @@ class ObjectPlayer{
 
     boolean             playerFinishedBoolean                                   = false;
     boolean             playerVisitCorrectExhibitionBoolean                     = false;
-    float               timeCurrentExhibitionFloat                              = 0f;                               /*How many frame/tick this player already stay in an exhibition.                        */
-    int                 playerIndexInt                                          = 0;                                /*Unique identifier for each player object, can be changed later to name.               */
+    float               timeCurrentExhibitionFloat                              = 0f;                               /*How many frame/tick this player already stay in an exhibition.                            */
+    int                 playerExplanationCurrentIndexInt                        = -1;                               /*Index to explanation given to this player right after this player visited an exhibition.  */
+    int                 playerIndexInt                                          = 0;                                /*Unique identifier for each player object, can be changed later to name.                   */
     int                 playerMovementModeInt                                   = 2;                                /*The mode that runs this player.
                                                                                                                         editPlayerMode =    1, this player controlled by AIAutoVoid.
                                                                                                                         editPlayerMode =    2, this player controlled manually using this application.
-                                                                                                                        editPlayerMode =    3, this player controlled manually using Arduino.               */
+                                                                                                                        editPlayerMode =    3, this player controlled manually using Arduino.                   */
     int                 playerScoreInt                                          = 0;
-    int                 playerSiblingIndexInt                                   = -1;                               /*The index of this object within the List of object player sibling.                    */
+    int                 playerSiblingIndexInt                                   = -1;                               /*The index of this object within the List of object player sibling.                        */
     ObjectMuseum        exhibitionCurrentObject                                 = null;
     String              exhibitionCurrentNameAltString                          = "";
     String              exhibitionCurrentNameFullString                         = "";
@@ -660,7 +661,7 @@ class ObjectPlayer{
 
         }
 
-        return                              exhibitionTargetNameAltStringList;
+        return exhibitionTargetNameAltStringList;
 
     }
 
@@ -746,7 +747,8 @@ class ObjectPlayer{
 
         }
         if(counterInt < exhibitionCurrentObject.explanationStringArray.length){
-            explanationStringList.add(exhibitionCurrentObject.explanationStringArray[indexRandomInt]);
+            playerExplanationCurrentIndexInt    = indexRandomInt;
+            explanationStringList               .add(exhibitionCurrentObject.explanationStringArray[indexRandomInt]);
         }
 
         PopulateTagStringList           (false);

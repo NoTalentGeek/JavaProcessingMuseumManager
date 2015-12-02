@@ -5,6 +5,7 @@ import processing.opengl.*;
 
 import controlP5.*; 
 import java.util.*; 
+import processing.serial.*; 
 import java.util.*; 
 import controlP5.*; 
 import java.util.*; 
@@ -38,6 +39,7 @@ import java.io.OutputStream;
 import java.io.IOException; 
 
 public class JavaProcessingMuseumManager extends PApplet {
+
 
 
 
@@ -100,6 +102,20 @@ EditTagGroupGUIObject       editTagGroupGUIObject                           ;
 RemoveMuseumGroupGUIObject  removeMuseumGroupGUIObject                      ;
 RemovePlayerGroupGUIObject  removePlayerGroupGUIObject                      ;
 RemoveTagGroupGUIObject     removeTagGroupGUIObject                         ;
+/*Hardware connection.*/
+boolean                     firstContactBoolean                             = false                         ;
+boolean                     secondContactBoolean                            = false                         ;
+Serial                      serialConnectionObject                          ;
+String                      receivedSerialCommandString                     ;
+/*Received data from RFID variables.*/
+int                         coolDownTimerMaxLongInt                         = 200                           ;
+int                         coolDownTimerMaxShortInt                        = 100                           ;
+int                         coolDownTimerInt                                = 100                           ;
+int                         receivedPlayerIndexInt                          = -1;
+ObjectPlayer                receivedPlayerObject                            = null;
+String                      receivedExhibitionNextNameAltString             = null;
+String                      receivedPlayerIndexString                       = null;
+List<String>                sendInstructionToArduinoStringList              = new ArrayList<String>()       ;
 /*Misc variables.*/
 boolean                     buttonOpenCloseBoolean                          = false                         ;
 int                         biggestPlayerIndexInt                           = 0                             ;
@@ -323,6 +339,11 @@ public void setup(){
 
     size                                                        (1152, 648, P2D);
     noStroke                                                    ();
+
+    printArray                                                  (Serial.list());
+    serialConnectionObject                                      = new Serial(this, Serial.list()[32], 9600);
+    serialConnectionObject                                      .bufferUntil('\n');
+
     LoadVoid                                                    ();
     OnExit                                                      ();
     adjectiveTagObjectList                                      = new ArrayList<Tag>            (adjectiveTagObjectList                 );
@@ -374,8 +395,8 @@ public void draw(){
     /*Set the background color for this application.*/
     background                              (34, 32, 52);
     /*Always update the full threshold and layout total row int.*/
-    museumObjectFullThresholdInt            = 2 + (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
-    panelLayoutTotalRowInt                  = (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
+    museumObjectFullThresholdInt            = 2 +   (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
+    panelLayoutTotalRowInt                  =       (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
     /*Update function for all museum objects and player objects.
     Also within these four for loops we need to get which object is hovered.*/
     for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, exhibitionObjectList  ); }
@@ -426,6 +447,67 @@ public void draw(){
     addPlayerGroupGUIObject                 .addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
     DrawGUIVoid                             ();
 
+         if(receivedSerialCommandString != null && sendInstructionToArduinoStringList.size() <= 0) {
+        println(receivedSerialCommandString);
+        if(receivedSerialCommandString                          .length() >= 20){
+            if(receivedSerialCommandString                      .substring(0, 19).equals("SENT_PLAYER_IND_XXX")){
+                receivedPlayerIndexString                       = receivedSerialCommandString.substring(20);
+                receivedPlayerIndexInt                          = Integer.parseInt(receivedPlayerIndexString);
+                if(receivedPlayerIndexInt != -1){
+                    receivedPlayerObject                        = FindPlayerObject(receivedPlayerIndexInt);
+                }
+            }
+            if(receivedSerialCommandString                      .substring(0, 19).equals("SENT_PLAYER_EXH_NXT")){
+                receivedExhibitionNextNameAltString             = receivedSerialCommandString.substring(20);
+                if( receivedPlayerObject != null){ if(receivedPlayerObject.playerMovementModeInt == 3){
+                    receivedPlayerObject                        .ExhibitionMoveObject(receivedExhibitionNextNameAltString);
+
+                    sendInstructionToArduinoStringList          .add("PLAY_WELCOME");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION_VISITED");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXPLANATION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(receivedPlayerObject.playerExplanationCurrentIndexInt));
+                    sendInstructionToArduinoStringList          .add("PLAY_PLEASE_VISIT_AND_TAP");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(0))));
+                    sendInstructionToArduinoStringList          .add("PLAY_OR");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(1))));
+                    sendInstructionToArduinoStringList          .add("PLAY_OR");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(2))));
+
+                    receivedPlayerIndexInt                      = -1;
+                    receivedPlayerObject                        = null;
+                    receivedExhibitionNextNameAltString         = null;
+                    receivedPlayerIndexString                   = null;
+                } }
+            }
+            receivedSerialCommandString                         = null;
+        }
+    }
+    else if(sendInstructionToArduinoStringList.size() > 0){
+        coolDownTimerInt                                            --;
+        println                                                     (coolDownTimerInt);
+    }
+    if(sendInstructionToArduinoStringList.size() > 0 && coolDownTimerInt <= 0){
+        serialConnectionObject                                  .write(sendInstructionToArduinoStringList.get(0));
+        sendInstructionToArduinoStringList                      .remove(0);
+        if(sendInstructionToArduinoStringList.size() == 13  )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 12  )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 11  )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 10  )   { coolDownTimerInt = 120;    }
+        if(sendInstructionToArduinoStringList.size() == 9   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 8   )   { coolDownTimerInt = 140;    }
+        if(sendInstructionToArduinoStringList.size() == 7   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 6   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 5   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 4   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 3   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 2   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 1   )   { coolDownTimerInt = 100;    }
+    }
+
 }
 
 /*The mouse pressed override function is for the open and close button.*/
@@ -433,6 +515,32 @@ public void mousePressed(){
 
     if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimatingBoolean = true; }
     if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimatingBoolean = true; }
+
+}
+public void serialEvent(Serial serialConnectionObject){
+
+    receivedSerialCommandString              = serialConnectionObject.readStringUntil('\n');
+    if(receivedSerialCommandString          != null){
+
+        receivedSerialCommandString          = trim(receivedSerialCommandString);
+
+        if(firstContactBoolean              == false){
+
+            if(receivedSerialCommandString  .equals("HANDSHAKE")){
+
+                serialConnectionObject      .clear();
+                firstContactBoolean         = true;
+                serialConnectionObject      .write("HANDSHAKE");
+                println                     ("HANDSHAKE DONE.");
+
+            }
+
+        }
+        else{
+            if(secondContactBoolean == false){ serialConnectionObject.write("HANDSHAKE"); secondContactBoolean = true; }
+        }
+
+    }
 
 }
 
@@ -2258,9 +2366,9 @@ public void SelectMuseumObjectScrollableListObject (int _indexInt){
 //START//SelectPlayerScrollableList Controller's Functions./////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*This function is to control player scrollable list.*/
-public void SelectPlayerScrollableListObject       (int _indexInt){
+public void SelectPlayerScrollableListObject                                           (int _indexInt){
 
-    editPlayerGroupGUIObject.tempSelectedPlayerObject                           = playerObjectList.get(_indexInt);                                                          /*Assign the selected player.                               */
+    editPlayerGroupGUIObject.tempSelectedPlayerObject                           = FindPlayerObject(_indexInt + 1);                                                          /*Assign the selected player.                               */
     editPlayerGroupGUIObject.editPlayerGroupPlayerNameTextfieldObject           .setText ((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerNameString));
     editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject    .activate((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt - 1));   /*Assign the mode of selected player into the radio button. */
 
@@ -4246,14 +4354,14 @@ class ButtonOpenClose{
         int originXInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
         int originYInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
 
-        fill                            (255);
-        stroke                          (0);
         shapeMode                       (CENTER);                   /*Set this button origin point mode as center.*/
 
         buttonOpenCloseObject           = createShape(GROUP);       /*Create a shape type GROUP, which is an accumulation of other shapes.*/
         
         /*Create the sub shape components.
         The components are the main circle shape and two lines that formed a plus.*/
+        fill                            (68, 40, 60);
+        noStroke                        ();
         buttonOpenCloseCircleObject     = createShape(
 
             ELLIPSE, 
@@ -4263,6 +4371,9 @@ class ButtonOpenClose{
             buttonSizeInt
 
         );
+        stroke                          (223, 113, 38);
+        strokeWeight                    (2);
+        noFill                          ();
         buttonOpenCloseCross1Object     = createShape(
 
             LINE, 
@@ -4290,6 +4401,7 @@ class ButtonOpenClose{
         buttonOpenCloseObject.addChild  (buttonOpenCloseCross1Object);
         buttonOpenCloseObject.addChild  (buttonOpenCloseCross2Object);
 
+        strokeWeight                    (1);
         noFill                          ();
         noStroke                        ();
         shapeMode                       (CORNER);                   /*Set this button origin point mode as center.*/
@@ -6357,14 +6469,15 @@ class ObjectPlayer{
 
     boolean             playerFinishedBoolean                                   = false;
     boolean             playerVisitCorrectExhibitionBoolean                     = false;
-    float               timeCurrentExhibitionFloat                              = 0f;                               /*How many frame/tick this player already stay in an exhibition.                        */
-    int                 playerIndexInt                                          = 0;                                /*Unique identifier for each player object, can be changed later to name.               */
+    float               timeCurrentExhibitionFloat                              = 0f;                               /*How many frame/tick this player already stay in an exhibition.                            */
+    int                 playerExplanationCurrentIndexInt                        = -1;                               /*Index to explanation given to this player right after this player visited an exhibition.  */
+    int                 playerIndexInt                                          = 0;                                /*Unique identifier for each player object, can be changed later to name.                   */
     int                 playerMovementModeInt                                   = 2;                                /*The mode that runs this player.
                                                                                                                         editPlayerMode =    1, this player controlled by AIAutoVoid.
                                                                                                                         editPlayerMode =    2, this player controlled manually using this application.
-                                                                                                                        editPlayerMode =    3, this player controlled manually using Arduino.               */
+                                                                                                                        editPlayerMode =    3, this player controlled manually using Arduino.                   */
     int                 playerScoreInt                                          = 0;
-    int                 playerSiblingIndexInt                                   = -1;                               /*The index of this object within the List of object player sibling.                    */
+    int                 playerSiblingIndexInt                                   = -1;                               /*The index of this object within the List of object player sibling.                        */
     ObjectMuseum        exhibitionCurrentObject                                 = null;
     String              exhibitionCurrentNameAltString                          = "";
     String              exhibitionCurrentNameFullString                         = "";
@@ -6974,7 +7087,7 @@ class ObjectPlayer{
 
         }
 
-        return                              exhibitionTargetNameAltStringList;
+        return exhibitionTargetNameAltStringList;
 
     }
 
@@ -7060,7 +7173,8 @@ class ObjectPlayer{
 
         }
         if(counterInt < exhibitionCurrentObject.explanationStringArray.length){
-            explanationStringList.add(exhibitionCurrentObject.explanationStringArray[indexRandomInt]);
+            playerExplanationCurrentIndexInt    = indexRandomInt;
+            explanationStringList               .add(exhibitionCurrentObject.explanationStringArray[indexRandomInt]);
         }
 
         PopulateTagStringList           (false);

@@ -1,5 +1,6 @@
 import controlP5.*;
 import java.util.*;
+import processing.serial.*;
 
 /*Panel card variables.*/
 boolean                     panelCardChangeBoolean                          = true                          ;
@@ -59,6 +60,20 @@ EditTagGroupGUIObject       editTagGroupGUIObject                           ;
 RemoveMuseumGroupGUIObject  removeMuseumGroupGUIObject                      ;
 RemovePlayerGroupGUIObject  removePlayerGroupGUIObject                      ;
 RemoveTagGroupGUIObject     removeTagGroupGUIObject                         ;
+/*Hardware connection.*/
+boolean                     firstContactBoolean                             = false                         ;
+boolean                     secondContactBoolean                            = false                         ;
+Serial                      serialConnectionObject                          ;
+String                      receivedSerialCommandString                     ;
+/*Received data from RFID variables.*/
+int                         coolDownTimerMaxLongInt                         = 200                           ;
+int                         coolDownTimerMaxShortInt                        = 100                           ;
+int                         coolDownTimerInt                                = 100                           ;
+int                         receivedPlayerIndexInt                          = -1;
+ObjectPlayer                receivedPlayerObject                            = null;
+String                      receivedExhibitionNextNameAltString             = null;
+String                      receivedPlayerIndexString                       = null;
+List<String>                sendInstructionToArduinoStringList              = new ArrayList<String>()       ;
 /*Misc variables.*/
 boolean                     buttonOpenCloseBoolean                          = false                         ;
 int                         biggestPlayerIndexInt                           = 0                             ;
@@ -282,6 +297,11 @@ void setup(){
 
     size                                                        (1152, 648, P2D);
     noStroke                                                    ();
+
+    printArray                                                  (Serial.list());
+    serialConnectionObject                                      = new Serial(this, Serial.list()[32], 9600);
+    serialConnectionObject                                      .bufferUntil('\n');
+
     LoadVoid                                                    ();
     OnExit                                                      ();
     adjectiveTagObjectList                                      = new ArrayList<Tag>            (adjectiveTagObjectList                 );
@@ -333,8 +353,8 @@ void draw(){
     /*Set the background color for this application.*/
     background                              (34, 32, 52);
     /*Always update the full threshold and layout total row int.*/
-    museumObjectFullThresholdInt            = 2 + (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
-    panelLayoutTotalRowInt                  = (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
+    museumObjectFullThresholdInt            = 2 +   (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()));
+    panelLayoutTotalRowInt                  =       (int)(Math.ceil(playerObjectList.size()/exhibitionObjectList.size()) + 5)*2;
     /*Update function for all museum objects and player objects.
     Also within these four for loops we need to get which object is hovered.*/
     for(int i = 0; i < exhibitionObjectList .size(); i ++){ exhibitionObjectList    .get(i).DrawVoid(); CheckMuseumObjectHoverVoid(i, exhibitionObjectList  ); }
@@ -385,6 +405,64 @@ void draw(){
     addPlayerGroupGUIObject                 .addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
     DrawGUIVoid                             ();
 
+         if(receivedSerialCommandString != null && sendInstructionToArduinoStringList.size() <= 0) {
+        println(receivedSerialCommandString);
+        if(receivedSerialCommandString                          .length() >= 20){
+            if(receivedSerialCommandString                      .substring(0, 19).equals("SENT_PLAYER_IND_XXX")){
+                receivedPlayerIndexString                       = receivedSerialCommandString.substring(20);
+                receivedPlayerIndexInt                          = Integer.parseInt(receivedPlayerIndexString);
+                if(receivedPlayerIndexInt != -1){
+                    receivedPlayerObject                        = FindPlayerObject(receivedPlayerIndexInt);
+                }
+            }
+            if(receivedSerialCommandString                      .substring(0, 19).equals("SENT_PLAYER_EXH_NXT")){
+                receivedExhibitionNextNameAltString             = receivedSerialCommandString.substring(20);
+                if( receivedPlayerObject != null){ if(receivedPlayerObject.playerMovementModeInt == 3){
+                    receivedPlayerObject                        .ExhibitionMoveObject(receivedExhibitionNextNameAltString);
+
+                    sendInstructionToArduinoStringList          .add("PLAY_WELCOME");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION_VISITED");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXPLANATION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(receivedPlayerObject.playerExplanationCurrentIndexInt));
+                    sendInstructionToArduinoStringList          .add("PLAY_PLEASE_VISIT_AND_TAP");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(0))));
+                    sendInstructionToArduinoStringList          .add("PLAY_OR");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(1))));
+                    sendInstructionToArduinoStringList          .add("PLAY_OR");
+                    sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
+                    sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(2))));
+
+                    receivedPlayerIndexInt                      = -1;
+                    receivedPlayerObject                        = null;
+                    receivedExhibitionNextNameAltString         = null;
+                    receivedPlayerIndexString                   = null;
+                } }
+            }
+            receivedSerialCommandString                         = null;
+        }
+    }
+    else if(sendInstructionToArduinoStringList.size() > 0){ coolDownTimerInt --; }
+    if(sendInstructionToArduinoStringList.size() > 0 && coolDownTimerInt <= 0){
+        serialConnectionObject                                  .write(sendInstructionToArduinoStringList.get(0));
+        sendInstructionToArduinoStringList                      .remove(0);
+        if(sendInstructionToArduinoStringList.size() == 13  )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 12  )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 11  )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 10  )   { coolDownTimerInt = 120;    }
+        if(sendInstructionToArduinoStringList.size() == 9   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 8   )   { coolDownTimerInt = 140;    }
+        if(sendInstructionToArduinoStringList.size() == 7   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 6   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 5   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 4   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 3   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 2   )   { coolDownTimerInt = 100;    }
+        if(sendInstructionToArduinoStringList.size() == 1   )   { coolDownTimerInt = 100;    }
+    }
+
 }
 
 /*The mouse pressed override function is for the open and close button.*/
@@ -392,6 +470,32 @@ void mousePressed(){
 
     if(buttonOpenClosePlayerObject.MouseOverBoolean() == true){ buttonOpenClosePlayerObject.isAnimatingBoolean = true; }
     if(buttonOpenCloseMuseumObject.MouseOverBoolean() == true){ buttonOpenCloseMuseumObject.isAnimatingBoolean = true; }
+
+}
+void serialEvent(Serial serialConnectionObject){
+
+    receivedSerialCommandString              = serialConnectionObject.readStringUntil('\n');
+    if(receivedSerialCommandString          != null){
+
+        receivedSerialCommandString          = trim(receivedSerialCommandString);
+
+        if(firstContactBoolean              == false){
+
+            if(receivedSerialCommandString  .equals("HANDSHAKE")){
+
+                serialConnectionObject      .clear();
+                firstContactBoolean         = true;
+                serialConnectionObject      .write("HANDSHAKE");
+                println                     ("HANDSHAKE DONE.");
+
+            }
+
+        }
+        else{
+            if(secondContactBoolean == false){ serialConnectionObject.write("HANDSHAKE"); secondContactBoolean = true; }
+        }
+
+    }
 
 }
 
@@ -2217,9 +2321,9 @@ void SelectMuseumObjectScrollableListObject (int _indexInt){
 //START//SelectPlayerScrollableList Controller's Functions./////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 /*This function is to control player scrollable list.*/
-void SelectPlayerScrollableListObject       (int _indexInt){
+void SelectPlayerScrollableListObject                                           (int _indexInt){
 
-    editPlayerGroupGUIObject.tempSelectedPlayerObject                           = playerObjectList.get(_indexInt);                                                          /*Assign the selected player.                               */
+    editPlayerGroupGUIObject.tempSelectedPlayerObject                           = FindPlayerObject(_indexInt + 1);                                                          /*Assign the selected player.                               */
     editPlayerGroupGUIObject.editPlayerGroupPlayerNameTextfieldObject           .setText ((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerNameString));
     editPlayerGroupGUIObject.editPlayerGroupPlayerModeValueRadioButtonObject    .activate((editPlayerGroupGUIObject.tempSelectedPlayerObject.playerMovementModeInt - 1));   /*Assign the mode of selected player into the radio button. */
 

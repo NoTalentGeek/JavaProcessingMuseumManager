@@ -22,14 +22,14 @@ class ButtonOpenClose{
         int originXInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
         int originYInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
 
-        fill                            (255);
-        stroke                          (0);
         shapeMode                       (CENTER);                   /*Set this button origin point mode as center.*/
 
         buttonOpenCloseObject           = createShape(GROUP);       /*Create a shape type GROUP, which is an accumulation of other shapes.*/
         
         /*Create the sub shape components.
         The components are the main circle shape and two lines that formed a plus.*/
+        fill                            (68, 40, 60);
+        noStroke                        ();
         buttonOpenCloseCircleObject     = createShape(
 
             ELLIPSE, 
@@ -39,6 +39,9 @@ class ButtonOpenClose{
             buttonSizeInt
 
         );
+        stroke                          (223, 113, 38);
+        strokeWeight                    (2);
+        noFill                          ();
         buttonOpenCloseCross1Object     = createShape(
 
             LINE, 
@@ -66,6 +69,7 @@ class ButtonOpenClose{
         buttonOpenCloseObject.addChild  (buttonOpenCloseCross1Object);
         buttonOpenCloseObject.addChild  (buttonOpenCloseCross2Object);
 
+        strokeWeight                    (1);
         noFill                          ();
         noStroke                        ();
         shapeMode                       (CORNER);                   /*Set this button origin point mode as center.*/
