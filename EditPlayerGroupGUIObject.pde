@@ -299,7 +299,7 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
                 .addItem                                            ("SOFTWARE - MANUAL", 2)
                 .addItem                                            ("HARDWARE - MANUAL", 3)
                 .setGroup                                           (editPlayerGroupObject)
-                .setNoneSelectedAllowed                             (true)
+                .setNoneSelectedAllowed                             (false)
                 .setPosition                                        (guiElement2ColumnFirstColumnXInt, ((guiLayoutOffsetInt*16) + (guiScrollableList5RowHeightInt*3)))
                 .setSize                                            (guiLayoutOffsetInt, guiLayoutOffsetInt);
 
