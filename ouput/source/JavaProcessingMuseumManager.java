@@ -451,6 +451,7 @@ public void draw(){
     addPlayerGroupGUIObject                 .addPlayerGroupPlayerIndexValueTextlabelObject.setText("" + nextBiggestPlayerIndexInt);
     DrawGUIVoid                             ();
 
+    /*Arduino serial connection code.*/
     if(serialConnectionObject != null){
         if(sendInstructionToArduinoStringList.size() == 0)          { sendCommandToArduinoBool = false; }
         if((receivedSerialCommandString != null) && (sendInstructionToArduinoStringList.size() <= 0)) {
@@ -468,21 +469,22 @@ public void draw(){
                     if( receivedPlayerObject != null){ if(receivedPlayerObject.playerMovementModeInt == 3){
                         receivedPlayerObject                        .ExhibitionMoveObject(receivedExhibitionNextNameAltString);
 
-                        //sendInstructionToArduinoStringList        .add("PLAY_WELCOME");
-                        serialConnectionObject                      .write("PLAY_WELCOME");
+                        serialConnectionObject                      .write("CAPTURE_START");
+                        sendInstructionToArduinoStringList          .add("PLAY_WELCOME");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION_VISITED");
                         sendInstructionToArduinoStringList          .add("PLAY_EXPLANATION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(receivedPlayerObject.playerExplanationCurrentIndexInt));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(receivedPlayerObject.playerExplanationCurrentIndexInt + 1));
                         sendInstructionToArduinoStringList          .add("PLAY_PLEASE_VISIT_AND_TAP");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(0))));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(0)) + 1));
                         sendInstructionToArduinoStringList          .add("PLAY_OR");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(1))));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(1)) + 1));
                         sendInstructionToArduinoStringList          .add("PLAY_OR");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(2))));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(2)) + 1));
+                        sendInstructionToArduinoStringList          .add("CAPTURE_DONE");
 
                         receivedPlayerIndexInt                      = -1;
                         receivedPlayerObject                        = null;
@@ -497,7 +499,7 @@ public void draw(){
                 sendCommandToArduinoBool                            = true;
         } }
         if((sendCommandToArduinoBool        == true) && (sendInstructionToArduinoStringList.size() > 0)){
-                //println                                           (sendInstructionToArduinoStringList.size());
+                println                                             (sendInstructionToArduinoStringList.get(0));
                 serialConnectionObject                              .write(sendInstructionToArduinoStringList.get(0));
                 sendInstructionToArduinoStringList                  .remove(0);
                 receivedSerialCommandString                         = null;
@@ -4590,21 +4592,21 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ){
 
-        super                                                   (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        editPlayerGroupControlP5Object                          = new ControlP5(pAppletObject);                                                                         /*PENDING.*/
+        super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
+        editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);                                                                         /*PENDING.*/
 
-        tempSelectedPlayerObject                                =  playerObjectList.get(0);                                                                        /*Set the default player object.                                            */
-        tempSelectedPlayerFinishedString                        = (tempSelectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";                         /*Convert boolean value into String type data with sentence case.           */
+        tempSelectedPlayerObject                                    =  playerObjectList.get(0);                                                                        /*Set the default player object.                                            */
+        tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";                         /*Convert boolean value into String type data with sentence case.           */
         for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerExplanationString   =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
-            else        { tempSelectedPlayerExplanationString   = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerExplanationString       =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+            else        { tempSelectedPlayerExplanationString       = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
 
         }
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerSentenceString      =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
-            else        { tempSelectedPlayerSentenceString      = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
 

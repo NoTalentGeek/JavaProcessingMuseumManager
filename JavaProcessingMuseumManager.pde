@@ -427,21 +427,22 @@ void draw(){
                     if( receivedPlayerObject != null){ if(receivedPlayerObject.playerMovementModeInt == 3){
                         receivedPlayerObject                        .ExhibitionMoveObject(receivedExhibitionNextNameAltString);
 
-                        //sendInstructionToArduinoStringList        .add("PLAY_WELCOME");
-                        serialConnectionObject                      .write("PLAY_WELCOME");
+                        serialConnectionObject                      .write("CAPTURE_START");
+                        sendInstructionToArduinoStringList          .add("PLAY_WELCOME");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION_VISITED");
                         sendInstructionToArduinoStringList          .add("PLAY_EXPLANATION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(receivedPlayerObject.playerExplanationCurrentIndexInt));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(receivedPlayerObject.playerExplanationCurrentIndexInt + 1));
                         sendInstructionToArduinoStringList          .add("PLAY_PLEASE_VISIT_AND_TAP");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(0))));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(0)) + 1));
                         sendInstructionToArduinoStringList          .add("PLAY_OR");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(1))));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(1)) + 1));
                         sendInstructionToArduinoStringList          .add("PLAY_OR");
                         sendInstructionToArduinoStringList          .add("PLAY_EXHIBITION");
-                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(2))));
+                        sendInstructionToArduinoStringList          .add(Integer.toString(exhibitionNameAltStringList.indexOf(receivedPlayerObject.exhibitionTargetNameAltStringList.get(2)) + 1));
+                        sendInstructionToArduinoStringList          .add("CAPTURE_DONE");
 
                         receivedPlayerIndexInt                      = -1;
                         receivedPlayerObject                        = null;
@@ -456,7 +457,7 @@ void draw(){
                 sendCommandToArduinoBool                            = true;
         } }
         if((sendCommandToArduinoBool        == true) && (sendInstructionToArduinoStringList.size() > 0)){
-                //println                                           (sendInstructionToArduinoStringList.size());
+                println                                             (sendInstructionToArduinoStringList.get(0));
                 serialConnectionObject                              .write(sendInstructionToArduinoStringList.get(0));
                 sendInstructionToArduinoStringList                  .remove(0);
                 receivedSerialCommandString                         = null;

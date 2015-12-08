@@ -52,21 +52,21 @@ class EditPlayerGroupGUIObject extends GroupGUIObject{
 
     ){
 
-        super                                                   (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
-        editPlayerGroupControlP5Object                          = new ControlP5(pAppletObject);                                                                         /*PENDING.*/
+        super                                                       (_guiXInt, _guiYInt, _guiWidthInt, _guiHeightInt, _pAppletObject);
+        editPlayerGroupControlP5Object                              = new ControlP5(pAppletObject);                                                                         /*PENDING.*/
 
-        tempSelectedPlayerObject                                =  playerObjectList.get(0);                                                                        /*Set the default player object.                                            */
-        tempSelectedPlayerFinishedString                        = (tempSelectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";                         /*Convert boolean value into String type data with sentence case.           */
+        tempSelectedPlayerObject                                    =  playerObjectList.get(0);                                                                        /*Set the default player object.                                            */
+        tempSelectedPlayerFinishedString                            = (tempSelectedPlayerObject.playerFinishedBoolean == true) ? "True" : "False";                         /*Convert boolean value into String type data with sentence case.           */
         for(int i = 0; i < tempSelectedPlayerObject.explanationStringList.size(); i ++){                                                                                /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerExplanationString   =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
-            else        { tempSelectedPlayerExplanationString   = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerExplanationString       =                                                tempSelectedPlayerObject.explanationStringList.get(i); }
+            else        { tempSelectedPlayerExplanationString       = tempSelectedPlayerExplanationString + "\n\n" + tempSelectedPlayerObject.explanationStringList.get(i); }
 
         }
         for(int i = 0; i < tempSelectedPlayerObject.sentenceStringList.size(); i ++){                                                                                   /*Put all selected player sentences into one paragraph of a String variable.*/
 
-            if(i == 0)  { tempSelectedPlayerSentenceString      =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
-            else        { tempSelectedPlayerSentenceString      = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
+            if(i == 0)  { tempSelectedPlayerSentenceString          =                                             tempSelectedPlayerObject.sentenceStringList.get(i); }
+            else        { tempSelectedPlayerSentenceString          = tempSelectedPlayerSentenceString + "\n\n" + tempSelectedPlayerObject.sentenceStringList.get(i); }
 
         }
 
