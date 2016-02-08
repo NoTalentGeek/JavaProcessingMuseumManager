@@ -297,16 +297,9 @@ void setup(){
     noStroke                                                    ();
 
     printArray                                                  (Serial.list());
-    try{
-        serialConnectionObject                                  = new Serial(this, Serial.list()[(Serial.list().length - 1)], 9600);
-        serialConnectionObject                                  .bufferUntil('\n');
-    }
-    catch (RuntimeException e){
-        serialConnectionObject                                  = null;
-        println 												(e);
-        println                                                 ("SERIAL CONNECTION FAILED");
-    }
+    InitSerialConnectionVoid                                    (0);
 
+    /*Change initBool to false if you want to enable save and load functionality.*/
     LoadVoid                                                    ();
     OnExit                                                      ();
     adjectiveTagObjectList                                      = new ArrayList<Tag>            (adjectiveTagObjectList                 );
@@ -703,6 +696,40 @@ void CreatePanelCardVoid(){
     }
 
 }
+
+
+
+
+
+/*========================================
+Function to loop through all available Serial port and to find which Serial port is an
+    Arduino's Serial port.*/
+void InitSerialConnectionVoid(int _serialChannelIndexInt){
+
+    int serialChannelIndexInt = _serialChannelIndexInt;
+    
+    if(serialChannelIndexInt == Serial.list().length){ return; }
+    try{
+
+        serialConnectionObject                                  = new Serial(this, Serial.list()[serialChannelIndexInt], 9600);
+        serialConnectionObject                                  .bufferUntil('\n');
+
+    }
+    catch (RuntimeException e){
+
+        serialConnectionObject                                  = null;
+        println                                                 (e);
+        println                                                 ("SERIAL CONNECTION FAILED");
+        InitSerialConnectionVoid                                (serialChannelIndexInt + 1);
+
+    }
+
+}
+/*========================================*/
+
+
+
+
 
 void OnExit(){ Runtime.getRuntime().addShutdownHook(new Thread(new Runnable(){ public void run(){ SaveVoid(); } })); }
 
