@@ -345,6 +345,7 @@ public void setup(){
     }
     catch (RuntimeException e){
         serialConnectionObject                                  = null;
+        println 												(e);
         println                                                 ("SERIAL CONNECTION FAILED");
     }
 
@@ -522,7 +523,7 @@ public void serialEvent(Serial serialConnectionObject){
         receivedSerialCommandString              = serialConnectionObject.readStringUntil('\n');
         if(receivedSerialCommandString          != null){
 
-            receivedSerialCommandString          = trim(receivedSerialCommandString);
+            receivedSerialCommandString          = trim(receivedSerialCommandString); println(receivedSerialCommandString);
 
             if(firstContactBoolean              == false){
 
