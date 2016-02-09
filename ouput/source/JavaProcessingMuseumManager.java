@@ -341,6 +341,7 @@ public void setup(){
     printArray                                                  (Serial.list());
     InitSerialConnectionVoid                                    (0);
 
+    /*Change initBool to false if you want to enable save and load functionality.*/
     LoadVoid                                                    ();
     OnExit                                                      ();
     adjectiveTagObjectList                                      = new ArrayList<Tag>            (adjectiveTagObjectList                 );
@@ -4382,8 +4383,6 @@ class ButtonOpenClose{
         int originXInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
         int originYInt                  = -(buttonSizeInt/2);       /*This button origin point is adjusted by substracting a half of button size.*/
 
-        shapeMode                       (CENTER);                   /*Set this button origin point mode as center.*/
-
         buttonOpenCloseObject           = createShape(GROUP);       /*Create a shape type GROUP, which is an accumulation of other shapes.*/
         
         /*Create the sub shape components.
@@ -4432,7 +4431,6 @@ class ButtonOpenClose{
         strokeWeight                    (1);
         noFill                          ();
         noStroke                        ();
-        shapeMode                       (CORNER);                   /*Set this button origin point mode as center.*/
 
     }
 

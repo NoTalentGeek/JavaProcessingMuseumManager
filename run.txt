@@ -1,1 +1,0 @@
-processing-java --run --sketch="/home/notalentgeek/Documents/Mikael/(ONGOING - 50%) Bachelor Thesis/Deliverable/DeliverableCode/JavaProcessingMuseumManager" --output="/home/notalentgeek/Documents/Mikael/(ONGOING - 50%) Bachelor Thesis/Deliverable/DeliverableCode/JavaProcessingMuseumManager/ouput" --force
