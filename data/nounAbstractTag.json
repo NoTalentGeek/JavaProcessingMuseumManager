@@ -1,79 +1,79 @@
 [
   {
-    "tagNounAbstractString": "actions",
-    "tagNounAbstractSString": "action",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "actions",
     "tagNameFullString": "NounAbstract Action",
+    "tagNounAbstractSString": "action",
     "tagNameAltString": "NOA_ACT"
   },
   {
-    "tagNounAbstractString": "angers",
-    "tagNounAbstractSString": "anger",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "angers",
     "tagNameFullString": "NounAbstract Anger",
+    "tagNounAbstractSString": "anger",
     "tagNameAltString": "NOA_ANG"
   },
   {
-    "tagNounAbstractString": "corners",
-    "tagNounAbstractSString": "corner",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "corners",
     "tagNameFullString": "NounAbstract Corner",
+    "tagNounAbstractSString": "corner",
     "tagNameAltString": "NOA_COR"
   },
   {
-    "tagNounAbstractString": "deaths",
-    "tagNounAbstractSString": "death",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "deaths",
     "tagNameFullString": "NounAbstract Death",
+    "tagNounAbstractSString": "death",
     "tagNameAltString": "NOA_DEA"
   },
   {
-    "tagNounAbstractString": "desolations",
-    "tagNounAbstractSString": "desolation",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "desolations",
     "tagNameFullString": "NounAbstract Desolation",
+    "tagNounAbstractSString": "desolation",
     "tagNameAltString": "NOA_DES"
   },
   {
-    "tagNounAbstractString": "exhaustions",
-    "tagNounAbstractSString": "exhaustion",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "exhaustions",
     "tagNameFullString": "NounAbstract Exhaustion",
+    "tagNounAbstractSString": "exhaustion",
     "tagNameAltString": "NOA_EXH"
   },
   {
-    "tagNounAbstractString": "faiths",
-    "tagNounAbstractSString": "faith",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "faiths",
     "tagNameFullString": "NounAbstract Faith",
+    "tagNounAbstractSString": "faith",
     "tagNameAltString": "NOA_FAI"
   },
   {
-    "tagNounAbstractString": "lifes",
-    "tagNounAbstractSString": "life",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "lifes",
     "tagNameFullString": "NounAbstract Life",
+    "tagNounAbstractSString": "life",
     "tagNameAltString": "NOA_LIF"
   },
   {
-    "tagNounAbstractString": "loves",
-    "tagNounAbstractSString": "love",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "loves",
     "tagNameFullString": "NounAbstract Love",
+    "tagNounAbstractSString": "love",
     "tagNameAltString": "NOA_LOV"
   },
   {
-    "tagNounAbstractString": "noises",
-    "tagNounAbstractSString": "noise",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "noises",
     "tagNameFullString": "NounAbstract Noise",
+    "tagNounAbstractSString": "noise",
     "tagNameAltString": "NOA_NOI"
   },
   {
-    "tagNounAbstractString": "works",
-    "tagNounAbstractSString": "work",
     "tagTypeString": "NOA",
+    "tagNounAbstractString": "works",
     "tagNameFullString": "NounAbstract Work",
+    "tagNounAbstractSString": "work",
     "tagNameAltString": "NOA_WOR"
   }
 ]

@@ -1,82 +1,82 @@
 [
   {
-    "tagIntransitiveVerbIngString": "drinking",
-    "tagIntransitiveVerbSString": "drinks",
+    "tagTypeString": "IVR",
     "tagIntransitiveVerb3String": "drank",
-    "tagIntransitiveVerb1String": "drink",
-    "tagIntransitiveVerb2String": "drunk",
-    "tagTypeString": "IVR",
+    "tagIntransitiveVerbIngString": "drinking",
     "tagNameFullString": "IntransitiveVerb Drink",
-    "tagNameAltString": "IVR_DRI"
+    "tagIntransitiveVerb1String": "drink",
+    "tagNameAltString": "IVR_DRI",
+    "tagIntransitiveVerbSString": "drinks",
+    "tagIntransitiveVerb2String": "drunk"
   },
   {
-    "tagIntransitiveVerbIngString": "eating",
-    "tagIntransitiveVerbSString": "eats",
+    "tagTypeString": "IVR",
     "tagIntransitiveVerb3String": "eaten",
-    "tagIntransitiveVerb1String": "eat",
-    "tagIntransitiveVerb2String": "ate",
-    "tagTypeString": "IVR",
+    "tagIntransitiveVerbIngString": "eating",
     "tagNameFullString": "IntransitiveVerb Eat",
-    "tagNameAltString": "IVR_EAT"
+    "tagIntransitiveVerb1String": "eat",
+    "tagNameAltString": "IVR_EAT",
+    "tagIntransitiveVerbSString": "eats",
+    "tagIntransitiveVerb2String": "ate"
   },
   {
-    "tagIntransitiveVerbIngString": "jumping",
-    "tagIntransitiveVerbSString": "jumps",
+    "tagTypeString": "IVR",
     "tagIntransitiveVerb3String": "jumped",
-    "tagIntransitiveVerb1String": "jump",
-    "tagIntransitiveVerb2String": "jumped",
-    "tagTypeString": "IVR",
+    "tagIntransitiveVerbIngString": "jumping",
     "tagNameFullString": "IntransitiveVerb Jump",
-    "tagNameAltString": "IVR_JUM"
+    "tagIntransitiveVerb1String": "jump",
+    "tagNameAltString": "IVR_JUM",
+    "tagIntransitiveVerbSString": "jumps",
+    "tagIntransitiveVerb2String": "jumped"
   },
   {
-    "tagIntransitiveVerbIngString": "painting",
-    "tagIntransitiveVerbSString": "paints",
+    "tagTypeString": "IVR",
     "tagIntransitiveVerb3String": "painted",
-    "tagIntransitiveVerb1String": "paint",
-    "tagIntransitiveVerb2String": "painted",
-    "tagTypeString": "IVR",
+    "tagIntransitiveVerbIngString": "painting",
     "tagNameFullString": "IntransitiveVerb Paint",
-    "tagNameAltString": "IVR_PAI"
+    "tagIntransitiveVerb1String": "paint",
+    "tagNameAltString": "IVR_PAI",
+    "tagIntransitiveVerbSString": "paints",
+    "tagIntransitiveVerb2String": "painted"
   },
   {
-    "tagIntransitiveVerbIngString": "running",
-    "tagIntransitiveVerbSString": "runs",
+    "tagTypeString": "IVR",
     "tagIntransitiveVerb3String": "run",
-    "tagIntransitiveVerb1String": "run",
-    "tagIntransitiveVerb2String": "ran",
-    "tagTypeString": "IVR",
+    "tagIntransitiveVerbIngString": "running",
     "tagNameFullString": "IntransitiveVerb Run",
-    "tagNameAltString": "IVR_RUN"
+    "tagIntransitiveVerb1String": "run",
+    "tagNameAltString": "IVR_RUN",
+    "tagIntransitiveVerbSString": "runs",
+    "tagIntransitiveVerb2String": "ran"
   },
   {
-    "tagIntransitiveVerbIngString": "singing",
-    "tagIntransitiveVerbSString": "sings",
+    "tagTypeString": "IVR",
     "tagIntransitiveVerb3String": "sung",
-    "tagIntransitiveVerb1String": "sing",
-    "tagIntransitiveVerb2String": "sang",
-    "tagTypeString": "IVR",
+    "tagIntransitiveVerbIngString": "singing",
     "tagNameFullString": "IntransitiveVerb Sing",
-    "tagNameAltString": "IVR_SIN"
+    "tagIntransitiveVerb1String": "sing",
+    "tagNameAltString": "IVR_SIN",
+    "tagIntransitiveVerbSString": "sings",
+    "tagIntransitiveVerb2String": "sang"
   },
   {
-    "tagIntransitiveVerbIngString": "sitting",
-    "tagIntransitiveVerbSString": "sits",
+    "tagTypeString": "IVR",
     "tagIntransitiveVerb3String": "sat",
-    "tagIntransitiveVerb1String": "sit",
-    "tagIntransitiveVerb2String": "sat",
-    "tagTypeString": "IVR",
+    "tagIntransitiveVerbIngString": "sitting",
     "tagNameFullString": "IntransitiveVerb Sit",
-    "tagNameAltString": "IVR_SIT"
+    "tagIntransitiveVerb1String": "sit",
+    "tagNameAltString": "IVR_SIT",
+    "tagIntransitiveVerbSString": "sits",
+    "tagIntransitiveVerb2String": "sat"
   },
   {
-    "tagIntransitiveVerbIngString": "sleeping",
-    "tagIntransitiveVerbSString": "sleeps",
-    "tagIntransitiveVerb3String": "slept",
-    "tagIntransitiveVerb1String": "sleep",
-    "tagIntransitiveVerb2String": "slept",
     "tagTypeString": "IVR",
+    "tagIntransitiveVerb3String": "slept",
+    "tagIntransitiveVerbIngString": "sleeping",
     "tagNameFullString": "IntransitiveVerb Sleep",
-    "tagNameAltString": "IVR_SLE"
+    "tagIntransitiveVerb1String": "sleep",
+    "tagNameAltString": "IVR_SLE",
+    "tagIntransitiveVerbSString": "sleeps",
+    "tagIntransitiveVerb2String": "slept"
   }
 ]

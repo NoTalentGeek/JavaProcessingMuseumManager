@@ -1,128 +1,128 @@
 [
   {
-    "tagNounSString": "anklet",
+    "tagTypeString": "NOU",
     "tagNounString": "anklets",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Anklet",
-    "tagNameAltString": "NOU_ANK"
+    "tagNameAltString": "NOU_ANK",
+    "tagNounSString": "anklet"
   },
   {
-    "tagNounSString": "ball",
+    "tagTypeString": "NOU",
     "tagNounString": "balls",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Ball",
-    "tagNameAltString": "NOU_BAL"
+    "tagNameAltString": "NOU_BAL",
+    "tagNounSString": "ball"
   },
   {
-    "tagNounSString": "cigarette",
+    "tagTypeString": "NOU",
     "tagNounString": "cigarettes",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Cigarette",
-    "tagNameAltString": "NOU_CIG"
+    "tagNameAltString": "NOU_CIG",
+    "tagNounSString": "cigarette"
   },
   {
-    "tagNounSString": "crown",
+    "tagTypeString": "NOU",
     "tagNounString": "crowns",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Crown",
-    "tagNameAltString": "NOU_CRO"
+    "tagNameAltString": "NOU_CRO",
+    "tagNounSString": "crown"
   },
   {
-    "tagNounSString": "double crown",
+    "tagTypeString": "NOU",
     "tagNounString": "double crown",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun DoubleCrown",
-    "tagNameAltString": "NOU_DCR"
+    "tagNameAltString": "NOU_DCR",
+    "tagNounSString": "double crown"
   },
   {
-    "tagNounSString": "door",
+    "tagTypeString": "NOU",
     "tagNounString": "doors",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Door",
-    "tagNameAltString": "NOU_DOR"
+    "tagNameAltString": "NOU_DOR",
+    "tagNounSString": "door"
   },
   {
-    "tagNounSString": "figure",
+    "tagTypeString": "NOU",
     "tagNounString": "figures",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Figure",
-    "tagNameAltString": "NOU_FIG"
+    "tagNameAltString": "NOU_FIG",
+    "tagNounSString": "figure"
   },
   {
-    "tagNounSString": "flower",
+    "tagTypeString": "NOU",
     "tagNounString": "flowers",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Flower",
-    "tagNameAltString": "NOU_FLO"
+    "tagNameAltString": "NOU_FLO",
+    "tagNounSString": "flower"
   },
   {
-    "tagNounSString": "gun",
+    "tagTypeString": "NOU",
     "tagNounString": "guns",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Gun",
-    "tagNameAltString": "NOU_GUN"
+    "tagNameAltString": "NOU_GUN",
+    "tagNounSString": "gun"
   },
   {
-    "tagNounSString": "hood",
+    "tagTypeString": "NOU",
     "tagNounString": "hoods",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Hood",
-    "tagNameAltString": "NOU_HOD"
+    "tagNameAltString": "NOU_HOD",
+    "tagNounSString": "hood"
   },
   {
-    "tagNounSString": "jackhammer",
+    "tagTypeString": "NOU",
     "tagNounString": "jackhammers",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Jackhammer",
-    "tagNameAltString": "NOU_JHM"
+    "tagNameAltString": "NOU_JHM",
+    "tagNounSString": "jackhammer"
   },
   {
-    "tagNounSString": "job",
+    "tagTypeString": "NOU",
     "tagNounString": "jobs",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Job",
-    "tagNameAltString": "NOU_JOB"
+    "tagNameAltString": "NOU_JOB",
+    "tagNounSString": "job"
   },
   {
-    "tagNounSString": "paper",
+    "tagTypeString": "NOU",
     "tagNounString": "papers",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Paper",
-    "tagNameAltString": "NOU_PAP"
+    "tagNameAltString": "NOU_PAP",
+    "tagNounSString": "paper"
   },
   {
-    "tagNounSString": "plaque",
+    "tagTypeString": "NOU",
     "tagNounString": "plaques",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Plaque",
-    "tagNameAltString": "NOU_PLA"
+    "tagNameAltString": "NOU_PLA",
+    "tagNounSString": "plaque"
   },
   {
-    "tagNounSString": "rain",
+    "tagTypeString": "NOU",
     "tagNounString": "rains",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Rain",
-    "tagNameAltString": "NOU_RAI"
+    "tagNameAltString": "NOU_RAI",
+    "tagNounSString": "rain"
   },
   {
-    "tagNounSString": "sidewalk",
+    "tagTypeString": "NOU",
     "tagNounString": "sidewalks",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Sidewalk",
-    "tagNameAltString": "NOU_SID"
+    "tagNameAltString": "NOU_SID",
+    "tagNounSString": "sidewalk"
   },
   {
-    "tagNounSString": "statue",
+    "tagTypeString": "NOU",
     "tagNounString": "statues",
-    "tagTypeString": "NOU",
     "tagNameFullString": "Noun Statue",
-    "tagNameAltString": "NOU_STA"
+    "tagNameAltString": "NOU_STA",
+    "tagNounSString": "statue"
   },
   {
-    "tagNounSString": "stone",
-    "tagNounString": "stones",
     "tagTypeString": "NOU",
+    "tagNounString": "stones",
     "tagNameFullString": "Noun Stone",
-    "tagNameAltString": "NOU_STO"
+    "tagNameAltString": "NOU_STO",
+    "tagNounSString": "stone"
   }
 ]

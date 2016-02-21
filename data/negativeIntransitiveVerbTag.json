@@ -1,22 +1,22 @@
 [
   {
-    "tagNegativeIntransitiveVerb2String": "died",
-    "tagNegativeIntransitiveVerbSString": "dying",
     "tagNegativeIntransitiveVerbIngString": "dies",
-    "tagNegativeIntransitiveVerb3String": "died",
-    "tagNegativeIntransitiveVerb1String": "die",
     "tagTypeString": "NIV",
+    "tagNegativeIntransitiveVerb2String": "died",
+    "tagNegativeIntransitiveVerb3String": "died",
     "tagNameFullString": "NegativeIntransitiveVerb Die",
+    "tagNegativeIntransitiveVerb1String": "die",
+    "tagNegativeIntransitiveVerbSString": "dying",
     "tagNameAltString": "NIV_DIE"
   },
   {
-    "tagNegativeIntransitiveVerb2String": "disintegrated",
-    "tagNegativeIntransitiveVerbSString": "disintegrates",
     "tagNegativeIntransitiveVerbIngString": "disintegrating",
-    "tagNegativeIntransitiveVerb3String": "disintegrated",
-    "tagNegativeIntransitiveVerb1String": "disintegrate",
     "tagTypeString": "NIV",
+    "tagNegativeIntransitiveVerb2String": "disintegrated",
+    "tagNegativeIntransitiveVerb3String": "disintegrated",
     "tagNameFullString": "NegativeIntransitiveVerb Disintegrate",
+    "tagNegativeIntransitiveVerb1String": "disintegrate",
+    "tagNegativeIntransitiveVerbSString": "disintegrates",
     "tagNameAltString": "NIV_DIS"
   }
 ]

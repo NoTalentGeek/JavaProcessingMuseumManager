@@ -1,22 +1,22 @@
 [
   {
-    "tagNegativeTransitiveVerb2String": "assasinated",
-    "tagNegativeTransitiveVerb1String": "assasinate",
-    "tagTypeString": "NTV",
-    "tagNameFullString": "NegativeTransitiveVerb Assasinate",
-    "tagNameAltString": "NTV_ASS",
     "tagNegativeTransitiveVerbSString": "assasinates",
+    "tagTypeString": "NTV",
+    "tagNegativeTransitiveVerb1String": "assasinate",
+    "tagNegativeTransitiveVerb2String": "assasinated",
     "tagNegativeTransitiveVerbIngString": "assasinating",
-    "tagNegativeTransitiveVerb3String": "assasinated"
+    "tagNameFullString": "NegativeTransitiveVerb Assasinate",
+    "tagNegativeTransitiveVerb3String": "assasinated",
+    "tagNameAltString": "NTV_ASS"
   },
   {
-    "tagNegativeTransitiveVerb2String": "killed",
-    "tagNegativeTransitiveVerb1String": "kill",
-    "tagTypeString": "NTV",
-    "tagNameFullString": "NegativeTransitiveVerb Kill",
-    "tagNameAltString": "NTV_KIL",
     "tagNegativeTransitiveVerbSString": "kills",
+    "tagTypeString": "NTV",
+    "tagNegativeTransitiveVerb1String": "kill",
+    "tagNegativeTransitiveVerb2String": "killed",
     "tagNegativeTransitiveVerbIngString": "killing",
-    "tagNegativeTransitiveVerb3String": "killed"
+    "tagNameFullString": "NegativeTransitiveVerb Kill",
+    "tagNegativeTransitiveVerb3String": "killed",
+    "tagNameAltString": "NTV_KIL"
   }
 ]

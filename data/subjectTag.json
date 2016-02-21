@@ -1,156 +1,156 @@
 [
   {
-    "tagSubjectPossesionString": "Napoleon's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Napoleon",
-    "tagNameAltString": "SUB_NAP",
-    "tagSubjectString": "Napoleon"
+    "tagSubjectString": "Napoleon",
+    "tagSubjectPossesionString": "Napoleon's",
+    "tagNameAltString": "SUB_NAP"
   },
   {
-    "tagSubjectPossesionString": "Washington's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Washington",
-    "tagNameAltString": "SUB_WAS",
-    "tagSubjectString": "Washington"
+    "tagSubjectString": "Washington",
+    "tagSubjectPossesionString": "Washington's",
+    "tagNameAltString": "SUB_WAS"
   },
   {
-    "tagSubjectPossesionString": "assasin's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Assasin",
-    "tagNameAltString": "SUB_ASS",
-    "tagSubjectString": "assasin"
+    "tagSubjectString": "assasin",
+    "tagSubjectPossesionString": "assasin's",
+    "tagNameAltString": "SUB_ASS"
   },
   {
-    "tagSubjectPossesionString": "Bodhisattva's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Bodhisattva",
-    "tagNameAltString": "SUB_BOD",
-    "tagSubjectString": "Bodhisattva"
+    "tagSubjectString": "Bodhisattva",
+    "tagSubjectPossesionString": "Bodhisattva's",
+    "tagNameAltString": "SUB_BOD"
   },
   {
-    "tagSubjectPossesionString": "Buddha's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Buddha",
-    "tagNameAltString": "SUB_BUD",
-    "tagSubjectString": "Buddha"
+    "tagSubjectString": "Buddha",
+    "tagSubjectPossesionString": "Buddha's",
+    "tagNameAltString": "SUB_BUD"
   },
   {
-    "tagSubjectPossesionString": "Dimitri's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Dimitri",
-    "tagNameAltString": "SUB_DIM",
-    "tagSubjectString": "Dimitri"
+    "tagSubjectString": "Dimitri",
+    "tagSubjectPossesionString": "Dimitri's",
+    "tagNameAltString": "SUB_DIM"
   },
   {
-    "tagSubjectPossesionString": "Dimitri Mitropoulos'",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject DimitriMitropoulos",
-    "tagNameAltString": "SUB_DMI",
-    "tagSubjectString": "Dimitri Mitropoulos"
+    "tagSubjectString": "Dimitri Mitropoulos",
+    "tagSubjectPossesionString": "Dimitri Mitropoulos'",
+    "tagNameAltString": "SUB_DMI"
   },
   {
-    "tagSubjectPossesionString": "dragon's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Dragon",
-    "tagNameAltString": "SUB_DRA",
-    "tagSubjectString": "dragon"
+    "tagSubjectString": "dragon",
+    "tagSubjectPossesionString": "dragon's",
+    "tagNameAltString": "SUB_DRA"
   },
   {
-    "tagSubjectPossesionString": "the first's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject TheFirst",
-    "tagNameAltString": "SUB_FIR",
-    "tagSubjectString": "the first"
+    "tagSubjectString": "the first",
+    "tagSubjectPossesionString": "the first's",
+    "tagNameAltString": "SUB_FIR"
   },
   {
-    "tagSubjectPossesionString": "iraqi's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Iraqi",
-    "tagNameAltString": "SUB_IRQ",
-    "tagSubjectString": "iraqi"
+    "tagSubjectString": "iraqi",
+    "tagSubjectPossesionString": "iraqi's",
+    "tagNameAltString": "SUB_IRQ"
   },
   {
-    "tagSubjectPossesionString": "italian's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Italian",
-    "tagNameAltString": "SUB_ITA",
-    "tagSubjectString": "italian"
+    "tagSubjectString": "italian",
+    "tagSubjectPossesionString": "italian's",
+    "tagNameAltString": "SUB_ITA"
   },
   {
-    "tagSubjectPossesionString": "Julius Caesar's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject JuliusCaesar",
-    "tagNameAltString": "SUB_JUC",
-    "tagSubjectString": "Julius Caesar"
+    "tagSubjectString": "Julius Caesar",
+    "tagSubjectPossesionString": "Julius Caesar's",
+    "tagNameAltString": "SUB_JUC"
   },
   {
-    "tagSubjectPossesionString": "Julius'",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Julius",
-    "tagNameAltString": "SUB_JUL",
-    "tagSubjectString": "Julius"
+    "tagSubjectString": "Julius",
+    "tagSubjectPossesionString": "Julius'",
+    "tagNameAltString": "SUB_JUL"
   },
   {
-    "tagSubjectPossesionString": "killer's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Killer",
-    "tagNameAltString": "SUB_KIL",
-    "tagSubjectString": "killer"
+    "tagSubjectString": "killer",
+    "tagSubjectPossesionString": "killer's",
+    "tagNameAltString": "SUB_KIL"
   },
   {
-    "tagSubjectPossesionString": "Koshchey's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Koshchey",
-    "tagNameAltString": "SUB_KOS",
-    "tagSubjectString": "Koshchey"
+    "tagSubjectString": "Koshchey",
+    "tagSubjectPossesionString": "Koshchey's",
+    "tagNameAltString": "SUB_KOS"
   },
   {
-    "tagSubjectPossesionString": "Maria's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Maria",
-    "tagNameAltString": "SUB_MAR",
-    "tagSubjectString": "Maria"
+    "tagSubjectString": "Maria",
+    "tagSubjectPossesionString": "Maria's",
+    "tagNameAltString": "SUB_MAR"
   },
   {
-    "tagSubjectPossesionString": "Medusa's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Medusa",
-    "tagNameAltString": "SUB_MED",
-    "tagSubjectString": "Medusa"
+    "tagSubjectString": "Medusa",
+    "tagSubjectPossesionString": "Medusa's",
+    "tagNameAltString": "SUB_MED"
   },
   {
-    "tagSubjectPossesionString": "Maria Morevna's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject MariaMorevna",
-    "tagNameAltString": "SUB_MMO",
-    "tagSubjectString": "Maria Morevna"
+    "tagSubjectString": "Maria Morevna",
+    "tagSubjectPossesionString": "Maria Morevna's",
+    "tagNameAltString": "SUB_MMO"
   },
   {
-    "tagSubjectPossesionString": "painter's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Painter",
-    "tagNameAltString": "SUB_PAI",
-    "tagSubjectString": "painter"
+    "tagSubjectString": "painter",
+    "tagSubjectPossesionString": "painter's",
+    "tagNameAltString": "SUB_PAI"
   },
   {
-    "tagSubjectPossesionString": "romanian's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Romanian",
-    "tagNameAltString": "SUB_ROM",
-    "tagSubjectString": "romanian"
+    "tagSubjectString": "romanian",
+    "tagSubjectPossesionString": "romanian's",
+    "tagNameAltString": "SUB_ROM"
   },
   {
-    "tagSubjectPossesionString": "russian's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Russian",
-    "tagNameAltString": "SUB_RUS",
-    "tagSubjectString": "russian"
+    "tagSubjectString": "russian",
+    "tagSubjectPossesionString": "russian's",
+    "tagNameAltString": "SUB_RUS"
   },
   {
-    "tagSubjectPossesionString": "Sphinx's",
     "tagTypeString": "SUB",
     "tagNameFullString": "Subject Sphinx",
-    "tagNameAltString": "SUB_SPH",
-    "tagSubjectString": "Sphinx"
+    "tagSubjectString": "Sphinx",
+    "tagSubjectPossesionString": "Sphinx's",
+    "tagNameAltString": "SUB_SPH"
   }
 ]

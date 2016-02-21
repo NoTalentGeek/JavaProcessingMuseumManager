@@ -1,122 +1,122 @@
 [
   {
     "tagTransitiveVerb1String": "buy",
-    "tagTransitiveVerbIngString": "buying",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Buy",
     "tagTransitiveVerb3String": "bought",
+    "tagNameFullString": "TransitiveVerb Buy",
     "tagTransitiveVerb2String": "bought",
     "tagNameAltString": "TVR_BUY",
-    "tagTransitiveVerbSString": "buys"
+    "tagTransitiveVerbSString": "buys",
+    "tagTransitiveVerbIngString": "buying"
   },
   {
     "tagTransitiveVerb1String": "call",
-    "tagTransitiveVerbIngString": "calling",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Call",
     "tagTransitiveVerb3String": "called",
+    "tagNameFullString": "TransitiveVerb Call",
     "tagTransitiveVerb2String": "called",
     "tagNameAltString": "TVR_CAL",
-    "tagTransitiveVerbSString": "calls"
+    "tagTransitiveVerbSString": "calls",
+    "tagTransitiveVerbIngString": "calling"
   },
   {
     "tagTransitiveVerb1String": "desire",
-    "tagTransitiveVerbIngString": "desiring",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Desire",
     "tagTransitiveVerb3String": "desired",
+    "tagNameFullString": "TransitiveVerb Desire",
     "tagTransitiveVerb2String": "desired",
     "tagNameAltString": "TVR_DES",
-    "tagTransitiveVerbSString": "desires"
+    "tagTransitiveVerbSString": "desires",
+    "tagTransitiveVerbIngString": "desiring"
   },
   {
     "tagTransitiveVerb1String": "drive",
-    "tagTransitiveVerbIngString": "driving",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Drive",
     "tagTransitiveVerb3String": "driven",
+    "tagNameFullString": "TransitiveVerb Drive",
     "tagTransitiveVerb2String": "drove",
     "tagNameAltString": "TVR_DRI",
-    "tagTransitiveVerbSString": "drives"
+    "tagTransitiveVerbSString": "drives",
+    "tagTransitiveVerbIngString": "driving"
   },
   {
     "tagTransitiveVerb1String": "fight",
-    "tagTransitiveVerbIngString": "fighting",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Fight",
     "tagTransitiveVerb3String": "fought",
+    "tagNameFullString": "TransitiveVerb Fight",
     "tagTransitiveVerb2String": "fought",
     "tagNameAltString": "TVR_FIG",
-    "tagTransitiveVerbSString": "fights"
+    "tagTransitiveVerbSString": "fights",
+    "tagTransitiveVerbIngString": "fighting"
   },
   {
     "tagTransitiveVerb1String": "get",
-    "tagTransitiveVerbIngString": "getting",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Get",
     "tagTransitiveVerb3String": "gotten",
+    "tagNameFullString": "TransitiveVerb Get",
     "tagTransitiveVerb2String": "got",
     "tagNameAltString": "TVR_GET",
-    "tagTransitiveVerbSString": "gets"
+    "tagTransitiveVerbSString": "gets",
+    "tagTransitiveVerbIngString": "getting"
   },
   {
     "tagTransitiveVerb1String": "grab",
-    "tagTransitiveVerbIngString": "grabbing",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Grab",
     "tagTransitiveVerb3String": "grabbed",
+    "tagNameFullString": "TransitiveVerb Grab",
     "tagTransitiveVerb2String": "grabbed",
     "tagNameAltString": "TVR_GRA",
-    "tagTransitiveVerbSString": "grabs"
+    "tagTransitiveVerbSString": "grabs",
+    "tagTransitiveVerbIngString": "grabbing"
   },
   {
     "tagTransitiveVerb1String": "hustle",
-    "tagTransitiveVerbIngString": "hustling",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Hustle",
     "tagTransitiveVerb3String": "hustled",
+    "tagNameFullString": "TransitiveVerb Hustle",
     "tagTransitiveVerb2String": "hustled",
     "tagNameAltString": "TVR_HUS",
-    "tagTransitiveVerbSString": "hustles"
+    "tagTransitiveVerbSString": "hustles",
+    "tagTransitiveVerbIngString": "hustling"
   },
   {
     "tagTransitiveVerb1String": "love",
-    "tagTransitiveVerbIngString": "loving",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Love",
     "tagTransitiveVerb3String": "loved",
+    "tagNameFullString": "TransitiveVerb Love",
     "tagTransitiveVerb2String": "loved",
     "tagNameAltString": "TVR_LOV",
-    "tagTransitiveVerbSString": "loves"
+    "tagTransitiveVerbSString": "loves",
+    "tagTransitiveVerbIngString": "loving"
   },
   {
     "tagTransitiveVerb1String": "sell",
-    "tagTransitiveVerbIngString": "selling",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Sell",
     "tagTransitiveVerb3String": "sold",
+    "tagNameFullString": "TransitiveVerb Sell",
     "tagTransitiveVerb2String": "sold",
     "tagNameAltString": "TVR_SEL",
-    "tagTransitiveVerbSString": "sells"
+    "tagTransitiveVerbSString": "sells",
+    "tagTransitiveVerbIngString": "selling"
   },
   {
     "tagTransitiveVerb1String": "shove",
-    "tagTransitiveVerbIngString": "shoving",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Shove",
     "tagTransitiveVerb3String": "shoved",
+    "tagNameFullString": "TransitiveVerb Shove",
     "tagTransitiveVerb2String": "shoved",
     "tagNameAltString": "TVR_SHO",
-    "tagTransitiveVerbSString": "shoves"
+    "tagTransitiveVerbSString": "shoves",
+    "tagTransitiveVerbIngString": "shoving"
   },
   {
     "tagTransitiveVerb1String": "talk",
-    "tagTransitiveVerbIngString": "talking",
     "tagTypeString": "TVR",
-    "tagNameFullString": "TransitiveVerb Talk",
     "tagTransitiveVerb3String": "told",
+    "tagNameFullString": "TransitiveVerb Talk",
     "tagTransitiveVerb2String": "told",
     "tagNameAltString": "TVR_TAL",
-    "tagTransitiveVerbSString": "talks"
+    "tagTransitiveVerbSString": "talks",
+    "tagTransitiveVerbIngString": "talking"
   }
 ]

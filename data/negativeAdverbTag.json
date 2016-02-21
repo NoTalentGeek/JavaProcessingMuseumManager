@@ -1,14 +1,14 @@
 [
   {
-    "tagNegativeAdverbString": "desperately",
     "tagTypeString": "NDV",
     "tagNameFullString": "NegativeAdverb Desperately",
+    "tagNegativeAdverbString": "desperately",
     "tagNameAltString": "NDV_DES"
   },
   {
-    "tagNegativeAdverbString": "slowly",
     "tagTypeString": "NDV",
     "tagNameFullString": "NegativeAdverb Slowly",
+    "tagNegativeAdverbString": "slowly",
     "tagNameAltString": "NDV_SLO"
   }
 ]

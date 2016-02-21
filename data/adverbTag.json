@@ -1,14 +1,14 @@
 [
   {
-    "tagAdverbString": "perfectly",
     "tagTypeString": "ADV",
     "tagNameFullString": "Adverb Perfectly",
+    "tagAdverbString": "perfectly",
     "tagNameAltString": "ADV_PER"
   },
   {
-    "tagAdverbString": "quickly",
     "tagTypeString": "ADV",
     "tagNameFullString": "Adverb Quickly",
+    "tagAdverbString": "quickly",
     "tagNameAltString": "ADV_QUI"
   }
 ]

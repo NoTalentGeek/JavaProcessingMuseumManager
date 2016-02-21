@@ -31,8 +31,8 @@ class ButtonOpenClose{
         buttonOpenCloseCircleObject     = createShape(
 
             ELLIPSE, 
-            originXInt, 
-            originYInt, 
+            originXInt + (buttonSizeInt/2), 
+            originYInt + (buttonSizeInt/2), 
             buttonSizeInt, 
             buttonSizeInt
 
@@ -137,9 +137,3 @@ class ButtonOpenClose{
     } 
 
 };
-
-
-
-
-
-

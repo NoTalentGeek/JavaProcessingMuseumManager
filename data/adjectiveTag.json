@@ -2,19 +2,19 @@
   {
     "tagTypeString": "ADJ",
     "tagNameFullString": "Adjective Excellent",
-    "tagNameAltString": "ADJ_BAD",
-    "tagAdjectiveString": "excellent"
+    "tagAdjectiveString": "excellent",
+    "tagNameAltString": "ADJ_BAD"
   },
   {
     "tagTypeString": "ADJ",
     "tagNameFullString": "Adjective Good",
-    "tagNameAltString": "ADJ_GOD",
-    "tagAdjectiveString": "good"
+    "tagAdjectiveString": "good",
+    "tagNameAltString": "ADJ_GOD"
   },
   {
     "tagTypeString": "ADJ",
     "tagNameFullString": "Adjective Soft",
-    "tagNameAltString": "ADJ_SOF",
-    "tagAdjectiveString": "soft"
+    "tagAdjectiveString": "soft",
+    "tagNameAltString": "ADJ_SOF"
   }
 ]
